@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --SideNavBackgorund: #1e293b;
+  --SideNavPColor: #8a8a8a;
+}
+
+@use "~@angular/material" as mat;
+@font-face {
+  font-family: "custom-font";
+  src: url("assets/custom-font.ttf");
+}
+$custom-typography: mat.define-typography-config(
+  $font-family: "custom-font",
+);
+@include mat.core($custom-typography);
 
 html,
 body {
@@ -6,7 +20,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Poppins, "Helvetica Neue", sans-serif;
 }
 
 .card-container .card:not(.highlight-card) {
