@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
-import { User } from './user.types';
-
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, ReplaySubject, of } from "rxjs";
+import { User } from "./user.types";
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class UserService {
   private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
@@ -23,7 +22,21 @@ export class UserService {
   }
 
   // /* Get current logged in user data */
-  // get():Observable<User> {
-  //   return this._http.get
-  // }
+  /**
+   * Get the current logged in user data
+   */
+  get(): Observable<User> {
+    return of({
+      firstName: "Govind",
+      lastName: "ram",
+      isActive: "true",
+      _id: "61530841e0e17d60b3e8c0a3",
+      email: "gram@gmail.com",
+    });
+    // return this._httpClient.get<User>("api/common/user").pipe(
+    //   tap((user) => {
+    //     this._user.next(user);
+    //   })
+    // );
+  }
 }

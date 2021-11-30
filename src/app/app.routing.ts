@@ -1,4 +1,5 @@
 import { Route } from "@angular/router";
+import { InitialDataResolver } from "./app.resolvers";
 import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
 import { LayoutComponent } from "./layout/layout.component";
@@ -26,12 +27,15 @@ export const routes: Route[] = [
       },
     ],
   },
-  // Landing routes
+  // Admin routes
   {
     path: "",
     component: LayoutComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
+    resolve: {
+      initialData: InitialDataResolver,
+    },
     data: {
       layout: "empty",
     },
@@ -42,6 +46,11 @@ export const routes: Route[] = [
           import("./modules/dashboard/dashboard.module").then(
             (x) => x.DashboardModule
           ),
+      },
+      {
+        path: "auth",
+        loadChildren: () =>
+          import("./modules/auth/auth.module").then((m) => m.AuthPageModule),
       },
     ],
   },

@@ -1,10 +1,7 @@
 <!-- Button -->
 <button mat-icon-button [matMenuTriggerFor]="userActions">
-  <mat-icon
-    *ngIf="!showAvatar || !user.avatar"
-    style="color: var(--TopNavIconColor)"
-    >account_circle</mat-icon
-  >
+  <!-- *ngIf="!showAvatar || !user.avatar" -->
+  <mat-icon style="color: var(--TopNavIconColor)">account_circle</mat-icon>
   <span class="relative">
     <!-- <img
       class="w-7 h-7 rounded-full"

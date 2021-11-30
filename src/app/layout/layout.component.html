@@ -1,4 +1,4 @@
-<mat-drawer-container class="main-container" *ngIf="false">
+<mat-drawer-container class="main-container" *ngIf="user === undefined">
   <mat-drawer #drawer class="sidenav" mode="push">
     <div
       style="
@@ -129,4 +129,4 @@
   </div>
 </mat-drawer-container>
 
-<router-outlet *ngIf="true"></router-outlet>
+<router-outlet *ngIf="user === undefined"></router-outlet>
