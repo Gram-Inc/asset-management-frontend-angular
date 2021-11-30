@@ -3,8 +3,9 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TitleCardComponent } from "./title-card/title-card.component";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
+import { FullscreenComponent } from "./fullscreen/fullscreen.component";
 
-var sharedComp: any = [TitleCardComponent];
+var sharedComp = [TitleCardComponent, FullscreenComponent];
 @NgModule({
   declarations: [...sharedComp],
   imports: [

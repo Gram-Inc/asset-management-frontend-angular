@@ -112,6 +112,13 @@
         this.getUsername() &nbsp;&nbsp;
         <mat-icon class="pl-3 red">logout</mat-icon>
       </button>
+      <FullScreen [iconTpl]="icon">
+        <ng-template #icon>
+          <mat-icon style="color: var(--IconColor)"
+            >fullscreen</mat-icon
+          ></ng-template
+        ></FullScreen
+      >
     </mat-toolbar>
     <!-- <br />
     <br />
