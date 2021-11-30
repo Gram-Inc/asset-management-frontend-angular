@@ -1,14 +1,22 @@
 <mat-drawer-container class="main-container bg-white">
   <mat-drawer #drawer class="sidenav" mode="push">
-    <div class="side-con">
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">home_rounded</mat-icon>
-        <span>Dashboard</span>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        margin: 12px;
+        align-items: center;
+      "
+    >
+      <img
+        src="../assets/logo/favicon.ico"
+        alt=""
+        z-index="50"
+        width="32"
+        height="32"
+      />
+      <button z-index="50" mat-icon-button [routerLink]="['/']">
+        <mat-icon>account_circle</mat-icon>
       </button>
     </div>
     <div style="text-align: center; padding: 25px; margin-top: 20px">
@@ -93,7 +101,7 @@
       style="z-index: 100; height: 64px; background-color: white"
     >
       <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon class="grey">menu</mat-icon>
+        <mat-icon class="topIcon">menu</mat-icon>
       </button>
       <span class="toolbar-spacer"></span>
       <a [routerLink]="['/']">
@@ -107,18 +115,12 @@
       </a>
 
       <span class="toolbar-spacer"></span>
-
-      <button mat-button class="example-icon">
-        this.getUsername() &nbsp;&nbsp;
-        <mat-icon class="pl-3 red">logout</mat-icon>
-      </button>
       <FullScreen [iconTpl]="icon">
         <ng-template #icon>
-          <mat-icon style="color: var(--IconColor)"
-            >fullscreen</mat-icon
-          ></ng-template
+          <mat-icon class="topIcon">fullscreen</mat-icon></ng-template
         ></FullScreen
       >
+      <user [showAvatar]="false"></user>
     </mat-toolbar>
     <!-- <br />
     <br />

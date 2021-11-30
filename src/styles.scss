@@ -10,9 +10,12 @@ $my-custom-level: mat.define-typography-config(
   --SideNavPColor: #8a8a8a;
   --SideNavIconColor: #e5e5e5;
 
-  --IconColor: #8a8a8a;
+  --SideNavIconColor: #e5e5e5;
+  --TopNavIconColor: #8a8a8a;
 }
-
+mat-icon {
+  color: var(--IconColor);
+}
 html,
 body {
   height: 100%;
