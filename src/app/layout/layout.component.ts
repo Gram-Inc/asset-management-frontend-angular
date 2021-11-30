@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { User } from "../core/user/user.types";
 
 @Component({
-  selector: "app-layout",
+  selector: "layout",
   templateUrl: "./layout.component.html",
   styleUrls: ["./layout.component.scss"],
 })

@@ -1,5 +1,4 @@
 @use "@angular/material" as mat;
-
 $my-custom-level: mat.define-typography-config(
   $font-family: Poppins,
 );
@@ -12,6 +11,8 @@ $my-custom-level: mat.define-typography-config(
 
   --SideNavIconColor: #e5e5e5;
   --TopNavIconColor: #8a8a8a;
+
+  --TextColor: #4a4a4a;
 }
 mat-icon {
   color: var(--IconColor);
