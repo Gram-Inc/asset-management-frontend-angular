@@ -1,26 +1,27 @@
-<div
-  class="card"
-  [class.card-selected]="this.icon == 'pending_actions'"
-  target="_blank"
-  rel="noopener"
->
-  <div>
-    <mat-icon style="font-size: 66px">{{ this.icon }}</mat-icon>
-    <br />
-    <p class="" style="font-weight: 400; font-size: 16px; color: #a0a0a0">
-      {{ this.title }}
-    </p>
-
-    <p
-      class=""
-      style="
-        font-weight: 700;
-        padding-top: 10px;
-        font-size: 36px;
-        color: #4a4a4a;
-      "
-    >
-      {{ this.value }}
-    </p>
-  </div>
+<h1>Dashboard</h1>
+<div class="card-container">
+  <title-card
+    [value]="50"
+    [icon]="'inventory_2'"
+    title="In Pool"
+    bgColor="#C8FACD"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'person_pin'"
+    title="Assigned"
+    bgColor="#D0F2FF"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'delete_outline'"
+    title="Scrap"
+    bgColor="#FFF7CD"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'warning'"
+    title="Down"
+    bgColor="#FFE7D9"
+  ></title-card>
 </div>
