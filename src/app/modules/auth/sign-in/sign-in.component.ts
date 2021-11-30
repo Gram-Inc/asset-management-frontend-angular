@@ -76,36 +76,41 @@ export class SignInComponent implements OnInit {
     // Hide the alert
     this.showAlert = false;
 
-    // Sign in
-    this._authService.signIn(this.signInForm.value).subscribe(
-      () => {
-        // Set the redirect url.
-        // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-        // to the correct page after a successful sign in. This way, that url can be set via
-        // routing file and we don't have to touch here.
-        const redirectURL =
-          this._activatedRoute.snapshot.queryParamMap.get("redirectURL") ||
-          "/signed-in-redirect";
+    try {
+      // Sign in
+      this._authService.signIn(this.signInForm.value).subscribe(
+        () => {
+          // Set the redirect url.
+          // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
+          // to the correct page after a successful sign in. This way, that url can be set via
+          // routing file and we don't have to touch here.
+          const redirectURL =
+            this._activatedRoute.snapshot.queryParamMap.get("redirectURL") ||
+            "/signed-in-redirect";
 
-        // Navigate to the redirect url
-        this._router.navigateByUrl(redirectURL);
-      },
-      (response) => {
-        // Re-enable the form
-        this.signInForm.enable();
+          // Navigate to the redirect url
+          this._router.navigateByUrl(redirectURL);
+        },
+        (response) => {
+          console.log(response);
+          // Re-enable the form
+          this.signInForm.enable();
 
-        // Reset the form
-        this.signInNgForm.resetForm();
+          // Reset the form
+          this.signInNgForm.resetForm();
 
-        // Set the alert
-        this.alert = {
-          type: "error",
-          message: "Wrong email or password",
-        };
+          // Set the alert
+          this.alert = {
+            type: "error",
+            message: "Wrong email or password",
+          };
 
-        // Show the alert
-        this.showAlert = true;
-      }
-    );
+          // Show the alert
+          this.showAlert = true;
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

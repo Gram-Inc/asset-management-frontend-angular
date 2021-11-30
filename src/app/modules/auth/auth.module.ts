@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthModule } from "src/app/core/auth/auth.module";
 
 @NgModule({
   declarations: [SignInComponent],
@@ -17,13 +18,5 @@ import { ReactiveFormsModule } from "@angular/forms";
     CustomMaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
 })
-export class AuthModule {}
+export class AuthPageModule {}

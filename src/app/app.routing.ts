@@ -1,32 +1,41 @@
 import { Route } from "@angular/router";
+import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
 import { LayoutComponent } from "./layout/layout.component";
 
 export const routes: Route[] = [
-  {
-    path: "",
-    pathMatch: "full",
-    redirectTo: "auth",
-  },
+  { path: "", pathMatch: "full", redirectTo: "dashboard" },
 
   {
     path: "signed-in-redirect",
     pathMatch: "full",
-    redirectTo: "home",
+    redirectTo: "dashboard",
   },
 
   //No Auth Guard
   {
     path: "",
-    // canActivate: [NoAuthGuard],
-    // canActivateChild: [NoAuthGuard],
+    canActivate: [NoAuthGuard],
+    canActivateChild: [NoAuthGuard],
     component: LayoutComponent,
     children: [
       {
         path: "auth",
         loadChildren: () =>
-          import("./modules/auth/auth.module").then((x) => x.AuthModule),
+          import("./modules/auth/auth.module").then((x) => x.AuthPageModule),
       },
+    ],
+  },
+  // Landing routes
+  {
+    path: "",
+    component: LayoutComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    data: {
+      layout: "empty",
+    },
+    children: [
       {
         path: "dashboard",
         loadChildren: () =>
@@ -36,21 +45,4 @@ export const routes: Route[] = [
       },
     ],
   },
-  // Landing routes
-  // {
-  //   path: '',
-  //   component: LayoutComponent,
-  //   data: {
-  //     layout: 'empty',
-  //   },
-  //   children: [
-  //     {
-  //       path: 'home',
-  //       loadChildren: () =>
-  //         import('./modules/landing/home/home.module').then(
-  //           (m) => m.HomeModule
-  //         ),
-  //     },
-  //   ],
-  // },
 ];

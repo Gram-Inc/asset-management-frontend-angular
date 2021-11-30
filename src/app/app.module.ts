@@ -5,12 +5,13 @@ import { ExtraOptions, PreloadAllModules, RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
 import { routes } from "./app.routing";
-import { AuthModule } from "./modules/auth/auth.module";
+import { AuthPageModule } from "./modules/auth/auth.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CustomMaterialModule } from "./modules/custom-material/custom-material.module";
 import { LayoutModule } from "@angular/cdk/layout";
 import { LayoutComponent } from "./layout/layout.component";
 import { SharedModule } from "./modules/shared/shared.module";
+import { AuthModule } from "./core/auth/auth.module";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
@@ -20,12 +21,12 @@ const routerConfig: ExtraOptions = {
 @NgModule({
   declarations: [AppComponent, LayoutComponent],
   imports: [
+    AuthModule,
     BrowserModule,
-    HttpClientModule,
     RouterModule.forRoot(routes, routerConfig),
     SharedModule,
     // AppRoutingModule,
-    AuthModule,
+    AuthPageModule,
     BrowserAnimationsModule,
     CustomMaterialModule.forRoot(),
   ],
