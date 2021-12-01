@@ -48,6 +48,13 @@ export const routes: Route[] = [
           ),
       },
       {
+        path: "sign-out",
+        loadChildren: () =>
+          import("./modules/auth/sign-out/sign-out.module").then(
+            (x) => x.SignOutModule
+          ),
+      },
+      {
         path: "auth",
         loadChildren: () =>
           import("./modules/auth/auth.module").then((m) => m.AuthPageModule),

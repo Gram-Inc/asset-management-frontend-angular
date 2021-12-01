@@ -9,10 +9,10 @@ import { AuthInterceptor } from "src/app/core/auth/auth.interceptor";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AuthModule } from "src/app/core/auth/auth.module";
-import { SignOutComponent } from './sign-out/sign-out.component';
+import { SignOutComponent } from "./sign-out/sign-out.component";
 
 @NgModule({
-  declarations: [SignInComponent, SignOutComponent],
+  declarations: [SignInComponent],
   imports: [
     RouterModule.forChild(authRoutes),
     CommonModule,

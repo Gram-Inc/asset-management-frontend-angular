@@ -30,6 +30,7 @@ export class SignOutComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
+    console.log("Sign Out");
     // Sign out
     this._authService.signOut();
 

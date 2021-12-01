@@ -12,6 +12,7 @@ import { LayoutModule } from "@angular/cdk/layout";
 import { LayoutComponent } from "./layout/layout.component";
 import { SharedModule } from "./modules/shared/shared.module";
 import { AuthModule } from "./core/auth/auth.module";
+import { SignOutModule } from "./modules/auth/sign-out/sign-out.module";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
@@ -29,6 +30,7 @@ const routerConfig: ExtraOptions = {
     AuthPageModule,
     BrowserAnimationsModule,
     CustomMaterialModule.forRoot(),
+    SignOutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,132 +1,135 @@
-<mat-drawer-container class="main-container" *ngIf="user === undefined">
-  <mat-drawer #drawer class="sidenav" mode="push">
-    <div
-      style="
-        display: flex;
-        justify-content: space-between;
-        margin: 12px;
-        align-items: center;
-      "
-    >
-      <img
-        src="../assets/logo/favicon.ico"
-        alt=""
-        z-index="50"
-        width="32"
-        height="32"
-      />
-      <button z-index="50" mat-icon-button [routerLink]="['/']">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-    </div>
-    <div style="text-align: center; padding: 25px; margin-top: 20px">
-      <h1 style="margin: 0">Govindram</h1>
-      <p>Govindram@gmail.com</p>
-    </div>
+<div *ngIf="user != undefined">
+  <mat-drawer-container class="main-container">
+    <mat-drawer #drawer class="sidenav" mode="push" style="color: white">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          margin: 12px;
+          align-items: center;
+        "
+      >
+        <img
+          src="../assets/logo/favicon.ico"
+          alt=""
+          z-index="50"
+          width="32"
+          height="32"
+        />
+        <button z-index="50" mat-icon-button [routerLink]="['/']">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+      <div style="text-align: center; padding: 25px; margin-top: 20px">
+        <h1 style="margin: 0">Govindram</h1>
+        <p>Govindram@gmail.com</p>
+      </div>
 
-    <!-- DASHBOARD Component -->
-    <!-- <div style="margin-top: 24px">
+      <!-- DASHBOARD Component -->
+      <!-- <div style="margin-top: 24px">
       <div style="margin-left: 25px; margin-right: 25px">
         <span class="title">DASHBOARD</span>
         <p>Auto-resizing sidenav</p>
       </div>
     </div> -->
-    <div class="side-con">
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">home_rounded</mat-icon>
-        <span>Dashboard</span>
-      </button>
+      <div class="side-con">
+        <button
+          mat-button
+          class="side-btn"
+          [routerLink]="['/']"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px">home_rounded</mat-icon>
+          <span>Dashboard</span>
+        </button>
 
-      <button
-        mat-button
-        class="side-btn"
-        routerLinkActive="active"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">assignment</mat-icon>
-        <span>Assets</span>
-      </button>
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/report']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">bar_chart</mat-icon>
-        <span>Assignments</span>
-      </button>
-      <!-- <button mat-button class="side-btn" (click)="drawer.toggle()">
+        <button
+          mat-button
+          class="side-btn"
+          routerLinkActive="active"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px">assignment</mat-icon>
+          <span>Assets</span>
+        </button>
+        <button
+          mat-button
+          class="side-btn"
+          [routerLink]="['/report']"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px">bar_chart</mat-icon>
+          <span>Assignments</span>
+        </button>
+        <!-- <button mat-button class="side-btn" (click)="drawer.toggle()">
         <mat-icon style="margin-right: 12px">table_chart</mat-icon>
         <span>Reports</span>
       </button> -->
 
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/user']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">admin_panel_settings</mat-icon>
-        <span>Reports</span>
-      </button>
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/warehouse']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">precision_manufacturing</mat-icon>
-        <span>Contacts</span>
-      </button>
-      <button
-        mat-button
-        class="side-btn"
-        [routerLink]="['/department']"
-        (click)="drawer.toggle()"
-      >
-        <mat-icon style="margin-right: 12px">dashboard</mat-icon>
-        <span>Settings</span>
-      </button>
-    </div>
-  </mat-drawer>
+        <button
+          mat-button
+          class="side-btn"
+          [routerLink]="['/user']"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px">admin_panel_settings</mat-icon>
+          <span>Reports</span>
+        </button>
+        <button
+          mat-button
+          class="side-btn"
+          [routerLink]="['/warehouse']"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px"
+            >precision_manufacturing</mat-icon
+          >
+          <span>Contacts</span>
+        </button>
+        <button
+          mat-button
+          class="side-btn"
+          [routerLink]="['/department']"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon style="margin-right: 12px">dashboard</mat-icon>
+          <span>Settings</span>
+        </button>
+      </div>
+    </mat-drawer>
 
-  <div class="sidenav-main-content bg-white" style="color: var(--TextColor)">
-    <mat-toolbar
-      class="mat-elevation-z4"
-      style="z-index: 100; height: 64px; background-color: white"
-    >
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon class="topIcon">menu</mat-icon>
-      </button>
-      <span class="toolbar-spacer"></span>
-      <a [routerLink]="['/']">
-        <img
-          class="mx-4"
-          src="../assets/logo/favicon.ico"
-          alt=""
-          z-index="50"
-          width="58"
-        />
-      </a>
-
-      <span class="toolbar-spacer"></span>
-      <FullScreen [iconTpl]="icon">
-        <ng-template #icon>
-          <mat-icon class="topIcon">fullscreen</mat-icon></ng-template
-        ></FullScreen
+    <div class="sidenav-main-content bg-white" style="color: var(--TextColor)">
+      <mat-toolbar
+        class="mat-elevation-z4"
+        style="z-index: 100; height: 64px; background-color: white"
       >
-      <user [showAvatar]="false"></user>
-    </mat-toolbar>
-    <!-- <br />
+        <button mat-icon-button (click)="drawer.toggle()">
+          <mat-icon class="topIcon">menu</mat-icon>
+        </button>
+        <span class="toolbar-spacer"></span>
+        <a [routerLink]="['/']">
+          <img
+            class="mx-4"
+            src="../assets/logo/favicon.ico"
+            alt=""
+            z-index="50"
+            width="58"
+          />
+        </a>
+
+        <span class="toolbar-spacer"></span>
+        <FullScreen [iconTpl]="icon">
+          <ng-template #icon>
+            <mat-icon class="topIcon">fullscreen</mat-icon></ng-template
+          ></FullScreen
+        >
+        <user [showAvatar]="false"></user>
+      </mat-toolbar>
+      <!-- <br />
     <br />
     <br /> -->
-    <router-outlet></router-outlet>
-  </div>
-</mat-drawer-container>
-
-<router-outlet *ngIf="user === undefined"></router-outlet>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+</div>
+<router-outlet *ngIf="user == undefined"></router-outlet>

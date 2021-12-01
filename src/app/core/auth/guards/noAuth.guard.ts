@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -9,13 +9,13 @@ import {
   RouterStateSnapshot,
   UrlSegment,
   UrlTree,
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AuthService } from '../auth.service';
+} from "@angular/router";
+import { Observable, of } from "rxjs";
+import { switchMap } from "rxjs/operators";
+import { AuthService } from "../auth.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad {
   /**
@@ -86,7 +86,7 @@ export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad {
         // If the user is authenticated...
         if (authenticated) {
           // Redirect to the root
-          this._router.navigate(['']);
+          this._router.navigate(["dashboard"]);
 
           // Prevent the access
           return of(false);

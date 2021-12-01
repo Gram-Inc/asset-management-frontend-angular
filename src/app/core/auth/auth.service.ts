@@ -77,6 +77,8 @@ export class AuthService {
 
           // Store the user on the user service
           this._userService.user = response.data.user;
+          console.log(response);
+          console.log(response.data.user);
           console.log(this._userService.user);
 
           // Return a new observable with the response
@@ -88,32 +90,32 @@ export class AuthService {
   /**
    * Sign in using the access token
    */
-  signInUsingToken(): Observable<any> {
-    // Renew token
-    return this._httpClient
-      .post(this._baseUrl + "api/auth/refresh-access-token", {
-        accessToken: this.accessToken,
-      })
-      .pipe(
-        catchError(() =>
-          // Return false
-          of(false)
-        ),
-        switchMap((response: any) => {
-          // Store the access token in the local storage
-          this.accessToken = response.data.accessToken;
+  // signInUsingToken(): Observable<any> {
+  //   // Renew token
+  //   return this._httpClient
+  //     .post(this._baseUrl + "api/auth/refresh-access-token", {
+  //       accessToken: this.accessToken,
+  //     })
+  //     .pipe(
+  //       catchError(() =>
+  //         // Return false
+  //         of(false)
+  //       ),
+  //       switchMap((response: any) => {
+  //         // Store the access token in the local storage
+  //         this.accessToken = response.data.accessToken;
 
-          // Set the authenticated flag to true
-          // this._authenticated = true;
+  //         // Set the authenticated flag to true
+  //         // this._authenticated = true;
 
-          // Store the user on the user service
-          this._userService.user = response.user;
+  //         // Store the user on the user service
+  //         this._userService.user = response.user;
 
-          // Return true
-          return of(true);
-        })
-      );
-  }
+  //         // Return true
+  //         return of(true);
+  //       })
+  //     );
+  // }
 
   /**
    * Sign out
@@ -177,6 +179,7 @@ export class AuthService {
     }
 
     // If the access token exists and it didn't expire, sign in using it
-    return this.signInUsingToken();
+    // return this.signInUsingToken();
+    return of(false);
   }
 }

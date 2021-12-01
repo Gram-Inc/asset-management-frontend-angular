@@ -10,16 +10,17 @@ import { User } from "../core/user/user.types";
   styleUrls: ["./layout.component.scss"],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  user: User;
+  user: User = undefined;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
-    this._userService.user$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((user: User) => {
-        this.user = user;
-      });
+    // this._userService.user$
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe((user: User) => {
+    //     this.user = user;
+    //     console.log(this.user);
+    //   });
   }
   ngOnDestroy() {
     this._unsubscribeAll.next();
