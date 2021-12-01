@@ -15,12 +15,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
-    // this._userService.user$
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe((user: User) => {
-    //     this.user = user;
-    //     console.log(this.user);
-    //   });
+    this._userService.user$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((user: User) => {
+        this.user = user;
+      });
   }
   ngOnDestroy() {
     this._unsubscribeAll.next();

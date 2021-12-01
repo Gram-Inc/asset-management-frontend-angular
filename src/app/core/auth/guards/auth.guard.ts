@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -9,13 +9,13 @@ import {
   RouterStateSnapshot,
   UrlSegment,
   UrlTree,
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AuthService } from '../auth.service';
+} from "@angular/router";
+import { Observable, of } from "rxjs";
+import { switchMap } from "rxjs/operators";
+import { AuthService } from "../auth.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   /**
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
+    const redirectUrl = state.url === "/sign-out" ? "/" : state.url;
     return this._check(redirectUrl);
   }
 
@@ -55,7 +55,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
+    const redirectUrl = state.url === "/sign-out" ? "/" : state.url;
     return this._check(redirectUrl);
   }
 
@@ -69,7 +69,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     route: Route,
     segments: UrlSegment[]
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this._check('/');
+    return this._check("/");
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -89,7 +89,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         // If the user is not authenticated...
         if (!authenticated) {
           // Redirect to the sign-in page
-          this._router.navigate(['auth/sign-in'], {
+          this._router.navigate(["sign-in"], {
             queryParams: { redirectURL },
           });
 

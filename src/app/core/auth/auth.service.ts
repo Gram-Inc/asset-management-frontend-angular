@@ -4,6 +4,7 @@ import { Observable, of, throwError } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
 import { UserService } from "../user/user.service";
 import { AuthUtils } from "./auth.utils";
+import { User } from "../user/user.types";
 
 @Injectable()
 export class AuthService {
@@ -77,9 +78,6 @@ export class AuthService {
 
           // Store the user on the user service
           this._userService.user = response.data.user;
-          console.log(response);
-          console.log(response.data.user);
-          console.log(this._userService.user);
 
           // Return a new observable with the response
           return of(response);
@@ -90,32 +88,24 @@ export class AuthService {
   /**
    * Sign in using the access token
    */
-  // signInUsingToken(): Observable<any> {
-  //   // Renew token
-  //   return this._httpClient
-  //     .post(this._baseUrl + "api/auth/refresh-access-token", {
-  //       accessToken: this.accessToken,
-  //     })
-  //     .pipe(
-  //       catchError(() =>
-  //         // Return false
-  //         of(false)
-  //       ),
-  //       switchMap((response: any) => {
-  //         // Store the access token in the local storage
-  //         this.accessToken = response.data.accessToken;
+  signInUsingToken(): Observable<any> {
+    // Renew token
+    return this._httpClient
+      .get<User>(this._baseUrl + "users/current-user")
+      .pipe(
+        catchError(() =>
+          // Return false
+          of(false)
+        ),
+        switchMap((response: any) => {
+          // Store the user on the user service
+          this._userService.user = response.data;
 
-  //         // Set the authenticated flag to true
-  //         // this._authenticated = true;
-
-  //         // Store the user on the user service
-  //         this._userService.user = response.user;
-
-  //         // Return true
-  //         return of(true);
-  //       })
-  //     );
-  // }
+          // Return true
+          return of(true);
+        })
+      );
+  }
 
   /**
    * Sign out
@@ -166,6 +156,7 @@ export class AuthService {
     // Check if the user is logged in
     if (this.accessToken) {
       return of(true);
+      // return this.signInUsingToken();
     }
 
     // Check the access token availability
@@ -174,12 +165,12 @@ export class AuthService {
     }
 
     // Check the access token expire date
-    if (AuthUtils.isTokenExpired(this.accessToken)) {
-      return of(false);
-    }
+    // if (AuthUtils.isTokenExpired(this.accessToken)) {
+    //   return of(false);
+    // }
 
     // If the access token exists and it didn't expire, sign in using it
-    // return this.signInUsingToken();
-    return of(false);
+    return this.signInUsingToken();
+    // return of(false);
   }
 }

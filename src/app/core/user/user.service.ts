@@ -36,9 +36,9 @@ export class UserService {
     //   _id: "61530841e0e17d60b3e8c0a3",
     //   email: "gram@gmail.com",
     // });
-    return this._http.get<User>(this._baseUrl + "users/current-user").pipe(
-      tap((user) => {
-        this._user.next(user);
+    return this._http.get<any>(this._baseUrl + "users/current-user").pipe(
+      tap((res) => {
+        this._user.next(res.data);
       })
     );
   }

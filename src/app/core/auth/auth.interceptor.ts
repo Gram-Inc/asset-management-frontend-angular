@@ -2,14 +2,15 @@ import {
   HttpErrorResponse,
   HttpEvent,
   HttpHandler,
+  HttpHeaders,
   HttpInterceptor,
   HttpRequest,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { AuthService } from './auth.service';
-import { AuthUtils } from './auth.utils';
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { AuthService } from "./auth.service";
+import { AuthUtils } from "./auth.utils";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,19 +21,18 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     //Clone the HTTP Request
-
     let newReq = req.clone();
 
     //Check for Authorization and Token Expiry
     if (
-      this.authService.accessToken &&
-      !AuthUtils.isTokenExpired(this.authService.accessToken)
+      this.authService.accessToken
+      // && !AuthUtils.isTokenExpired(this.authService.accessToken)
     ) {
+      const hde = new HttpHeaders({
+        Authorization: "Bearer " + this.authService.accessToken,
+      });
       newReq = req.clone({
-        headers: req.headers.set(
-          'Authorization',
-          'Bearer' + this.authService.accessToken
-        ),
+        headers: hde,
       });
     }
 
@@ -43,7 +43,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           // Sign out
           this.authService.signOut();
-
           // Reload the app
           location.reload();
         }

@@ -21,9 +21,11 @@ export const routes: Route[] = [
     component: LayoutComponent,
     children: [
       {
-        path: "auth",
+        path: "sign-in",
         loadChildren: () =>
-          import("./modules/auth/auth.module").then((x) => x.AuthPageModule),
+          import("./modules/auth/sign-in/sign-in.module").then(
+            (x) => x.SignInModule
+          ),
       },
     ],
   },
@@ -53,11 +55,6 @@ export const routes: Route[] = [
           import("./modules/auth/sign-out/sign-out.module").then(
             (x) => x.SignOutModule
           ),
-      },
-      {
-        path: "auth",
-        loadChildren: () =>
-          import("./modules/auth/auth.module").then((m) => m.AuthPageModule),
       },
     ],
   },
