@@ -113,10 +113,9 @@ export class AuthService {
   signOut(): Observable<any> {
     // Remove the access token from the local storage
     localStorage.removeItem("accessToken");
-
+    this._userService.user = null;
     // Set the authenticated flag to false
     // this._authenticated = false;
-
     // Return the observable
     return of(true);
   }
@@ -170,7 +169,7 @@ export class AuthService {
     // }
 
     // If the access token exists and it didn't expire, sign in using it
-    return this.signInUsingToken();
-    // return of(false);
+    // return this.signInUsingToken();
+    return of(false);
   }
 }

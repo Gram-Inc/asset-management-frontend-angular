@@ -18,6 +18,9 @@ export const routes: Route[] = [
     path: "",
     canActivate: [NoAuthGuard],
     canActivateChild: [NoAuthGuard],
+    data: {
+      layout: "",
+    },
     component: LayoutComponent,
     children: [
       {
@@ -38,9 +41,7 @@ export const routes: Route[] = [
     resolve: {
       initialData: InitialDataResolver,
     },
-    data: {
-      layout: "empty",
-    },
+
     children: [
       {
         path: "dashboard",

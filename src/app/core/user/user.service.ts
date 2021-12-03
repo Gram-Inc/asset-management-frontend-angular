@@ -29,13 +29,6 @@ export class UserService {
    * Get the current logged in user data
    */
   get(): Observable<User> {
-    // return of({
-    //   firstName: "Govind",
-    //   lastName: "ram",
-    //   isActive: "true",
-    //   _id: "61530841e0e17d60b3e8c0a3",
-    //   email: "gram@gmail.com",
-    // });
     return this._http.get<any>(this._baseUrl + "users/current-user").pipe(
       tap((res) => {
         this._user.next(res.data);

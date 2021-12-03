@@ -1,4 +1,4 @@
-<div *ngIf="user != undefined">
+<div *ngIf="user != null">
   <mat-drawer-container class="main-container">
     <mat-drawer #drawer class="sidenav" mode="push" style="color: white">
       <div
@@ -132,4 +132,4 @@
     </div>
   </mat-drawer-container>
 </div>
-<router-outlet *ngIf="user == undefined"></router-outlet>
+<router-outlet *ngIf="user == null"></router-outlet>
