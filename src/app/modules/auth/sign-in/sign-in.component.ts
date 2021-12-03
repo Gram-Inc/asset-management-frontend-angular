@@ -12,6 +12,7 @@ import {
   NgForm,
   Validators,
 } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "src/app/core/auth/auth.service";
 
@@ -38,7 +39,8 @@ export class SignInComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   // -----------------------------------------------------------------------------------------------------
@@ -99,14 +101,8 @@ export class SignInComponent implements OnInit {
           // Reset the form
           this.signInNgForm.resetForm();
 
-          // Set the alert
-          this.alert = {
-            type: "error",
-            message: "Wrong email or password",
-          };
-
           // Show the alert
-          this.showAlert = true;
+          this._snackBar.open("Wrong email or password")._dismissAfter(5000);
         }
       );
     } catch (err) {

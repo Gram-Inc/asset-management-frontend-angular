@@ -1,4 +1,6 @@
 @use "@angular/material" as mat;
+@tailwind base;
+
 $my-custom-level: mat.define-typography-config(
   $font-family: Poppins,
 );
