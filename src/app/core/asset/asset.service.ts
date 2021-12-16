@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from "rxjs";
-import { map, switchMap, take, tap } from "rxjs/operators";
+import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IDTO } from "../dto/dto.types";
 import { IAsset, IPagination } from "./asset.types";
@@ -42,38 +42,6 @@ export class AssetService {
   clrAst() {
     this._asset.next(null);
   }
-
-  // /**
-  //  * @param page
-  //  * @param size
-  //  * @param search
-  //  * @param order
-  //  * @param sort
-  //  */
-  // getAssets(
-  //   page: number = 0,
-  //   size: number = 10,
-  //   search: string = "",
-  //   order: "asc" | "desc" | "" = "desc",
-  //   sort: string = "name"
-  // ): Observable<{ assets: Asset[]; pagination: AssetPagination }> {
-  //   return this._httpClient
-  //     .get<{ assets: Asset[]; pagination: AssetPagination }>(`${this._baseUrl}/assets`, {
-  //       params: {
-  //         page: "" + page,
-  //         size: "" + size,
-  //         search: search,
-  //         order: order,
-  //         sort: sort,
-  //       },
-  //     })
-  //     .pipe(
-  //       tap((response) => {
-  //         this._assets.next(response.assets);
-  //         this._pagination.next(response.pagination);
-  //       })
-  //     );
-  // }
 
   createAsset(asset: IAsset): Observable<IAsset> {
     return this.assets$.pipe(
@@ -147,6 +115,76 @@ export class AssetService {
 
         return of(ast);
       })
+    );
+  }
+
+  /**
+   * Update product
+   *
+   * @param _id
+   * @param asset
+   */
+  updateAsset(_id: string, asset: IAsset): Observable<any> {
+    return this.assets$.pipe(
+      take(1),
+      switchMap((assets) =>
+        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${_id}`, asset).pipe(
+          map((updatedAsset) => {
+            // Find the index of the updated asset
+            const index = assets.findIndex((ast) => ast._id === _id);
+
+            // Update the asset
+            assets[index] = updatedAsset;
+
+            // Update the assets
+            this._assets.next(assets);
+
+            // Return the updated asset
+            return updatedAsset;
+          }),
+          switchMap((updatedAsset) =>
+            this.asset$.pipe(
+              take(1),
+              filter((item) => item && item._id === _id),
+              tap(() => {
+                // Update the asset if it's selected
+                this._asset.next(updatedAsset);
+
+                // Return the updated asset
+                return updatedAsset;
+              })
+            )
+          )
+        )
+      )
+    );
+  }
+
+  /**
+   * Delete the product
+   *
+   * @param _id
+   */
+  deleteAsset(_id: string): Observable<boolean> {
+    return this.assets$.pipe(
+      take(1),
+      switchMap((assets) =>
+        this._httpClient.delete(`${this._baseUrl}/asset/${_id}`).pipe(
+          map((isDeleted: boolean) => {
+            // Find the index of the deleted asset
+            const index = assets.findIndex((item) => item._id === _id);
+
+            // Delete the product
+            assets.splice(index, 1);
+
+            // Update the assets
+            this._assets.next(assets);
+
+            // Return the deleted status
+            return isDeleted;
+          })
+        )
+      )
     );
   }
 }

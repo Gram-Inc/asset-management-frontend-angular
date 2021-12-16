@@ -5,6 +5,7 @@ import { Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
+import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 
 @Component({
   selector: "app-asset",
@@ -17,6 +18,7 @@ export class AssetComponent implements OnInit {
   types: string[];
   pagination: IPagination;
   selectedAsset: IAsset | null = null;
+  flashMessage: "success" | "error" | null = null;
 
   selectedAssetForm: FormGroup;
   isLoading: boolean = false;
@@ -26,12 +28,13 @@ export class AssetComponent implements OnInit {
     private _dialog: MatDialog,
     private _assetService: AssetService,
     private _formBuilder: FormBuilder,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _rikielConfirmationService: RikielConfirmationService
   ) {}
 
   ngOnInit(): void {
     // Create Asset Form
-    // Create the selected product form
+    // Create the selected asset form
     this.selectedAssetForm = this._formBuilder.group({
       _id: [""],
       name: ["", [Validators.required]],
@@ -72,21 +75,21 @@ export class AssetComponent implements OnInit {
   }
 
   /**
-   * Toggle product details
+   * Toggle asset details
    *
    * @param assetId
    */
   toggleDetails(assetId: string): void {
-    // If the product is already selected...
+    // If the asset is already selected...
     if (this.selectedAsset && this.selectedAsset._id === assetId) {
       // Close the details
       this.closeDetails();
       return;
     }
 
-    // Get the product by id
+    // Get the asset by id
     this._assetService.getAssetById(assetId).subscribe((asset) => {
-      // Set the selected product
+      // Set the selected asset
       this.selectedAsset = asset;
 
       // Fill the form
@@ -105,13 +108,27 @@ export class AssetComponent implements OnInit {
   }
 
   /**
-   * Delete the selected product using the form data
+   * Update the selected asset using the form data
    */
-  deleteSelectedProduct(): void {
+  updateSelectedasset(): void {
+    // Get the asset object
+    const asset = this.selectedAssetForm.getRawValue();
+
+    // Update the asset on the server
+    this._assetService.updateAsset(asset.id, asset).subscribe(() => {
+      // Show a success message
+      this.showFlashMessage("success");
+    });
+  }
+
+  /**
+   * Delete the selected asset using the form data
+   */
+  deleteSelectedAsset(): void {
     // Open the confirmation dialog
-    const confirmation = this._fuseConfirmationService.open({
-      title: "Delete product",
-      message: "Are you sure you want to remove this product? This action cannot be undone!",
+    const confirmation = this._rikielConfirmationService.open({
+      title: "Delete asset",
+      message: "Are you sure you want to remove this asset? This action cannot be undone!",
       actions: {
         confirm: {
           label: "Delete",
@@ -123,16 +140,35 @@ export class AssetComponent implements OnInit {
     confirmation.afterClosed().subscribe((result) => {
       // If the confirm button pressed...
       if (result === "confirmed") {
-        // Get the product object
-        const product = this.selectedProductForm.getRawValue();
+        // Get the asset object
+        const asset = this.selectedAssetForm.getRawValue();
 
-        // Delete the product on the server
-        this._inventoryService.deleteProduct(product.id).subscribe(() => {
+        // Delete the asset on the server
+        this._assetService.deleteAsset(asset._id).subscribe(() => {
           // Close the details
           this.closeDetails();
         });
       }
     });
+  }
+
+  /**
+   * Show flash message
+   */
+  showFlashMessage(type: "success" | "error"): void {
+    // Show the message
+    this.flashMessage = type;
+
+    // Mark for check
+    this._changeDetectorRef.markForCheck();
+
+    // Hide it after 3 seconds
+    setTimeout(() => {
+      this.flashMessage = null;
+
+      // Mark for check
+      this._changeDetectorRef.markForCheck();
+    }, 3000);
   }
 
   /**
