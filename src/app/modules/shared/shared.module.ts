@@ -6,11 +6,19 @@ import { CustomMaterialModule } from "../custom-material/custom-material.module"
 import { FullscreenComponent } from "./fullscreen/fullscreen.component";
 import { UserComponent } from "./user/user.component";
 import { ConfirmationModule } from "src/app/custom/confirmation/confirmation.module";
+import { IconsModule } from "src/app/core/icons/icons.module";
 
 var sharedComp = [TitleCardComponent, FullscreenComponent, UserComponent];
 @NgModule({
   declarations: [...sharedComp],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, CustomMaterialModule, ConfirmationModule],
-  exports: [CommonModule, ReactiveFormsModule, FormsModule, ConfirmationModule, ...sharedComp],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CustomMaterialModule,
+    ConfirmationModule,
+    IconsModule,
+  ],
+  exports: [CommonModule, ReactiveFormsModule, FormsModule, ConfirmationModule, IconsModule, ...sharedComp],
 })
 export class SharedModule {}
