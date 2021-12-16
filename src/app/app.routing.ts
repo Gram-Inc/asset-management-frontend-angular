@@ -25,10 +25,7 @@ export const routes: Route[] = [
     children: [
       {
         path: "sign-in",
-        loadChildren: () =>
-          import("./modules/auth/sign-in/sign-in.module").then(
-            (x) => x.SignInModule
-          ),
+        loadChildren: () => import("./modules/auth/sign-in/sign-in.module").then((x) => x.SignInModule),
       },
     ],
   },
@@ -45,17 +42,15 @@ export const routes: Route[] = [
     children: [
       {
         path: "dashboard",
-        loadChildren: () =>
-          import("./modules/dashboard/dashboard.module").then(
-            (x) => x.DashboardModule
-          ),
+        loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
       },
       {
         path: "sign-out",
-        loadChildren: () =>
-          import("./modules/auth/sign-out/sign-out.module").then(
-            (x) => x.SignOutModule
-          ),
+        loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
+      },
+      {
+        path: "asset",
+        loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
       },
     ],
   },
