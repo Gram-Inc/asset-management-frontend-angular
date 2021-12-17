@@ -87,16 +87,16 @@
             </div>
             <!-- Rows -->
             <ng-container *ngIf="assets$ | async as assets">
-              <ng-container *ngFor="let product of assets; trackBy: trackByFn">
+              <ng-container *ngFor="let asset of assets; trackBy: trackByFn">
                 <div class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b">
                   <!-- Name -->
                   <div class="truncate">
-                    {{ product.name }}
+                    {{ asset.name }}
                   </div>
 
                   <!-- Price -->
                   <div class="hidden sm:block">
-                    {{ product.name | currency: "USD":"symbol":"1.2-2" }}
+                    {{ asset.name | currency: "USD":"symbol":"1.2-2" }}
                   </div>
 
                   <!-- Active -->
@@ -117,12 +117,12 @@
                     <button
                       class="min-w-10 min-h-7 h-7 px-2 leading-6"
                       mat-stroked-button
-                      (click)="toggleDetails(product._id)"
+                      (click)="toggleDetails(asset._id)"
                     >
                       <mat-icon
                         class="icon-size-5"
                         [svgIcon]="
-                          selectedAsset?._id === product._id
+                          selectedAsset?._id === asset._id
                             ? 'heroicons_solid:chevron-up'
                             : 'heroicons_solid:chevron-down'
                         "
@@ -131,9 +131,9 @@
                   </div>
                 </div>
                 <div class="grid">
-                  <ng-container *ngIf="selectedAsset?._id === product._id">
+                  <ng-container *ngIf="selectedAsset?._id === asset._id">
                     <ng-container
-                      *ngTemplateOutlet="rowDetailsTemplate; context: { $implicit: product }"
+                      *ngTemplateOutlet="rowDetailsTemplate; context: { $implicit: asset }"
                     ></ng-container>
                   </ng-container>
                 </div>
@@ -162,14 +162,14 @@
 
       <ng-template #noProducts>
         <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-          There are no products!
+          There are no assets!
         </div>
       </ng-template>
 
-      <ng-template #rowDetailsTemplate let-product>
+      <ng-template #rowDetailsTemplate let-asset>
         <div class="shadow-lg overflow-hidden">
           <div class="flex border-b">
-            <!-- Selected product form -->
+            <!-- Selected asset form -->
             <form class="flex flex-col w-full" [formGroup]="selectedAssetForm">
               <div class="flex flex-col sm:flex-row p-8">
                 <div class="flex flex-auto flex-wrap">

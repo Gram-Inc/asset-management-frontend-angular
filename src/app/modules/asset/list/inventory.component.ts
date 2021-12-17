@@ -44,7 +44,7 @@ import { RikielConfirmationService } from "src/app/custom/confirmation/confirmat
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class AssetListComponent implements OnInit, OnDestroy {
+export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) private _paginator: MatPaginator;
   @ViewChild(MatSort) private _sort: MatSort;
 
@@ -100,6 +100,47 @@ export class AssetListComponent implements OnInit, OnDestroy {
     this.assets$ = this._assetService.assets$;
   }
 
+  ngAfterViewInit(): void {
+    if (this._sort && this._paginator) {
+      // Set the initial sort
+      this._sort.sort({
+        id: "name",
+        start: "asc",
+        disableClear: true,
+      });
+
+      // Mark for check
+      this._changeDetectorRef.markForCheck();
+
+      // If the user changes the sort order...
+      this._sort.sortChange.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
+        // Reset back to the first page
+        this._paginator.pageIndex = 0;
+
+        // Close the details
+        this.closeDetails();
+      });
+
+      // Get products if sort or page changes
+      merge(this._sort.sortChange, this._paginator.page)
+        .pipe(
+          switchMap(() => {
+            this.closeDetails();
+            this.isLoading = true;
+            return this._assetService.getAssets(
+              this._paginator.pageIndex,
+              this._paginator.pageSize,
+              this._sort.active,
+              this._sort.direction
+            );
+          }),
+          map(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe();
+    }
+  }
   /**
    * On destroy
    */
@@ -146,7 +187,16 @@ export class AssetListComponent implements OnInit, OnDestroy {
    * Create Asset
    */
   createAsset(): void {
-    // Get the asset object
+    this._rikielConfirmationService.open({
+      title: "Delete asset",
+      message: "Are you sure you want to remove this asset? This action cannot be undone!",
+      actions: {
+        confirm: {
+          label: "Delete",
+        },
+      },
+    });
+    /* // Get the asset object
     const asset = this.selectedAssetForm.getRawValue();
     // Create the product
     this._assetService.createAsset(asset).subscribe((newAsset) => {
@@ -158,7 +208,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
 
       // Mark for check
       this._changeDetectorRef.markForCheck();
-    });
+    }); */
   }
 
   /**
