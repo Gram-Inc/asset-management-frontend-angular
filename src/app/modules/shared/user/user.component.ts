@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { User } from "src/app/core/user/user.types";
+import { IUser } from "src/app/core/user/user.types";
 import { UserService } from "src/app/core/user/user.service";
 
 @Component({
@@ -27,7 +27,7 @@ export class UserComponent implements OnInit, OnDestroy {
   /* eslint-enable @typescript-eslint/naming-convention */
 
   @Input() showAvatar: boolean = true;
-  user: User;
+  user: IUser;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -49,13 +49,11 @@ export class UserComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe to user changes
-    this._userService.user$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((user: User) => {
-        if (user != null) this.user = user;
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-      });
+    this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: IUser) => {
+      if (user != null) this.user = user;
+      // Mark for check
+      this._changeDetectorRef.markForCheck();
+    });
   }
 
   /**

@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, of, throwError } from "rxjs";
 import { catchError, switchMap } from "rxjs/operators";
-import { UserService } from "../user/user.service";
 import { AuthUtils } from "./auth.utils";
-import { User } from "../user/user.types";
+import { IUser } from "../user/user.types";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class AuthService {
@@ -13,10 +13,7 @@ export class AuthService {
   /**
    * Constructor
    */
-  constructor(
-    private _httpClient: HttpClient,
-    private _userService: UserService
-  ) {}
+  constructor(private _httpClient: HttpClient, private _userService: UserService) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
@@ -66,23 +63,21 @@ export class AuthService {
       return throwError("User is already logged in.");
     }
 
-    return this._httpClient
-      .post(this._baseUrl + "auth/login", credentials)
-      .pipe(
-        switchMap((response: any) => {
-          // Store the access token in the local storage
-          this.accessToken = response.data.accessToken;
+    return this._httpClient.post(this._baseUrl + "auth/login", credentials).pipe(
+      switchMap((response: any) => {
+        // Store the access token in the local storage
+        this.accessToken = response.data.accessToken;
 
-          // Set the authenticated flag to true
-          // this._authenticated = true;
+        // Set the authenticated flag to true
+        // this._authenticated = true;
 
-          // Store the user on the user service
-          this._userService.user = response.data.user;
+        // Store the user on the user service
+        this._userService.user = response.data.user;
 
-          // Return a new observable with the response
-          return of(response);
-        })
-      );
+        // Return a new observable with the response
+        return of(response);
+      })
+    );
   }
 
   /**
@@ -90,21 +85,19 @@ export class AuthService {
    */
   signInUsingToken(): Observable<any> {
     // Renew token
-    return this._httpClient
-      .get<User>(this._baseUrl + "users/current-user")
-      .pipe(
-        catchError(() =>
-          // Return false
-          of(false)
-        ),
-        switchMap((response: any) => {
-          // Store the user on the user service
-          this._userService.user = response.data;
+    return this._httpClient.get<IUser>(this._baseUrl + "users/current-user").pipe(
+      catchError(() =>
+        // Return false
+        of(false)
+      ),
+      switchMap((response: any) => {
+        // Store the user on the user service
+        this._userService.user = response.data;
 
-          // Return true
-          return of(true);
-        })
-      );
+        // Return true
+        return of(true);
+      })
+    );
   }
 
   /**
@@ -141,10 +134,7 @@ export class AuthService {
    *
    * @param credentials
    */
-  unlockSession(credentials: {
-    email: string;
-    password: string;
-  }): Observable<any> {
+  unlockSession(credentials: { email: string; password: string }): Observable<any> {
     return this._httpClient.post("api/auth/unlock-session", credentials);
   }
 
