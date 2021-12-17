@@ -189,10 +189,10 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
    * Create Asset
    */
   createAsset(): void {
-    this._matDialog.open(DetailsComponent, {
+    /* this._matDialog.open(DetailsComponent, {
       panelClass: "fuse-confirmation-dialog-panel",
-    });
-    /* this._rikielConfirmationService.open({
+    }); */
+    this._rikielConfirmationService.open({
       title: "Delete asset",
       message: "Are you sure you want to remove this asset? This action cannot be undone!",
       actions: {
@@ -200,7 +200,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
           label: "Delete",
         },
       },
-    }); */
+    });
     /* // Get the asset object
     const asset = this.selectedAssetForm.getRawValue();
     // Create the product
