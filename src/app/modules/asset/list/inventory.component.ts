@@ -18,6 +18,7 @@ import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
+import { DetailsComponent } from "../details/details.component";
 
 @Component({
   selector: "inventory-list",
@@ -64,7 +65,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     private _assetService: AssetService,
     private _formBuilder: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _rikielConfirmationService: RikielConfirmationService
+    private _rikielConfirmationService: RikielConfirmationService,
+    private _matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -187,7 +189,10 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
    * Create Asset
    */
   createAsset(): void {
-    this._rikielConfirmationService.open({
+    this._matDialog.open(DetailsComponent, {
+      panelClass: "fuse-confirmation-dialog-panel",
+    });
+    /* this._rikielConfirmationService.open({
       title: "Delete asset",
       message: "Are you sure you want to remove this asset? This action cannot be undone!",
       actions: {
@@ -195,7 +200,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
           label: "Delete",
         },
       },
-    });
+    }); */
     /* // Get the asset object
     const asset = this.selectedAssetForm.getRawValue();
     // Create the product

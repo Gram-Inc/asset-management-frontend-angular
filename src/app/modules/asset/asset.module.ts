@@ -6,9 +6,10 @@ import { assetRoutes } from "./asset.routing";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { AssetListComponent } from "./list/inventory.component";
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
-  declarations: [AssetComponent, AssetListComponent],
+  declarations: [AssetComponent, AssetListComponent, DetailsComponent],
   imports: [CommonModule, SharedModule, CustomMaterialModule, RouterModule.forChild(assetRoutes)],
 })
 export class AssetModule {}
