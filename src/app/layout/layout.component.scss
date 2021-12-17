@@ -26,6 +26,9 @@
   height: 44px;
   width: 100%;
 }
+.side-btn :hover {
+  background-color: #4e4e4e;
+}
 
 .grey {
   color: #4e4e4e;
@@ -74,4 +77,8 @@ h1 {
 }
 .sideIcon {
   color: var(--SideNavIconColor);
+}
+
+mat-icon {
+  padding: 3px;
 }

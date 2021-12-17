@@ -7,8 +7,9 @@ import { FullscreenComponent } from "./fullscreen/fullscreen.component";
 import { UserComponent } from "./user/user.component";
 import { ConfirmationModule } from "src/app/custom/confirmation/confirmation.module";
 import { IconsModule } from "src/app/core/icons/icons.module";
+import { ThemeTogglerComponent } from "./theme-toggler/theme-toggler.component";
 
-var sharedComp = [TitleCardComponent, FullscreenComponent, UserComponent];
+var sharedComp = [TitleCardComponent, FullscreenComponent, UserComponent, ThemeTogglerComponent];
 @NgModule({
   declarations: [...sharedComp],
   imports: [
