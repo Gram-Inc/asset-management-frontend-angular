@@ -8,10 +8,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
     /* language=SCSS */
     `
       .fuse-confirmation-dialog-panel {
-        /* @screen md {
-          @apply w-128;
-        } */
-
         .mat-dialog-container {
           padding: 0 !important;
         }

@@ -29,7 +29,6 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles/tailwind.scss",
               "./node_modules/tailwindcss/tailwind.css",
               "src/styles/styles.scss"
             ],
@@ -97,7 +96,6 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles/tailwind.scss",
               "./node_modules/tailwindcss/tailwind.css",
               "src/styles/styles.scss"
             ],
