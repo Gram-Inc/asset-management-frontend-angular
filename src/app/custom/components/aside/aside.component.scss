@@ -12,6 +12,7 @@ button {
   text-align: left;
   height: 44px;
   width: 100%;
+  padding-left: 35px;
 }
 
 button.active {
@@ -21,4 +22,7 @@ button.active {
 
 mat-icon {
   padding: 3px;
+}
+.inactive {
+  color: rgb(99, 115, 129);
 }

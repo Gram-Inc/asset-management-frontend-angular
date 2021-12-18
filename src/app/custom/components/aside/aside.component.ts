@@ -12,6 +12,7 @@ export class AsideComponent implements OnInit {
   @Input() svgIcon: string;
   @Input() name: string;
   @Input() routerString: string;
+  @Input() isDisabled: boolean = false;
   active: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 

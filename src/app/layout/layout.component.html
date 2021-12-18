@@ -4,7 +4,7 @@
       <div style="display: flex; justify-content: space-between; margin: 12px; align-items: center">
         <img src="../assets/logo/favicon.ico" alt="" z-index="50" width="32" height="32" />
         <button z-index="50" mat-icon-button [routerLink]="['/']">
-          <mat-icon>account_circle</mat-icon>
+          <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>
         </button>
       </div>
       <div style="text-align: center; padding: 25px; margin-top: 20px">
@@ -20,50 +20,34 @@
       </div>
     </div> -->
       <div class="side-con">
-        <!-- <div style="position: relative; height: 100%">
-          <button mat-button class="side-btn" [routerLink]="['/']">
-            <mat-icon style="margin-right: 12px" svgIcon="feather:home"></mat-icon>
-            <span>Dashboard</span>
-          </button>
-          <div class="nav-line rounded-r-xl"></div>
-        </div> -->
         <app-aside [routerString]="'/dashboard'" [svgIcon]="'feather:home'" [name]="'Dashboard'"></app-aside>
-        <app-aside [routerString]="'/asset'" [svgIcon]="'feather:layers'" [name]="'Assets'"></app-aside>
-
-        <!-- <button mat-button class="side-btn" routerLinkActive="active">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:layers"></mat-icon>
-          <span>Assets</span>
-        </button> -->
-        <button mat-button class="side-btn" [routerLink]="['/report']">
-          <mat-icon style="margin-right: 12px">bar_chart</mat-icon>
-          <span>Assignments</span>
-        </button>
-        <button mat-button class="side-btn">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:file-text"></mat-icon>
-          <span>U.A.M</span>
-        </button>
-
-        <button mat-button class="side-btn" [routerLink]="['/user']">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:activity"></mat-icon>
-          <span>Reports</span>
-        </button>
-        <button mat-button class="side-btn" [routerLink]="['/warehouse']">
-          <mat-icon style="margin-right: 12px" svgIcon="heroicons_outline:identification"></mat-icon>
-          <span>Contacts</span>
-        </button>
-        <button mat-button class="side-btn" [routerLink]="['/warehouse']">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:users"></mat-icon>
-          <span>Users</span>
-        </button>
-        <button mat-button class="side-btn" [routerLink]="['/warehouse']">
-          <mat-icon style="margin-right: 12px" svgIcon="heroicons_outline:ticket"></mat-icon>
-          <span>Ticket</span>
-        </button>
-        <button mat-button class="side-btn" [routerLink]="['/department']">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:sliders"></mat-icon>
-          <span>Settings</span>
-        </button>
-        <app-theme-toggler></app-theme-toggler>
+        <app-aside [routerString]="'/asset'" [svgIcon]="'feather:layers'" [name]="'Asset'"></app-aside>
+        <app-aside [routerString]="'/ticket'" [svgIcon]="'feather:home'" [name]="'Ticket'"></app-aside>
+        <app-aside [routerString]="'/user'" [svgIcon]="'feather:users'" [name]="'User'"></app-aside>
+        <app-aside
+          [routerString]="'/asset'"
+          [svgIcon]="'feather:file-text'"
+          [name]="'U.A.M'"
+          [isDisabled]="true"
+        ></app-aside>
+        <app-aside
+          [routerString]="'/report'"
+          [svgIcon]="'feather:activity'"
+          [name]="'Report'"
+          [isDisabled]="true"
+        ></app-aside>
+        <app-aside
+          [routerString]="'/vendor'"
+          [svgIcon]="'heroicons_outline:identification'"
+          [name]="'Vendor'"
+          [isDisabled]="true"
+        ></app-aside>
+        <app-aside
+          [routerString]="'/setting'"
+          [svgIcon]="'feather:sliders'"
+          [name]="'Setting'"
+          [isDisabled]="true"
+        ></app-aside>
       </div>
     </mat-drawer>
 
