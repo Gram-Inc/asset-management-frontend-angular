@@ -1,0 +1,7 @@
+<div style="position: relative; height: 100%">
+  <button mat-button class="side-btn" [routerLink]="[routerString]" [ngClass]="{ active: active }">
+    <mat-icon style="margin-right: 12px" [svgIcon]="svgIcon"></mat-icon>
+    <span>{{ name }}</span>
+  </button>
+  <div class="rounded-r-xl" [ngClass]="{ 'nav-line': active }"></div>
+</div>

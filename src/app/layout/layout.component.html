@@ -20,15 +20,20 @@
       </div>
     </div> -->
       <div class="side-con">
-        <button mat-button class="side-btn" [routerLink]="['/']">
-          <mat-icon style="margin-right: 12px" svgIcon="feather:home"></mat-icon>
-          <span>Dashboard</span>
-        </button>
+        <!-- <div style="position: relative; height: 100%">
+          <button mat-button class="side-btn" [routerLink]="['/']">
+            <mat-icon style="margin-right: 12px" svgIcon="feather:home"></mat-icon>
+            <span>Dashboard</span>
+          </button>
+          <div class="nav-line rounded-r-xl"></div>
+        </div> -->
+        <app-aside [routerString]="'/dashboard'" [svgIcon]="'feather:home'" [name]="'Dashboard'"></app-aside>
+        <app-aside [routerString]="'/asset'" [svgIcon]="'feather:layers'" [name]="'Assets'"></app-aside>
 
-        <button mat-button class="side-btn" routerLinkActive="active">
+        <!-- <button mat-button class="side-btn" routerLinkActive="active">
           <mat-icon style="margin-right: 12px" svgIcon="feather:layers"></mat-icon>
           <span>Assets</span>
-        </button>
+        </button> -->
         <button mat-button class="side-btn" [routerLink]="['/report']">
           <mat-icon style="margin-right: 12px">bar_chart</mat-icon>
           <span>Assignments</span>
