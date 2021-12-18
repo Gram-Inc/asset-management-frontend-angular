@@ -1,20 +1,23 @@
 <div *ngIf="user != null" style="height: 100%">
   <mat-drawer-container class="main-container" hasBackdrop="false">
     <mat-drawer #drawer class="sidenav" opened mode="side">
-      <div style="display: flex; justify-content: space-between; margin: 12px; align-items: center">
-        <img src="../assets/logo/rikielR.svg" alt="" z-index="50" width="32" height="32" />
+      <div style="display: flex; justify-content: space-between; padding: 24px 20px; align-items: center">
+        <img src="../assets/logo/rikielR.svg" alt="" z-index="50" width="40px" height="40px" />
         <button z-index="50" mat-icon-button [routerLink]="['/']">
           <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>
         </button>
       </div>
-      <div
-        class="sideNav-TopCard"
-        style="display: flex; padding: 18px; align-items: center; margin-top: 28px"
-      >
-        <mat-icon svgIcon="heroicons_outline:user-circle" style="margin-right: 16px"></mat-icon>
+      <div class="sideNav-TopCard" style="display: flex; padding: 18px; align-items: center">
+        <img
+          alt="photoURL"
+          src="../assets/logo/avatar_default.jpg"
+          class="inline-block rounded-full w-10 h-10"
+          style="margin-right: 16px"
+        />
+        <!-- <mat-icon svgIcon="heroicons_outline:user-circle"style="margin-right: 16px" ></mat-icon> -->
         <div class="flex flex-col w-full">
-          <span class="w-full overf" style="font-size: 0.8125rem !important; font-weight: 900">Admin</span>
-          <span class="text-gray-500" style="font-size: 0.8125rem !important">Govindram@gmail.com</span>
+          <h6 class="w-full overf text-sm font-regular">Admin</h6>
+          <p class="text-xs font-extralight">admin</p>
         </div>
       </div>
 

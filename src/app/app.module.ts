@@ -15,6 +15,7 @@ import { SignOutModule } from "./modules/auth/sign-out/sign-out.module";
 import { SignInModule } from "./modules/auth/sign-in/sign-in.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AsideComponent } from './custom/components/aside/aside.component';
+import { UserComponent } from './custom/components/user/user.component';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
@@ -22,7 +23,7 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-  declarations: [AppComponent, LayoutComponent, AsideComponent],
+  declarations: [AppComponent, LayoutComponent, AsideComponent, UserComponent],
   imports: [
     AuthModule,
     BrowserModule,
