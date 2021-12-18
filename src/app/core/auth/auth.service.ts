@@ -5,11 +5,12 @@ import { catchError, switchMap } from "rxjs/operators";
 import { AuthUtils } from "./auth.utils";
 import { IUser } from "../user/user.types";
 import { UserService } from "../user/user.service";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class AuthService {
   // private _authenticated: boolean = false;
-  private _baseUrl = "http://65.0.136.73/";
+  private _baseUrl = environment.baseUrl;
   /**
    * Constructor
    */

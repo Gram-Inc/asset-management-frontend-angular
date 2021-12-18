@@ -16,18 +16,12 @@ import { AuthUtils } from "./auth.utils";
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //Clone the HTTP Request
     let newReq = req.clone();
 
     //Check for Authorization and Token Expiry
-    if (
-      this.authService.accessToken
-      // && !AuthUtils.isTokenExpired(this.authService.accessToken)
-    ) {
+    if (this.authService.accessToken) {
       const hde = new HttpHeaders({
         Authorization: "Bearer " + this.authService.accessToken,
       });
