@@ -13,25 +13,32 @@
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Name
+                      Asset
+                    </th>
+
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      User
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Title
+                      Host Name
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Status
+                      Allocation Status
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Role
+                      Branch
                     </th>
                     <th scope="col" class="relative px-6 py-3">
                       <span class="sr-only">Edit</span>
@@ -45,33 +52,32 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center">
                             <div class="">
-                              <div class="text-sm font-medium text-gray-900">{{ asset.name }}</div>
-                              <div class="text-sm text-gray-500">{{ asset.sr_no }}</div>
+                              <div class="text-sm font-medium text-gray-900">{{ asset?.name }}</div>
+                              <div class="text-sm text-gray-500">{{ asset?.sr_no }}</div>
                             </div>
                           </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                          <div class="text-sm text-gray-500">Optimization</div>
+                          <div class="text-sm text-gray-900">Current User</div>
+                          <div class="text-sm text-gray-500">Prev. User</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900">{{ asset.laptop?.hostName }}</div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
                           <span
-                            class="
-                              px-2
-                              inline-flex
-                              text-xs
-                              leading-5
-                              rounded-full
-                              bg-green-100
-                              text-green-800
-                            "
+                            [ngClass]="{ 'bg-green-100 ': true, 'text-green-800': true }"
+                            class="px-2 inline-flex text-xs leading-5 rounded-full"
                           >
-                            Active
+                            {{ asset.allocationStatus.replace("_", " ") | titlecase }}
                           </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Admin</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ADI / DEL</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                          <button class="text-indigo-600 hover:text-indigo-900" (click)="openDetail(asset)">
+                            Edit
+                          </button>
                         </td>
                       </tr>
                     </ng-container></ng-container

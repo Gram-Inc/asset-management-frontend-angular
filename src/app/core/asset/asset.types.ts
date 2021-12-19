@@ -15,6 +15,7 @@ export interface IAsset {
   amc?: IWarranty[];
   client?: IVendor;
   ups?: IUPS;
+  allocationStatus: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
 }
 
 export interface IUPS {

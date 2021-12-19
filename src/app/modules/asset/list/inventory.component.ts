@@ -122,16 +122,12 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
       this._sort.sortChange.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
         // Reset back to the first page
         this._paginator.pageIndex = 0;
-
-        // Close the details
-        this.closeDetails();
       });
 
       // Get products if sort or page changes
       merge(this._sort.sortChange, this._paginator.page)
         .pipe(
           switchMap(() => {
-            this.closeDetails();
             this.isLoading = true;
             return this._assetService.getAssets(
               this._paginator.pageIndex,
@@ -157,39 +153,6 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
-  }
-
-  /**
-   * Toggle asset details
-   *
-   * @param assetId
-   */
-  toggleDetails(assetId: string): void {
-    // If the asset is already selected...
-    if (this.selectedAsset && this.selectedAsset._id === assetId) {
-      // Close the details
-      this.closeDetails();
-      return;
-    }
-
-    // Get the asset by id
-    this._assetService.getAssetById(assetId).subscribe((asset) => {
-      // Set the selected asset
-      this.selectedAsset = asset;
-
-      // Fill the form
-      this.selectedAssetForm.patchValue(asset);
-
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    });
-  }
-
-  /**
-   * Close the details
-   */
-  closeDetails(): void {
-    this.selectedAsset = null;
   }
 
   /**
@@ -222,52 +185,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
       this._changeDetectorRef.markForCheck();
     }); */
   }
-
-  /**
-   * Update the selected asset using the form data
-   */
-  updateSelectedasset(): void {
-    // Get the asset object
-    const asset = this.selectedAssetForm.getRawValue();
-
-    // Update the asset on the server
-    this._assetService.updateAsset(asset.id, asset).subscribe(() => {
-      // Show a success message
-      this.showFlashMessage("success");
-    });
-  }
-
-  /**
-   * Delete the selected asset using the form data
-   */
-  deleteSelectedAsset(): void {
-    // Open the confirmation dialog
-    const confirmation = this._rikielConfirmationService.open({
-      title: "Delete asset",
-      message: "Are you sure you want to remove this asset? This action cannot be undone!",
-      actions: {
-        confirm: {
-          label: "Delete",
-        },
-      },
-    });
-
-    // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed().subscribe((result) => {
-      // If the confirm button pressed...
-      if (result === "confirmed") {
-        // Get the asset object
-        const asset = this.selectedAssetForm.getRawValue();
-
-        // Delete the asset on the server
-        this._assetService.deleteAsset(asset._id).subscribe(() => {
-          // Close the details
-          this.closeDetails();
-        });
-      }
-    });
-  }
-
+  openDetail(ast: IAsset) {}
   /**
    * Show flash message
    */
