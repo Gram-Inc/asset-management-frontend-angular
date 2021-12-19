@@ -50,7 +50,7 @@ export class AuthService {
    * @param password
    */
   resetPassword(data: { id: string; password: string }): Observable<any> {
-    return this._httpClient.put(this._baseUrl + "auth/reset-password", data);
+    return this._httpClient.put(this._baseUrl + "/auth/reset-password", data);
   }
 
   /**
@@ -64,7 +64,7 @@ export class AuthService {
       return throwError("User is already logged in.");
     }
 
-    return this._httpClient.post(this._baseUrl + "auth/login", credentials).pipe(
+    return this._httpClient.post(this._baseUrl + "/auth/login", credentials).pipe(
       switchMap((response: any) => {
         // Store the access token in the local storage
         this.accessToken = response.data.accessToken;
@@ -86,7 +86,7 @@ export class AuthService {
    */
   signInUsingToken(): Observable<any> {
     // Renew token
-    return this._httpClient.get<IUser>(this._baseUrl + "users/current-user").pipe(
+    return this._httpClient.get<IUser>(this._baseUrl + "/users/current-user").pipe(
       catchError(() =>
         // Return false
         of(false)
@@ -127,7 +127,7 @@ export class AuthService {
     role: string;
     departmentId: string;
   }): Observable<any> {
-    return this._httpClient.post(this._baseUrl + "auth/sign-up", user);
+    return this._httpClient.post(this._baseUrl + "/auth/sign-up", user);
   }
 
   /**
