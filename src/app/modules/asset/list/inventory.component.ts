@@ -83,7 +83,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
       purchaseDate: [""],
       poNumber: [""],
     });
-
+    // If Search value changes
     this.searchCtrl.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),
@@ -100,16 +100,20 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Get the Assets
     this.assets$ = this._assetService.assets$;
+
+    this._assetService.pagination$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((paginationResponse: IPagination) => (this.pagination = paginationResponse));
   }
 
   ngAfterViewInit(): void {
     if (this._sort && this._paginator) {
       // Set the initial sort
-      this._sort.sort({
+      /* this._sort.sort({
         id: "name",
         start: "asc",
         disableClear: true,
-      });
+      }); */
 
       // Mark for check
       this._changeDetectorRef.markForCheck();
@@ -131,9 +135,12 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isLoading = true;
             return this._assetService.getAssets(
               this._paginator.pageIndex,
-              this._paginator.pageSize,
-              this._sort.active,
-              this._sort.direction
+              this._paginator.pageSize
+              /* "",
+              "",
+              "",
+              this._sort.direction,
+              this._sort.active */
             );
           }),
           map(() => {

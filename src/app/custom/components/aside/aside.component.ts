@@ -40,7 +40,6 @@ export class AsideComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-    console.log(this.routerString);
     // Mark if active
     this._markIfActive(this._router.url);
 

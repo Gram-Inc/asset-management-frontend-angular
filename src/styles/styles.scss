@@ -81,14 +81,14 @@ layout {
   }
 
   /* Base styles for components that load as a route */
-  router-outlet {
-    + * {
-      position: relative;
-      display: flex;
-      flex: 1 1 auto;
-      width: 100%;
-    }
-  }
+  // router-outlet {
+  //   + * {
+  //     position: relative;
+  //     display: flex;
+  //     flex: 1 1 auto;
+  //     width: 100%;
+  //   }
+  // }
 }
 app-asset {
   height: 100% !important;

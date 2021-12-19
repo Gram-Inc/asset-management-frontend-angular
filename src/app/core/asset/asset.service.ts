@@ -68,9 +68,9 @@ export class AssetService {
     limit: number = 10,
     searchText: string = "",
     type: string = "",
-    allocationStatus: string = ""
-    // order: "asc" | "desc" | "" = "desc"
-    // sort: string = "name"
+    allocationStatus: string = "",
+    order: "asc" | "desc" | "" = "desc",
+    sort: string = "name"
   ): Observable<IDTO> {
     return this._httpClient
       .get<IDTO>(`${this._baseUrl}/asset/paginate`, {
