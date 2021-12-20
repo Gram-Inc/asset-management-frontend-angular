@@ -36,16 +36,10 @@
       </div>
 
       <!-- Title -->
-      <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">
-        Sign in
-      </div>
+      <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
       <div class="flex items-baseline mt-0.5 font-medium">
         <div>Don't have an account?</div>
-        <a
-          class="ml-1 text-primary-500 hover:underline"
-          [routerLink]="['/sign-up']"
-          >Sign up
-        </a>
+        <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['/sign-up']">Sign up </a>
       </div>
 
       <!-- Alert -->
@@ -77,13 +71,7 @@
         <!-- Password field -->
         <mat-form-field class="w-full">
           <mat-label>Password</mat-label>
-          <input
-            id="password"
-            matInput
-            type="password"
-            [formControlName]="'password'"
-            #passwordField
-          />
+          <input id="password" matInput type="password" [formControlName]="'password'" #passwordField />
           <button
             mat-icon-button
             type="button"
@@ -94,27 +82,16 @@
             "
             matSuffix
           >
-            <mat-icon
-              class="icon-size-5"
-              *ngIf="passwordField.type === 'password'"
-            >
-              visibility
-            </mat-icon>
-            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
-              >visibility_off</mat-icon
-            >
+            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"> visibility </mat-icon>
+            <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'">visibility_off</mat-icon>
           </button>
           <mat-error> Password is required </mat-error>
         </mat-form-field>
 
         <!-- Actions -->
         <div class="inline-flex items-end justify-between w-full mt-1.5">
-          <mat-checkbox [color]="'primary'" [formControlName]="'rememberMe'">
-            Remember me
-          </mat-checkbox>
-          <a
-            class="text-md font-medium text-primary-500 hover:underline"
-            [routerLink]="['/forgot-password']"
+          <mat-checkbox [color]="'primary'" [formControlName]="'rememberMe'"> Remember me </mat-checkbox>
+          <a class="text-md font-medium text-primary-500 hover:underline" [routerLink]="['/forgot-password']"
             >Forgot password?
           </a>
         </div>
@@ -193,12 +170,7 @@
       preserveAspectRatio="xMidYMax slice"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g
-        class="text-gray-700 opacity-25"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="100"
-      >
+      <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
         <circle r="234" cx="196" cy="23"></circle>
         <circle r="234" cx="790" cy="491"></circle>
       </g>
@@ -223,11 +195,7 @@
           <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
         </pattern>
       </defs>
-      <rect
-        width="220"
-        height="192"
-        fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"
-      ></rect>
+      <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
     </svg>
     <!-- @formatter:on -->
     <!-- Content -->

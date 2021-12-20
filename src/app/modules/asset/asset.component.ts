@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subject } from "rxjs";
@@ -6,11 +6,13 @@ import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
+import { AssetFilterComponent } from "../shared/asset-filter/asset-filter.component";
 
 @Component({
   selector: "app-asset",
   templateUrl: "./asset.component.html",
   styleUrls: ["./asset.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AssetComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -179,5 +181,9 @@ export class AssetComponent implements OnInit {
    */
   trackByFn(index: number, item: any): any {
     return item._id || index;
+  }
+
+  openFilter() {
+    this._dialog.open(AssetFilterComponent, { panelClass: "fuse-confirmation-dialog-panel" });
   }
 }
