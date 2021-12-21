@@ -25,7 +25,13 @@
             sm:text-sm
             rounded-md
           "
+          [matAutocomplete]="name"
         />
+        <mat-autocomplete #name="matAutocomplete">
+          <mat-option *ngFor="let modelName of filteredModelNameForAutoComplete | async" [value]="modelName">
+            {{ modelName }}
+          </mat-option>
+        </mat-autocomplete>
         <span
           *ngIf="
             assetForm.controls['name'].invalid &&
@@ -136,7 +142,7 @@
             sm:text-sm
           "
         >
-          <option *ngFor="let branch of branches">{{ branch }}</option>
+          <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
         </select>
         <span
           *ngIf="
@@ -375,25 +381,25 @@
           <!-- Storage Type -->
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
-            <input
-              type="text"
-              [formControlName]="'storageType'"
-              [class]="
-                assetForm.controls['laptop'].get('storageType').invalid &&
-                assetForm.controls['laptop'].get('storageType').touched
-                  ? 'border-red-500'
-                  : 'border-gray-300'
-              "
+            <select
+              [formControlName]="'type'"
               class="
                 mt-1
-                focus:ring-orange-500 focus:border-orange-500
                 block
                 w-full
-                shadow-sm
-                sm:text-sm
+                py-2
+                px-3
+                border border-gray-300
+                bg-white
                 rounded-md
+                shadow-sm
+                focus:outline-none focus:ring-orange-500 focus:border-orange-500
+                sm:text-sm
               "
-            />
+            >
+              <option value="HDD">HDD</option>
+              <option value="SSD">SSD</option>
+            </select>
             <span
               *ngIf="
                 assetForm.controls['laptop'].get('storageType').invalid &&

@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angula
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { map, startWith, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 
 @Component({
@@ -25,7 +25,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   branches: string[] = ["Ahmedabad", "Delhi", "US"];
   types; // All type of asset Types
-
+  modelNameForAutoComplete: string[] = ["Lenevo V110", "Dell Latitude 5410", "Macbook Air", "Asus Predetor"];
+  filteredModelNameForAutoComplete: Observable<string[]>;
   constructor(private _formBuilder: FormBuilder, private _assetService: AssetService) {}
 
   // Life Cycle Hooks
@@ -42,11 +43,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
       assetCode: [""],
       type: ["", [Validators.required]],
       sr_no: ["", [Validators.required]],
-      location: ["", [Validators.required]],
+      location: ["Ahmedabad", [Validators.required]],
       vendorId: [""],
       category: ["", [Validators.required]],
       warranty: [""],
     });
+
+    //Enable AutoCompelete Feature for Model Name
+    this.filteredModelNameForAutoComplete = this.assetForm.get("name").valueChanges.pipe(
+      startWith(""),
+      map((value) => this._filter(value))
+    );
   }
 
   ngOnDestroy(): void {
@@ -103,5 +110,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     for (const [key, value] of Object.entries(this.types)) {
       if (this.assetForm.contains(value as string)) this.assetForm.removeControl(value as string);
     }
+  }
+  // Filter for Autocomplete Model Name Feature
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.modelNameForAutoComplete
+      .filter((option) => option.toLowerCase().includes(filterValue))
+      .splice(0, 7); //Limited Manually for now @Gramosx
   }
 }
