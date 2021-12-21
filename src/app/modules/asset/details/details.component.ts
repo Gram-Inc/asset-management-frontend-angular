@@ -4,6 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map, startWith, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
+import { BranchService } from "src/app/core/branch/branch.service";
+import { IBranch } from "src/app/core/branch/branch.types";
+import { VendorService } from "src/app/core/vendor/vendor.service";
+import { IVendor } from "src/app/core/vendor/vendor.types";
 
 @Component({
   selector: "app-details",
@@ -23,8 +27,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any> = new Subject<any>();
   assetForm: FormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
-  branches: string[] = ["Ahmedabad", "Delhi", "US"];
   types; // All type of asset Types
+
+  //Vendors
+  vendors$: Observable<IVendor[]> = new Observable<IVendor[]>();
+  //Branchs
+  branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
 
   //Auto Complete
   modelNameForAutoComplete: string[] = ["Lenevo V110", "Dell Latitude 5410", "Macbook Air", "Asus Predetor"];
@@ -37,7 +45,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   filteredProcessorForAutoComplete: Observable<string[]>;
 
   //Constructor
-  constructor(private _formBuilder: FormBuilder, private _assetService: AssetService) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _assetService: AssetService,
+    private _vendorService: VendorService,
+    private _branchService: BranchService
+  ) {}
 
   // Life Cycle Hooks
 
@@ -47,6 +60,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.types = val.commonAssetFields.find((x) => x.fieldName == "type").values;
     });
 
+    // Get All Vendors
+    this.vendors$ = this._vendorService.vendors$;
+
+    //Get All Branch
+    this.branchs$ = this._branchService.branchs$;
+
     //create Asset Form
     this.assetForm = this._formBuilder.group({
       name: ["", [Validators.required]],
@@ -54,9 +73,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
       type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
       sr_no: ["", [Validators.required]],
       location: ["Ahmedabad", [Validators.required]],
-      vendorId: [""],
+      vendorId: [null],
       category: ["", [Validators.required]],
-      warranty: [""],
+      warranty: [[]],
     });
 
     //Check for AssetTypeChanges
@@ -132,7 +151,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
   //Create Asset
   create() {
     this.assetForm.markAllAsTouched();
-    console.log(this.assetForm.value);
+    //Check Validation
+    if (this.assetForm.invalid) return;
+
+    // Create Asset
+    this._assetService.createAsset(this.assetForm.value).subscribe(
+      (_) => {
+        console.log(_);
+      },
+      (err) => {}
+    );
   }
 
   removeTypeFromForm() {

@@ -24,10 +24,7 @@ export class AssetResolverResolver implements Resolve<any> {
 export class CreateAssetResolver implements Resolve<any> {
   constructor(private _assetService: AssetService, private _vendorService: VendorService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return forkJoin([
-      // this._vendorService.getVendors(),
-      this._assetService.getAssetTyes(),
-    ]);
+    return forkJoin([this._vendorService.getVendors(), this._assetService.getAssetTyes()]);
   }
 }
 

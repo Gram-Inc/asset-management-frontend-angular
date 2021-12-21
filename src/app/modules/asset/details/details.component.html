@@ -7,7 +7,7 @@
     <div class="grid grid-cols-6 gap-6">
       <!-- Name -->
       <div class="col-span-4 sm:col-span-4">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">Name</label>
+        <label for="first-name" class="block text-sm font-medium text-gray-700">Model Name</label>
         <input
           type="text"
           [formControlName]="'name'"
@@ -142,7 +142,7 @@
             sm:text-sm
           "
         >
-          <option *ngFor="let branch of branches" [value]="branch">{{ branch }}</option>
+          <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
         </select>
         <span
           *ngIf="
@@ -172,7 +172,8 @@
             sm:text-sm
           "
         >
-          <option value="id">ABC</option>
+          <option [value]="null"></option>
+          <option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</option>
         </select>
         <span
           *ngIf="
@@ -321,7 +322,7 @@
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">RAM</label>
             <input
-              type="text"
+              type="number"
               [formControlName]="'ram'"
               [class]="
                 assetForm.controls['laptop'].get('ram').invalid &&
@@ -339,6 +340,7 @@
                 rounded-md
               "
             />
+            <div class="text-xs text-gray-300 mt-1">In GB</div>
             <span
               *ngIf="
                 assetForm.controls['laptop'].get('ram').invalid &&
@@ -349,7 +351,6 @@
               >*Required.</span
             >
           </div>
-
           <!-- Processor -->
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Processor</label>
@@ -391,7 +392,6 @@
               >*Required.</span
             >
           </div>
-
           <!-- Storage Type -->
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
@@ -424,7 +424,6 @@
               >*Required.</span
             >
           </div>
-
           <!-- Storage Size -->
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Size</label>
@@ -447,6 +446,8 @@
                 rounded-md
               "
             />
+            <div class="text-xs text-gray-300 mt-1">In GB</div>
+
             <span
               *ngIf="
                 assetForm.controls['laptop'].get('storageSize').invalid &&
@@ -491,5 +492,25 @@
 
       Create
     </button>
+  </div>
+</div>
+
+<div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+  <div class="flex">
+    <div class="py-1">
+      <svg
+        class="fill-current h-6 w-6 text-teal-500 mr-4"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"
+        />
+      </svg>
+    </div>
+    <div>
+      <p class="font-bold">Our privacy policy has changed</p>
+      <p class="text-sm">Make sure you know how these changes affect you.</p>
+    </div>
   </div>
 </div>

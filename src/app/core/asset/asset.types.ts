@@ -1,3 +1,4 @@
+import { IBranch } from "../branch/branch.types";
 import { IVendor } from "../vendor/vendor.types";
 
 export interface IAsset {
@@ -16,6 +17,7 @@ export interface IAsset {
   client?: IVendor;
   ups?: IUPS;
   allocationStatus: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
+  branch?: string | IBranch;
 }
 
 export interface IUPS {
