@@ -15,7 +15,7 @@ import { SignOutModule } from "./modules/auth/sign-out/sign-out.module";
 import { SignInModule } from "./modules/auth/sign-in/sign-in.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AsideComponent } from "./custom/components/aside/aside.component";
-import { DetailsComponent } from './modules/user/details/details.component';
+import { DetailsComponent } from "./modules/user/details/details.component";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
