@@ -219,8 +219,7 @@
         <label for="city" class="block text-sm font-medium text-gray-700">Warranty</label>
         <input
           [formControlName]="'warranty'"
-          type="text"
-          autocomplete="address-level2"
+          type="date"
           class="
             mt-1
             focus:ring-orange-500 focus:border-orange-500
@@ -301,7 +300,13 @@
                 sm:text-sm
                 rounded-md
               "
+              [matAutocomplete]="os"
             />
+            <mat-autocomplete #os="matAutocomplete">
+              <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
+                {{ os }}
+              </mat-option>
+            </mat-autocomplete>
             <span
               *ngIf="
                 assetForm.controls['laptop'].get('operatingSystem').invalid &&
@@ -366,7 +371,16 @@
                 sm:text-sm
                 rounded-md
               "
+              [matAutocomplete]="processor"
             />
+            <mat-autocomplete #processor="matAutocomplete">
+              <mat-option
+                *ngFor="let processor of filteredProcessorForAutoComplete | async"
+                [value]="processor"
+              >
+                {{ processor }}
+              </mat-option>
+            </mat-autocomplete>
             <span
               *ngIf="
                 assetForm.controls['laptop'].get('processor').invalid &&
@@ -382,7 +396,7 @@
           <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
             <select
-              [formControlName]="'type'"
+              [formControlName]="'storageType'"
               class="
                 mt-1
                 block
