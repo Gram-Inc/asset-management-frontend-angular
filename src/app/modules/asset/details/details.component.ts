@@ -1,6 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
+import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map, startWith, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
@@ -49,7 +51,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _assetService: AssetService,
     private _vendorService: VendorService,
-    private _branchService: BranchService
+    private _branchService: BranchService,
+    private _snackBar: MatSnackBar,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
   ) {}
 
   // Life Cycle Hooks
@@ -157,9 +162,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     // Create Asset
     this._assetService.createAsset(this.assetForm.value).subscribe(
       (_) => {
-        console.log(_);
+        this.openSnackBar("Success", "Asset Created");
+        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
       },
-      (err) => {}
+      (err) => {
+        this.openSnackBar("Error", err.message);
+      }
     );
   }
 
@@ -190,5 +198,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
     return this.processorAutoComplete
       .filter((option) => option.toLowerCase().includes(filterValue))
       .splice(0, 7); //Limited Manually for now @Gramosx
+  }
+
+  openSnackBar(type: "Error" | "Info" | "Success", msg: string) {
+    this._snackBar.open(msg, "Close", {
+      duration: 3000,
+      verticalPosition: "top",
+      horizontalPosition: "center",
+      panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+    });
   }
 }
