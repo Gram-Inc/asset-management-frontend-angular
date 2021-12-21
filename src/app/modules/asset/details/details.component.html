@@ -242,7 +242,8 @@
     <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
       <div class="px-4 py-5 bg-white sm:p-6">
         <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-4 sm:col-span-4">
+          <!-- Hostname -->
+          <div class="col-span-3 sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
             <input
               type="text"
@@ -272,6 +273,169 @@
               class="text-xs text-red-700"
               >*Required.</span
             >
+          </div>
+          <!-- OS -->
+          <div class="col-span-3 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Operating System</label>
+            <input
+              type="text"
+              [formControlName]="'operatingSystem'"
+              [class]="
+                assetForm.controls['laptop'].get('operatingSystem').invalid &&
+                assetForm.controls['laptop'].get('operatingSystem').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('operatingSystem').invalid &&
+                (assetForm.controls['laptop'].get('operatingSystem').dirty ||
+                  assetForm.controls['laptop'].get('operatingSystem').touched)
+              "
+              class="text-xs text-red-700"
+              >*Required.</span
+            >
+          </div>
+          <!-- RAM -->
+          <div class="col-span-3 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">RAM</label>
+            <input
+              type="text"
+              [formControlName]="'ram'"
+              [class]="
+                assetForm.controls['laptop'].get('ram').invalid &&
+                assetForm.controls['laptop'].get('ram').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('ram').invalid &&
+                (assetForm.controls['laptop'].get('ram').dirty ||
+                  assetForm.controls['laptop'].get('ram').touched)
+              "
+              class="text-xs text-red-700"
+              >*Required.</span
+            >
+          </div>
+
+          <!-- Processor -->
+          <div class="col-span-3 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Processor</label>
+            <input
+              type="text"
+              [formControlName]="'processor'"
+              [class]="
+                assetForm.controls['laptop'].get('processor').invalid &&
+                assetForm.controls['laptop'].get('processor').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('processor').invalid &&
+                (assetForm.controls['laptop'].get('processor').dirty ||
+                  assetForm.controls['laptop'].get('processor').touched)
+              "
+              class="text-xs text-red-700"
+              >*Required.</span
+            >
+          </div>
+
+          <!-- Storage Type -->
+          <div class="col-span-3 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
+            <input
+              type="text"
+              [formControlName]="'storageType'"
+              [class]="
+                assetForm.controls['laptop'].get('storageType').invalid &&
+                assetForm.controls['laptop'].get('storageType').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('storageType').invalid &&
+                (assetForm.controls['laptop'].get('storageType').dirty ||
+                  assetForm.controls['laptop'].get('storageType').touched)
+              "
+              class="text-xs text-red-700"
+              >*Required.</span
+            >
+          </div>
+
+          <!-- Storage Size -->
+          <div class="col-span-3 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Size</label>
+            <input
+              type="number"
+              [formControlName]="'storageSize'"
+              [class]="
+                assetForm.controls['laptop'].get('storageSize').invalid &&
+                assetForm.controls['laptop'].get('storageSize').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('storageSize').invalid &&
+                (assetForm.controls['laptop'].get('storageSize').dirty ||
+                  assetForm.controls['laptop'].get('storageSize').touched)
+              "
+              class="text-xs text-red-700"
+              >Invalid
+            </span>
           </div>
         </div>
       </div>

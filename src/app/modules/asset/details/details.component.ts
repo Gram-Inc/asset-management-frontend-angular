@@ -61,8 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     let type = this.assetForm.controls["type"].value;
 
     //Remove if any other exisiting Field type exsist
-    // if (this.assetForm.contains("Laptop" || "PC" || "Server" || "Switch" || "Firewall"))
-    // if (this.assetForm.contains("Laptop")) this.assetForm.removeControl("Laptop");
+    this.removeTypeFromForm();
 
     let fields: FormGroup = new FormGroup({});
     switch (type) {
@@ -70,7 +69,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       case "laptop" || "pc" || "server":
         fields = this._formBuilder.group({
           hostName: ["", Validators.required],
-          ram: ["", Validators.required],
+          ram: ["", [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
           operatingSystem: ["", Validators.required],
           processor: ["", Validators.required],
           storageType: ["", Validators.required],
@@ -91,7 +90,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       default:
         break;
     }
-    console.log("Added Control");
     this.assetForm.addControl(type, fields);
   }
 
@@ -99,5 +97,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
   create() {
     this.assetForm.markAllAsTouched();
     console.log(this.assetForm.value);
+  }
+
+  removeTypeFromForm() {
+    for (const [key, value] of Object.entries(this.types)) {
+      if (this.assetForm.contains(value as string)) this.assetForm.removeControl(value as string);
+    }
   }
 }
