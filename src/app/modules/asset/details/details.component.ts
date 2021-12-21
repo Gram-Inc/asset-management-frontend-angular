@@ -77,10 +77,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       assetCode: [""],
       type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
       sr_no: ["", [Validators.required]],
-      location: ["Ahmedabad", [Validators.required]],
       vendorId: [null],
       category: ["", [Validators.required]],
       warranty: [[]],
+      branch: [null],
     });
 
     //Check for AssetTypeChanges

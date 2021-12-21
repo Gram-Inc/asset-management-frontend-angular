@@ -127,7 +127,7 @@
       <div class="col-span-2 sm:col-span-2">
         <label for="country" class="block text-sm font-medium text-gray-700">Location / Branch</label>
         <select
-          [formControlName]="'location'"
+          [formControlName]="'branch'"
           class="
             mt-1
             block
@@ -146,8 +146,8 @@
         </select>
         <span
           *ngIf="
-            assetForm.controls['location'].invalid &&
-            (assetForm.controls['location'].dirty || assetForm.controls['location'].touched)
+            assetForm.controls['branch'].invalid &&
+            (assetForm.controls['branch'].dirty || assetForm.controls['branch'].touched)
           "
           class="text-xs text-red-700"
           >*Required.</span

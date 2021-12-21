@@ -17,6 +17,7 @@ import { merge, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
+import { IBranch } from "src/app/core/branch/branch.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 import { DetailsComponent } from "../details/details.component";
 
@@ -213,5 +214,19 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   trackByFn(index: number, item: any): any {
     return item._id || index;
+  }
+
+  // Check For Branch Code
+  getBranchShortCode(obj: any) {
+    console.log(obj);
+    typeof obj == "object" ? (obj as IBranch).branchCode : "-";
+  }
+
+  //Get Current User
+  getCurrentUser(ast: IAsset) {
+    return "-";
+  }
+  getPrevUser(ast: IAsset) {
+    return "-";
   }
 }

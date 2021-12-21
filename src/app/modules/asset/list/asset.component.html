@@ -58,8 +58,8 @@
                           </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">Current User</div>
-                          <div class="text-sm text-gray-500">Prev. User</div>
+                          <div class="text-sm text-gray-900">{{ getCurrentUser(asset) }}</div>
+                          <div class="text-sm text-gray-500">{{ getPrevUser(asset) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="text-sm text-gray-900">{{ asset.laptop?.hostName }}</div>
@@ -67,13 +67,24 @@
 
                         <td class="px-6 py-4 whitespace-nowrap">
                           <span
-                            [ngClass]="{ 'bg-green-100 ': true, 'text-green-800': true }"
+                            [ngClass]="{
+                              'bg-green-100 ': asset.allocationStatus == 'IN_POOL',
+                              'text-green-600': asset.allocationStatus == 'IN_POOL',
+                              'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
+                              'text-indigo-600': asset.allocationStatus == 'ASSIGNED',
+                              'bg-red-100': asset.allocationStatus == 'SCRAP',
+                              'text-red-600': asset.allocationStatus == 'SCRAP',
+                              'bg-yellow-100': asset.allocationStatus == 'DOWN',
+                              'text-yellow-600': asset.allocationStatus == 'DOWN'
+                            }"
                             class="px-2 inline-flex text-xs leading-5 rounded-full"
                           >
                             {{ asset.allocationStatus.replace("_", " ") | titlecase }}
                           </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ADI / DEL</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {{ getBranchShortCode(asset) }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button class="text-orange-600 hover:text-orange-900" (click)="openDetail(asset)">
                             Edit
