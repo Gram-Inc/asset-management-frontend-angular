@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from "@angular/router";
 import { forkJoin, Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { BranchService } from "../branch/branch.service";
 import { IDTO } from "../dto/dto.types";
 import { VendorService } from "../vendor/vendor.service";
 import { AssetService } from "./asset.service";
@@ -22,9 +23,17 @@ export class AssetResolverResolver implements Resolve<any> {
   providedIn: "root",
 })
 export class CreateAssetResolver implements Resolve<any> {
-  constructor(private _assetService: AssetService, private _vendorService: VendorService) {}
+  constructor(
+    private _assetService: AssetService,
+    private _vendorService: VendorService,
+    private _branchService: BranchService
+  ) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return forkJoin([this._vendorService.getVendors(), this._assetService.getAssetTyes()]);
+    return forkJoin([
+      this._vendorService.getVendors(),
+      this._branchService.getBranchs(),
+      this._assetService.getAssetTyes(),
+    ]);
   }
 }
 

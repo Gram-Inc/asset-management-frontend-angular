@@ -21,8 +21,8 @@ import { RikielConfirmationService } from "src/app/custom/confirmation/confirmat
 import { DetailsComponent } from "../details/details.component";
 
 @Component({
-  selector: "inventory-list",
-  templateUrl: "./inventory.component.html",
+  selector: "asset-list",
+  templateUrl: "./asset.component.html",
   styles: [
     /* language=SCSS */
     `

@@ -50,7 +50,7 @@ export class BranchService {
   }
 
   getBranchs(): Observable<IDTO> {
-    return this._httpClient.get<IDTO>(`${this._baseUrl}/branch`).pipe(
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/branch/paginate`).pipe(
       tap((response: IDTO) => {
         this._branchs.next(response.data);
       })
