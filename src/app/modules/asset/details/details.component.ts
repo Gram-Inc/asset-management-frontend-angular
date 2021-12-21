@@ -1,5 +1,9 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { AssetService } from "src/app/core/asset/asset.service";
 
 @Component({
   selector: "app-details",
@@ -15,11 +19,85 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
     `,
   ],
 })
-export class DetailsComponent implements OnInit {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public matDialogRef: MatDialogRef<DetailsComponent>
-  ) {}
+export class DetailsComponent implements OnInit, OnDestroy {
+  private unsubscribeAll: Subject<any> = new Subject<any>();
+  assetForm: FormGroup;
+  categories: string[] = ["Hardware", "Software"]; // Hardware / Software
+  branches: string[] = ["Ahmedabad", "Delhi", "US"];
+  types; // All type of asset Types
 
-  ngOnInit(): void {}
+  constructor(private _formBuilder: FormBuilder, private _assetService: AssetService) {}
+
+  // Life Cycle Hooks
+
+  ngOnInit(): void {
+    // Get All Category & Types
+    this._assetService.assetTypes$.pipe(takeUntil(this.unsubscribeAll)).subscribe((val) => {
+      this.types = val.commonAssetFields.find((x) => x.fieldName == "type").values;
+    });
+
+    //create Asset Form
+    this.assetForm = this._formBuilder.group({
+      name: ["", [Validators.required]],
+      assetCode: [""],
+      type: ["", [Validators.required]],
+      sr_no: ["", [Validators.required]],
+      location: ["", [Validators.required]],
+      vendorId: [""],
+      category: ["", [Validators.required]],
+      warranty: [""],
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeAll.next();
+    this.unsubscribeAll.complete();
+  }
+
+  addAssetTypeToAssetForm() {
+    //Validate Type of Dropdown
+    if (this.assetForm.controls["type"].invalid) return;
+    // Get Type Feilds to be added
+    let type = this.assetForm.controls["type"].value;
+
+    //Remove if any other exisiting Field type exsist
+    // if (this.assetForm.contains("Laptop" || "PC" || "Server" || "Switch" || "Firewall"))
+    // if (this.assetForm.contains("Laptop")) this.assetForm.removeControl("Laptop");
+
+    let fields: FormGroup = new FormGroup({});
+    switch (type) {
+      //Laptop, Server ,PC Fields
+      case "laptop" || "pc" || "server":
+        fields = this._formBuilder.group({
+          hostName: ["", Validators.required],
+          ram: ["", Validators.required],
+          operatingSystem: ["", Validators.required],
+          processor: ["", Validators.required],
+          storageType: ["", Validators.required],
+          storageSize: ["", Validators.required],
+        });
+        break;
+
+      //Switch , Firewall
+      case "switch" || "firewall":
+        fields = this._formBuilder.group({
+          brand: ["", Validators.required],
+          noOfPorts: ["", Validators.required],
+          speed: ["", Validators.required],
+          modelNo: ["", Validators.required],
+        });
+        break;
+
+      default:
+        break;
+    }
+    console.log("Added Control");
+    this.assetForm.addControl(type, fields);
+  }
+
+  //Create Asset
+  create() {
+    this.assetForm.markAllAsTouched();
+    console.log(this.assetForm.value);
+  }
 }

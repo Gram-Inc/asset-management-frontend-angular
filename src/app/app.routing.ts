@@ -49,6 +49,10 @@ export const routes: Route[] = [
         loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
       },
       {
+        path: "user",
+        loadChildren: () => import("./modules/user/user.module").then((x) => x.UserModule),
+      },
+      {
         path: "sign-out",
         loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
       },

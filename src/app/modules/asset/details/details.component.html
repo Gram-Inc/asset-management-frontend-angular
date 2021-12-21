@@ -1,22 +1,49 @@
-<!-- <div class="hidden sm:block" aria-hidden="true">
-  <div class="py-5">
-    <div class="border-t border-gray-200"></div>
+<div class="p-8" [formGroup]="assetForm">
+  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
   </div>
-</div> -->
 
-<form action="#" method="POST">
   <div class="px-4 py-5 bg-white sm:p-6">
     <div class="grid grid-cols-6 gap-6">
-      <div class="col-span-6 sm:col-span-3">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+      <!-- Name -->
+      <div class="col-span-4 sm:col-span-4">
+        <label for="first-name" class="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
-          name="first-name"
-          id="first-name"
-          autocomplete="given-name"
+          [formControlName]="'name'"
+          [class]="
+            assetForm.controls['name'].invalid && assetForm.controls['name'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
           class="
             mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
+            focus:ring-orange-500 focus:border-orange-500
+            block
+            w-full
+            shadow-sm
+            sm:text-sm
+            rounded-md
+          "
+        />
+        <span
+          *ngIf="
+            assetForm.controls['name'].invalid &&
+            (assetForm.controls['name'].dirty || assetForm.controls['name'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
+      </div>
+      <!-- Asset Code -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="last-name" class="block text-sm font-medium text-gray-700">Asset Code</label>
+        <input
+          type="text"
+          [formControlName]="'assetCode'"
+          class="
+            mt-1
+            focus:ring-orange-500 focus:border-orange-500
             block
             w-full
             shadow-sm
@@ -25,54 +52,20 @@
             rounded-md
           "
         />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3">
-        <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-        <input
-          type="text"
-          name="last-name"
-          id="last-name"
-          autocomplete="family-name"
-          class="
-            mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
+        <span
+          *ngIf="
+            assetForm.controls['assetCode'].invalid &&
+            (assetForm.controls['assetCode'].dirty || assetForm.controls['assetCode'].touched)
           "
-        />
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
-
-      <div class="col-span-6 sm:col-span-4">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-        <input
-          type="text"
-          name="email-address"
-          id="email-address"
-          autocomplete="email"
-          class="
-            mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
-          "
-        />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3">
-        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+      <!-- Category -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
         <select
-          id="country"
-          name="country"
-          autocomplete="country-name"
+          [formControlName]="'category'"
           class="
             mt-1
             block
@@ -83,26 +76,30 @@
             bg-white
             rounded-md
             shadow-sm
-            focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
             sm:text-sm
           "
         >
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
+        <span
+          *ngIf="
+            assetForm.controls['category'].invalid &&
+            (assetForm.controls['category'].dirty || assetForm.controls['category'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
-
-      <div class="col-span-6">
-        <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
+      <!-- Serial Number -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
         <input
           type="text"
-          name="street-address"
-          id="street-address"
-          autocomplete="street-address"
+          [formControlName]="'sr_no'"
           class="
             mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
+            focus:ring-orange-500 focus:border-orange-500
             block
             w-full
             shadow-sm
@@ -111,18 +108,116 @@
             rounded-md
           "
         />
+        <span
+          *ngIf="
+            assetForm.controls['sr_no'].invalid &&
+            (assetForm.controls['sr_no'].dirty || assetForm.controls['sr_no'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
-
-      <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-        <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+      <!-- Location / Branch -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="country" class="block text-sm font-medium text-gray-700">Location / Branch</label>
+        <select
+          [formControlName]="'location'"
+          class="
+            mt-1
+            block
+            w-full
+            py-2
+            px-3
+            border border-gray-300
+            bg-white
+            rounded-md
+            shadow-sm
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
+            sm:text-sm
+          "
+        >
+          <option *ngFor="let branch of branches">{{ branch }}</option>
+        </select>
+        <span
+          *ngIf="
+            assetForm.controls['location'].invalid &&
+            (assetForm.controls['location'].dirty || assetForm.controls['location'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
+      </div>
+      <!-- vendor -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="country" class="block text-sm font-medium text-gray-700">Vendor</label>
+        <select
+          [formControlName]="'vendorId'"
+          class="
+            mt-1
+            block
+            w-full
+            py-2
+            px-3
+            border border-gray-300
+            bg-white
+            rounded-md
+            shadow-sm
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
+            sm:text-sm
+          "
+        >
+          <option value="id">ABC</option>
+        </select>
+        <span
+          *ngIf="
+            assetForm.controls['vendorId'].invalid &&
+            (assetForm.controls['vendorId'].dirty || assetForm.controls['vendorId'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
+      </div>
+      <!-- Type -->
+      <div class="col-span-2 sm:col-span-2">
+        <label for="email-address" class="block text-sm font-medium text-gray-700">Type</label>
+        <select
+          (change)="addAssetTypeToAssetForm()"
+          [formControlName]="'type'"
+          class="
+            mt-1
+            block
+            w-full
+            py-2
+            px-3
+            border border-gray-300
+            bg-white
+            rounded-md
+            shadow-sm
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
+            sm:text-sm
+          "
+        >
+          <option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</option>
+        </select>
+        <span
+          *ngIf="
+            assetForm.controls['type'].invalid &&
+            (assetForm.controls['type'].dirty || assetForm.controls['type'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
+      </div>
+      <!-- warranty -->
+      <div class="col-span-2 sm:col-span-2 lg:col-span-2">
+        <label for="city" class="block text-sm font-medium text-gray-700">Warranty</label>
         <input
+          [formControlName]="'warranty'"
           type="text"
-          name="city"
-          id="city"
           autocomplete="address-level2"
           class="
             mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
+            focus:ring-orange-500 focus:border-orange-500
             block
             w-full
             shadow-sm
@@ -131,70 +226,86 @@
             rounded-md
           "
         />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-        <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-        <input
-          type="text"
-          name="region"
-          id="region"
-          autocomplete="address-level1"
-          class="
-            mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
+        <span
+          *ngIf="
+            assetForm.controls['warranty'].invalid &&
+            (assetForm.controls['warranty'].dirty || assetForm.controls['warranty'].touched)
           "
-        />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-        <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-        <input
-          type="text"
-          name="postal-code"
-          id="postal-code"
-          autocomplete="postal-code"
-          class="
-            mt-1
-            focus:ring-indigo-500 focus:border-indigo-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
-          "
-        />
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
     </div>
   </div>
-  <div
-    class="
-      flex
-      items-center
-      justify-center
-      sm:justify-end
-      px-6
-      py-4
-      space-x-3
-      bg-gray-50
-      dark:bg-black dark:bg-opacity-10
-    "
-  >
-    <!-- Cancel -->
-    <ng-container *ngIf="true">
-      <button mat-stroked-button [matDialogClose]="'cancelled'">data.actions.cancel.label</button>
+
+  <ng-container *ngIf="assetForm.contains('laptop')">
+    <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
+      <div class="px-4 py-5 bg-white sm:p-6">
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-4 sm:col-span-4">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
+            <input
+              type="text"
+              [formControlName]="'hostName'"
+              [class]="
+                assetForm.controls['laptop'].get('hostName').invalid &&
+                assetForm.controls['laptop'].get('hostName').touched
+                  ? 'border-red-500'
+                  : 'border-gray-300'
+              "
+              class="
+                mt-1
+                focus:ring-orange-500 focus:border-orange-500
+                block
+                w-full
+                shadow-sm
+                sm:text-sm
+                rounded-md
+              "
+            />
+            <span
+              *ngIf="
+                assetForm.controls['laptop'].get('hostName').invalid &&
+                (assetForm.controls['laptop'].get('hostName').dirty ||
+                  assetForm.controls['laptop'].get('hostName').touched)
+              "
+              class="text-xs text-red-700"
+              >*Required.</span
+            >
+          </div>
+        </div>
+      </div>
     </ng-container>
+  </ng-container>
+  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+    <!-- Cancel -->
+
+    <button mat-stroked-button>Back</button>
 
     <!-- Confirm -->
-    <ng-container *ngIf="true">
-      <button mat-flat-button [matDialogClose]="'confirmed'">data.actions.confirm.label</button>
-    </ng-container>
+    <button
+      type="button"
+      class="
+        inline-flex
+        items-center
+        px-4
+        py-2
+        border border-transparent
+        rounded-md
+        shadow-sm
+        text-sm
+        font-medium
+        text-white
+        bg-orange-600
+        hover:bg-orange-700
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+      "
+      (click)="create()"
+    >
+      <!-- Heroicon name: solid/check -->
+      <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+
+      Create
+    </button>
   </div>
-</form>
+</div>

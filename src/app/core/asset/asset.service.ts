@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from "rxjs
 import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IDTO } from "../dto/dto.types";
-import { IAsset, IPagination } from "./asset.types";
+import { IAsset, IAssetTypes, IPagination } from "./asset.types";
 
 @Injectable({
   providedIn: "root",
@@ -14,6 +14,7 @@ export class AssetService {
 
   private _assets: BehaviorSubject<IAsset[] | null> = new BehaviorSubject<IAsset[] | null>(null);
   private _asset: BehaviorSubject<IAsset | null> = new BehaviorSubject<IAsset | null>(null);
+  private _assetTypes: BehaviorSubject<IAssetTypes | null> = new BehaviorSubject<IAssetTypes | null>(null);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}
@@ -25,6 +26,12 @@ export class AssetService {
     return this._assets.asObservable();
   }
 
+  /**
+  Getter For Assets Types
+  */
+  get assetTypes$(): Observable<IAssetTypes> {
+    return this._assetTypes.asObservable();
+  }
   /**
   Getter For Pagination
   */
@@ -185,6 +192,15 @@ export class AssetService {
           })
         )
       )
+    );
+  }
+
+  //Get All Asset Tpyes field
+  getAssetTyes() {
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/asset-type/types`).pipe(
+      tap((response: IDTO) => {
+        this._assetTypes.next(response.data);
+      })
     );
   }
 }

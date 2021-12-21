@@ -24,7 +24,10 @@ export class AssetResolverResolver implements Resolve<any> {
 export class CreateAssetResolver implements Resolve<any> {
   constructor(private _assetService: AssetService, private _vendorService: VendorService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return forkJoin([this._vendorService.getVendors()]);
+    return forkJoin([
+      // this._vendorService.getVendors(),
+      this._assetService.getAssetTyes(),
+    ]);
   }
 }
 
@@ -40,6 +43,7 @@ export class EditAssetResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     return forkJoin([
       this._vendorService.getVendors(),
+      this._assetService.getAssetTyes(),
       this._assetService.getAssetById(route.paramMap.get("id")).pipe(
         catchError(
           // Asset with ID not found

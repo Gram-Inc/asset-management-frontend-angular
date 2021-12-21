@@ -68,3 +68,16 @@ export interface IPagination {
   totalPage?: number;
   totalData?: number;
 }
+
+export interface IAssetTypes {
+  commonAssetFields: IAssetSubType[];
+  assetTypeSpecificFieldTypes: IAssetSubType[];
+}
+interface IAssetSubType {
+  label?: string;
+  dataType?: string;
+  fieldName?: string;
+  values?: any;
+  type?: string;
+  fields?: [];
+}

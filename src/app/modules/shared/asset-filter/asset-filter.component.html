@@ -1,78 +1,29 @@
-<div class="relative flex flex-col w-full h-full">
-  <!-- Content -->
-  <div class="flex flex-col sm:flex-row flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8">
-    <ng-container>
-      <div
-        class="
-          flex flex-col
-          items-center
-          sm:items-start
-          mt-4
-          sm:mt-0 sm:pr-8
-          space-y-1
-          text-center
-          sm:text-left
-        "
-      >
-        <!-- Title -->
-        <div class="text-xl leading-6 font-medium">Filter</div>
-        <mat-form-field class="w-75" appearance="outline">
-          <mat-label>Filter</mat-label>
-          <mat-chip-list #chipListFilter>
-            <mat-chip
-              required
-              *ngFor="let filter of filters"
-              [selectable]="true"
-              [removable]="true"
-              (removed)="removeFilter(filter)"
-            >
-              {{ filter }}
-              <mat-icon matChipRemove *ngIf="removableFilter">cancel</mat-icon>
-            </mat-chip>
-            <input
-              placeholder="New Filter..."
-              [formControl]="filterCtrl"
-              #filterInput
-              [matAutocomplete]="auto2"
-              [matChipInputFor]="chipListFilter"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="true"
-            />
-          </mat-chip-list>
-          <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedFilter($event)">
-            <mat-option *ngFor="let filter of filteredFilters | async" [value]="filter">
-              {{ filter }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-    </ng-container>
-  </div>
-
-  <!-- Actions -->
-  <ng-container>
-    <div
-      class="
-        flex
-        items-center
-        justify-center
-        sm:justify-end
-        px-6
-        py-4
-        space-x-3
-        bg-gray-50
-        dark:bg-black dark:bg-opacity-10
-      "
+<mat-form-field class="w-100">
+  <mat-label>Filter</mat-label>
+  <mat-chip-list #chipListFilter>
+    <mat-chip
+      required
+      *ngFor="let filter of filters"
+      [selectable]="true"
+      [removable]="true"
+      (removed)="removeFilter(filter)"
     >
-      <!-- Cancel -->
-      <ng-container>
-        <button mat-stroked-button [matDialogClose]="'cancelled'">Cancel</button>
-      </ng-container>
-
-      <!-- Confirm -->
-      <ng-container>
-        <button mat-flat-button [color]="'primary'" [matDialogClose]="'confirmed'">Confirm</button>
-      </ng-container>
-    </div>
-  </ng-container>
-</div>
+      {{ filter }}
+      <mat-icon matChipRemove *ngIf="removableFilter">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="New Filter..."
+      [formControl]="filterCtrl"
+      #filterInput
+      [matAutocomplete]="auto2"
+      [matChipInputFor]="chipListFilter"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="true"
+    />
+  </mat-chip-list>
+  <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedFilter($event)">
+    <mat-option *ngFor="let filter of filteredFilters | async" [value]="filter">
+      {{ filter }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
