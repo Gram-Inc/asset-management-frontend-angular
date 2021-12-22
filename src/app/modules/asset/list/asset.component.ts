@@ -186,7 +186,9 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
       this._changeDetectorRef.markForCheck();
     }); */
   }
-  openDetail(ast: IAsset) {}
+  openDetail(ast: IAsset) {
+    console.log("Got Ast");
+  }
   /**
    * Show flash message
    */
@@ -218,8 +220,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Check For Branch Code
   getBranchShortCode(obj: any) {
-    console.log(obj);
-    typeof obj == "object" ? (obj as IBranch).branchCode : "-";
+    return typeof obj === "object" ? obj.branchCode : "-";
   }
 
   //Get Current User
