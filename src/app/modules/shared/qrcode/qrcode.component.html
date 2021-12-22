@@ -1,1 +1,18 @@
-<img [src]="src" height="116px !important" width="116px !important" />
+<div class="relative m-3">
+  <div
+    class="
+      absolute
+      h-full
+      w-full
+      hover:bg-orange-200
+      border-2
+      hover:bg-opacity-30 hover:border-orange-500
+      rounded-lg
+      border-transparent
+      cursor-pointer
+    "
+    matTooltip="Print QR"
+    (click)="printQR()"
+  ></div>
+  <img [src]="src" height="116px !important" width="116px !important" />
+</div>

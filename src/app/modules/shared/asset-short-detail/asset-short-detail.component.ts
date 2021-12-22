@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset } from "src/app/core/asset/asset.types";
+import { IBranch } from "src/app/core/branch/branch.types";
 
 @Component({
   selector: "app-asset-short-detail",
@@ -12,7 +13,11 @@ import { IAsset } from "src/app/core/asset/asset.types";
 export class AssetShortDetailComponent implements OnInit {
   asset?: IAsset;
   //Fetch Latest detail of Asset
-  constructor(private _assetService: AssetService, @Inject(MAT_DIALOG_DATA) public data: IAsset) {}
+  constructor(
+    private _assetService: AssetService,
+    @Inject(MAT_DIALOG_DATA) public data: IAsset,
+    private matDialogRef: MatDialogRef<AssetShortDetailComponent>
+  ) {}
 
   ngOnInit(): void {
     //Get data From Server with ID
@@ -20,5 +25,16 @@ export class AssetShortDetailComponent implements OnInit {
       this.asset = _;
       console.log(_);
     });
+  }
+  close() {
+    this.matDialogRef.close();
+  }
+
+  getBranchName(branch: string | IBranch) {
+    return typeof branch === "object" ? branch.name : "-";
+  }
+
+  getAssetType(asset: IAsset) {
+    // if(Object.k )
   }
 }

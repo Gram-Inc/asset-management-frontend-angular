@@ -1,5 +1,4 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+<div class="bg-white shadow overflow-hidden sm:rounded-lg max-w-3xl" style="min-width: 768px">
   <div class="px-4 py-5 lg:flex lg:items-center lg:justify-between">
     <div class="">
       <h3 class="text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
@@ -19,6 +18,7 @@
         text-base text-orange-600
         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
       "
+      (click)="close()"
     >
       <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
     </button>
@@ -37,23 +37,27 @@
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.sr_no }}</dd>
           </div>
           <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Email address</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">margotfoster@example.com</dd>
+            <dt class="text-sm font-medium text-gray-500">Branch</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ getBranchName(asset.branch) }}
+            </dd>
           </div>
           <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Salary expectation</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">$120,000</dd>
+            <dt class="text-sm font-medium text-gray-500">Type</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ asset.type | titlecase }}
+              ostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit
+              id mollit nulla mollit nostrud in ea officia proident. Irure nostr
+            </dd>
           </div>
         </div>
 
-        <app-qrcode class="flex-none"></app-qrcode>
+        <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
       </div>
       <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">About</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat.
-          Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-          proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+          {{ asset.laptop.hostName | keyvalue }}
         </dd>
       </div>
       <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

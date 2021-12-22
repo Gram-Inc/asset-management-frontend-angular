@@ -9,8 +9,8 @@ import { ConfirmationModule } from "src/app/custom/confirmation/confirmation.mod
 import { IconsModule } from "src/app/core/icons/icons.module";
 import { ThemeTogglerComponent } from "./theme-toggler/theme-toggler.component";
 import { AssetFilterComponent } from "./asset-filter/asset-filter.component";
-import { AssetShortDetailComponent } from './asset-short-detail/asset-short-detail.component';
-import { QrcodeComponent } from './qrcode/qrcode.component';
+import { AssetShortDetailComponent } from "./asset-short-detail/asset-short-detail.component";
+import { QrcodeComponent } from "./qrcode/qrcode.component";
 
 var sharedComp = [
   TitleCardComponent,
