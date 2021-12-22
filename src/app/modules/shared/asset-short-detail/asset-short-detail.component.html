@@ -9,13 +9,20 @@
         svgIcon="mat_outline:laptop_mac"
       ></mat-icon>
       <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
+        <h3 class="mb-2 text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
+        <p class="max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
       </div>
     </div>
 
     <div>
-      <button
+      <!-- Brand IMage / Icon  -->
+      <img
+        style="max-width: 64px; max-height: 40px"
+        src="https://cdn.worldvectorlogo.com/logos/lenovo-2.svg"
+        alt=""
+      />
+
+      <!-- <button
         href="#"
         class="
           ml-8
@@ -32,7 +39,7 @@
         mat-ripple
       >
         <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
-      </button>
+      </button> -->
     </div>
   </div>
 
@@ -57,14 +64,18 @@
           </div>
           <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
-            <dd
-              class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
-              [ngClass]="{
-                'text-green-500': isDateFuture('24/12/2022'),
-                'text-red-500': !isDateFuture('24/12/2022')
-              }"
-            >
-              24/12/2022
+            <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              24/12/2022 &nbsp; &nbsp;
+              <mat-icon
+                class="h-4 w-4"
+                [ngClass]="{
+                  'text-green-500': isDateFuture('24/12/2022'),
+                  'text-red-500': !isDateFuture('24/12/2022')
+                }"
+                [svgIcon]="
+                  isDateFuture('24/12/2022') ? 'heroicons_solid:badge-check' : 'heroicons_solid:x-circle'
+                "
+              ></mat-icon>
             </dd>
           </div>
         </div>

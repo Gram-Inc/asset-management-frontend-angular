@@ -1,0 +1,68 @@
+{
+  "system": {
+    "manufacturer": "Apple Inc.",
+    "model": "MacBookAir7,2",
+    "serial": "C1MS5HW0H3QD"
+  },
+  "os": {
+    "platform": "darwin",
+    "distro": "macOS",
+    "release": "11.6.1",
+    "codename": "macOS Big Sur",
+    "arch": "x64",
+    "hostname": "Air.local",
+    "fqdn": "Air.local"
+  },
+  "mem": {
+    "total": 8589934592
+  },
+  "memLayout": [
+    {
+      "size": 4294967296,
+      "bank": "BANK 0",
+      "type": "DDR3",
+      "ecc": false,
+      "clockSpeed": 1600,
+      "manufacturer": "Elpida"
+    },
+    {
+      "size": 4294967296,
+      "bank": "BANK 1",
+      "type": "DDR3",
+      "ecc": false,
+      "clockSpeed": 1600,
+      "manufacturer": "Elpida"
+    }
+  ],
+  "diskLayout": [
+    {
+      "device": "disk0",
+      "type": "NVMe",
+      "name": "INTEL SSDPEKNW512G8",
+      "vendor": "INTEL",
+      "size": 512110190592,
+      "interfaceType": "PCIe x4",
+      "smartStatus": "Ok"
+    }
+  ],
+  "battery": {
+    "hasBattery": true,
+    "maxCapacity": 46097,
+    "capacityUnit": "mWh",
+    "type": "Li-ion",
+    "manufacturer": "Apple"
+  },
+  "baseboard": {
+    "manufacturer": "Apple Inc.",
+    "model": "MacBookAir7,2",
+    "serial": "C1MS5HW0H3QD",
+    "memSlots": 2
+  },
+  "cpu": {
+    "manufacturer": "Intel®",
+    "brand": "Core™ i5-5250U",
+    "cores": 4,
+    "physicalCores": 2,
+    "processors": 1
+  }
+}
