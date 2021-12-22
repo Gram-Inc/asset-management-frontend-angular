@@ -19,6 +19,7 @@ import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
+import { AssetShortDetailComponent } from "../../shared/asset-short-detail/asset-short-detail.component";
 import { DetailsComponent } from "../details/details.component";
 
 @Component({
@@ -62,7 +63,6 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   searchCtrl: FormControl = new FormControl("");
 
   constructor(
-    private _dialog: MatDialog,
     private _assetService: AssetService,
     private _formBuilder: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
@@ -187,7 +187,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     }); */
   }
   openDetail(ast: IAsset) {
-    console.log("Got Ast");
+    //OPen Detail dialog
+    this._matDialog.open(AssetShortDetailComponent, { data: ast });
   }
   /**
    * Show flash message
