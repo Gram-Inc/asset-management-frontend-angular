@@ -9,7 +9,24 @@
         svgIcon="mat_outline:laptop_mac"
       ></mat-icon>
       <div>
-        <h3 class="mb-2 text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
+        <h3 class="mb-1 text-lg leading-6 font-medium text-gray-900">
+          Asset Information &nbsp; &nbsp;
+          <span
+            [ngClass]="{
+              'bg-green-100 ': asset.allocationStatus == 'IN_POOL',
+              'text-green-600': asset.allocationStatus == 'IN_POOL',
+              'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
+              'text-indigo-600': asset.allocationStatus == 'ASSIGNED',
+              'bg-red-100': asset.allocationStatus == 'SCRAP',
+              'text-red-600': asset.allocationStatus == 'SCRAP',
+              'bg-yellow-100': asset.allocationStatus == 'DOWN',
+              'text-yellow-600': asset.allocationStatus == 'DOWN'
+            }"
+            class="px-2 inline-flex text-xs leading-5 rounded-full"
+          >
+            {{ asset.allocationStatus.replace("_", " ") | titlecase }}
+          </span>
+        </h3>
         <p class="max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
       </div>
     </div>
@@ -17,7 +34,7 @@
     <div>
       <!-- Brand IMage / Icon  -->
       <img
-        style="max-width: 64px; max-height: 40px"
+        style="max-width: 84px; max-height: 70px"
         src="https://cdn.worldvectorlogo.com/logos/lenovo-2.svg"
         alt=""
       />
@@ -69,11 +86,11 @@
               <mat-icon
                 class="h-4 w-4"
                 [ngClass]="{
-                  'text-green-500': isDateFuture('24/12/2022'),
-                  'text-red-500': !isDateFuture('24/12/2022')
+                  'text-green-500': !isDateFuture('24/12/2022'),
+                  'text-red-500': isDateFuture('24/12/2022')
                 }"
                 [svgIcon]="
-                  isDateFuture('24/12/2022') ? 'heroicons_solid:badge-check' : 'heroicons_solid:x-circle'
+                  !isDateFuture('24/12/2022') ? 'heroicons_solid:badge-check' : 'heroicons_solid:x-circle'
                 "
               ></mat-icon>
             </dd>
@@ -116,8 +133,9 @@
           font-medium
           text-red-500
           bg-white
+          focus:outline-none
           hover:bg-gray-50 hover:text-red-600 hover:border-red-500
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+          focus:ring-2 focus:ring-offset-2 focus:ring-red-500
         "
         matTooltip="Delete Asset Permanently"
       >
@@ -127,6 +145,27 @@
 
     <!-- Right Side Action -->
     <div>
+      <button
+        href="#"
+        class="
+          ml-8
+          whitespace-nowrap
+          inline-flex
+          items-center
+          justify-center
+          px-3
+          py-1
+          border
+          rounded-md
+          shadow-sm
+          text-base text-orange-600
+          border-orange-600
+          hover:bg-orange-600 hover:text-white
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+        "
+      >
+        More Details
+      </button>
       <button
         type="submit"
         class="
