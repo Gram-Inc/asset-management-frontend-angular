@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
+import { isValid, isFuture, formatDistanceToNow } from "date-fns";
 
 @Component({
   selector: "app-asset-short-detail",
@@ -30,11 +31,19 @@ export class AssetShortDetailComponent implements OnInit {
     this.matDialogRef.close();
   }
 
-  getBranchName(branch: string | IBranch) {
+  getBranchName(branch: string | IBranch): string {
     return typeof branch === "object" ? branch.name : "-";
   }
 
   getAssetType(asset: IAsset) {
     // if(Object.k )
+  }
+
+  isDateFuture(date) {
+    if (isValid(date)) return isFuture(date);
+    return false;
+  }
+  getBranchShortCode(branch: string | IBranch): string {
+    return typeof branch === "object" ? branch.name : "-";
   }
 }

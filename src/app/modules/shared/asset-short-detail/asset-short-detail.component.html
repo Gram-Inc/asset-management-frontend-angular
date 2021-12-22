@@ -1,32 +1,44 @@
 <div class="bg-white shadow overflow-hidden sm:rounded-lg max-w-3xl" style="min-width: 768px">
-  <div class="px-4 py-5 lg:flex lg:items-center lg:justify-between">
-    <div class="">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
+  <div class="px-4 py-5 flex items-center justify-between">
+    <div class="flex items-center">
+      <!-- <h1 class="">Test</h1> -->
+      <mat-icon
+        style="height: 40px; width: 40px"
+        class="mx-12 text-gray-400 hover:text-orange-500"
+        matTooltip="Asset Type : Laptop"
+        svgIcon="mat_outline:laptop_mac"
+      ></mat-icon>
+      <div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Asset Information</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
+      </div>
     </div>
-    <!-- <h1 class="">Test</h1> -->
-    <button
-      href="#"
-      class="
-        ml-8
-        p-2
-        whitespace-nowrap
-        inline-flex
-        items-center
-        justify-center
-        rounded-full
-        text-base text-orange-600
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-      "
-      (click)="close()"
-    >
-      <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
-    </button>
+
+    <div>
+      <button
+        href="#"
+        class="
+          ml-8
+          p-2
+          whitespace-nowrap
+          inline-flex
+          items-center
+          justify-center
+          rounded-full
+          text-base text-orange-600
+          focus:outline-none
+        "
+        (click)="close()"
+        mat-ripple
+      >
+        <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="border-t border-gray-200">
     <dl>
-      <div class="flex flex-row items-center divide-x">
+      <div class="flex flex-row items-center">
         <div class="flex-auto">
           <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Model Name</dt>
@@ -39,15 +51,20 @@
           <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Branch</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ getBranchName(asset.branch) }}
+              {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+              <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
             </dd>
           </div>
           <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Type</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ asset.type | titlecase }}
-              ostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit
-              id mollit nulla mollit nostrud in ea officia proident. Irure nostr
+            <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
+            <dd
+              class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+              [ngClass]="{
+                'text-green-500': isDateFuture('24/12/2022'),
+                'text-red-500': !isDateFuture('24/12/2022')
+              }"
+            >
+              24/12/2022
             </dd>
           </div>
         </div>
@@ -62,55 +79,60 @@
       </div>
       <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Attachments</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
-            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-              <div class="w-0 flex-1 flex items-center">
-                <!-- Heroicon name: solid/paper-clip -->
-                <svg
-                  class="flex-shrink-0 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="ml-2 flex-1 w-0 truncate"> resume_back_end_developer.pdf </span>
-              </div>
-              <div class="ml-4 flex-shrink-0">
-                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Download </a>
-              </div>
-            </li>
-            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-              <div class="w-0 flex-1 flex items-center">
-                <!-- Heroicon name: solid/paper-clip -->
-                <svg
-                  class="flex-shrink-0 h-5 w-5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span class="ml-2 flex-1 w-0 truncate"> coverletter_back_end_developer.pdf </span>
-              </div>
-              <div class="ml-4 flex-shrink-0">
-                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Download </a>
-              </div>
-            </li>
-          </ul>
-        </dd>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"></dd>
       </div>
     </dl>
+  </div>
+
+  <!-- Bottom Action Bar -->
+  <div class="px-4 py-2 border-t border-gray-200 bg-gray-50 flex justify-between sm:px-6">
+    <!-- Left Side Action -->
+    <div>
+      <!-- Delete Asset -->
+      <button
+        type="button"
+        class="
+          ml-2
+          m-auto
+          inline-flex
+          items-center
+          px-1
+          py-1
+          border border-gray-300
+          rounded-md
+          shadow-sm
+          text-sm
+          font-medium
+          text-red-500
+          bg-white
+          hover:bg-gray-50 hover:text-red-600 hover:border-red-500
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+        "
+        matTooltip="Delete Asset Permanently"
+      >
+        <mat-icon class="h-5 w-5" svgIcon="feather:trash"></mat-icon>
+      </button>
+    </div>
+
+    <!-- Right Side Action -->
+    <div>
+      <button
+        type="submit"
+        class="
+          inline-flex
+          justify-center
+          py-2
+          px-4
+          border border-transparent
+          text-sm
+          font-medium
+          rounded-md
+          text-gray-800
+          hover:text-orange-700
+        "
+      >
+        Close
+      </button>
+    </div>
   </div>
 </div>
