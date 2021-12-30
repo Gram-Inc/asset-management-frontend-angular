@@ -27,7 +27,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/rikielR.svg", "src/assets"],
+            "assets": ["src/rikielR.svg", "src/assets", "src/assets/icons", "src/assets/logo"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles/theme.scss",
