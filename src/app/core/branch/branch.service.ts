@@ -36,6 +36,7 @@ export class BranchService {
   }
 
   createBranch(branch: IBranch): Observable<IBranch> {
+    delete branch._id;
     return this.branchs$.pipe(
       take(1),
       switchMap((brnh) =>
@@ -81,6 +82,7 @@ export class BranchService {
    * @param branch
    */
   updateBranch(_id: string, branch: IBranch): Observable<any> {
+    delete branch._id;
     return this.branchs$.pipe(
       take(1),
       switchMap((branchs) =>

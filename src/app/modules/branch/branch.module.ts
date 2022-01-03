@@ -6,7 +6,7 @@ import { BranchCreateComponent } from "./branch-create/branch-create.component";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { BranchCardComponent } from "./branch-card/branch-card.component";
-import { BranchResolver } from "src/app/core/branch/branch.resolver";
+import { BranchResolver, EditBranchResolver } from "src/app/core/branch/branch.resolver";
 
 const branchRoutes: Routes = [
   {
@@ -18,10 +18,15 @@ const branchRoutes: Routes = [
     path: "create",
     component: BranchCreateComponent,
   },
+  {
+    path: ":id",
+    resolve: [EditBranchResolver],
+    component: BranchCreateComponent,
+  },
 ];
 
 @NgModule({
   declarations: [BranchComponent, BranchCreateComponent, BranchCardComponent],
-  imports: [CommonModule, RouterModule.forChild(branchRoutes), CustomMaterialModule],
+  imports: [CommonModule, SharedModule, RouterModule.forChild(branchRoutes), CustomMaterialModule],
 })
 export class BranchModule {}

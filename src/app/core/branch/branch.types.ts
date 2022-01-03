@@ -9,4 +9,6 @@ export interface IBranch {
   state: string;
   fqdn?: string;
   branchCode: string;
+  userCount?: number;
+  assetCount?: number;
 }
