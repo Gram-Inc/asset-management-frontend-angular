@@ -249,14 +249,14 @@
       <div class="px-4 py-5 bg-white sm:p-6">
         <div class="grid grid-cols-6 gap-6">
           <!-- Hostname -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
             <input
               type="text"
-              [formControlName]="'hostName'"
+              [formControlName]="'hostname'"
               [class]="
-                assetForm.controls['laptop'].get('hostName').invalid &&
-                assetForm.controls['laptop'].get('hostName').touched
+                assetForm.controls['laptop'].get('os.hostname').invalid &&
+                assetForm.controls['laptop'].get('os.hostname').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
@@ -272,23 +272,23 @@
             />
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('hostName').invalid &&
-                (assetForm.controls['laptop'].get('hostName').dirty ||
-                  assetForm.controls['laptop'].get('hostName').touched)
+                assetForm.controls['laptop'].get('os.hostname').invalid &&
+                (assetForm.controls['laptop'].get('os.hostname').dirty ||
+                  assetForm.controls['laptop'].get('os.hostname').touched)
               "
               class="text-xs text-red-700"
               >*Required.</span
             >
           </div>
           <!-- OS -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Operating System</label>
             <input
               type="text"
-              [formControlName]="'operatingSystem'"
+              [formControlName]="'distro'"
               [class]="
-                assetForm.controls['laptop'].get('operatingSystem').invalid &&
-                assetForm.controls['laptop'].get('operatingSystem').touched
+                assetForm.controls['laptop'].get('os.distro').invalid &&
+                assetForm.controls['laptop'].get('os.distro').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
@@ -310,23 +310,23 @@
             </mat-autocomplete>
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('operatingSystem').invalid &&
-                (assetForm.controls['laptop'].get('operatingSystem').dirty ||
-                  assetForm.controls['laptop'].get('operatingSystem').touched)
+                assetForm.controls['laptop'].get('os.distro').invalid &&
+                (assetForm.controls['laptop'].get('os.distro').dirty ||
+                  assetForm.controls['laptop'].get('os.distro').touched)
               "
               class="text-xs text-red-700"
               >*Required.</span
             >
           </div>
           <!-- RAM -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" formGroupName="mem">
             <label for="first-name" class="block text-sm font-medium text-gray-700">RAM</label>
             <input
               type="number"
-              [formControlName]="'ram'"
+              [formControlName]="'total'"
               [class]="
-                assetForm.controls['laptop'].get('ram').invalid &&
-                assetForm.controls['laptop'].get('ram').touched
+                assetForm.controls['laptop'].get('mem.total').invalid &&
+                assetForm.controls['laptop'].get('mem.total').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
@@ -343,23 +343,23 @@
             <div class="text-xs text-gray-300 mt-1">In GB</div>
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('ram').invalid &&
-                (assetForm.controls['laptop'].get('ram').dirty ||
-                  assetForm.controls['laptop'].get('ram').touched)
+                assetForm.controls['laptop'].get('mem.total').invalid &&
+                (assetForm.controls['laptop'].get('mem.total').dirty ||
+                  assetForm.controls['laptop'].get('mem.total').touched)
               "
               class="text-xs text-red-700"
               >*Required.</span
             >
           </div>
           <!-- Processor -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" formGroupName="cpu">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Processor</label>
             <input
               type="text"
-              [formControlName]="'processor'"
+              [formControlName]="'brand'"
               [class]="
-                assetForm.controls['laptop'].get('processor').invalid &&
-                assetForm.controls['laptop'].get('processor').touched
+                assetForm.controls['laptop'].get('cpu.brand').invalid &&
+                assetForm.controls['laptop'].get('cpu.brand').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
@@ -384,19 +384,19 @@
             </mat-autocomplete>
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('processor').invalid &&
-                (assetForm.controls['laptop'].get('processor').dirty ||
-                  assetForm.controls['laptop'].get('processor').touched)
+                assetForm.controls['laptop'].get('cpu.brand').invalid &&
+                (assetForm.controls['laptop'].get('cpu.brand').dirty ||
+                  assetForm.controls['laptop'].get('cpu.brand').touched)
               "
               class="text-xs text-red-700"
               >*Required.</span
             >
           </div>
           <!-- Storage Type -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
             <select
-              [formControlName]="'storageType'"
+              [formControlName]="'type'"
               class="
                 mt-1
                 block
@@ -416,23 +416,23 @@
             </select>
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('storageType').invalid &&
-                (assetForm.controls['laptop'].get('storageType').dirty ||
-                  assetForm.controls['laptop'].get('storageType').touched)
+                assetForm.controls['laptop'].get('diskLayout.type').invalid &&
+                (assetForm.controls['laptop'].get('diskLayout.type').dirty ||
+                  assetForm.controls['laptop'].get('diskLayout.type').touched)
               "
               class="text-xs text-red-700"
               >*Required.</span
             >
           </div>
           <!-- Storage Size -->
-          <div class="col-span-3 sm:col-span-3">
+          <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Size</label>
             <input
               type="number"
-              [formControlName]="'storageSize'"
+              [formControlName]="'size'"
               [class]="
-                assetForm.controls['laptop'].get('storageSize').invalid &&
-                assetForm.controls['laptop'].get('storageSize').touched
+                assetForm.controls['laptop'].get('diskLayout.size').invalid &&
+                assetForm.controls['laptop'].get('diskLayout.size').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
@@ -450,9 +450,9 @@
 
             <span
               *ngIf="
-                assetForm.controls['laptop'].get('storageSize').invalid &&
-                (assetForm.controls['laptop'].get('storageSize').dirty ||
-                  assetForm.controls['laptop'].get('storageSize').touched)
+                assetForm.controls['laptop'].get('diskLayout.size').invalid &&
+                (assetForm.controls['laptop'].get('diskLayout.size').dirty ||
+                  assetForm.controls['laptop'].get('diskLayout.size').touched)
               "
               class="text-xs text-red-700"
               >Invalid

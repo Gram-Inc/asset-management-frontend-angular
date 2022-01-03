@@ -113,12 +113,32 @@ export class DetailsComponent implements OnInit, OnDestroy {
       //Laptop, Server ,PC Fields
       case "laptop" || "pc" || "server":
         fields = this._formBuilder.group({
-          hostName: ["", Validators.required],
-          ram: ["", [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
-          operatingSystem: ["", Validators.required],
-          processor: ["", Validators.required],
-          storageType: ["", Validators.required],
-          storageSize: ["", Validators.required],
+          system: this._formBuilder.group({
+            manufacturer: [""],
+            model: [""],
+            serial: [""],
+          }),
+          os: this._formBuilder.group({
+            platform: ["WINDOWS"],
+            distro: [""],
+            arch: ["x64"], //x64,x32
+            hostname: ["", Validators.required],
+          }),
+          mem: this._formBuilder.group({
+            total: ["", [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]], //in bytes
+          }),
+          cpu: this._formBuilder.group({
+            manufacturer: ["Intel®"],
+            brand: [""], //i3,i5..
+            processors: 1,
+          }),
+          diskLayout: this._formBuilder.group({
+            device: ["disk0"],
+            type: [""], // NVMe,..
+            name: [""], //"INTEL SSDPEKNW512G8"
+            vendor: [""], // INTEL
+            size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
+          }),
         });
         break;
 
@@ -139,13 +159,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
     if (type == "laptop") {
       //Enable AutoCompelete Feature for OS
       this.filteredOSForAutoComplete = (this.assetForm.get("laptop") as FormGroup)
-        .get("operatingSystem")
+        .get("os.distro")
         .valueChanges.pipe(
           startWith(""),
           map((value) => this._filterOS(value))
         );
       this.filteredProcessorForAutoComplete = (this.assetForm.get("laptop") as FormGroup)
-        .get("processor")
+        .get("cpu.brand")
         .valueChanges.pipe(
           startWith(""),
           map((value) => this._filterProcessor(value))
@@ -159,16 +179,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
     //Check Validation
     if (this.assetForm.invalid) return;
 
+    console.log(this.assetForm.value);
+
+    //Create Asset Object
+
     // Create Asset
-    this._assetService.createAsset(this.assetForm.value).subscribe(
-      (_) => {
-        this.openSnackBar("Success", "Asset Created");
-        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-      },
-      (err) => {
-        this.openSnackBar("Error", err.message);
-      }
-    );
+    // this._assetService.createAsset(this.assetForm.value).subscribe(
+    //   (_) => {
+    //     this.openSnackBar("Success", "Asset Created");
+    //     this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+    //   },
+    //   (err) => {
+    //     this.openSnackBar("Error", err.message);
+    //   }
+    // );
   }
 
   removeTypeFromForm() {
