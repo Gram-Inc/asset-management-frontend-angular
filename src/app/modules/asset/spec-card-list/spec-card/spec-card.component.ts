@@ -7,6 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class SpecCardComponent implements OnInit {
   type: "HDD" | "SSD" | "NVMe" | "RAM" = "SSD";
+  size = "1000";
   constructor() {}
 
   ngOnInit(): void {}

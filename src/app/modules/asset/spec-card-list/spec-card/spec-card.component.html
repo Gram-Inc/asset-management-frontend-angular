@@ -28,34 +28,34 @@
     <div
       *ngSwitchCase="'HDD'"
       class="mx-2"
-      style="width: 56px !important; height: 34px; min-width: 44px !important"
+      style="width: 56px !important; height: 44px; min-width: 44px !important"
     >
-      <img src="/assets/icons/harddisk.png" class="m-auto" width="34px" height="34px" alt="ram" />
+      <img src="/assets/icons/harddisk.png" class="m-auto" width="44px" height="44px" alt="ram" />
     </div>
 
     <!-- SSD -->
     <div
       *ngSwitchCase="'SSD'"
       class="mx-2"
-      style="width: 56px !important; height: 34px; min-width: 44px !important"
+      style="width: 56px !important; height: 44px; min-width: 44px !important"
     >
-      <img src="/assets/icons/ssd.png" class="m-auto" width="34px" height="34px" alt="ram" />
+      <img src="/assets/icons/ssd.png" class="m-auto" width="44px" height="44px" alt="ram" />
     </div>
 
     <!-- NVMe -->
     <div
       *ngSwitchCase="'NVMe'"
       class="mx-2"
-      style="width: 56px !important; height: 34px; min-width: 44px !important"
+      style="width: 56px !important; height: 44px; min-width: 44px !important"
     >
-      <img src="/assets/icons/harddisk.png" class="m-auto" width="34px" height="34px" alt="ram" />
+      <img src="/assets/icons/harddisk.png" class="m-auto" width="44px" height="44px" alt="ram" />
     </div>
 
     <!-- Default -->
     <div
       *ngSwitchDefault
       class="flex justify-center items-center"
-      style="width: 56px !important; height: 34px; min-width: 44px !important"
+      style="width: 56px !important; height: 44px; min-width: 44px !important"
     >
       N/A
     </div>
@@ -80,11 +80,11 @@
     class="overf font-semibold border-x-2 h-full text-lg text-center"
     style="writing-mode: vertical-rl; color: #ffb900"
   >
-    {{ type == "RAM" ? "DDR4" : type }}
+    {{ type == "RAM" ? "DDR4" : (type | uppercase) }}
   </h6>
   <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
     <h6 class="text-xs text-gray-300">Total</h6>
-    <h4 class="text-lg font-bold">8</h4>
+    <h4 class="text-lg font-bold">{{ size }}</h4>
     <h6 class="text-xs">GB</h6>
   </div>
   <!-- <div class="flex flex-col w-full border-l border-gray-200" style="margin-left: 16px; padding: 18px">
