@@ -6,6 +6,7 @@ import { SharedModule } from "../shared/shared.module";
 import { UamListComponent } from "./uam-list/uam-list.component";
 import { UamDetailComponent } from "./uam-detail/uam-detail.component";
 import { CreateUAMResolver, EditUAMResolver } from "src/app/core/uam/uam.resolver";
+import { CustomMaterialModule } from "../custom-material/custom-material.module";
 
 const uamRoutes: Routes = [
   {
@@ -26,6 +27,6 @@ const uamRoutes: Routes = [
 
 @NgModule({
   declarations: [UamComponent, UamListComponent, UamDetailComponent],
-  imports: [CommonModule, SharedModule, RouterModule.forChild(uamRoutes)],
+  imports: [CommonModule, SharedModule, CustomMaterialModule, RouterModule.forChild(uamRoutes)],
 })
 export class UamModule {}
