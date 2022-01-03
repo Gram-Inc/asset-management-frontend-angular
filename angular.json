@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "allowedCommonJsDependencies": ["qrcode"],
             "outputPath": "dist/asset-management-frontend-angular",
             "index": "src/index.html",
