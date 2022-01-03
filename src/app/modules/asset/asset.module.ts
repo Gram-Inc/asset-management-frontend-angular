@@ -7,9 +7,16 @@ import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { AssetListComponent } from "./list/asset.component";
 import { DetailsComponent } from "./details/details.component";
+import { SpecCardListModule } from "./spec-card-list/spec-card-list.module";
 
 @NgModule({
   declarations: [AssetComponent, AssetListComponent, DetailsComponent],
-  imports: [CommonModule, SharedModule, CustomMaterialModule, RouterModule.forChild(assetRoutes)],
+  imports: [
+    CommonModule,
+    SharedModule,
+    CustomMaterialModule,
+    SpecCardListModule,
+    RouterModule.forChild(assetRoutes),
+  ],
 })
 export class AssetModule {}
