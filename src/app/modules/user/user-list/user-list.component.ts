@@ -140,36 +140,6 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  /**
-   * Create Asset
-   */
-  createAsset(): void {
-    this._matDialog.open(DetailsComponent, {
-      panelClass: "fuse-confirmation-dialog-panel",
-    });
-    /* this._rikielConfirmationService.open({
-      title: "Delete user",
-      message: "Are you sure you want to remove this user? This action cannot be undone!",
-      actions: {
-        confirm: {
-          label: "Delete",
-        },
-      },
-    }); */
-    /* // Get the user object
-    const user = this.selectedAssetForm.getRawValue();
-    // Create the product
-    this._userService.createAsset(user).subscribe((newAsset) => {
-      // Go to new product
-      this.selectedAsset = newAsset;
-
-      // Fill the form
-      this.selectedAssetForm.patchValue(newAsset);
-
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    }); */
-  }
   openDetail(ast: IUser) {
     //Open User Detail Page
   }
@@ -204,15 +174,8 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Check For Branch Code
   getBranchShortCode(obj: any) {
+    console.log(obj);
     if (obj) return typeof obj === "object" ? obj.branchCode : "-";
     return "NULL";
-  }
-
-  //Get Current User
-  getCurrentUser(ast?: IUser) {
-    return ast ? "-" : "NULL";
-  }
-  getPrevUser(ast?: IUser) {
-    return ast ? "-" : "NULL";
   }
 }

@@ -1,6 +1,6 @@
-<div class="p-8">
+<div class="container mx-auto p-5" [formGroup]="userForm">
   <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create User</h2>
   </div>
 
   <div class="px-4 py-5 bg-white sm:p-6">
@@ -9,9 +9,12 @@
         <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
         <input
           type="text"
-          name="first-name"
-          id="first-name"
-          autocomplete="given-name"
+          [formControlName]="'firstName'"
+          [class]="
+            userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
           class="
             mt-1
             focus:ring-orange-500 focus:border-orange-500
@@ -29,9 +32,12 @@
         <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
         <input
           type="text"
-          name="last-name"
-          id="last-name"
-          autocomplete="family-name"
+          [formControlName]="'lastName'"
+          [class]="
+            userForm.controls['lastName'].invalid && userForm.controls['lastName'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
           class="
             mt-1
             focus:ring-orange-500 focus:border-orange-500
@@ -45,13 +51,17 @@
         />
       </div>
 
-      <div class="col-span-6 sm:col-span-4">
+      <!-- Email Address -->
+      <div class="col-span-6 sm:col-span-3">
         <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
         <input
           type="text"
-          name="email-address"
-          id="email-address"
-          autocomplete="email"
+          [formControlName]="'email'"
+          [class]="
+            userForm.controls['email'].invalid && userForm.controls['email'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
           class="
             mt-1
             focus:ring-orange-500 focus:border-orange-500
@@ -65,12 +75,35 @@
         />
       </div>
 
+      <!-- Mobile Number -->
       <div class="col-span-6 sm:col-span-3">
-        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+        <label for="street-address" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+        <input
+          type="text"
+          [formControlName]="'mobileNumber'"
+          [class]="
+            userForm.controls['mobileNumber'].invalid && userForm.controls['mobileNumber'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
+          class="
+            mt-1
+            focus:ring-orange-500 focus:border-orange-500
+            block
+            w-full
+            shadow-sm
+            sm:text-sm
+            border-gray-300
+            rounded-md
+          "
+        />
+      </div>
+
+      <!-- Branch -->
+      <div class="col-span-6 sm:col-span-6">
+        <label for="email-address" class="block text-sm font-medium text-gray-700">Branch</label>
         <select
-          id="country"
-          name="country"
-          autocomplete="country-name"
+          [formControlName]="'branch'"
           class="
             mt-1
             block
@@ -85,90 +118,87 @@
             sm:text-sm
           "
         >
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
+          <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
         </select>
+        <span
+          *ngIf="
+            userForm.controls['branch'].invalid &&
+            (userForm.controls['branch'].dirty || userForm.controls['branch'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
 
-      <div class="col-span-6">
-        <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
-        <input
-          type="text"
-          name="street-address"
-          id="street-address"
-          autocomplete="street-address"
+      <!-- Role -->
+      <div class="col-span-6 sm:col-span-3">
+        <label for="country" class="block text-sm font-medium text-gray-700">Role</label>
+        <select
+          [formControlName]="'role'"
+          [class]="
+            userForm.controls['role'].invalid && userForm.controls['role'].touched
+              ? 'border-red-500'
+              : 'border-gray-300'
+          "
           class="
             mt-1
-            focus:ring-orange-500 focus:border-orange-500
             block
             w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
+            py-2
+            px-3
+            border border-gray-300
+            bg-white
             rounded-md
+            shadow-sm
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
+            sm:text-sm
           "
-        />
+        >
+          <option value="level1">Level 1</option>
+          <option value="level2">Level 2</option>
+          <option value="level3">Level 3</option>
+        </select>
+        <span
+          *ngIf="
+            userForm.controls['role'].invalid &&
+            (userForm.controls['role'].dirty || userForm.controls['role'].touched)
+          "
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
 
-      <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-        <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-        <input
-          type="text"
-          name="city"
-          id="city"
-          autocomplete="address-level2"
+      <!-- Department -->
+      <div class="col-span-6 sm:col-span-3">
+        <label for="city" class="block text-sm font-medium text-gray-700">Department</label>
+        <select
+          [formControlName]="'departmentId'"
           class="
             mt-1
-            focus:ring-orange-500 focus:border-orange-500
             block
             w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
+            py-2
+            px-3
+            border border-gray-300
+            bg-white
             rounded-md
-          "
-        />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-        <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-        <input
-          type="text"
-          name="region"
-          id="region"
-          autocomplete="address-level1"
-          class="
-            mt-1
-            focus:ring-orange-500 focus:border-orange-500
-            block
-            w-full
             shadow-sm
+            focus:outline-none focus:ring-orange-500 focus:border-orange-500
             sm:text-sm
-            border-gray-300
-            rounded-md
           "
-        />
-      </div>
-
-      <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-        <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-        <input
-          type="text"
-          name="postal-code"
-          id="postal-code"
-          autocomplete="postal-code"
-          class="
-            mt-1
-            focus:ring-orange-500 focus:border-orange-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
+        >
+          <option *ngFor="let department of departments$ | async" [value]="department?._id">
+            {{ department.name }}
+          </option>
+        </select>
+        <span
+          *ngIf="
+            userForm.controls['departmentId'].invalid &&
+            (userForm.controls['departmentId'].dirty || userForm.controls['departmentId'].touched)
           "
-        />
+          class="text-xs text-red-700"
+          >*Required.</span
+        >
       </div>
     </div>
   </div>
@@ -180,7 +210,32 @@
 
     <!-- Confirm -->
     <ng-container>
-      <button mat-flat-button>Cancel</button>
+      <span class="sm:ml-3">
+        <button
+          type="button"
+          class="
+            inline-flex
+            items-center
+            px-4
+            py-2
+            border border-transparent
+            rounded-md
+            shadow-sm
+            text-sm
+            font-medium
+            text-white
+            bg-orange-600
+            hover:bg-orange-700
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+          "
+          (click)="create()"
+        >
+          <!-- Heroicon name: solid/check -->
+          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+
+          Create
+        </button>
+      </span>
     </ng-container>
   </div>
 </div>
