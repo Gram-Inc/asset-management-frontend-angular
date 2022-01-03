@@ -13,6 +13,7 @@ import { AssetShortDetailComponent } from "./asset-short-detail/asset-short-deta
 import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { AssetSubDetailCardComponent } from "./asset-sub-detail-card/asset-sub-detail-card.component";
 import { SpecCardListModule } from "../asset/spec-card-list/spec-card-list.module";
+import { UserFilterComponent } from "./user-filter/user-filter.component";
 
 var sharedComp = [
   TitleCardComponent,
@@ -21,6 +22,7 @@ var sharedComp = [
   ThemeTogglerComponent,
   AssetFilterComponent,
   AssetSubDetailCardComponent,
+  UserFilterComponent,
 ];
 @NgModule({
   declarations: [...sharedComp, AssetShortDetailComponent, QrcodeComponent],

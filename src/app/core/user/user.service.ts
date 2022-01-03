@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, ReplaySubject, of, BehaviorSubject } from "rxjs";
+import { Observable, ReplaySubject, of, BehaviorSubject, throwError } from "rxjs";
 import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IPagination } from "../asset/asset.types";
@@ -13,6 +13,7 @@ export class UserService {
   private _baseUrl = environment.baseUrl;
 
   private _user: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
+  private _selectedUser: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
   private _users: BehaviorSubject<IUser[] | null> = new BehaviorSubject<IUser[] | null>(null);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
@@ -27,6 +28,14 @@ export class UserService {
 
   get user$(): Observable<IUser> {
     return this._user.asObservable();
+  }
+
+  set selectedUser(value: IUser) {
+    this._selectedUser.next(value);
+  }
+
+  get selectedUser$(): Observable<IUser> {
+    return this._selectedUser.asObservable();
   }
 
   get users$(): Observable<IUser[]> {
@@ -126,13 +135,61 @@ export class UserService {
               filter((asmnt) => asmnt && asmnt._id === _id),
               tap(() => {
                 // Update the user if it's selected
-                this._user.next(updatedUser);
+                this._selectedUser.next(updatedUser);
 
                 // Return the updated user
                 return updatedUser;
               })
             )
           )
+        )
+      )
+    );
+  }
+
+  getUserById(id: string): Observable<IUser> {
+    return this._users.pipe(
+      take(1),
+      map((users) => {
+        const usr = users.find((usr) => usr._id == id || null);
+
+        this._selectedUser.next(usr); // Change this
+
+        return usr;
+      }),
+      switchMap((usr) => {
+        if (!usr) {
+          return throwError("Could not found user with id of " + id + "!");
+        }
+
+        return of(usr);
+      })
+    );
+  }
+
+  /**
+   * Delete the product
+   *
+   * @param _id
+   */
+  deleteUser(_id: string): Observable<boolean> {
+    return this.users$.pipe(
+      take(1),
+      switchMap((users) =>
+        this._httpClient.delete(`${this._baseUrl}/user/${_id}`).pipe(
+          map((isDeleted: boolean) => {
+            // Find the index of the deleted asset
+            const index = users.findIndex((item) => item._id === _id);
+
+            // Delete the product
+            users.splice(index, 1);
+
+            // Update the users
+            this._users.next(users);
+
+            // Return the deleted status
+            return isDeleted;
+          })
         )
       )
     );
