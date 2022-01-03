@@ -57,6 +57,10 @@ export class UserService {
     );
   }
 
+  clrAst() {
+    this._selectedUser.next(null);
+  }
+
   getUsers(page: number = 1, limit: number = 10, searchText: string = "") {
     return this._httpClient
       .get<IDTO>(`${this._baseUrl}/users/paginate`, {
