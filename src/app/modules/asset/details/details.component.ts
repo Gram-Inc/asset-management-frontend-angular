@@ -179,20 +179,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     //Check Validation
     if (this.assetForm.invalid) return;
 
-    console.log(this.assetForm.value);
-
     //Create Asset Object
 
     // Create Asset
-    // this._assetService.createAsset(this.assetForm.value).subscribe(
-    //   (_) => {
-    //     this.openSnackBar("Success", "Asset Created");
-    //     this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-    //   },
-    //   (err) => {
-    //     this.openSnackBar("Error", err.message);
-    //   }
-    // );
+    this._assetService.createAsset(this.assetForm.value).subscribe(
+      (_) => {
+        this.openSnackBar("Success", "Asset Created");
+        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+      },
+      (err) => {
+        this.openSnackBar("Error", err.message);
+      }
+    );
   }
 
   removeTypeFromForm() {

@@ -348,7 +348,7 @@
                   assetForm.controls['laptop'].get('mem.total').touched)
               "
               class="text-xs text-red-700"
-              >*Required.</span
+              >*Invalid.</span
             >
           </div>
           <!-- Processor -->
@@ -413,6 +413,7 @@
             >
               <option value="HDD">HDD</option>
               <option value="SSD">SSD</option>
+              <option value="NVMe">NVMe</option>
             </select>
             <span
               *ngIf="

@@ -32,7 +32,8 @@ export class AssetShortDetailComponent implements OnInit {
   }
 
   getBranchName(branch: string | IBranch): string {
-    return typeof branch === "object" ? branch.name : "-";
+    if (branch) return typeof branch === "object" ? branch.name : "-";
+    return "NULL";
   }
 
   getAssetType(asset: IAsset) {
@@ -44,6 +45,7 @@ export class AssetShortDetailComponent implements OnInit {
     return false;
   }
   getBranchShortCode(branch: string | IBranch): string {
-    return typeof branch === "object" ? branch.name : "-";
+    if (branch) return typeof branch === "object" ? branch.name : "-";
+    return "NULL";
   }
 }

@@ -221,14 +221,15 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Check For Branch Code
   getBranchShortCode(obj: any) {
-    return typeof obj === "object" ? obj.branchCode : "-";
+    if (obj) return typeof obj === "object" ? obj.branchCode : "-";
+    return "NULL";
   }
 
   //Get Current User
-  getCurrentUser(ast: IAsset) {
-    return "-";
+  getCurrentUser(ast?: IAsset) {
+    return ast ? "-" : "NULL";
   }
-  getPrevUser(ast: IAsset) {
-    return "-";
+  getPrevUser(ast?: IAsset) {
+    return ast ? "-" : "NULL";
   }
 }
