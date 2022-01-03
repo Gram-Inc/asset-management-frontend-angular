@@ -11,4 +11,6 @@ export class BranchCreateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  create() {}
 }
