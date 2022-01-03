@@ -31,7 +31,7 @@ export class AssetShortDetailComponent implements OnInit {
     this.matDialogRef.close();
   }
 
-  getBranchName(branch: string | IBranch): string {
+  getBranchName(branch: string | Partial<IBranch>): string {
     if (branch) return typeof branch === "object" ? branch.name : "-";
     return "NULL";
   }
@@ -44,7 +44,7 @@ export class AssetShortDetailComponent implements OnInit {
     if (isValid(date)) return isFuture(date);
     return false;
   }
-  getBranchShortCode(branch: string | IBranch): string {
+  getBranchShortCode(branch: string | Partial<IBranch>): string {
     if (branch) return typeof branch === "object" ? branch.name : "-";
     return "NULL";
   }

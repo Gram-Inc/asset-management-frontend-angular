@@ -6,5 +6,6 @@ import { SpecCardListComponent } from "./spec-card-list.component";
 @NgModule({
   declarations: [SpecCardComponent, SpecCardListComponent],
   imports: [CommonModule],
+  exports: [SpecCardListComponent],
 })
 export class SpecCardListModule {}

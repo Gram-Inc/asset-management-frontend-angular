@@ -2,22 +2,22 @@ import { IBranch } from "../branch/branch.types";
 import { IVendor } from "../vendor/vendor.types";
 
 export interface IAsset {
-  _id: string;
-  assetCode: string;
-  name: string;
-  type: string;
+  _id?: string;
+  assetCode?: string;
+  name?: string;
+  type?: string;
   location?: string;
   venderId?: string;
   comment?: string;
-  laptop?: ILaptop;
-  battery?: IBattery[];
+  laptop?: Partial<ILaptop>;
+  battery?: Partial<IBattery>[];
   sr_no: string;
-  warranty?: IWarranty[];
-  amc?: IWarranty[];
-  client?: IVendor;
-  ups?: IUPS;
-  allocationStatus: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
-  branch?: string | IBranch;
+  warranty?: Partial<IWarranty>[];
+  amc?: Partial<IWarranty>[];
+  client?: Partial<IVendor>;
+  ups?: Partial<IUPS>;
+  allocationStatus?: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
+  branch?: string | Partial<IBranch>;
 }
 
 export interface IUPS {

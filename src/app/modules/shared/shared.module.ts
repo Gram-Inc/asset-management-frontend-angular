@@ -12,6 +12,7 @@ import { AssetFilterComponent } from "./asset-filter/asset-filter.component";
 import { AssetShortDetailComponent } from "./asset-short-detail/asset-short-detail.component";
 import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { AssetSubDetailCardComponent } from "./asset-sub-detail-card/asset-sub-detail-card.component";
+import { SpecCardListModule } from "../asset/spec-card-list/spec-card-list.module";
 
 var sharedComp = [
   TitleCardComponent,
@@ -30,6 +31,7 @@ var sharedComp = [
     CustomMaterialModule,
     ConfirmationModule,
     IconsModule,
+    SpecCardListModule,
   ],
   exports: [CommonModule, ReactiveFormsModule, FormsModule, ConfirmationModule, IconsModule, ...sharedComp],
 })
