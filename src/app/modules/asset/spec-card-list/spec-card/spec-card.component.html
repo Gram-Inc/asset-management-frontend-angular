@@ -1,35 +1,77 @@
 <div class="flex items-center border-2 border-gray-300 rounded-2xl" style="width: 260px; height: 75px">
   <!-- Icons / Image -->
-  <div
-    class="relative left-0 top-0 mx-2"
-    style="width: 56px !important; height: 34px; min-width: 44px !important"
-  >
-    <img
-      class="relative left-2 top-0"
-      src="/assets/icons/ram-memory.png"
-      width="34px"
-      height="34px"
-      alt="ram"
-    />
-    <img
-      class="absolute left-0 top-0"
-      src="/assets/icons/ram-memory.png"
-      width="34px"
-      height="34px"
-      alt="ram"
-    />
-  </div>
+
+  <!-- RAM -->
+  <ng-container [ngSwitch]="type">
+    <div
+      *ngSwitchCase="true"
+      class="relative left-0 top-0 mx-2"
+      style="width: 56px !important; height: 34px; min-width: 44px !important"
+    >
+      <img
+        class="relative left-2 top-0"
+        src="/assets/icons/ram-memory.png"
+        width="34px"
+        height="34px"
+        alt="ram"
+      />
+      <img
+        class="absolute left-0 top-0"
+        src="/assets/icons/ram-memory.png"
+        width="34px"
+        height="34px"
+        alt="ram"
+      />
+    </div>
+
+    <!-- HDD -->
+    <div
+      *ngSwitchCase="'HDD'"
+      class="mx-2"
+      style="width: 56px !important; height: 34px; min-width: 44px !important"
+    >
+      <img src="/assets/icons/harddisk.png" class="m-auto" width="34px" height="34px" alt="ram" />
+    </div>
+
+    <!-- SSD -->
+    <div
+      *ngSwitchCase="'SSD'"
+      class="mx-2"
+      style="width: 56px !important; height: 34px; min-width: 44px !important"
+    >
+      <img src="/assets/icons/ssd.png" class="m-auto" width="34px" height="34px" alt="ram" />
+    </div>
+
+    <!-- NVMe -->
+    <div
+      *ngSwitchCase="'NVMe'"
+      class="mx-2"
+      style="width: 56px !important; height: 34px; min-width: 44px !important"
+    >
+      <img src="/assets/icons/harddisk.png" class="m-auto" width="34px" height="34px" alt="ram" />
+    </div>
+
+    <!-- Default -->
+    <div
+      *ngSwitchDefault
+      class="flex justify-center items-center"
+      style="width: 56px !important; height: 34px; min-width: 44px !important"
+    >
+      N/A
+    </div>
+  </ng-container>
+
   <hr class="border border-gray-300 h-full" />
 
   <!-- Sr  -->
   <div class="flex flex-col h-full justify-center ml-3" style="width: 100%">
     <div class="flex items-center mb-2">
-      <h6 class="overf text-xs font-medium text-gray-300">S1 -&nbsp;</h6>
-      <h6 class="overf text-xs text-black">4 GB</h6>
+      <h6 class="overf text-xs font-medium text-gray-300">{{ type == "RAM" ? "S1" : "Brand" }} &nbsp;</h6>
+      <h6 class="overf text-xs text-black">{{ type == "RAM" ? "4 GB" : "King.." }}</h6>
     </div>
     <div class="flex items-center mt-2">
-      <h6 class="overf text-xs font-medium text-gray-300">S2 -&nbsp;</h6>
-      <h6 class="overf text-xs text-black">4 GB</h6>
+      <h6 class="overf text-xs font-medium text-gray-300">{{ type == "RAM" ? "S2" : "Sr." }} &nbsp;</h6>
+      <h6 class="overf text-xs text-black">{{ type == "RAM" ? "4 GB" : "SR1232" }}</h6>
     </div>
   </div>
 
@@ -38,7 +80,7 @@
     class="overf font-semibold border-x-2 h-full text-lg text-center"
     style="writing-mode: vertical-rl; color: #ffb900"
   >
-    DDR4
+    {{ type == "RAM" ? "DDR4" : type }}
   </h6>
   <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
     <h6 class="text-xs text-gray-300">Total</h6>
