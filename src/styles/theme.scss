@@ -10,8 +10,35 @@ $custom-typography: mat-typography-config(
 @include angular-material-typography($custom-typography);
 
 // Default colors
-$my-app-primary: mat-palette($mat-teal, 700, 100, 800);
-$my-app-accent: mat-palette($mat-teal, 700, 100, 800);
+$rikiel-orange: (
+  50: #fff8e2,
+  100: #ffecb5,
+  200: #ffe185,
+  300: #ffd655,
+  400: #ffcb32,
+  500: #ffc21e,
+  600: #ffb519,
+  700: #ffa218,
+  800: #ff9116,
+  900: #ff7214,
+);
+
+$rikiel-accent: (
+  50: #e1f1fe,
+  100: #b7ddfe,
+  200: #87c8fe,
+  300: #51b2fe,
+  400: #14a1ff,
+  500: #0091fe,
+  600: #0083f0,
+  700: #0071dd,
+  800: #0060cb,
+  900: #0041aa,
+);
+$my-app-primary: mat-palette($mat-deep-orange, 400);
+// mat-palette($mat-brown, 200);
+
+$my-app-accent: mat-palette($mat-grey, 200, 500, 300);
 
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
 @include angular-material-theme($my-app-theme);

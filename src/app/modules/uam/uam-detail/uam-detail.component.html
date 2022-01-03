@@ -10,8 +10,8 @@
 </div>
 <div class="px-8">
   <!-- request Type  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-lg font-medium">Request Type</h4></div>
+  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Request Type</h4></div>
     <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
       <div class="flex flex-col items-center">
         <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
@@ -70,37 +70,84 @@
     </div>
   </div>
 
-  <!-- User Information  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-lg font-medium">User Information</h4></div>
-
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-6 items-center">
-      <!-- UAM no. -->
-      <div class="col-span-4 sm:col-span-4">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">Model Name</label>
-        <input
-          type="text"
-          class="
-            mt-1
-            focus:ring-orange-500 focus:border-orange-500
-            block
-            w-full
-            shadow-sm
-            sm:text-sm
-            border-gray-300
-            rounded-md
-          "
-        />
-
-        <!-- <span
-          *ngIf="
-            assetForm.controls['name'].invalid &&
-            (assetForm.controls['name'].dirty || assetForm.controls['name'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        > -->
+  <!-- Single Or Multiple User  -->
+  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">No. of User</h4></div>
+    <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+      <div class="flex flex-col items-center">
+        <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+          <button
+            class="px-6 rounded-full"
+            [ngClass]="{
+              'bg-card pointer-events-none shadow': noOfUser == 'single',
+              'bg-transparent': !(noOfUser == 'single')
+            }"
+            mat-flat-button
+            (click)="(noOfUser == 'single')"
+            disableRipple
+          >
+            Single
+          </button>
+          <button
+            class="px-6 rounded-full"
+            [ngClass]="{
+              'bg-card pointer-events-none shadow': noOfUser == 'multiple',
+              'bg-transparent': !(noOfUser == 'multiple')
+            }"
+            mat-flat-button
+            (click)="(noOfUser == 'multiple')"
+            disableRipple
+          >
+            Multiple
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- User Information  -->
+  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
+
+    <div class="mt-1 col-span-3 grid grid-cols-6 gap-6 items-center">
+      <!-- UAM no. -->
+      <div class="col-span-6" [style.fontSize.px]="12">
+        <mat-form-field appearance="outline">
+          <mat-label>U.A.M Number</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+
+      <!-- date of Request -->
+      <div class="col-span-3" [style.fontSize.px]="12">
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Request</mat-label>
+          <input matInput [matDatepicker]="dor" />
+          <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
+          <mat-datepicker #dor></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Date of Joining / Leaving -->
+      <div class="col-span-3" [style.fontSize.px]="12">
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Joining / Leaving </mat-label>
+          <input matInput [matDatepicker]="doj" />
+          <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
+          <mat-datepicker #doj></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Check if Single  -->
+      <ng-container *ngIf="noOfUser == 'single' ? single : multiple"></ng-container>
+    </div>
+  </div>
 </div>
+
+<ng-template #single>
+  <h1>Signle</h1>
+</ng-template>
+
+<ng-template #multiple>
+  <h1>Multiple</h1>
+</ng-template>

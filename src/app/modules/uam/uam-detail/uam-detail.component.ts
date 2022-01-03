@@ -7,6 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class UamDetailComponent implements OnInit {
   requestType: "c" | "m" | "d" | "de" = "m";
+  noOfUser: "single" | "multiple" = "single";
   constructor() {}
 
   ngOnInit(): void {}
