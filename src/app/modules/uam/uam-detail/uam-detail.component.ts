@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-uam-detail',
-  templateUrl: './uam-detail.component.html',
-  styleUrls: ['./uam-detail.component.scss']
+  selector: "app-uam-detail",
+  templateUrl: "./uam-detail.component.html",
+  styleUrls: ["./uam-detail.component.scss"],
 })
 export class UamDetailComponent implements OnInit {
+  requestType: "c" | "m" | "d" | "de" = "m";
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
