@@ -56,12 +56,13 @@ export interface IBattery {
 }
 
 export interface ILaptop {
-  hostName: string;
-  operatingSystem: string;
-  ram: string;
-  processor: string;
-  storageType: string;
-  storageSize: string;
+  system?: Partial<System>;
+  os?: Partial<OS>;
+  mem?: Partial<Mem>;
+  memLayout?: Partial<MemLayout>[];
+  battery?: Partial<LaptopBattery>;
+  baseboard?: Partial<Baseboard>;
+  cpu?: Partial<CPU>;
 }
 
 export interface IPagination {
@@ -82,4 +83,92 @@ interface IAssetSubType {
   values?: any;
   type?: string;
   fields?: [];
+}
+
+interface LaptopBattery {
+  hasBattery: boolean;
+  cycleCount: number;
+  isCharging: boolean;
+  designedCapacity: number;
+  maxCapacity: number;
+  currentCapacity: number;
+  voltage: number;
+  capacityUnit: string;
+  percent: number;
+  timeRemaining: number;
+  acConnected: boolean;
+  type: string;
+  model: string;
+  manufacturer: string;
+  serial: string;
+}
+
+interface CPU {
+  manufacturer: string;
+  brand: string;
+  cores: number;
+  physicalCores: number;
+  processors: number;
+}
+interface Baseboard {
+  manufacturer: string;
+  model: string;
+  version: string;
+  serial: string;
+  assetTag: string;
+  memMax: string;
+  memSlots: number;
+}
+interface MemLayout {
+  size: number;
+  bank: string;
+  type: string;
+  ecc: boolean;
+  clockSpeed: number;
+  formFactor: string;
+  manufacturer: string;
+  partNum: string;
+  serialNum: string;
+  voltageConfigured: string;
+  voltageMin: string;
+  voltageMax: string;
+}
+interface Mem {
+  total: number;
+  free: number;
+  used: number;
+  active: number;
+  available: number;
+  buffers: number;
+  cached: number;
+  slab: number;
+  buffcache: number;
+  swaptotal: number;
+  swapused: number;
+  swapfree: number;
+}
+interface OS {
+  platform: string;
+  distro: string;
+  release: string;
+  codename: string;
+  kernel: string;
+  arch: string;
+  hostname: string;
+  fqdn: string;
+  codepage: string;
+  logofile: string;
+  serial: string;
+  build: string;
+  servicepack: string;
+  uefi: boolean;
+}
+interface System {
+  manufacturer: string;
+  model: string;
+  version: string;
+  serial: string;
+  uuid: string;
+  sku: string;
+  virtual: boolean;
 }
