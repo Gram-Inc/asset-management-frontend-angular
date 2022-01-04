@@ -18,8 +18,7 @@ export class AssetComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   assets$: Observable<IAsset[]>;
   types: string[];
-  pagination: IPagination;
-  selectedAsset: IAsset | null = null;
+
   flashMessage: "success" | "error" | null = null;
 
   selectedAssetForm: FormGroup;
@@ -74,117 +73,6 @@ export class AssetComponent implements OnInit {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
-  }
-
-  /**
-   * Toggle asset details
-   *
-   * @param assetId
-   */
-  toggleDetails(assetId: string): void {
-    // If the asset is already selected...
-    if (this.selectedAsset && this.selectedAsset._id === assetId) {
-      // Close the details
-      this.closeDetails();
-      return;
-    }
-
-    // Get the asset by id
-    this._assetService.getAssetById(assetId).subscribe((asset) => {
-      // Set the selected asset
-      this.selectedAsset = asset;
-
-      // Fill the form
-      this.selectedAssetForm.patchValue(asset);
-
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    });
-  }
-
-  /**
-   * Close the details
-   */
-  closeDetails(): void {
-    this.selectedAsset = null;
-  }
-
-  /**
-   * Update the selected asset using the form data
-   */
-  updateSelectedasset(): void {
-    // Get the asset object
-    const asset = this.selectedAssetForm.getRawValue();
-
-    // Update the asset on the server
-    this._assetService.updateAsset(asset.id, asset).subscribe(() => {
-      // Show a success message
-      this.showFlashMessage("success");
-    });
-  }
-
-  /**
-   * Delete the selected asset using the form data
-   */
-  deleteSelectedAsset(): void {
-    // Open the confirmation dialog
-    const confirmation = this._rikielConfirmationService.open({
-      title: "Delete asset",
-      message: "Are you sure you want to remove this asset? This action cannot be undone!",
-      actions: {
-        confirm: {
-          label: "Delete",
-        },
-      },
-    });
-
-    // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed().subscribe((result) => {
-      // If the confirm button pressed...
-      if (result === "confirmed") {
-        // Get the asset object
-        const asset = this.selectedAssetForm.getRawValue();
-
-        // Delete the asset on the server
-        this._assetService.deleteAsset(asset._id).subscribe(() => {
-          // Close the details
-          this.closeDetails();
-        });
-      }
-    });
-  }
-
-  /**
-   * Show flash message
-   */
-  showFlashMessage(type: "success" | "error"): void {
-    // Show the message
-    this.flashMessage = type;
-
-    // Mark for check
-    this._changeDetectorRef.markForCheck();
-
-    // Hide it after 3 seconds
-    setTimeout(() => {
-      this.flashMessage = null;
-
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    }, 3000);
-  }
-
-  /**
-   * Track by function for ngFor loops
-   *
-   * @param index
-   * @param item
-   */
-  trackByFn(index: number, item: any): any {
-    return item._id || index;
-  }
-
-  openFilter() {
-    this._dialog.open(AssetFilterComponent, { panelClass: "fuse-confirmation-dialog-panel" });
   }
 
   dummy = {

@@ -97,6 +97,21 @@
       </div>
     </div>
   </div>
+
+  <!-- User List / Selection -->
+  <ng-container *ngIf="asset.allocationStatus == 'ASSIGNED'">
+    <span class="hidden sm:block">
+      <mat-form-field class="w-full">
+        <mat-label>Select User</mat-label>
+        <input matInput [formControl]="searchCtrl" [matAutocomplete]="name" />
+        <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let user of users$ | async" [value]="user">
+            {{ user.firstName + " " + user.lastName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </span>
+  </ng-container>
 </div>
 <span class="sm:ml-3 m-3 flex justify-center">
   <button
