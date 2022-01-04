@@ -2,7 +2,7 @@
   <div class="lg:flex lg:items-center lg:justify-between">
     <div class="flex-1 min-w-0">
       <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
-        <span class="block xl:inline">Manage</span>
+        <span class="block xl:inline">Create</span>
         <span class="block text-orange-600 xl:inline"> U.A.M</span>
       </h1>
     </div>
@@ -10,7 +10,7 @@
 </div>
 <div class="px-8">
   <!-- request Type  -->
-  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Request Type</h4></div>
     <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
       <div class="flex flex-col items-center">
@@ -71,7 +71,7 @@
   </div>
 
   <!-- Single Or Multiple User  -->
-  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">No. of User</h4></div>
     <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
       <div class="flex flex-col items-center">
@@ -106,10 +106,10 @@
   </div>
 
   <!-- User Information  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
 
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-6 items-center">
+    <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
       <!-- UAM no. -->
       <div class="col-span-6" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
@@ -139,15 +139,138 @@
       </div>
 
       <!-- Check if Single  -->
-      <ng-container *ngIf="noOfUser == 'single' ? single : multiple"></ng-container>
+      <ng-container *ngIf="noOfUser == 'single'">
+        <h4 class="text-lg col-span-full">Name of the Employee</h4>
+        <h6 class="text-sm text-gray-500 col-span-full">(Service Request For)</h6>
+        <!-- First Name -->
+        <div class="col-span-3" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!-- Last Name -->
+        <div class="col-span-3" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!-- User ID -->
+        <div class="col-span-3" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>User ID</mat-label>
+            <input matInput />
+            <mat-hint>(For Apcer IT)</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Email ID -->
+        <div class="col-span-3" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>Email ID </mat-label>
+            <input matInput />
+            <mat-hint>(For Apcer IT)</mat-hint>
+          </mat-form-field>
+        </div>
+      </ng-container>
+
+      <!-- Type of Access Required  -->
+      <div
+        class="col-span-6 p-4 my-2 grid grid-cols-3 border-gray-300 border rounded-lg"
+        [style.fontSize.px]="12"
+      >
+        <mat-hint class="col-span-1">Type of Access Required</mat-hint>
+        <mat-radio-group class="flex gap-6 col-span-2">
+          <mat-radio-button value="1">Permanent</mat-radio-button>
+          <mat-radio-button value="2">Temporary</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!-- If Temporary -->
+      <ng-container *ngIf="true">
+        <div class="col-span-6" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>Date for deactivation</mat-label>
+            <input matInput [matDatepicker]="dod" />
+            <mat-datepicker-toggle matSuffix [for]="dod"></mat-datepicker-toggle>
+            <mat-datepicker #dod></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </ng-container>
+
+      <!-- Type of User -->
+      <ng-container>
+        <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
+          <div class="flex flex-col" [style.fontSize.px]="12">
+            <mat-hint class="mr-3 mb-3">Type of User</mat-hint>
+            <mat-radio-group class="flex flex-row mb-3">
+              <mat-radio-button class="m-2" value="1">Apcer User</mat-radio-button>
+              <mat-radio-button class="m-2" value="2">Apcer Client Emp</mat-radio-button>
+              <mat-radio-button class="m-2" value="3">Other</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <!-- If Other -->
+          <ng-container *ngIf="true">
+            <div class="col-span-6 mb-2" [style.fontSize.px]="12">
+              <mat-form-field appearance="outline">
+                <mat-label>Other</mat-label>
+                <input matInput />
+                <mat-hint>Other if the person is not an APCER employee</mat-hint>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+          <!-- Designation -->
+          <div class="col-span-6" [style.fontSize.px]="12">
+            <mat-form-field appearance="outline">
+              <mat-label>Designation</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- User Location -->
+      <ng-container>
+        <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
+          <div class="flex flex-col" [style.fontSize.px]="12">
+            <mat-form-field appearance="outline">
+              <mat-label>User Location</mat-label>
+              <select required>
+                <option value="volvo">Apcer Delhi</option>
+                <option value="saab">Apcer Ahmedabad</option>
+                <option value="mercedes">Apcer US</option>
+                <option value="audi">Apcer UK</option>
+              </select>
+            </mat-form-field>
+          </div>
+
+          <!-- If Other -->
+          <ng-container *ngIf="true">
+            <div class="col-span-6 mb-2" [style.fontSize.px]="12">
+              <mat-form-field appearance="outline">
+                <mat-label>Other</mat-label>
+                <input matInput />
+                <mat-hint
+                  >Other if the user will work from non APCEr listed locations e.g. Client location</mat-hint
+                >
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+          <!-- Department -->
+          <div class="col-span-6" [style.fontSize.px]="12">
+            <mat-form-field appearance="outline">
+              <mat-label>Department</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
-
-<ng-template #single>
-  <h1>Signle</h1>
-</ng-template>
-
-<ng-template #multiple>
-  <h1>Multiple</h1>
-</ng-template>
