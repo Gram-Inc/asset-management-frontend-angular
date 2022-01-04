@@ -535,7 +535,156 @@
       <h4 class="text-sm font-semibold">UAM Approvals</h4>
     </div>
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
-      <!-- UAM -->
+      <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+        <!-- Requested By-->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>Requested By</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <!-- Head of Department / Designee-->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>Head of Department / Designee </mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <!--IT Head/Designee (Mandatory in case of Email Forwarding)  -->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>IT Head/Designee (Mandatory in case of Email Forwarding)</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <!-- DPO/ Designee (Mandatory in case of Email Forwarding)-->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>DPO/ Designee (Mandatory in case of Email Forwarding) </mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
     </div>
   </div>
+
+  <!--For IT Department Only -->
+  <ng-container *ngIf="true">
+    <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+      <div class="text-sm font-medium">
+        <h4 class="text-sm font-semibold">For IT Department Use Only</h4>
+      </div>
+      <div
+        class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2"
+        [style.fontSize.px]="12"
+      >
+        <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+          <!-- Active Directory Account Deactivation Date-->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>Active Directory Account Deactivation Date</mat-label>
+            <input matInput [matDatepicker]="ada" />
+            <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
+            <mat-datepicker #ada></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Active Directory Account Deletion Date-->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>Active Directory Account Deletion Date </mat-label>
+            <input matInput [matDatepicker]="adad" />
+            <mat-datepicker-toggle matSuffix [for]="adad"></mat-datepicker-toggle>
+            <mat-datepicker #adad></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Comments -->
+          <mat-form-field appearance="outline" class="col-span-4">
+            <mat-label>Comments (if any)</mat-label>
+            <textarea class="focus:ring-0" style="height: 140px" matInput></textarea>
+          </mat-form-field>
+        </div>
+
+        <!-- Executed By-->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>Executed By </mat-label>
+          <input matInput />
+          <mat-hint>Printed Name</mat-hint>
+        </mat-form-field>
+
+        <!--(Server Administrator / Designee)  -->
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>(Server Administrator / Designee)</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- In case of Common Request Type for Multiple Users-->
+  <ng-container *ngIf="true">
+    <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+      <div class="text-sm font-medium">
+        <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
+      </div>
+      <div
+        class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2"
+        [style.fontSize.px]="12"
+      >
+        <!-- User system Data -->
+        <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
+          <mat-hint class="mr-3 mb-3">User System Data</mat-hint>
+          <mat-radio-group class="flex flex-row mb-3">
+            <mat-radio-button class="m-2" value="1">Not Required</mat-radio-button>
+            <mat-radio-button class="m-2" value="2">Archive</mat-radio-button>
+            <mat-radio-button class="m-2" value="3">Handover</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+          <!-- Data Handover to -->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>Data Handover To </mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <!-- End User configuration -->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>End User Confirmation on receipt of data </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+          <!-- Email Mailbox Transterred  -->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>Email Mailbox Transferred to </mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <!-- End User Confirmation on activation of Mailbox -->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>End User Confirmation on activation of Mailbox </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+          <!-- Email ID Forwarded to#-->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>Email ID Forwarded to#</mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <!-- End User Confirmation on Email Forwarding-->
+          <mat-form-field appearance="outline" class="col-span-2">
+            <mat-label>End User Confirmation on Email Forwarding </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!-- Date Till Email ID to remain Active-->
+        <div class="col-span-6" [style.fontSize.px]="12">
+          <mat-form-field appearance="outline">
+            <mat-label>Date Till Email ID to remain Active</mat-label>
+            <input matInput [matDatepicker]="dte" />
+            <mat-datepicker-toggle matSuffix [for]="dte"></mat-datepicker-toggle>
+            <mat-datepicker #dte></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>
