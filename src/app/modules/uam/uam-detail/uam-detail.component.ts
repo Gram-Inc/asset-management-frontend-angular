@@ -10,6 +10,7 @@ import {
   GrantRevokeUAM,
   RequestTypeActionUAM,
   TypeOfAccessRequiredUAM,
+  UserSystemDataUAM,
 } from "src/app/core/uam/uam.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
@@ -53,8 +54,10 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     this.uamForm = this._formBuilder.group({
       _id: [""],
       requestTypeAction: [RequestTypeActionUAM.Create, [Validators.required]],
-      accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
       userInformation: this.createUserInformationForm(),
+      accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
+      userSystemDataAndEmailIdTreatment: this.createUserSystemDataAndEmailIdTreatment(),
+      uamApprovals: this.createUAMApprovals(),
       forITDepartmentUseOnly: this.createITDepartmentUseOnly(),
     });
   }
@@ -67,21 +70,22 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   createUserInformationForm(): FormGroup {
     return this._formBuilder.group({
       users: this._formBuilder.array([this.createUser()]),
-      dateOfRequest: [Date.now()],
+      dateOfRequest: [new Date(Date.now())],
       dateOfJoiningLeaving: [""],
       typeOfAccessRequired: [null],
+      userLocation: [""],
       ifTemporaryDateForDeactivation: [""],
       typeOfUser: [null],
       typeOfUserOtherText: [""],
       designation: [""],
       department: [""],
-      networkServicesToBeGrantedRevoked: {
+      networkServicesToBeGrantedRevoked: this._formBuilder.group({
         emailAccess: [false],
         serverAccess: [false],
         "sharedDrive/folderAccess": [false],
         APCERNetworkVPNAccess: [false],
         others: [false],
-      },
+      }),
       reportingManager: [""],
       accessToDistributionList: [false],
       comments: [""],
@@ -93,12 +97,38 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       activeDirectoryAccountDeletionDate: [""],
       comments: [""],
       executedBy: this._formBuilder.array([
-        {
+        this._formBuilder.group({
           printedName: [""],
           signature: [""],
           date: [""],
-        },
+        }),
       ]),
+    });
+  }
+
+  createUserSystemDataAndEmailIdTreatment() {
+    return this._formBuilder.group({
+      userSystemData: [UserSystemDataUAM["Not Required"]],
+      dataHandOverTo: [""],
+      endUserConfirmationOnReceiptOfData: [""],
+      emailMailboxTransferredTo: [""],
+      endUserConfirmationOnActivationOfMailbox: [""],
+      emailIdForwardedTo: [""],
+      dateTillEmailIdToRemainActive: [""],
+      endUserConfirmatinoOnEmailForwarding: [""],
+    });
+  }
+  createUAMApprovals(): FormGroup {
+    let obj = {
+      name: [""],
+      signature: [""],
+      approvalDate: [""],
+    };
+    return this._formBuilder.group({
+      requestedBy: this._formBuilder.group(obj),
+      headOfDepartmentDesignee: this._formBuilder.group(obj),
+      itHeadDesignee: this._formBuilder.group(obj),
+      dpoDesignee: this._formBuilder.group(obj),
     });
   }
   createUser(): FormGroup {

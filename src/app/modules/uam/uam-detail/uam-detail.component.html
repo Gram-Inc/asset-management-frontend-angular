@@ -82,7 +82,7 @@
       <div class="col-span-6" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>U.A.M Number</mat-label>
-          <input matInput formControlName="" />
+          <input matInput disabled />
         </mat-form-field>
       </div>
 
@@ -100,7 +100,7 @@
       <div class="col-span-3" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>Date of Joining / Leaving </mat-label>
-          <input matInput formControlName="" [matDatepicker]="doj" formControlName="dateOfJoiningLeaving" />
+          <input matInput [matDatepicker]="doj" formControlName="dateOfJoiningLeaving" />
           <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
           <mat-datepicker #doj></mat-datepicker>
         </mat-form-field>
@@ -114,7 +114,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>First Name </mat-label>
-            <input matInput formControlName="" />
+            <input matInput disabled />
           </mat-form-field>
         </div>
 
@@ -122,7 +122,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>Last Name </mat-label>
-            <input matInput formControlName="" />
+            <input matInput disabled />
           </mat-form-field>
         </div>
 
@@ -130,7 +130,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>User ID</mat-label>
-            <input matInput formControlName="" />
+            <input matInput disabled />
             <mat-hint>(For Apcer IT)</mat-hint>
           </mat-form-field>
         </div>
@@ -139,7 +139,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>Email ID </mat-label>
-            <input matInput formControlName="" />
+            <input matInput disabled />
             <mat-hint>(For Apcer IT)</mat-hint>
           </mat-form-field>
         </div>
@@ -210,7 +210,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>User Location</mat-label>
-              <mat-select formControlName="">
+              <mat-select formControlName="userLocation">
                 <mat-option value="volvo">Apcer Delhi</mat-option>
                 <mat-option value="saab">Apcer Ahmedabad</mat-option>
                 <mat-option value="mercedes">Apcer US</mat-option>
@@ -223,7 +223,7 @@
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field appearance="outline">
                 <mat-label>Other</mat-label>
-                <input matInput formControlName="" />
+                <input matInput disabled />
                 <mat-hint
                   >Other if the user will work from non APCEr listed locations e.g. Client location</mat-hint
                 >
@@ -235,7 +235,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field appearance="outline">
               <mat-label>Department</mat-label>
-              <input matInput formControlName="" />
+              <input matInput formControlName="department" />
             </mat-form-field>
           </div>
         </div>
@@ -273,7 +273,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field appearance="outline">
               <mat-label>Reporting Manager Name</mat-label>
-              <input matInput formControlName="" />
+              <input matInput formControlName="reportingManager" />
               <!-- Load from DB -->
             </mat-form-field>
           </div>
@@ -284,7 +284,7 @@
       <ng-container>
         <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
           <mat-hint class="mr-3 mb-3">Access to Distribution List (DL)? </mat-hint>
-          <mat-radio-group class="flex flex-row mb-3">
+          <mat-radio-group formControlName="accessToDistributionList" class="flex flex-row mb-3">
             <mat-radio-button class="m-2" value="1">Yes</mat-radio-button>
             <mat-radio-button class="m-2" value="2">No</mat-radio-button>
           </mat-radio-group>
@@ -310,11 +310,9 @@
     </div>
   </div>
 
+  <!-- Done -->
   <!--Access to Share Drives  -->
-  <div
-    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
-    formGroupName="accessToShareDrives"
-  >
+  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Access to Share Drives</h4></div>
 
     <div
@@ -350,7 +348,7 @@
           <div class="col-span-2">
             <mat-form-field appearance="outline">
               <mat-label>Folder Name/s</mat-label>
-              <input matInput formControlName="" formControlName="folderName" />
+              <input matInput formControlName="folderName" />
             </mat-form-field>
           </div>
           <!-- Access Rights -->
@@ -428,6 +426,7 @@
     </div>
   </div>
 
+  <!-- Done -->
   <!--User system Data and  -->
   <div
     class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
@@ -440,7 +439,7 @@
       <!-- User system Data -->
       <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
         <mat-hint class="mr-3 mb-3">User System Data</mat-hint>
-        <mat-radio-group class="flex flex-row mb-3">
+        <mat-radio-group formControlName="userSystemData" class="flex flex-row mb-3">
           <mat-radio-button class="m-2" value="1">Not Required</mat-radio-button>
           <mat-radio-button class="m-2" value="2">Archive</mat-radio-button>
           <mat-radio-button class="m-2" value="3">Handover</mat-radio-button>
@@ -451,13 +450,13 @@
         <!-- Data Handover to -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Data Handover To </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="dataHandOverTo" />
         </mat-form-field>
 
         <!-- End User configuration -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on receipt of data </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="endUserConfirmationOnReceiptOfData" />
         </mat-form-field>
       </div>
 
@@ -465,13 +464,13 @@
         <!-- Email Mailbox Transterred  -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Email Mailbox Transferred to </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="emailMailboxTransferredTo" />
         </mat-form-field>
 
         <!-- End User Confirmation on activation of Mailbox -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on activation of Mailbox </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="endUserConfirmationOnActivationOfMailbox" />
         </mat-form-field>
       </div>
 
@@ -479,13 +478,13 @@
         <!-- Email ID Forwarded to#-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Email ID Forwarded to#</mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="emailIdForwardedTo" />
         </mat-form-field>
 
         <!-- End User Confirmation on Email Forwarding-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on Email Forwarding </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="endUserConfirmatinoOnEmailForwarding" />
         </mat-form-field>
       </div>
 
@@ -493,7 +492,7 @@
       <div class="col-span-6" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>Date Till Email ID to remain Active</mat-label>
-          <input matInput formControlName="" [matDatepicker]="dte" />
+          <input matInput formControlName="dateTillEmailIdToRemainActive" [matDatepicker]="dte" />
           <mat-datepicker-toggle matSuffix [for]="dte"></mat-datepicker-toggle>
           <mat-datepicker #dte></mat-datepicker>
         </mat-form-field>
@@ -501,6 +500,7 @@
     </div>
   </div>
 
+  <!-- Done -->
   <!--UAM Approvals -->
   <div
     class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
@@ -512,32 +512,33 @@
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
       <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
         <!-- Requested By-->
-        <mat-form-field appearance="outline" class="col-span-2">
+        <mat-form-field formGroupName="requestedBy" appearance="outline" class="col-span-2">
           <mat-label>Requested By</mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="name" />
         </mat-form-field>
 
         <!-- Head of Department / Designee-->
-        <mat-form-field appearance="outline" class="col-span-2">
+        <mat-form-field formGroupName="headOfDepartmentDesignee" appearance="outline" class="col-span-2">
           <mat-label>Head of Department / Designee </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="name" />
         </mat-form-field>
 
         <!--IT Head/Designee (Mandatory in case of Email Forwarding)  -->
-        <mat-form-field appearance="outline" class="col-span-2">
+        <mat-form-field formGroupName="itHeadDesignee" appearance="outline" class="col-span-2">
           <mat-label>IT Head/Designee (Mandatory in case of Email Forwarding)</mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="name" />
         </mat-form-field>
 
         <!-- DPO/ Designee (Mandatory in case of Email Forwarding)-->
-        <mat-form-field appearance="outline" class="col-span-2">
+        <mat-form-field appearance="outline" class="col-span-2" formGroupName="dpoDesignee">
           <mat-label>DPO/ Designee (Mandatory in case of Email Forwarding) </mat-label>
-          <input matInput formControlName="" />
+          <input matInput formControlName="name" />
         </mat-form-field>
       </div>
     </div>
   </div>
 
+  <!-- Done -->
   <!--For IT Department Only -->
   <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
     <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
@@ -577,22 +578,23 @@
           </mat-form-field>
         </div>
 
-        <!-- Executed By-->
-        <mat-form-field appearance="outline" class="col-span-2">
-          <mat-label>Executed By </mat-label>
-          <input matInput formControlName="" />
-          <mat-hint>Printed Name</mat-hint>
-        </mat-form-field>
+        <ng-container
+          formArrayName="executedBy"
+          *ngFor="let exe of uamForm.get('forITDepartmentUseOnly.executedBy')['controls']; let i = index"
+        >
+          <!-- Executed By-->
 
-        <!--(Server Administrator / Designee)  -->
-        <mat-form-field appearance="outline" class="col-span-2">
-          <mat-label>(Server Administrator / Designee)</mat-label>
-          <input matInput formControlName="" />
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-2" [formGroupName]="i">
+            <mat-label>Executed By (Server Administrator / Designee) </mat-label>
+            <input matInput formControlName="printedName" />
+            <mat-hint>Printed Name</mat-hint>
+          </mat-form-field>
+        </ng-container>
       </div>
     </div>
   </ng-container>
 
+  <!-- Done -->
   <!-- In case of Common Request Type for Multiple Users-->
   <ng-container *ngIf="noOfUser == 'multiple'" formGroupName="userInformation">
     <div class="bg-white px-4 py-2 s sm:px-6">

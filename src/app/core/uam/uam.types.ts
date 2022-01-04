@@ -9,6 +9,7 @@ export interface IUAM {
     }[];
     dateOfRequest?: string;
     dateOfJoiningLeaving?: string;
+    userLocation?: string;
     typeOfAccessRequired?: TypeOfAccessRequiredUAM;
     ifTemporaryDateForDeactivation?: string;
     typeOfUser?: TypeOfUserUAM;
