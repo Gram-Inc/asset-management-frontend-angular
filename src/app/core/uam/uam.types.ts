@@ -76,30 +76,31 @@ export interface IUAM {
   };
 }
 export enum TypeOfUserUAM {
-  "ApcerUser",
-  "ApcerClientEmp",
-  "Other",
+  "Apcer User" = "ApcerUser",
+  "Apcer Client Emp" = "ApcerClientEmp",
+  "Other" = "Other",
 }
+
 export enum TypeOfAccessRequiredUAM {
-  "permanent",
-  "temporary",
+  "permanent" = "permanent",
+  "temporary" = "temporary",
 }
 export enum RequestTypeActionUAM {
-  "Create",
-  "Modify",
-  "Delete",
-  "Deactivate",
+  "Create" = "Create",
+  "Modify" = "Modify",
+  "Delete" = "Delete",
+  "Deactivate" = "Deactivate",
 }
 export enum AccessRightsUAM {
-  "ReadOnly",
-  "ReadWrite",
+  "Read Only" = "ReadOnly",
+  "Read Write" = "ReadWrite",
 }
 export enum GrantRevokeUAM {
-  "Grant",
-  "Revoke",
+  "Grant" = "Grant",
+  "Revoke" = "Revoke",
 }
 export enum UserSystemDataUAM {
-  "NotRequired",
-  "Archive",
-  "Handover",
+  "Not Required" = "NotRequired",
+  "Archive" = "Archive",
+  "Handover" = "Handover",
 }

@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="px-8">
+<div class="px-8" [formGroup]="uamForm">
   <!-- request Type  -->
   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Request Type</h4></div>
@@ -351,112 +351,46 @@
       "
       [style.fontSize.px]="12"
     >
-      <!-- Row 1 -->
-      <ng-container>
-        <!-- Drive Name -->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Drive Name </mat-label>
-            <input matInput />
+      <ng-container
+        formArrayName="accessToShareDrives"
+        *ngFor="let usr of uamForm.get('accessToShareDrives')['controls']; let i = index"
+      >
+        <!-- Row 1 -->
+
+        <ng-container [formGroupName]="i">
+          <!-- Drive Name -->
+          <div class="col-span-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Drive Name </mat-label>
+              <input formControlName="driveName" matInput />
+            </mat-form-field>
+          </div>
+
+          <!--Folder Name/s-->
+          <div class="col-span-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Folder Name/s</mat-label>
+              <input matInput formControlName="folderName" />
+            </mat-form-field>
+          </div>
+          <!-- Access Rights -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Access Rights</mat-label>
+            <mat-select formControlName="accessRights">
+              <mat-option value="volvo">Read Only</mat-option>
+              <mat-option value="saab">Read / Write</mat-option>
+            </mat-select>
           </mat-form-field>
-        </div>
 
-        <!--Folder Name/s-->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Folder Name/s</mat-label>
-            <input matInput />
+          <!-- Grant / Revoked -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Grant / Revoke</mat-label>
+            <mat-select formControlName="grantRevoke">
+              <mat-option value="volvo">Grant</mat-option>
+              <mat-option value="saab">Revoke</mat-option>
+            </mat-select>
           </mat-form-field>
-        </div>
-        <!-- Access Rights -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Access Rights</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Read Only</mat-option>
-            <mat-option value="saab">Read / Write</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <!-- Grant / Revoked -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Grant / Revoke</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Grant</mat-option>
-            <mat-option value="saab">Revoke</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
-
-      <!-- Row 2 -->
-      <ng-container>
-        <!-- Drive Name -->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Drive Name </mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-
-        <!--Folder Name/s-->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Folder Name/s</mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-        <!-- Access Rights -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Access Rights</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Read Only</mat-option>
-            <mat-option value="saab">Read / Write</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <!-- Grant / Revoked -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Grant / Revoke</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Grant</mat-option>
-            <mat-option value="saab">Revoke</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
-
-      <!-- Row 3 -->
-      <ng-container>
-        <!-- Drive Name -->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Drive Name </mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-
-        <!--Folder Name/s-->
-        <div class="col-span-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Folder Name/s</mat-label>
-            <input matInput />
-          </mat-form-field>
-        </div>
-        <!-- Access Rights -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Access Rights</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Read Only</mat-option>
-            <mat-option value="saab">Read / Write</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <!-- Grant / Revoked -->
-        <mat-form-field class="col-span-2" appearance="outline">
-          <mat-label>Grant / Revoke</mat-label>
-          <mat-select>
-            <mat-option value="volvo">Grant</mat-option>
-            <mat-option value="saab">Revoke</mat-option>
-          </mat-select>
-        </mat-form-field>
+        </ng-container>
       </ng-container>
     </div>
   </div>
@@ -734,4 +668,47 @@
       </div>
     </div>
   </ng-container>
+
+  <!-- Action Button -->
+  <div>
+    <button
+      href="#"
+      class="
+        ml-8
+        whitespace-nowrap
+        inline-flex
+        items-center
+        justify-center
+        px-3
+        py-1
+        border
+        rounded-md
+        shadow-sm
+        text-base text-orange-600
+        border-orange-600
+        hover:bg-orange-600 hover:text-white
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+      "
+      (click)="generateRequest()"
+    >
+      Generate Request
+    </button>
+    <button
+      type="submit"
+      class="
+        inline-flex
+        justify-center
+        py-2
+        px-4
+        border border-transparent
+        text-sm
+        font-medium
+        rounded-md
+        text-gray-800
+        hover:text-orange-700
+      "
+    >
+      Close
+    </button>
+  </div>
 </div>

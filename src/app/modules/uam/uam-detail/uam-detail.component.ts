@@ -1,10 +1,16 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
+import {
+  AccessRightsUAM,
+  GrantRevokeUAM,
+  RequestTypeActionUAM,
+  TypeOfAccessRequiredUAM,
+} from "src/app/core/uam/uam.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 
@@ -44,19 +50,68 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
     // Create UAM Form
     this.uamForm = this._formBuilder.group({
-      name: ["", [Validators.required]],
-      assetCode: [""],
-      type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
-      sr_no: ["", [Validators.required]],
-      vendorId: [null],
-      category: ["", [Validators.required]],
-      warranty: [[]],
-      branch: [null],
+      _id: [""],
+      requestTypeAction: [RequestTypeActionUAM.Create, [Validators.required]],
+      accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
+      userInformation: this.createUserInformationForm(),
     });
   }
   //On Destroy
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  createUserInformationForm(): FormGroup {
+    return this._formBuilder.group({
+      users: this._formBuilder.array([this.createUser()]),
+      dateOfRequest: [""],
+      dateOfJoiningLeaving: [""],
+      typeOfAccessRequired: [null],
+      ifTemporaryDateForDeactivation: [""],
+      typeOfUser: [null],
+      typeOfUserOtherText: [""],
+      designation: [""],
+      department: [""],
+      networkServicesToBeGrantedRevoked: {
+        emailAccess: [false],
+        serverAccess: [false],
+        "sharedDrive/folderAccess": [false],
+        APCERNetworkVPNAccess: [false],
+        others: [false],
+      },
+      reportingManager: [""],
+      accessToDistributionList: [false],
+      comments: [""],
+    });
+  }
+
+  createUser(): FormGroup {
+    return this._formBuilder.group({
+      remark: [""],
+      actionType: [""],
+      userId: [""],
+    });
+  }
+  addUserToForm(): void {
+    let frm = this.uamForm.get("userInformation.users") as FormArray;
+    frm.push(this.createUser());
+  }
+
+  createAccessShareDrive(): FormGroup {
+    return this._formBuilder.group({
+      driveName: [""],
+      folderName: [""],
+      accessRights: [null],
+      grantRevoke: [null],
+    });
+  }
+  addAccessToShareDriveForm(): void {
+    let frm = this.uamForm.get("accessToShareDrives") as FormArray;
+    frm.push(this.createAccessShareDrive());
+  }
+
+  generateRequest() {
+    console.log(this.uamForm.value);
   }
 }
