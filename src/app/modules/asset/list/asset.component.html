@@ -106,7 +106,7 @@
                                 hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
                               "
-                              matTooltip="Assign to user"
+                              (click)="$event.stopPropagation(); assignToUser(asset)"
                             >
                               <mat-icon class="h-4 w-4" svgIcon="feather:user-check"></mat-icon>
                             </button>
@@ -131,11 +131,12 @@
                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
                               "
                               matTooltip="Edit"
+                              (click)="$event.stopPropagation(); edit(asset)"
                             >
                               <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
                             </button>
 
-                            <!-- Edit Button -->
+                            <!-- QR Button -->
                             <button
                               type="button"
                               class="
@@ -156,6 +157,7 @@
                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
                               "
                               matTooltip="Print QR"
+                              (click)="$event.stopPropagation(); printQR(asset)"
                             >
                               <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:qrcode"></mat-icon>
                             </button>

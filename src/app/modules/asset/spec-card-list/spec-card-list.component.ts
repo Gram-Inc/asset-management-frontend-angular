@@ -8,6 +8,9 @@ import { IAsset } from "src/app/core/asset/asset.types";
 export class SpecCardListComponent implements OnInit {
   @Input() asset: IAsset;
 
+  diskLayout;
+  mem;
+  memLayout;
   constructor() {}
 
   ngOnInit(): void {}

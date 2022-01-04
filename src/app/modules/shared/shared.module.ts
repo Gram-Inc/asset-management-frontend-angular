@@ -23,9 +23,10 @@ var sharedComp = [
   AssetFilterComponent,
   AssetSubDetailCardComponent,
   UserFilterComponent,
+  QrcodeComponent,
 ];
 @NgModule({
-  declarations: [...sharedComp, AssetShortDetailComponent, QrcodeComponent],
+  declarations: [...sharedComp, AssetShortDetailComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

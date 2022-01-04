@@ -9,6 +9,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -18,8 +19,10 @@ import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
+import { QrService } from "src/app/core/qr/qr.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 import { AssetShortDetailComponent } from "../../shared/asset-short-detail/asset-short-detail.component";
+import { AssetBottomSheetComponent } from "../asset-bottom-sheet/asset-bottom-sheet.component";
 import { DetailsComponent } from "../details/details.component";
 
 @Component({
@@ -67,7 +70,9 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
     private _rikielConfirmationService: RikielConfirmationService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _qrService: QrService,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -231,5 +236,13 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   getPrevUser(ast?: IAsset) {
     return ast ? "-" : "NULL";
+  }
+
+  assignToUser(ast) {
+    this._bottomSheet.open(AssetBottomSheetComponent, { data: ast });
+  }
+  edit(ast) {}
+  printQR(ast: IAsset) {
+    this._qrService.printQR(ast._id ?? "");
   }
 }

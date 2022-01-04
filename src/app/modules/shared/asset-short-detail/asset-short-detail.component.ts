@@ -48,4 +48,5 @@ export class AssetShortDetailComponent implements OnInit {
     if (branch) return typeof branch === "object" ? branch.name : "-";
     return "NULL";
   }
+  deleteAsset() {}
 }

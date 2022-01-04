@@ -1,0 +1,65 @@
+<div class="">
+  <dl>
+    <div class="flex flex-row items-center">
+      <div class="flex-auto">
+        <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Model Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.name }}</dd>
+        </div>
+        <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.sr_no }}</dd>
+        </div>
+        <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Branch</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+            <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
+          </dd>
+        </div>
+        <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
+          <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            24/12/2022 &nbsp; &nbsp;
+            <mat-icon
+              class="h-4 w-4"
+              [ngClass]="{
+                'text-green-500': !isDateFuture('24/12/2022'),
+                'text-red-500': isDateFuture('24/12/2022')
+              }"
+              [svgIcon]="
+                !isDateFuture('24/12/2022') ? 'heroicons_solid:badge-check' : 'heroicons_solid:x-circle'
+              "
+            ></mat-icon>
+          </dd>
+        </div>
+      </div>
+
+      <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+    </div>
+    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+      <dt class="text-sm font-medium text-gray-500">Current User</dt>
+      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+        {{ "-" }}
+      </dd>
+    </div>
+    <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+      <div class="flex flex-col items-center">
+        <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+          <button
+            class="px-6 rounded-full"
+            [ngClass]="{
+              'bg-card pointer-events-none shadow': asset.allocationStatus == 'IN_POOL',
+              'bg-transparent': !(asset.allocationStatus == 'IN_POOL')
+            }"
+            mat-flat-button
+            (click)="asset.allocationStatus = 'IN_POOL'"
+            disableRipple
+          >
+            Move to pool
+          </button>
+        </div>
+      </div>
+    </div>
+  </dl>
+</div>
