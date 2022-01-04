@@ -26,7 +26,7 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
   ],
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  private unsubscribeAll: Subject<any> = new Subject<any>();
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   assetForm: FormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   types; // All type of asset Types
@@ -61,7 +61,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Get All Category & Types
-    this._assetService.assetTypes$.pipe(takeUntil(this.unsubscribeAll)).subscribe((val) => {
+    this._assetService.assetTypes$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
       this.types = val.commonAssetFields.find((x) => x.fieldName == "type").values;
     });
 
@@ -94,8 +94,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
   //On Destroy
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   //Check any other Exisiting Field and replace with Selected One

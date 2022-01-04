@@ -14,6 +14,7 @@ import { MatSort } from "@angular/material/sort";
 import { merge, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
+import { UamService } from "src/app/core/uam/uam.service";
 import { IUAM } from "src/app/core/uam/uam.types";
 import { UserService } from "src/app/core/user/user.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
@@ -59,7 +60,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
   searchCtrl: FormControl = new FormControl("");
 
   constructor(
-    private _userService: UserService,
+    private _uamService: UamService,
     private _formBuilder: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
     private _rikielConfirmationService: RikielConfirmationService,
@@ -74,7 +75,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
         debounceTime(300),
         switchMap((query) => {
           this.isLoading = true;
-          return this._userService.getUsers(1, 10, query);
+          return this._uamService.getUAMS(1, 10, query);
         }),
         map(() => {
           this.isLoading = false;
@@ -83,9 +84,9 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe();
 
     // Get the Assets
-    this.uams$ = this._userService.users$;
+    this.uams$ = this._uamService.uams$;
 
-    this._userService.pagination$
+    this._uamService.pagination$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((paginationResponse: IPagination) => (this.pagination = paginationResponse));
   }
@@ -113,7 +114,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(
           switchMap(() => {
             this.isLoading = true;
-            return this._userService.getUsers(
+            return this._uamService.getUAMS(
               this._paginator.pageIndex,
               this._paginator.pageSize
               /* "",

@@ -1,3 +1,4 @@
+<!-- Title -->
 <div class="p-8">
   <div class="lg:flex lg:items-center lg:justify-between">
     <div class="flex-1 min-w-0">
@@ -8,6 +9,7 @@
     </div>
   </div>
 </div>
+
 <div class="px-8">
   <!-- request Type  -->
   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
@@ -83,7 +85,7 @@
               'bg-transparent': !(noOfUser == 'single')
             }"
             mat-flat-button
-            (click)="(noOfUser == 'single')"
+            (click)="noOfUser = 'single'"
             disableRipple
           >
             Single
@@ -95,7 +97,7 @@
               'bg-transparent': !(noOfUser == 'multiple')
             }"
             mat-flat-button
-            (click)="(noOfUser == 'multiple')"
+            (click)="noOfUser = 'multiple'"
             disableRipple
           >
             Multiple
@@ -614,7 +616,7 @@
   </ng-container>
 
   <!-- In case of Common Request Type for Multiple Users-->
-  <ng-container *ngIf="true">
+  <ng-container *ngIf="noOfUser == 'multiple'">
     <div class="bg-white px-4 py-2 s sm:px-6">
       <div class="text-sm font-medium mt-4 mb-2">
         <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
