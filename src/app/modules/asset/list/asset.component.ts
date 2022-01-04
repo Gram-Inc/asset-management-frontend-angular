@@ -239,7 +239,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   assignToUser(ast) {
-    this._bottomSheet.open(AssetBottomSheetComponent, { data: ast });
+    this._bottomSheet.open(AssetBottomSheetComponent, { data: { ...ast } });
   }
   edit(ast) {}
   printQR(ast: IAsset) {

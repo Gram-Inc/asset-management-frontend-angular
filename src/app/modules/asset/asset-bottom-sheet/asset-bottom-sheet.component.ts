@@ -7,7 +7,6 @@ import { IAsset } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
-
 @Component({
   selector: "app-asset-bottom-sheet",
   templateUrl: "./asset-bottom-sheet.component.html",
@@ -16,16 +15,17 @@ import { IUser } from "src/app/core/user/user.types";
 export class AssetBottomSheetComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   users$: Observable<IUser[]> = new Observable<IUser[]>();
-
+  asset: IAsset;
   constructor(
     private _assetService: AssetService,
     private _userService: UserService,
     private _bottomSheetRef: MatBottomSheetRef<AssetBottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public asset: IAsset
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: IAsset
   ) {}
 
   ngOnInit(): void {
     this.users$ = this._userService.users$;
+    this.asset = { ...this.data };
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
@@ -44,8 +44,9 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     if (branch) return typeof branch === "object" ? branch.name : "-";
     return "NULL";
   }
-  assignToUser() {}
-  moveToPool() {}
-  moveToScrap() {}
-  moveToDown() {}
+  updateAllocation() {}
+
+  isAssetEdited(): boolean {
+    return JSON.stringify(this.asset) != JSON.stringify(this.data);
+  }
 }
