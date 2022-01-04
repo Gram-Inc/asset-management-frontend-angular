@@ -22,8 +22,10 @@ import { IUser } from "src/app/core/user/user.types";
 export class UamDetailComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  requestType: "c" | "m" | "d" | "de" = "m";
-  noOfUser: "single" | "multiple" = "single";
+  requestType: RequestTypeActionUAM = RequestTypeActionUAM.Create;
+  requestTypes = RequestTypeActionUAM;
+  noOfUsers: "single" | "multiple";
+  noOfUser = "single";
 
   // User
   users$: Observable<IUser[]> = new Observable<IUser[]>();
@@ -97,6 +99,10 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     let frm = this.uamForm.get("userInformation.users") as FormArray;
     frm.push(this.createUser());
   }
+  removeUserFromForm(): void {
+    let frm = this.uamForm.get("userInformation.users") as FormArray;
+    if (frm.length >= 0) frm.removeAt(frm.length - 1);
+  }
 
   createAccessShareDrive(): FormGroup {
     return this._formBuilder.group({
@@ -111,7 +117,16 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     frm.push(this.createAccessShareDrive());
   }
 
+  removeAccessToShareDriveForm(): void {
+    let frm = this.uamForm.get("accessToShareDrives") as FormArray;
+    if (frm.length >= 0) frm.removeAt(frm.length - 1);
+  }
+
   generateRequest() {
     console.log(this.uamForm.value);
+  }
+
+  ToArray(enumme) {
+    return Object.keys(enumme).map((key) => enumme[key]);
   }
 }
