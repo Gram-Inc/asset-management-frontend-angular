@@ -71,7 +71,10 @@
   </div>
 
   <!-- User Information  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+  <div
+    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+    formGroupName="userInformation"
+  >
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
 
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
@@ -79,7 +82,7 @@
       <div class="col-span-6" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>U.A.M Number</mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
 
@@ -87,7 +90,7 @@
       <div class="col-span-3" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>Date of Request</mat-label>
-          <input matInput [matDatepicker]="dor" />
+          <input matInput [matDatepicker]="dor" formControlName="dateOfRequest" />
           <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
           <mat-datepicker #dor></mat-datepicker>
         </mat-form-field>
@@ -97,7 +100,7 @@
       <div class="col-span-3" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>Date of Joining / Leaving </mat-label>
-          <input matInput [matDatepicker]="doj" />
+          <input matInput formControlName="" [matDatepicker]="doj" formControlName="dateOfJoiningLeaving" />
           <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
           <mat-datepicker #doj></mat-datepicker>
         </mat-form-field>
@@ -111,7 +114,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>First Name </mat-label>
-            <input matInput />
+            <input matInput formControlName="" />
           </mat-form-field>
         </div>
 
@@ -119,7 +122,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>Last Name </mat-label>
-            <input matInput />
+            <input matInput formControlName="" />
           </mat-form-field>
         </div>
 
@@ -127,7 +130,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>User ID</mat-label>
-            <input matInput />
+            <input matInput formControlName="" />
             <mat-hint>(For Apcer IT)</mat-hint>
           </mat-form-field>
         </div>
@@ -136,7 +139,7 @@
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>Email ID </mat-label>
-            <input matInput />
+            <input matInput formControlName="" />
             <mat-hint>(For Apcer IT)</mat-hint>
           </mat-form-field>
         </div>
@@ -148,7 +151,7 @@
         [style.fontSize.px]="12"
       >
         <mat-hint class="col-span-1">Type of Access Required</mat-hint>
-        <mat-radio-group class="flex gap-6 col-span-2">
+        <mat-radio-group formControlName="typeOfAccessRequired" class="flex gap-6 col-span-2">
           <mat-radio-button value="1">Permanent</mat-radio-button>
           <mat-radio-button value="2">Temporary</mat-radio-button>
         </mat-radio-group>
@@ -159,7 +162,7 @@
         <div class="col-span-6" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
             <mat-label>Date for deactivation</mat-label>
-            <input matInput [matDatepicker]="dod" />
+            <input formControlName="ifTemporaryDateForDeactivation" matInput [matDatepicker]="dod" />
             <mat-datepicker-toggle matSuffix [for]="dod"></mat-datepicker-toggle>
             <mat-datepicker #dod></mat-datepicker>
           </mat-form-field>
@@ -171,7 +174,7 @@
         <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
           <div class="flex flex-col" [style.fontSize.px]="12">
             <mat-hint class="mr-3 mb-3">Type of User</mat-hint>
-            <mat-radio-group class="flex flex-row mb-3">
+            <mat-radio-group formControlName="typeOfUser" class="flex flex-row mb-3">
               <mat-radio-button class="m-2" value="1">Apcer User</mat-radio-button>
               <mat-radio-button class="m-2" value="2">Apcer Client Emp</mat-radio-button>
               <mat-radio-button class="m-2" value="3">Other</mat-radio-button>
@@ -183,7 +186,7 @@
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field appearance="outline">
                 <mat-label>Other</mat-label>
-                <input matInput />
+                <input matInput formControlName="typeOfUserOtherText" />
                 <mat-hint>Other if the person is not an APCER employee</mat-hint>
               </mat-form-field>
             </div>
@@ -193,7 +196,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field appearance="outline">
               <mat-label>Designation</mat-label>
-              <input matInput />
+              <input matInput formControlName="department" />
             </mat-form-field>
           </div>
         </div>
@@ -207,7 +210,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>User Location</mat-label>
-              <mat-select>
+              <mat-select formControlName="">
                 <mat-option value="volvo">Apcer Delhi</mat-option>
                 <mat-option value="saab">Apcer Ahmedabad</mat-option>
                 <mat-option value="mercedes">Apcer US</mat-option>
@@ -220,7 +223,7 @@
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field appearance="outline">
                 <mat-label>Other</mat-label>
-                <input matInput />
+                <input matInput formControlName="" />
                 <mat-hint
                   >Other if the user will work from non APCEr listed locations e.g. Client location</mat-hint
                 >
@@ -232,7 +235,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field appearance="outline">
               <mat-label>Department</mat-label>
-              <input matInput />
+              <input matInput formControlName="" />
             </mat-form-field>
           </div>
         </div>
@@ -242,13 +245,23 @@
       <ng-container>
         <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
           <div class="flex flex-col" [style.fontSize.px]="12">
-            <section class="my-4">
+            <section class="my-4" formGroupName="networkServicesToBeGrantedRevoked">
               <mat-hint class="mb-2">Network Services to be Granted / Revoked</mat-hint>
-              <p><mat-checkbox>Email Access</mat-checkbox></p>
-              <p><mat-checkbox>Server Access</mat-checkbox></p>
-              <p><mat-checkbox>Shared Drive / Folder Access</mat-checkbox></p>
-              <p><mat-checkbox>APCER Network VPN Access</mat-checkbox></p>
-              <p><mat-checkbox>Others (e.g.Mobile Access, Guest Wi-Fi etc)</mat-checkbox></p>
+              <p><mat-checkbox formControlName="emailAccess">Email Access</mat-checkbox></p>
+              <p><mat-checkbox formControlName="serverAccess">Server Access</mat-checkbox></p>
+              <p>
+                <mat-checkbox formControlName="sharedDrive/folderAccess"
+                  >Shared Drive / Folder Access</mat-checkbox
+                >
+              </p>
+              <p>
+                <mat-checkbox formControlName="APCERNetworkVPNAccess">APCER Network VPN Access</mat-checkbox>
+              </p>
+              <p>
+                <mat-checkbox formControlName="others"
+                  >Others (e.g.Mobile Access, Guest Wi-Fi etc)</mat-checkbox
+                >
+              </p>
             </section>
             <mat-hint class="mb-2"
               >Other & capture the server details in the comments section. E.g. IRMS Terminal Server pr
@@ -260,7 +273,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field appearance="outline">
               <mat-label>Reporting Manager Name</mat-label>
-              <input matInput />
+              <input matInput formControlName="" />
               <!-- Load from DB -->
             </mat-form-field>
           </div>
@@ -288,6 +301,7 @@
               class="focus:ring-0"
               style="height: 140px"
               matInput
+              formControlName="comments"
               placeholder="22/Nov/2021 is the last day for Annapurna Chandra in the Organization. Hence User window account, Network access group, Email access and VPN access needs to be removed. &NewLine; &NewLine;Employee E Mail ID: Annapurna.Chandra@apcerls.com"
             ></textarea>
           </mat-form-field>
@@ -297,7 +311,10 @@
   </div>
 
   <!--Access to Share Drives  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+  <div
+    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+    formGroupName="accessToShareDrives"
+  >
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Access to Share Drives</h4></div>
 
     <div
@@ -333,7 +350,7 @@
           <div class="col-span-2">
             <mat-form-field appearance="outline">
               <mat-label>Folder Name/s</mat-label>
-              <input matInput formControlName="folderName" />
+              <input matInput formControlName="" formControlName="folderName" />
             </mat-form-field>
           </div>
           <!-- Access Rights -->
@@ -412,7 +429,10 @@
   </div>
 
   <!--User system Data and  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+  <div
+    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+    formGroupName="userSystemDataAndEmailIdTreatment"
+  >
     <div class="text-sm font-medium">
       <h4 class="text-sm font-semibold">User System Data and Email ID Treatment</h4>
     </div>
@@ -431,13 +451,13 @@
         <!-- Data Handover to -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Data Handover To </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!-- End User configuration -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on receipt of data </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
 
@@ -445,13 +465,13 @@
         <!-- Email Mailbox Transterred  -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Email Mailbox Transferred to </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!-- End User Confirmation on activation of Mailbox -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on activation of Mailbox </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
 
@@ -459,13 +479,13 @@
         <!-- Email ID Forwarded to#-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Email ID Forwarded to#</mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!-- End User Confirmation on Email Forwarding-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>End User Confirmation on Email Forwarding </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
 
@@ -473,7 +493,7 @@
       <div class="col-span-6" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
           <mat-label>Date Till Email ID to remain Active</mat-label>
-          <input matInput [matDatepicker]="dte" />
+          <input matInput formControlName="" [matDatepicker]="dte" />
           <mat-datepicker-toggle matSuffix [for]="dte"></mat-datepicker-toggle>
           <mat-datepicker #dte></mat-datepicker>
         </mat-form-field>
@@ -482,7 +502,10 @@
   </div>
 
   <!--UAM Approvals -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+  <div
+    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+    formGroupName="uamApprovals"
+  >
     <div class="text-sm font-medium">
       <h4 class="text-sm font-semibold">UAM Approvals</h4>
     </div>
@@ -491,32 +514,32 @@
         <!-- Requested By-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Requested By</mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!-- Head of Department / Designee-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Head of Department / Designee </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!--IT Head/Designee (Mandatory in case of Email Forwarding)  -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>IT Head/Designee (Mandatory in case of Email Forwarding)</mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
 
         <!-- DPO/ Designee (Mandatory in case of Email Forwarding)-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>DPO/ Designee (Mandatory in case of Email Forwarding) </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
     </div>
   </div>
 
   <!--For IT Department Only -->
-  <ng-container *ngIf="true">
+  <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
     <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
       <div class="text-sm font-medium">
         <h4 class="text-sm font-semibold">For IT Department Use Only</h4>
@@ -529,7 +552,7 @@
           <!-- Active Directory Account Deactivation Date-->
           <mat-form-field appearance="outline" class="col-span-2">
             <mat-label>Active Directory Account Deactivation Date</mat-label>
-            <input matInput [matDatepicker]="ada" />
+            <input matInput formControlName="activeDirectoryAccountDeactivationDate" [matDatepicker]="ada" />
             <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
             <mat-datepicker #ada></mat-datepicker>
           </mat-form-field>
@@ -537,7 +560,7 @@
           <!-- Active Directory Account Deletion Date-->
           <mat-form-field appearance="outline" class="col-span-2">
             <mat-label>Active Directory Account Deletion Date </mat-label>
-            <input matInput [matDatepicker]="adad" />
+            <input matInput formControlName="activeDirectoryAccountDeletionDate" [matDatepicker]="adad" />
             <mat-datepicker-toggle matSuffix [for]="adad"></mat-datepicker-toggle>
             <mat-datepicker #adad></mat-datepicker>
           </mat-form-field>
@@ -545,21 +568,26 @@
           <!-- Comments -->
           <mat-form-field appearance="outline" class="col-span-4">
             <mat-label>Comments (if any)</mat-label>
-            <textarea class="focus:ring-0" style="height: 140px" matInput></textarea>
+            <textarea
+              class="focus:ring-0"
+              formControlName="comments"
+              style="height: 140px"
+              matInput
+            ></textarea>
           </mat-form-field>
         </div>
 
         <!-- Executed By-->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>Executed By </mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
           <mat-hint>Printed Name</mat-hint>
         </mat-form-field>
 
         <!--(Server Administrator / Designee)  -->
         <mat-form-field appearance="outline" class="col-span-2">
           <mat-label>(Server Administrator / Designee)</mat-label>
-          <input matInput />
+          <input matInput formControlName="" />
         </mat-form-field>
       </div>
     </div>

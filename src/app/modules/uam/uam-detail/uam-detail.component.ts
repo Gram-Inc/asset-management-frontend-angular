@@ -24,8 +24,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
   requestType: RequestTypeActionUAM = RequestTypeActionUAM.Create;
   requestTypes = RequestTypeActionUAM;
-  noOfUsers: "single" | "multiple";
-  noOfUser = "single";
+  noOfUser: "single" | "multiple" = "single";
 
   // User
   users$: Observable<IUser[]> = new Observable<IUser[]>();
@@ -56,6 +55,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       requestTypeAction: [RequestTypeActionUAM.Create, [Validators.required]],
       accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
       userInformation: this.createUserInformationForm(),
+      forITDepartmentUseOnly: this.createITDepartmentUseOnly(),
     });
   }
   //On Destroy
@@ -67,7 +67,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   createUserInformationForm(): FormGroup {
     return this._formBuilder.group({
       users: this._formBuilder.array([this.createUser()]),
-      dateOfRequest: [""],
+      dateOfRequest: [Date.now()],
       dateOfJoiningLeaving: [""],
       typeOfAccessRequired: [null],
       ifTemporaryDateForDeactivation: [""],
@@ -87,7 +87,20 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       comments: [""],
     });
   }
-
+  createITDepartmentUseOnly() {
+    return this._formBuilder.group({
+      activeDirectoryAccountDeactivationDate: [""],
+      activeDirectoryAccountDeletionDate: [""],
+      comments: [""],
+      executedBy: this._formBuilder.array([
+        {
+          printedName: [""],
+          signature: [""],
+          date: [""],
+        },
+      ]),
+    });
+  }
   createUser(): FormGroup {
     return this._formBuilder.group({
       remark: [""],
