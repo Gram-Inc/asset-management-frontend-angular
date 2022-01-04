@@ -1,77 +1,105 @@
 export interface IUAM {
   _id?: string;
-  requestTypeAction: "Create" | "Modify" | "Delete" | "Deactivate";
-  userInformation: {
-    users: {
+  requestTypeAction?: RequestTypeActionUAM;
+  userInformation?: {
+    users?: {
       remark?: string;
       actionType?: string;
       userId?: string;
     }[];
-    dateOfRequest: string;
-    dateOfJoiningLeaving: string;
-    typeOfAccessRequired: "permanent" | "temporary";
-    ifTemporaryDateForDeactivation: string;
-    typeOfUser: "ApcerUser" | "ApcerClientEmp" | "Other";
-    typeOfUserOtherText: string;
-    designation: string;
-    department: string;
-    networkServicesToBeGrantedRevoked: {
-      emailAccess: boolean;
-      serverAccess: boolean;
-      "sharedDrive/folderAccess": boolean;
-      APCERNetworkVPNAccess: boolean;
-      others: boolean;
+    dateOfRequest?: string;
+    dateOfJoiningLeaving?: string;
+    typeOfAccessRequired?: TypeOfAccessRequiredUAM;
+    ifTemporaryDateForDeactivation?: string;
+    typeOfUser?: TypeOfUserUAM;
+    typeOfUserOtherText?: string;
+    designation?: string;
+    department?: string;
+    networkServicesToBeGrantedRevoked?: {
+      emailAccess?: boolean;
+      serverAccess?: boolean;
+      "sharedDrive/folderAccess"?: boolean;
+      APCERNetworkVPNAccess?: boolean;
+      others?: boolean;
     };
-    reportingManager: string;
-    accessToDistributionList: boolean;
-    comments: string;
+    reportingManager?: string;
+    accessToDistributionList?: boolean;
+    comments?: string;
   };
-  accessToShareDrives: {
-    driveName: string;
-    folderName: string;
-    accessRights: "ReadOnly" | "ReadWrite";
-    grantRevoke: "Grant" | "Revoke";
+  accessToShareDrives?: {
+    driveName?: string;
+    folderName?: string;
+    accessRights?: AccessRightsUAM;
+    grantRevoke?: GrantRevokeUAM;
   }[];
-  userSystemDataAndEmailIdTreatment: {
-    userSystemData: "NotRequired" | "Archive" | "Handover";
-    dataHandOverTo: string;
-    endUserConfirmationOnReceiptOfData: string;
-    emailMailboxTransferredTo: string;
-    endUserConfirmationOnActivationOfMailbox: string;
-    emailIdForwardedTo: string;
-    dateTillEmailIdToRemainActive: string;
-    endUserConfirmatinoOnEmailForwarding: string;
+  userSystemDataAndEmailIdTreatment?: {
+    userSystemData?: UserSystemDataUAM;
+    dataHandOverTo?: string;
+    endUserConfirmationOnReceiptOfData?: string;
+    emailMailboxTransferredTo?: string;
+    endUserConfirmationOnActivationOfMailbox?: string;
+    emailIdForwardedTo?: string;
+    dateTillEmailIdToRemainActive?: string;
+    endUserConfirmatinoOnEmailForwarding?: string;
   };
-  uamApprovals: {
-    requestedBy: {
-      name: string;
-      signature: string;
-      approvalDate: string;
+  uamApprovals?: {
+    requestedBy?: {
+      name?: string;
+      signature?: string;
+      approvalDate?: string;
     };
-    headOfDepartmentDesignee: {
-      name: string;
-      signature: string;
-      approvalDate: string;
+    headOfDepartmentDesignee?: {
+      name?: string;
+      signature?: string;
+      approvalDate?: string;
     };
-    itHeadDesignee: {
-      name: string;
-      signature: string;
-      approvalDate: string;
+    itHeadDesignee?: {
+      name?: string;
+      signature?: string;
+      approvalDate?: string;
     };
-    dpoDesignee: {
-      name: string;
-      signature: string;
-      approvalDate: string;
+    dpoDesignee?: {
+      name?: string;
+      signature?: string;
+      approvalDate?: string;
     };
   };
-  forITDepartmentUseOnly: {
-    activeDirectoryAccountDeactivationDate: string;
-    activeDirectoryAccountDeletionDate: string;
-    comments: string;
-    executedBy: {
-      printedName: string;
-      signature: string;
-      date: string;
+  forITDepartmentUseOnly?: {
+    activeDirectoryAccountDeactivationDate?: string;
+    activeDirectoryAccountDeletionDate?: string;
+    comments?: string;
+    executedBy?: {
+      printedName?: string;
+      signature?: string;
+      date?: string;
     }[];
   };
+}
+export enum TypeOfUserUAM {
+  "ApcerUser",
+  "ApcerClientEmp",
+  "Other",
+}
+export enum TypeOfAccessRequiredUAM {
+  "permanent",
+  "temporary",
+}
+export enum RequestTypeActionUAM {
+  "Create",
+  "Modify",
+  "Delete",
+  "Deactivate",
+}
+export enum AccessRightsUAM {
+  "ReadOnly",
+  "ReadWrite",
+}
+export enum GrantRevokeUAM {
+  "Grant",
+  "Revoke",
+}
+export enum UserSystemDataUAM {
+  "NotRequired",
+  "Archive",
+  "Handover",
 }
