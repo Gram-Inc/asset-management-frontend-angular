@@ -140,8 +140,8 @@
 
       <!-- Check if Single  -->
       <ng-container *ngIf="noOfUser == 'single'">
-        <h4 class="text-lg col-span-full">Name of the Employee</h4>
-        <h6 class="text-sm text-gray-500 col-span-full">(Service Request For)</h6>
+        <h4 class="text-sm col-span-full">Name of the Employee</h4>
+        <h6 class="text-xs text-gray-500 col-span-full">(Service Request For)</h6>
         <!-- First Name -->
         <div class="col-span-3" [style.fontSize.px]="12">
           <mat-form-field appearance="outline">
@@ -321,10 +321,9 @@
             <mat-label>Comments (if any)</mat-label>
             <textarea
               class="focus:ring-0"
+              style="height: 140px"
               matInput
-              placeholder="22/Nov/2021 is the last day for Annapurna Chandra in the Organization. Hence User window account, Network access group, Email access and VPN access needs to be removed.
-
-              Employee E Mail ID: Annapurna.Chandra@apcerls.com"
+              placeholder="22/Nov/2021 is the last day for Annapurna Chandra in the Organization. Hence User window account, Network access group, Email access and VPN access needs to be removed. &NewLine; &NewLine;Employee E Mail ID: Annapurna.Chandra@apcerls.com"
             ></textarea>
           </mat-form-field>
         </div>
@@ -332,10 +331,174 @@
     </div>
   </div>
 
-  <!-- User Information  -->
+  <!--Access to Share Drives  -->
   <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
+    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Access to Share Drives</h4></div>
 
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center"></div>
+    <div
+      class="
+        mt-1
+        col-span-3
+        grid grid-cols-8
+        gap-x-4 gap-y-2
+        items-center
+        border-gray-300 border
+        rounded-lg
+        p-4
+        my-2
+      "
+      [style.fontSize.px]="12"
+    >
+      <!-- Row 1 -->
+      <ng-container>
+        <!-- Drive Name -->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Drive Name </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!--Folder Name/s-->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Folder Name/s</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <!-- Access Rights -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Access Rights</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Read Only</mat-option>
+            <mat-option value="saab">Read / Write</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Grant / Revoked -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Grant / Revoke</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Grant</mat-option>
+            <mat-option value="saab">Revoke</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Row 2 -->
+      <ng-container>
+        <!-- Drive Name -->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Drive Name </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!--Folder Name/s-->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Folder Name/s</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <!-- Access Rights -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Access Rights</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Read Only</mat-option>
+            <mat-option value="saab">Read / Write</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Grant / Revoked -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Grant / Revoke</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Grant</mat-option>
+            <mat-option value="saab">Revoke</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Row 3 -->
+      <ng-container>
+        <!-- Drive Name -->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Drive Name </mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+
+        <!--Folder Name/s-->
+        <div class="col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Folder Name/s</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <!-- Access Rights -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Access Rights</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Read Only</mat-option>
+            <mat-option value="saab">Read / Write</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Grant / Revoked -->
+        <mat-form-field class="col-span-2" appearance="outline">
+          <mat-label>Grant / Revoke</mat-label>
+          <mat-select>
+            <mat-option value="volvo">Grant</mat-option>
+            <mat-option value="saab">Revoke</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+
+  <!--User system Data and  -->
+  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+    <div class="text-sm font-medium">
+      <h4 class="text-sm font-semibold">User System Data and Email ID Treatment</h4>
+    </div>
+
+    <h4 class="text-sm col-span-full">Name of the Employee</h4>
+    <h6 class="text-xs text-gray-500 col-span-full">(Service Request For)</h6>
+    <!-- First Name -->
+    <div class="col-span-3" [style.fontSize.px]="12">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name </mat-label>
+        <input matInput />
+      </mat-form-field>
+    </div>
+
+    <!-- Last Name -->
+    <div class="col-span-3" [style.fontSize.px]="12">
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name </mat-label>
+        <input matInput />
+      </mat-form-field>
+    </div>
+
+    <!-- User ID -->
+    <div class="col-span-3" [style.fontSize.px]="12">
+      <mat-form-field appearance="outline">
+        <mat-label>User ID</mat-label>
+        <input matInput />
+        <mat-hint>(For Apcer IT)</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <!-- Email ID -->
+    <div class="col-span-3" [style.fontSize.px]="12">
+      <mat-form-field appearance="outline">
+        <mat-label>Email ID </mat-label>
+        <input matInput />
+        <mat-hint>(For Apcer IT)</mat-hint>
+      </mat-form-field>
+    </div>
   </div>
 </div>
