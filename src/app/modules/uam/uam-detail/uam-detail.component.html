@@ -619,7 +619,7 @@
         <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
       </div>
       <!-- Table -->
-      <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="12">
+      <div class="mt-1 grid grid-cols-8 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="12">
         <ng-container
           formArrayName="users"
           *ngFor="let usr of uamForm.get('userInformation.users')['controls']; let i = index; let last = last"

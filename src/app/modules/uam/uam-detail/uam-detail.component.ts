@@ -7,6 +7,7 @@ import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { DepartmentService } from "src/app/core/department/department.service";
 import { IDepartment } from "src/app/core/department/department.types";
+import { SideNavService } from "src/app/core/side-nav/side-nav.service";
 import { UamService } from "src/app/core/uam/uam.service";
 import {
   AccessRightsUAM,
@@ -51,10 +52,13 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _sideNavService: SideNavService
   ) {}
 
   ngOnInit(): void {
+    //Close side Nav
+    this._sideNavService.opened = false;
     //Get All Branch
     this.branchs$ = this._branchService.branchs$;
 
