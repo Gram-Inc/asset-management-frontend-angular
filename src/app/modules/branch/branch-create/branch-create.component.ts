@@ -71,7 +71,7 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
     //CHECK IF UPDATE or Create
 
     //Update
-    if (this.branch) {
+    if (this.branch)
       this._branchService.updateBranch(this.branch._id, this.branchForm.value).subscribe(
         (_) => {
           this.openSnackBar("Success", "Branch Updated");
@@ -83,9 +83,8 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
           this.openSnackBar("Error", err.message);
         }
       );
-    }
     //Create
-    else {
+    else
       this._branchService.createBranch(this.branchForm.value).subscribe(
         (_) => {
           this.openSnackBar("Success", "Branch Created");
@@ -97,7 +96,6 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
           this.openSnackBar("Error", err.message);
         }
       );
-    }
   }
 
   openSnackBar(type: "Error" | "Info" | "Success", msg: string) {

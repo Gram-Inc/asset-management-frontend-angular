@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { VendorService } from "src/app/core/vendor/vendor.service";
+import { IVendor } from "src/app/core/vendor/vendor.types";
 
 @Component({
   selector: "vendor-create",
@@ -12,6 +14,8 @@ import { VendorService } from "src/app/core/vendor/vendor.service";
 })
 export class CreateComponent implements OnInit {
   vendorForm: FormGroup;
+  vendor: IVendor = null;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   //Constructor
   constructor(
@@ -19,7 +23,8 @@ export class CreateComponent implements OnInit {
     private _vendorService: VendorService,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   // Life Cycle Hooks
@@ -37,6 +42,14 @@ export class CreateComponent implements OnInit {
       city: ["", [Validators.required]],
       serviceNo: [""],
     });
+
+    this._vendorService.vendor$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
+      this.vendor = val;
+      this.vendorForm.patchValue(val);
+
+      // Mark for check
+      this._changeDetectorRef.markForCheck();
+    });
   }
 
   //Create Vendor
@@ -46,15 +59,28 @@ export class CreateComponent implements OnInit {
     if (this.vendorForm.invalid) return;
 
     // Create Vendor
-    this._vendorService.createVendor(this.vendorForm.value).subscribe(
-      (_) => {
-        this.openSnackBar("Success", "Vendor Created");
-        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-      },
-      (err) => {
-        this.openSnackBar("Error", err.message);
-      }
-    );
+    if (this.vendor)
+      this._vendorService.updateVendor(this.vendor._id, this.vendorForm.value).subscribe(
+        (_) => {
+          this.openSnackBar("Success", "Vendor Updated");
+          this._router.navigate(["../"], {
+            relativeTo: this._activatedRoute,
+          });
+        },
+        (err) => {
+          this.openSnackBar("Error", err.message);
+        }
+      );
+    else
+      this._vendorService.createVendor(this.vendorForm.value).subscribe(
+        (_) => {
+          this.openSnackBar("Success", "Vendor Created");
+          this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+        },
+        (err) => {
+          this.openSnackBar("Error", err.message);
+        }
+      );
   }
 
   openSnackBar(type: "Error" | "Info" | "Success", msg: string) {

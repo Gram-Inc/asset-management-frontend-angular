@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map, switchMap, take, tap } from "rxjs/operators";
+import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IPagination } from "../asset/asset.types";
 import { IDTO } from "../dto/dto.types";
@@ -40,6 +40,9 @@ export class VendorService {
     return this._pagination.asObservable();
   }
 
+  clrVendor() {
+    this._vendor.next(null);
+  }
   createVendor(vendor: IVendor): Observable<IVendor> {
     return this.vendors$.pipe(
       take(1),
@@ -101,6 +104,48 @@ export class VendorService {
       tap((response) => {
         this._vendor.next(response);
       })
+    );
+  }
+
+  /**
+   * Update vendor
+   *
+   * @param _id
+   * @param vendor
+   */
+  updateVendor(_id: string, vendor: IVendor): Observable<any> {
+    delete vendor._id;
+    return this.vendors$.pipe(
+      take(1),
+      switchMap((vendors) =>
+        this._httpClient.put<IVendor>(`${this._baseUrl}/vendor/${_id}`, vendor).pipe(
+          map((updatedVendor) => {
+            // Find the index of the updated vendor
+            const index = vendors.findIndex((brn) => brn._id === _id);
+
+            // Update the vendor
+            vendors[index] = updatedVendor;
+
+            this._vendors.next(vendors);
+
+            // Return the updated
+            return updatedVendor;
+          }),
+          switchMap((updatedVendor) =>
+            this.vendor$.pipe(
+              take(1),
+              filter((brn) => brn && brn._id === _id),
+              tap(() => {
+                // Update the vendor if it's selected
+                this._vendor.next(updatedVendor);
+
+                // Return the updated vendor
+                return updatedVendor;
+              })
+            )
+          )
+        )
+      )
     );
   }
 }

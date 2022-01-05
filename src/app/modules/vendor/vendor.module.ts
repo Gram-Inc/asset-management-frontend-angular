@@ -5,7 +5,8 @@ import { Route, RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { ListModule } from "./list/list.module";
-import { VendorResolver } from "src/app/core/vendor/vendor.resolver";
+import { EditVendorResolver, VendorResolver } from "src/app/core/vendor/vendor.resolver";
+import { CreateModule } from "./create/create.module";
 
 const vendorRoutes: Route[] = [
   {
@@ -20,6 +21,11 @@ const vendorRoutes: Route[] = [
   {
     path: "detail",
     loadChildren: () => import("./detail/detail.module").then((x) => x.DetailModule),
+  },
+  {
+    path: ":id",
+    resolve: [EditVendorResolver],
+    loadChildren: () => import("./create/create.module").then((x) => x.CreateModule),
   },
 ];
 
