@@ -250,10 +250,10 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getPrevUser(asset: IAsset) {
-    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
-      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
-        return asset.allocationToUserId.firstName;
-      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    if (asset.perviousUser && typeof asset.perviousUser == "object") {
+      if (asset.perviousUser.firstName.toUpperCase() == asset.perviousUser.lastName.toUpperCase())
+        return asset.perviousUser.firstName;
+      return asset.perviousUser.firstName + " " + asset.perviousUser.lastName;
     }
     return "-";
   }
@@ -263,7 +263,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
   }
   openPrevUser(asset: IAsset) {
-    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
-      this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+    if (asset.perviousUser && typeof asset.perviousUser == "object")
+      this.router.navigate([`/user/${asset.perviousUser._id}`]);
   }
 }

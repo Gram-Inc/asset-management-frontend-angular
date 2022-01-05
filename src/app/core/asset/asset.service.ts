@@ -129,19 +129,19 @@ export class AssetService {
     return this.assets$.pipe(
       take(1),
       switchMap((assets) =>
-        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${assetId}/user/${userId}/assign`, "").pipe(
-          map((updatedAsset) => {
+        this._httpClient.put<IDTO>(`${this._baseUrl}/asset/${assetId}/user/${userId}/assign`, "").pipe(
+          map((response) => {
             // Find the index of the updated asset
             const index = assets.findIndex((ast) => ast._id === assetId);
 
             // Update the asset
-            assets[index] = updatedAsset;
+            assets[index] = response.data;
 
             // Update the assets
             this._assets.next(assets);
 
             // Return the updated asset
-            return updatedAsset;
+            return response.data;
           }),
           switchMap((updatedAsset) =>
             this.asset$.pipe(
@@ -167,23 +167,23 @@ export class AssetService {
    * @param _id
    * @param asset
    */
-  updateAsset(_id: string, asset: IAsset): Observable<any> {
+  updateAsset(_id: string, asset: IAsset): Observable<IAsset> {
     return this.assets$.pipe(
       take(1),
       switchMap((assets) =>
-        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${_id}`, asset).pipe(
-          map((updatedAsset) => {
+        this._httpClient.put<IDTO>(`${this._baseUrl}/asset/${_id}`, asset).pipe(
+          map((response) => {
             // Find the index of the updated asset
             const index = assets.findIndex((ast) => ast._id === _id);
 
             // Update the asset
-            assets[index] = updatedAsset;
+            assets[index] = response.data;
 
             // Update the assets
             this._assets.next(assets);
 
             // Return the updated asset
-            return updatedAsset;
+            return response.data;
           }),
           switchMap((updatedAsset) =>
             this.asset$.pipe(

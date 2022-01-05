@@ -10,6 +10,7 @@ import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-asset-bottom-sheet",
@@ -28,7 +29,8 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _bottomSheetRef: MatBottomSheetRef<AssetBottomSheetComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: IAsset,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -64,13 +66,33 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     return "NULL";
   }
   updateAllocation() {
-    this.searchCtrl.markAllAsTouched();
-    //Validate User Control
-    if (this.searchCtrl.valid && typeof this.searchCtrl.value == "object") {
-      //Update the Asset
+    //Check validation only if status Assigned is selected
+    if (this.asset.allocationStatus == "ASSIGNED") {
+      this.searchCtrl.markAllAsTouched();
+      //Validate User Control
+      if (this.searchCtrl.valid && typeof this.searchCtrl.value == "object") {
+        //Update the Asset
 
-      this._assetService.assignAssetToUser(this.asset._id, this.searchCtrl.value["_id"]).subscribe(
+        this._assetService.assignAssetToUser(this.asset._id, this.searchCtrl.value["_id"]).subscribe(
+          (_) => {
+            this.openSnackBar("Success", "Action completed !");
+            this._bottomSheetRef.dismiss();
+          },
+          (err) => {
+            this.openSnackBar("Error", err.message);
+          }
+        );
+      } else {
+        this.searchCtrl.setErrors({ isValid: false });
+      }
+    }
+    //else other option
+    else {
+      //Remove allocationtoUserID section
+      delete this.asset.allocationToUserId;
+      this._assetService.updateAsset(this.asset._id, this.asset).subscribe(
         (_) => {
+          console.log(_);
           this.openSnackBar("Success", "Action completed !");
           this._bottomSheetRef.dismiss();
         },
@@ -78,13 +100,13 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
           this.openSnackBar("Error", err.message);
         }
       );
-    } else {
-      this.searchCtrl.setErrors({ isValid: false });
     }
   }
 
   isAssetEdited(): boolean {
-    return JSON.stringify(this.asset) != JSON.stringify(this.data);
+    return (
+      JSON.stringify(this.asset) != JSON.stringify(this.data) || this.asset.allocationStatus == "ASSIGNED"
+    );
   }
 
   displayFn(user: IUser): string {
@@ -99,5 +121,19 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
     });
+  }
+
+  getCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
+        return asset.allocationToUserId.firstName;
+      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    }
+    return "-";
+  }
+
+  openCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+      this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
   }
 }
