@@ -54,9 +54,9 @@
           [isDisabled]="true"
         ></app-aside>
 
-        <div class="MuiBox-root css-cgzaw6">
+        <!-- <div class="MuiBox-root css-cgzaw6">
           <div class="css-1y6oevj-MuiStack-root">
-            <!-- <img class="MuiBox-root css-8f3sc7" src="/static/rikiel-logo.svg" /> -->
+            <img class="MuiBox-root css-8f3sc7" src="/static/rikiel-logo.svg" /> 
             <div class="MuiBox-root css-xi606m">
               <h6
                 class="
@@ -84,7 +84,7 @@
               >hello@rikiel.com<span class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"></span
             ></a>
           </div>
-        </div>
+        </div> -->
       </div>
     </mat-drawer>
 
@@ -107,7 +107,7 @@
       <!-- <br />
     <br />
     <br /> -->
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="user != null"></router-outlet>
     </div>
   </mat-drawer-container>
 </div>

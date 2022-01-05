@@ -4,8 +4,8 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <ng-container *ngIf="users$ | async as users">
-            <ng-container *ngIf="users.length > 0; else noUsers">
+          <ng-container *ngIf="users$ | async as users; else noUsers">
+            <ng-container *ngIf="users.length > 0">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -40,58 +40,57 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngIf="users$ | async as users">
-                    <ng-container *ngFor="let user of users; trackBy: trackByFn">
-                      <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(user)">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="">
-                              <div class="text-sm font-medium text-gray-900">{{ user?.firstName }}</div>
-                              <div class="text-sm text-gray-500">{{ user?.email }}</div>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">{{ user.email }}</div>
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          {{ user.mobileNumber ?? "" | titlecase }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {{ getBranchShortCode(user.branch) }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <ng-container *ngFor="let user of users; trackBy: trackByFn">
+                    <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(user)">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
                           <div class="">
-                            <!-- Edit Button -->
-                            <button
-                              type="button"
-                              class="
-                                ml-2
-                                m-auto
-                                inline-flex
-                                items-center
-                                px-2
-                                py-1
-                                border border-gray-300
-                                rounded-md
-                                shadow-sm
-                                text-sm
-                                font-medium
-                                text-gray-500
-                                bg-white
-                                hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                              "
-                              matTooltip="Edit"
-                            >
-                              <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                            </button>
+                            <div class="text-sm font-medium text-gray-900">{{ user?.firstName }}</div>
+                            <div class="text-sm text-gray-500">{{ user?.email }}</div>
                           </div>
-                        </td>
-                      </tr> </ng-container
-                  ></ng-container>
+                        </div>
+                      </td>
+
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ user.email }}</div>
+                      </td>
+
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        {{ user.mobileNumber ?? "" | titlecase }}
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ getBranchShortCode(user.branch) }}
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="">
+                          <!-- Edit Button -->
+                          <button
+                            type="button"
+                            class="
+                              ml-2
+                              m-auto
+                              inline-flex
+                              items-center
+                              px-2
+                              py-1
+                              border border-gray-300
+                              rounded-md
+                              shadow-sm
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              bg-white
+                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+                            "
+                            matTooltip="Edit"
+                          >
+                            <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
                   <tr>
                     <td colspan="6">
                       <mat-paginator

@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { AssetResolverResolver, CreateAssetResolver } from "src/app/core/asset/asset-resolver.resolver";
 import { AssetComponent } from "./asset.component";
-import { DetailsComponent } from "./details/details.component";
+import { AssetDetailComponent } from "./details/details.component";
 
 export const assetRoutes: Routes = [
   {
@@ -12,6 +12,6 @@ export const assetRoutes: Routes = [
   {
     path: "create",
     resolve: [CreateAssetResolver],
-    component: DetailsComponent,
+    component: AssetDetailComponent,
   },
 ];

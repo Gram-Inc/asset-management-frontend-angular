@@ -25,7 +25,7 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
     `,
   ],
 })
-export class DetailsComponent implements OnInit, OnDestroy {
+export class AssetDetailComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   assetForm: FormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software

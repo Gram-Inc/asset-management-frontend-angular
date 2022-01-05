@@ -24,7 +24,7 @@ import { QrService } from "src/app/core/qr/qr.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 import { AssetShortDetailComponent } from "../../shared/asset-short-detail/asset-short-detail.component";
 import { AssetBottomSheetComponent } from "../asset-bottom-sheet/asset-bottom-sheet.component";
-import { DetailsComponent } from "../details/details.component";
+import { AssetDetailComponent } from "../details/details.component";
 
 @Component({
   selector: "asset-list",
@@ -137,7 +137,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
    * Create Asset
    */
   createAsset(): void {
-    this._matDialog.open(DetailsComponent, {
+    this._matDialog.open(AssetDetailComponent, {
       panelClass: "fuse-confirmation-dialog-panel",
     });
     /* this._rikielConfirmationService.open({

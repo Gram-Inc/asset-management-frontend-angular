@@ -6,13 +6,13 @@ import { assetRoutes } from "./asset.routing";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { AssetListComponent } from "./list/asset.component";
-import { DetailsComponent } from "./details/details.component";
+import { AssetDetailComponent } from "./details/details.component";
 import { SpecCardListModule } from "./spec-card-list/spec-card-list.module";
 import { AssetBottomSheetComponent } from "./asset-bottom-sheet/asset-bottom-sheet.component";
 import { AssetBottomSheetModule } from "./asset-bottom-sheet/asset-bottom-sheet.module";
 
 @NgModule({
-  declarations: [AssetComponent, AssetListComponent, DetailsComponent],
+  declarations: [AssetComponent, AssetListComponent, AssetDetailComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -4,8 +4,8 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <ng-container *ngIf="assets$ | async as assets">
-            <ng-container *ngIf="assets.length > 0; else noProducts">
+          <ng-container *ngIf="assets$ | async as assets; else noProducts">
+            <ng-container *ngIf="assets.length > 0">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -46,135 +46,134 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngIf="assets$ | async as assets">
-                    <ng-container *ngFor="let asset of assets; trackBy: trackByFn">
-                      <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(asset)">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="">
-                              <div class="text-sm font-medium text-gray-900">{{ asset?.name }}</div>
-                              <div class="text-sm text-gray-500">{{ asset?.sr_no }}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div
-                            class="text-sm text-blue-600 cursor-pointer hover:text-orange-500"
-                            (click)="$event.stopPropagation(); openCurrentUser(asset)"
-                          >
-                            {{ getCurrentUser(asset) }}
-                          </div>
-                          <div
-                            class="text-sm text-gray-500 cursor-pointer hover:text-orange-500"
-                            (click)="$event.stopPropagation(); openPrevUser(asset)"
-                          >
-                            {{ getPrevUser(asset) }}
-                          </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">{{ asset.laptop.os.hostname }}</div>
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <span
-                            [ngClass]="{
-                              'bg-green-100 ': asset.allocationStatus == 'IN_POOL',
-                              'text-green-600': asset.allocationStatus == 'IN_POOL',
-                              'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
-                              'text-indigo-600': asset.allocationStatus == 'ASSIGNED',
-                              'bg-red-100': asset.allocationStatus == 'SCRAP',
-                              'text-red-600': asset.allocationStatus == 'SCRAP',
-                              'bg-yellow-100': asset.allocationStatus == 'DOWN',
-                              'text-yellow-600': asset.allocationStatus == 'DOWN'
-                            }"
-                            class="px-2 inline-flex text-xs leading-5 rounded-full"
-                          >
-                            {{ asset.allocationStatus.replace("_", " ") | titlecase }}
-                          </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {{ getBranchShortCode(asset.branch) }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <ng-container *ngFor="let asset of assets; trackBy: trackByFn">
+                    <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(asset)">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
                           <div class="">
-                            <!-- Assign Button -->
-                            <button
-                              type="button"
-                              class="
-                                m-auto
-                                inline-flex
-                                items-center
-                                px-2
-                                py-1
-                                border border-gray-300
-                                rounded-md
-                                shadow-sm
-                                text-sm
-                                font-medium
-                                text-gray-500
-                                bg-white
-                                hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                              "
-                              (click)="$event.stopPropagation(); assignToUser(asset)"
-                            >
-                              <mat-icon class="h-4 w-4" svgIcon="feather:user-check"></mat-icon>
-                            </button>
-                            <!-- Edit Button -->
-                            <button
-                              type="button"
-                              class="
-                                ml-2
-                                m-auto
-                                inline-flex
-                                items-center
-                                px-2
-                                py-1
-                                border border-gray-300
-                                rounded-md
-                                shadow-sm
-                                text-sm
-                                font-medium
-                                text-gray-500
-                                bg-white
-                                hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                              "
-                              matTooltip="Edit"
-                              (click)="$event.stopPropagation(); edit(asset)"
-                            >
-                              <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                            </button>
-
-                            <!-- QR Button -->
-                            <button
-                              type="button"
-                              class="
-                                ml-2
-                                m-auto
-                                inline-flex
-                                items-center
-                                px-2
-                                py-1
-                                border border-gray-300
-                                rounded-md
-                                shadow-sm
-                                text-sm
-                                font-medium
-                                text-gray-500
-                                bg-white
-                                hover:bg-gray-50 hover:text-orange-500 hover:border-orange-500
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                              "
-                              matTooltip="Print QR"
-                              (click)="$event.stopPropagation(); printQR(asset)"
-                            >
-                              <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:qrcode"></mat-icon>
-                            </button>
+                            <div class="text-sm font-medium text-gray-900">{{ asset?.name }}</div>
+                            <div class="text-sm text-gray-500">{{ asset?.sr_no }}</div>
                           </div>
-                        </td>
-                      </tr> </ng-container
-                  ></ng-container>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div
+                          class="text-sm text-blue-600 cursor-pointer hover:text-orange-500"
+                          (click)="$event.stopPropagation(); openCurrentUser(asset)"
+                        >
+                          {{ getCurrentUser(asset) }}
+                        </div>
+                        <div
+                          class="text-sm text-gray-500 cursor-pointer hover:text-orange-500"
+                          (click)="$event.stopPropagation(); openPrevUser(asset)"
+                        >
+                          {{ getPrevUser(asset) }}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ asset.laptop.os.hostname }}</div>
+                      </td>
+
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          [ngClass]="{
+                            'bg-green-100 ': asset.allocationStatus == 'IN_POOL',
+                            'text-green-600': asset.allocationStatus == 'IN_POOL',
+                            'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
+                            'text-indigo-600': asset.allocationStatus == 'ASSIGNED',
+                            'bg-red-100': asset.allocationStatus == 'SCRAP',
+                            'text-red-600': asset.allocationStatus == 'SCRAP',
+                            'bg-yellow-100': asset.allocationStatus == 'DOWN',
+                            'text-yellow-600': asset.allocationStatus == 'DOWN'
+                          }"
+                          class="px-2 inline-flex text-xs leading-5 rounded-full"
+                        >
+                          {{ asset.allocationStatus.replace("_", " ") | titlecase }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ getBranchShortCode(asset.branch) }}
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="">
+                          <!-- Assign Button -->
+                          <button
+                            type="button"
+                            class="
+                              m-auto
+                              inline-flex
+                              items-center
+                              px-2
+                              py-1
+                              border border-gray-300
+                              rounded-md
+                              shadow-sm
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              bg-white
+                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+                            "
+                            (click)="$event.stopPropagation(); assignToUser(asset)"
+                          >
+                            <mat-icon class="h-4 w-4" svgIcon="feather:user-check"></mat-icon>
+                          </button>
+                          <!-- Edit Button -->
+                          <button
+                            type="button"
+                            class="
+                              ml-2
+                              m-auto
+                              inline-flex
+                              items-center
+                              px-2
+                              py-1
+                              border border-gray-300
+                              rounded-md
+                              shadow-sm
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              bg-white
+                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+                            "
+                            matTooltip="Edit"
+                            (click)="$event.stopPropagation(); edit(asset)"
+                          >
+                            <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                          </button>
+
+                          <!-- QR Button -->
+                          <button
+                            type="button"
+                            class="
+                              ml-2
+                              m-auto
+                              inline-flex
+                              items-center
+                              px-2
+                              py-1
+                              border border-gray-300
+                              rounded-md
+                              shadow-sm
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              bg-white
+                              hover:bg-gray-50 hover:text-orange-500 hover:border-orange-500
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+                            "
+                            matTooltip="Print QR"
+                            (click)="$event.stopPropagation(); printQR(asset)"
+                          >
+                            <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:qrcode"></mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
                   <tr>
                     <td colspan="6">
                       <mat-paginator
