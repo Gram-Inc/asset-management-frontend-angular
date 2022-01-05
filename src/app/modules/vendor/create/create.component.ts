@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -12,7 +12,7 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
   templateUrl: "./create.component.html",
   styleUrls: ["./create.component.scss"],
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
   vendorForm: FormGroup;
   vendor: IVendor = null;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -52,6 +52,11 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.vendor) this._vendorService.clrVendor();
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+  }
   //Create Vendor
   create() {
     this.vendorForm.markAllAsTouched();

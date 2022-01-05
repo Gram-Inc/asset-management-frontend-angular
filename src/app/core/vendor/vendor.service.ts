@@ -100,9 +100,12 @@ export class VendorService {
   }
 
   getVendorById(id: string): Observable<IVendor> {
-    return this._httpClient.get<IVendor>(`${this._baseUrl}/vendor/${id}`).pipe(
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/vendor/${id}`).pipe(
       tap((response) => {
-        this._vendor.next(response);
+        this._vendor.next(response.data);
+      }),
+      map((value) => {
+        return value.data;
       })
     );
   }
