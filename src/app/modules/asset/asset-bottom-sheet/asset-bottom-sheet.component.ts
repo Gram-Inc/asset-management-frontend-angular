@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from "@angular/material/bottom-sheet";
 import { isFuture, isValid } from "date-fns";
 import { Observable, Subject } from "rxjs";
@@ -19,7 +19,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   users$: Observable<IUser[]> = new Observable<IUser[]>();
   asset: IAsset;
-  searchCtrl: FormControl = new FormControl("");
+  searchCtrl: FormControl = new FormControl("", [Validators.required]);
   filteredUsers: Observable<IUser[]>;
   selectedUser: IUser = null;
   constructor(
@@ -61,7 +61,17 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     if (branch) return typeof branch === "object" ? branch.name : "-";
     return "NULL";
   }
-  updateAllocation() {}
+  updateAllocation() {
+    this.searchCtrl.markAllAsTouched();
+    //Validate User Control
+    if (this.searchCtrl.valid && typeof this.searchCtrl.value == "object") {
+      //Update the Asset
+
+      this._assetService.assignAssetToUser(this.asset._id, this.searchCtrl.value["_id"]);
+    } else {
+      this.searchCtrl.setErrors({ isValid: false });
+    }
+  }
 
   isAssetEdited(): boolean {
     return JSON.stringify(this.asset) != JSON.stringify(this.data);

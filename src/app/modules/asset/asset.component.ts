@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subject } from "rxjs";
@@ -14,7 +14,7 @@ import { AssetFilterComponent } from "../shared/asset-filter/asset-filter.compon
   styleUrls: ["./asset.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class AssetComponent implements OnInit {
+export class AssetComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   assets$: Observable<IAsset[]>;
   types: string[];

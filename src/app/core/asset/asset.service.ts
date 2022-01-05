@@ -125,6 +125,42 @@ export class AssetService {
     );
   }
 
+  assignAssetToUser(assetId: string, userId: string): Observable<IAsset> {
+    return this.assets$.pipe(
+      take(1),
+      switchMap((assets) =>
+        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${assetId}/user/${userId}`, "").pipe(
+          map((updatedAsset) => {
+            // Find the index of the updated asset
+            const index = assets.findIndex((ast) => ast._id === assetId);
+
+            // Update the asset
+            assets[index] = updatedAsset;
+
+            // Update the assets
+            this._assets.next(assets);
+
+            // Return the updated asset
+            return updatedAsset;
+          }),
+          switchMap((updatedAsset) =>
+            this.asset$.pipe(
+              take(1),
+              filter((item) => item && item._id === assetId),
+              tap(() => {
+                // Update the asset if it's selected
+                this._asset.next(updatedAsset);
+
+                // Return the updated asset
+                return updatedAsset;
+              })
+            )
+          )
+        )
+      )
+    );
+  }
+
   /**
    * Update product
    *
