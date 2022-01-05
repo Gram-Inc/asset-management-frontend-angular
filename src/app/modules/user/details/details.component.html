@@ -200,6 +200,19 @@
           >*Required.</span
         >
       </div>
+
+      <!-- Manager List / Selection -->
+      <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Search Manager</mat-label>
+          <input matInput formControlName="manager" [matAutocomplete]="name" />
+          <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let user of users$ | async" [value]="user">
+              {{ user.firstName + " " + user.lastName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
     </div>
   </div>
   <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">

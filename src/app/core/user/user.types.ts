@@ -11,4 +11,5 @@ export interface IUser {
   departmentId?: string | Partial<IDepartment>;
   mobileNumber?: string;
   branch?: string | Partial<IBranch>;
+  manager?: string | Partial<IUser>;
 }

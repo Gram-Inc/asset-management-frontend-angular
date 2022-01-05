@@ -35,7 +35,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.users$ = this._userService.users$;
+    this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
     this.asset = { ...this.data };
 
     this.searchCtrl.valueChanges
@@ -54,7 +54,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
       : this.searchCtrl.disable();
   }
   ngOnDestroy(): void {
-    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
 
