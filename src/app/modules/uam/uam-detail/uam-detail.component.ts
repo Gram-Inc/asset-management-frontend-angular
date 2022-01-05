@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
+import { UamService } from "src/app/core/uam/uam.service";
 import {
   AccessRightsUAM,
   GrantRevokeUAM,
@@ -37,6 +38,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   constructor(
     private _userService: UserService,
     private _branchService: BranchService,
+    private _uamService: UamService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
@@ -166,10 +168,33 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   }
 
   generateRequest() {
-    console.log(this.uamForm.value);
+    this.uamForm.markAllAsTouched();
+    //VAlidate Form
+    if (this.uamForm.invalid) return;
+
+    this._uamService.createUAM(this.uamForm.value).subscribe(
+      (_) => {
+        this.openSnackBar("Success", "U.A.M Updated");
+        this._router.navigate(["../"], {
+          relativeTo: this._activatedRoute,
+        });
+      },
+      (err) => {
+        this.openSnackBar("Error", err.message);
+      }
+    );
   }
 
   ToArray(enumme) {
     return Object.keys(enumme).map((key) => enumme[key]);
+  }
+
+  openSnackBar(type: "Error" | "Info" | "Success", msg: string) {
+    this._snackBar.open(msg, "Close", {
+      duration: 3000,
+      verticalPosition: "top",
+      horizontalPosition: "center",
+      panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+    });
   }
 }

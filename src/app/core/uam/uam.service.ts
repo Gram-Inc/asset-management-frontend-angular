@@ -50,7 +50,7 @@ export class UamService {
     return this.uams$.pipe(
       take(1),
       switchMap((uams) =>
-        this._httpClient.post(`${this._baseUrl}/uam`, uam).pipe(
+        this._httpClient.post(`${this._baseUrl}/user-access-management`, uam).pipe(
           map((newUAM: IDTO) => {
             this._uams.next([...uams, newUAM.data]);
             return newUAM.data;
@@ -75,7 +75,7 @@ export class UamService {
     sort: string = "name"
   ): Observable<IDTO> {
     return this._httpClient
-      .get<IDTO>(`${this._baseUrl}/uam/paginate`, {
+      .get<IDTO>(`${this._baseUrl}/user-access-management/paginate`, {
         params: {
           page: "" + page,
           limit: "" + limit,
@@ -130,7 +130,7 @@ export class UamService {
     return this.uams$.pipe(
       take(1),
       switchMap((uams) =>
-        this._httpClient.put<IUAM>(`${this._baseUrl}/uam/${_id}`, uam).pipe(
+        this._httpClient.put<IUAM>(`${this._baseUrl}/user-access-management/${_id}`, uam).pipe(
           map((updatedUAM) => {
             // Find the index of the updated uam
             const index = uams.findIndex((uam) => uam._id === _id);

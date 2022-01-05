@@ -130,9 +130,10 @@
         <label for="street-address" class="block text-sm font-medium text-gray-700">Contact Person</label>
         <input
           type="text"
-          [formControlName]="'contactPerson'"
+          [formControlName]="'contactPersonName'"
           [class]="
-            vendorForm.controls['contactPerson'].invalid && vendorForm.controls['contactPerson'].touched
+            vendorForm.controls['contactPersonName'].invalid &&
+            vendorForm.controls['contactPersonName'].touched
               ? 'border-red-500'
               : 'border-gray-300'
           "
