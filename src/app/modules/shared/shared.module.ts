@@ -16,6 +16,7 @@ import { SpecCardListModule } from "../asset/spec-card-list/spec-card-list.modul
 import { UserFilterComponent } from "./user-filter/user-filter.component";
 import { SimpleTimelineModule } from "./simple-timeline/simple-timeline.module";
 import { VendorFilterComponent } from "./vendor-filter/vendor-filter.component";
+import { NgApexchartsModule } from "ng-apexcharts";
 
 var sharedComp = [
   TitleCardComponent,
@@ -39,6 +40,7 @@ var sharedComp = [
     IconsModule,
     SpecCardListModule,
     SimpleTimelineModule,
+    NgApexchartsModule,
   ],
   exports: [
     CommonModule,
@@ -47,6 +49,8 @@ var sharedComp = [
     ConfirmationModule,
     SimpleTimelineModule,
     IconsModule,
+    NgApexchartsModule,
+
     ...sharedComp,
   ],
 })

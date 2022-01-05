@@ -7,6 +7,7 @@ import { SharedModule } from "../shared/shared.module";
 import { OverallBranchAssetDetailTableModule } from "./overall-branch-asset-detail-table/overall-branch-asset-detail-table.module";
 import { LastCreatedUserTableModule } from "./last-created-user-table/last-created-user-table.module";
 import { LastCreatedAssetTableModule } from "./last-created-asset-table/last-created-asset-table.module";
+import { TotalUserCardModule } from "./total-user-card/total-user-card.module";
 
 const dashboardRoutes: Routes = [
   {
@@ -25,6 +26,7 @@ const dashboardRoutes: Routes = [
     OverallBranchAssetDetailTableModule,
     LastCreatedUserTableModule,
     LastCreatedAssetTableModule,
+    TotalUserCardModule,
   ],
 })
 export class DashboardModule {}
