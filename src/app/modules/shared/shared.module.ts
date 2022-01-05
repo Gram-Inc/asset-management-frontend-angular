@@ -14,6 +14,7 @@ import { QrcodeComponent } from "./qrcode/qrcode.component";
 import { AssetSubDetailCardComponent } from "./asset-sub-detail-card/asset-sub-detail-card.component";
 import { SpecCardListModule } from "../asset/spec-card-list/spec-card-list.module";
 import { UserFilterComponent } from "./user-filter/user-filter.component";
+import { SimpleTimelineModule } from "./simple-timeline/simple-timeline.module";
 
 var sharedComp = [
   TitleCardComponent,
@@ -35,7 +36,16 @@ var sharedComp = [
     ConfirmationModule,
     IconsModule,
     SpecCardListModule,
+    SimpleTimelineModule,
   ],
-  exports: [CommonModule, ReactiveFormsModule, FormsModule, ConfirmationModule, IconsModule, ...sharedComp],
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ConfirmationModule,
+    SimpleTimelineModule,
+    IconsModule,
+    ...sharedComp,
+  ],
 })
 export class SharedModule {}

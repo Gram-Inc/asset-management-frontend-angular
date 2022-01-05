@@ -1,27 +1,11 @@
-<h1>Dashboard</h1>
 <div class="card-container">
-  <title-card
-    [value]="50"
-    [icon]="'inventory_2'"
-    title="In Pool"
-    bgColor="#C8FACD"
-  ></title-card>
-  <title-card
-    [value]="50"
-    [icon]="'person_pin'"
-    title="Assigned"
-    bgColor="#D0F2FF"
-  ></title-card>
-  <title-card
-    [value]="50"
-    [icon]="'delete_outline'"
-    title="Scrap"
-    bgColor="#FFF7CD"
-  ></title-card>
-  <title-card
-    [value]="50"
-    [icon]="'warning'"
-    title="Down"
-    bgColor="#FFE7D9"
-  ></title-card>
+  <title-card [value]="50" [icon]="'inventory_2'" title="In Pool" bgColor="#C8FACD"></title-card>
+  <title-card [value]="50" [icon]="'person_pin'" title="Assigned" bgColor="#D0F2FF"></title-card>
+  <title-card [value]="50" [icon]="'delete_outline'" title="Scrap" bgColor="#FFF7CD"></title-card>
+  <title-card [value]="50" [icon]="'warning'" title="Down" bgColor="#FFE7D9"></title-card>
+</div>
+
+<!-- Steps -->
+<div class="py-2 px-8">
+  <simple-timeline></simple-timeline>
 </div>

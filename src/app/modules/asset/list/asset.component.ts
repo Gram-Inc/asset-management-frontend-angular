@@ -14,6 +14,7 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { Router } from "@angular/router";
 import { merge, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
@@ -72,7 +73,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     private _rikielConfirmationService: RikielConfirmationService,
     private _matDialog: MatDialog,
     private _qrService: QrService,
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -230,19 +232,38 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     return "NULL";
   }
 
-  //Get Current User
-  getCurrentUser(ast?: IAsset) {
-    return ast ? "-" : "NULL";
-  }
-  getPrevUser(ast?: IAsset) {
-    return ast ? "-" : "NULL";
-  }
-
   assignToUser(ast) {
     this._bottomSheet.open(AssetBottomSheetComponent, { data: { ...ast } });
   }
   edit(ast) {}
   printQR(ast: IAsset) {
     this._qrService.printQR(ast._id ?? "");
+  }
+
+  getCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
+        return asset.allocationToUserId.firstName;
+      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    }
+    return "-";
+  }
+
+  getPrevUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
+        return asset.allocationToUserId.firstName;
+      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    }
+    return "-";
+  }
+
+  openCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+      this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+  }
+  openPrevUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+      this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
   }
 }

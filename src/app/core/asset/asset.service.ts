@@ -129,7 +129,7 @@ export class AssetService {
     return this.assets$.pipe(
       take(1),
       switchMap((assets) =>
-        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${assetId}/user/${userId}`, "").pipe(
+        this._httpClient.put<IAsset>(`${this._baseUrl}/asset/${assetId}/user/${userId}/assign`, "").pipe(
           map((updatedAsset) => {
             // Find the index of the updated asset
             const index = assets.findIndex((ast) => ast._id === assetId);

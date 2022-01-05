@@ -4,6 +4,7 @@ import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { isValid, isFuture, formatDistanceToNow } from "date-fns";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-asset-short-detail",
@@ -17,7 +18,8 @@ export class AssetShortDetailComponent implements OnInit {
   constructor(
     private _assetService: AssetService,
     @Inject(MAT_DIALOG_DATA) public data: IAsset,
-    private matDialogRef: MatDialogRef<AssetShortDetailComponent>
+    private matDialogRef: MatDialogRef<AssetShortDetailComponent>,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,4 +51,27 @@ export class AssetShortDetailComponent implements OnInit {
     return "NULL";
   }
   deleteAsset() {}
+
+  getCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
+        return asset.allocationToUserId.firstName;
+      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    }
+    return "-";
+  }
+
+  getPrevUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      if (asset.allocationToUserId.firstName.toUpperCase() == asset.allocationToUserId.lastName.toUpperCase())
+        return asset.allocationToUserId.firstName;
+      return asset.allocationToUserId.firstName + " " + asset.allocationToUserId.lastName;
+    }
+    return "-";
+  }
+
+  openCurrentUser(asset: IAsset) {
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+      this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+  }
 }

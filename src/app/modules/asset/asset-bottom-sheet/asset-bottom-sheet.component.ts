@@ -9,6 +9,7 @@ import { IBranch } from "src/app/core/branch/branch.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-asset-bottom-sheet",
@@ -26,7 +27,8 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     private _assetService: AssetService,
     private _userService: UserService,
     private _bottomSheetRef: MatBottomSheetRef<AssetBottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: IAsset
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: IAsset,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +69,15 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     if (this.searchCtrl.valid && typeof this.searchCtrl.value == "object") {
       //Update the Asset
 
-      this._assetService.assignAssetToUser(this.asset._id, this.searchCtrl.value["_id"]);
+      this._assetService.assignAssetToUser(this.asset._id, this.searchCtrl.value["_id"]).subscribe(
+        (_) => {
+          this.openSnackBar("Success", "Action completed !");
+          this._bottomSheetRef.dismiss();
+        },
+        (err) => {
+          this.openSnackBar("Error", err.message);
+        }
+      );
     } else {
       this.searchCtrl.setErrors({ isValid: false });
     }
@@ -81,4 +91,13 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     return user && user.firstName ? user.firstName + " " + user.lastName : "";
   }
   // Filter for Autocomplete Model Name Feature
+
+  openSnackBar(type: "Error" | "Info" | "Success", msg: string) {
+    this._snackBar.open(msg, "Close", {
+      duration: 3000,
+      verticalPosition: "top",
+      horizontalPosition: "center",
+      panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+    });
+  }
 }

@@ -80,15 +80,18 @@
 
         <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
       </div>
-      <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-sm font-medium text-gray-500">Current User</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          {{ "-" }}
+      <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-8 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500 col-span-3">Current User</dt>
+        <dd
+          class="mt-1 text-sm text-gray-900 col-span-5 cursor-pointer hover:text-orange-500"
+          (click)="openCurrentUser(asset)"
+        >
+          {{ getCurrentUser(asset) }}
         </dd>
       </div>
       <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-6 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Specifications</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-4">
+        <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4">
           <app-spec-card-list [asset]="asset"></app-spec-card-list>
         </dd>
       </div>

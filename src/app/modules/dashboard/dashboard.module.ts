@@ -14,11 +14,6 @@ const dashboardRoutes: Routes = [
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [
-    RouterModule.forChild(dashboardRoutes),
-    CommonModule,
-    CustomMaterialModule,
-    SharedModule,
-  ],
+  imports: [RouterModule.forChild(dashboardRoutes), CommonModule, CustomMaterialModule, SharedModule],
 })
 export class DashboardModule {}

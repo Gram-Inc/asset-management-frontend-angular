@@ -18,6 +18,7 @@ export interface IAsset {
   ups?: Partial<IUPS>;
   allocationStatus?: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
   branch?: string | Partial<IBranch>;
+  allocationToUserId?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
 }
 
 export interface IUPS {
