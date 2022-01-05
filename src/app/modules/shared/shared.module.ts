@@ -15,6 +15,7 @@ import { AssetSubDetailCardComponent } from "./asset-sub-detail-card/asset-sub-d
 import { SpecCardListModule } from "../asset/spec-card-list/spec-card-list.module";
 import { UserFilterComponent } from "./user-filter/user-filter.component";
 import { SimpleTimelineModule } from "./simple-timeline/simple-timeline.module";
+import { VendorFilterComponent } from "./vendor-filter/vendor-filter.component";
 
 var sharedComp = [
   TitleCardComponent,
@@ -25,6 +26,7 @@ var sharedComp = [
   AssetSubDetailCardComponent,
   UserFilterComponent,
   QrcodeComponent,
+  VendorFilterComponent,
 ];
 @NgModule({
   declarations: [...sharedComp, AssetShortDetailComponent],
