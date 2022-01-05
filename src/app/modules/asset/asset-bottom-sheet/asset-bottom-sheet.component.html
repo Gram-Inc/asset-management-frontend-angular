@@ -55,7 +55,7 @@
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.ASSIGNED)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = AllocationStatus.ASSIGNED"
+          (click)="asset.allocationStatus = AllocationStatus.ASSIGNED; searchCtrl.enable()"
           disableRipple
         >
           Assign
@@ -67,7 +67,7 @@
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.IN_POOL)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = AllocationStatus.IN_POOL"
+          (click)="asset.allocationStatus = AllocationStatus.IN_POOL; searchCtrl.disable()"
           disableRipple
         >
           Move to pool
@@ -80,7 +80,7 @@
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.SCRAP)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = AllocationStatus.SCRAP"
+          (click)="asset.allocationStatus = AllocationStatus.SCRAP; searchCtrl.disable()"
           disableRipple
         >
           Move to Scrap
@@ -92,7 +92,7 @@
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.DOWN)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = AllocationStatus.DOWN"
+          (click)="asset.allocationStatus = AllocationStatus.DOWN; searchCtrl.disable()"
           disableRipple
         >
           Move to Down
@@ -102,7 +102,7 @@
   </div>
 
   <!-- User List / Selection -->
-  <ng-container *ngIf="asset.allocationStatus == 'ASSIGNED'">
+  <ng-container>
     <span class="mx-3 hidden sm:block" style="font-size: small">
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Search User</mat-label>

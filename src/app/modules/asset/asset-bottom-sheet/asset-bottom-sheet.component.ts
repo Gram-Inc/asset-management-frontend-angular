@@ -48,6 +48,10 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
         map(() => {})
       )
       .subscribe();
+
+    this.asset.allocationStatus == AllocationStatus.ASSIGNED
+      ? this.searchCtrl.enable()
+      : this.searchCtrl.disable();
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);

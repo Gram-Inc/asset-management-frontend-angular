@@ -223,7 +223,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param item
    */
   trackByFn(index: number, item: any): any {
-    return item._id || index;
+    if (item) return item._id || index;
   }
 
   // Check For Branch Code
