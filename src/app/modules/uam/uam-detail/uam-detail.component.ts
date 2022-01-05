@@ -5,12 +5,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
+import { DepartmentService } from "src/app/core/department/department.service";
+import { IDepartment } from "src/app/core/department/department.types";
 import { UamService } from "src/app/core/uam/uam.service";
 import {
   AccessRightsUAM,
   GrantRevokeUAM,
   RequestTypeActionUAM,
   TypeOfAccessRequiredUAM,
+  TypeOfUserUAM,
   UserSystemDataUAM,
 } from "src/app/core/uam/uam.types";
 import { UserService } from "src/app/core/user/user.service";
@@ -27,17 +30,23 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   requestType: RequestTypeActionUAM = RequestTypeActionUAM.Create;
   requestTypes = RequestTypeActionUAM;
   noOfUser: "single" | "multiple" = "single";
-
+  typeOfUser = TypeOfUserUAM;
+  accessRight = AccessRightsUAM;
+  grantRevoke = GrantRevokeUAM;
+  userSystemData = UserSystemDataUAM;
   // User
   users$: Observable<IUser[]> = new Observable<IUser[]>();
   //Branchs
   branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
+  //Department
+  departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
 
   uamForm: FormGroup;
 
   constructor(
     private _userService: UserService,
     private _branchService: BranchService,
+    private _departmentService: DepartmentService,
     private _uamService: UamService,
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -51,6 +60,9 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
     //Get All User
     this.users$ = this._userService.users$;
+
+    //Get All Department
+    this.departments$ = this._departmentService.departments$;
 
     // Create UAM Form
     this.uamForm = this._formBuilder.group({
@@ -174,7 +186,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
     this._uamService.createUAM(this.uamForm.value).subscribe(
       (_) => {
-        this.openSnackBar("Success", "U.A.M Updated");
+        this.openSnackBar("Success", "U.A.M Created");
         this._router.navigate(["../"], {
           relativeTo: this._activatedRoute,
         });
@@ -196,5 +208,9 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
     });
+  }
+
+  displayFnUser(user: IUser): string {
+    return user && user.firstName ? user.firstName + " " + user.lastName : "";
   }
 }

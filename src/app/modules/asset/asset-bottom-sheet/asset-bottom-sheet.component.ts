@@ -36,8 +36,10 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
+
     this.asset = { ...this.data };
 
+    //
     this.searchCtrl.valueChanges
       .pipe(
         takeUntil(this._unsubscribeAll),

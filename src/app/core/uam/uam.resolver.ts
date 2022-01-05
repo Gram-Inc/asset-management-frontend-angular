@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from "@angular/router";
 import { forkJoin, Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { BranchService } from "../branch/branch.service";
+import { DepartmentService } from "../department/department.service";
 import { UserService } from "../user/user.service";
 import { UamService } from "./uam.service";
 
@@ -19,9 +21,18 @@ export class UamResolver implements Resolve<any> {
   providedIn: "root",
 })
 export class CreateUAMResolver implements Resolve<any> {
-  constructor(private _userService: UserService, private _uamService: UamService) {}
+  constructor(
+    private _userService: UserService,
+    private _uamService: UamService,
+    private _departmentService: DepartmentService,
+    private _branchService: BranchService
+  ) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    return forkJoin([this._userService.getUsers()]);
+    return forkJoin([
+      this._userService.getUsers(),
+      this._branchService.getBranchs(),
+      this._departmentService.getDepartments(),
+    ]);
   }
 }
 

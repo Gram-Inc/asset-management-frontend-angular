@@ -77,8 +77,8 @@ export interface IUAM {
   };
 }
 export enum TypeOfUserUAM {
-  "Apcer User" = "ApcerUser",
-  "Apcer Client Emp" = "ApcerClientEmp",
+  "ApcerUser" = "ApcerUser",
+  "ApcerClientEmp" = "ApcerClientEmp",
   "Other" = "Other",
 }
 
@@ -93,15 +93,15 @@ export enum RequestTypeActionUAM {
   "Deactivate" = "Deactivate",
 }
 export enum AccessRightsUAM {
-  "Read Only" = "ReadOnly",
-  "Read Write" = "ReadWrite",
+  "ReadOnly" = "ReadOnly",
+  "ReadWrite" = "ReadWrite",
 }
 export enum GrantRevokeUAM {
   "Grant" = "Grant",
   "Revoke" = "Revoke",
 }
 export enum UserSystemDataUAM {
-  "Not Required" = "NotRequired",
+  "NotRequired" = "NotRequired",
   "Archive" = "Archive",
   "Handover" = "Handover",
 }

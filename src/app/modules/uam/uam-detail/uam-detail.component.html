@@ -152,8 +152,8 @@
       >
         <mat-hint class="col-span-1">Type of Access Required</mat-hint>
         <mat-radio-group formControlName="typeOfAccessRequired" class="flex gap-6 col-span-2">
-          <mat-radio-button value="1">Permanent</mat-radio-button>
-          <mat-radio-button value="2">Temporary</mat-radio-button>
+          <mat-radio-button value="Permanent">Permanent</mat-radio-button>
+          <mat-radio-button value="Temporary">Temporary</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -175,14 +175,16 @@
           <div class="flex flex-col" [style.fontSize.px]="12">
             <mat-hint class="mr-3 mb-3">Type of User</mat-hint>
             <mat-radio-group formControlName="typeOfUser" class="flex flex-row mb-3">
-              <mat-radio-button class="m-2" value="1">Apcer User</mat-radio-button>
-              <mat-radio-button class="m-2" value="2">Apcer Client Emp</mat-radio-button>
-              <mat-radio-button class="m-2" value="3">Other</mat-radio-button>
+              <mat-radio-button class="m-2" [value]="typeOfUser.ApcerUser">Apcer User</mat-radio-button>
+              <mat-radio-button class="m-2" [value]="typeOfUser.ApcerClientEmp"
+                >Apcer Client Emp</mat-radio-button
+              >
+              <mat-radio-button class="m-2" [value]="typeOfUser.Other">Other</mat-radio-button>
             </mat-radio-group>
           </div>
 
           <!-- If Other -->
-          <ng-container *ngIf="true">
+          <ng-container *ngIf="uamForm.get('userInformation.typeOfUser').value == typeOfUser.Other">
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field appearance="outline">
                 <mat-label>Other</mat-label>
@@ -208,18 +210,18 @@
           <div class="flex flex-col" [style.fontSize.px]="12">
             <mat-hint class="mr-3 mb-3">User Location</mat-hint>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field class="w-full" appearance="outline">
               <mat-label>User Location</mat-label>
-              <mat-select formControlName="userLocation">
-                <mat-option value="volvo">Apcer Delhi</mat-option>
-                <mat-option value="saab">Apcer Ahmedabad</mat-option>
-                <mat-option value="mercedes">Apcer US</mat-option>
-                <mat-option value="audi">Apcer UK</mat-option>
-              </mat-select>
+              <input matInput formControlName="userLocation" [matAutocomplete]="ul" />
+              <mat-autocomplete #ul="matAutocomplete">
+                <mat-option *ngFor="let branch of branchs$ | async" [value]="branch.name">
+                  {{ branch.name }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
           <!-- If Other -->
-          <ng-container *ngIf="true">
+          <!-- <ng-container *ngIf="uamForm.get('userInformation.userLocation').value == 'Other'">
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field appearance="outline">
                 <mat-label>Other</mat-label>
@@ -229,13 +231,18 @@
                 >
               </mat-form-field>
             </div>
-          </ng-container>
+          </ng-container> -->
 
           <!-- Department -->
           <div class="col-span-6" [style.fontSize.px]="12">
-            <mat-form-field appearance="outline">
+            <mat-form-field class="w-full" appearance="outline">
               <mat-label>Department</mat-label>
-              <input matInput formControlName="department" />
+              <input matInput formControlName="userLocation" [matAutocomplete]="d" />
+              <mat-autocomplete #d="matAutocomplete">
+                <mat-option *ngFor="let department of departments$ | async" [value]="department.name">
+                  {{ department.name }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </div>
         </div>
@@ -276,6 +283,16 @@
               <input matInput formControlName="reportingManager" />
               <!-- Load from DB -->
             </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Reporting Manager Name</mat-label>
+              <input matInput formControlName="reportingManager" [matAutocomplete]="rmn" />
+              <mat-autocomplete #rmn="matAutocomplete">
+                <mat-option *ngFor="let user of users$ | async" [value]="user._id">
+                  {{ user.firstName + " " + user.lastName }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </div>
         </div>
       </ng-container>
@@ -285,8 +302,8 @@
         <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
           <mat-hint class="mr-3 mb-3">Access to Distribution List (DL)? </mat-hint>
           <mat-radio-group formControlName="accessToDistributionList" class="flex flex-row mb-3">
-            <mat-radio-button class="m-2" value="1">Yes</mat-radio-button>
-            <mat-radio-button class="m-2" value="2">No</mat-radio-button>
+            <mat-radio-button class="m-2" [value]="true">Yes</mat-radio-button>
+            <mat-radio-button class="m-2" [value]="false">No</mat-radio-button>
           </mat-radio-group>
           <mat-hint>if checked Yes,mention the group email id in the comments section.</mat-hint>
         </div>
@@ -355,8 +372,8 @@
           <mat-form-field class="col-span-2" appearance="outline">
             <mat-label>Access Rights</mat-label>
             <mat-select formControlName="accessRights">
-              <mat-option value="volvo">Read Only</mat-option>
-              <mat-option value="saab">Read / Write</mat-option>
+              <mat-option [value]="accessRight.ReadOnly">Read Only</mat-option>
+              <mat-option [value]="accessRight.ReadWrite">Read / Write</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -364,8 +381,8 @@
           <mat-form-field class="col-span-2" appearance="outline">
             <mat-label>Grant / Revoke</mat-label>
             <mat-select formControlName="grantRevoke">
-              <mat-option value="volvo">Grant</mat-option>
-              <mat-option value="saab">Revoke</mat-option>
+              <mat-option [value]="grantRevoke.Grant">Grant</mat-option>
+              <mat-option [value]="grantRevoke.Revoke">Revoke</mat-option>
             </mat-select>
           </mat-form-field>
         </ng-container>
@@ -440,9 +457,9 @@
       <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
         <mat-hint class="mr-3 mb-3">User System Data</mat-hint>
         <mat-radio-group formControlName="userSystemData" class="flex flex-row mb-3">
-          <mat-radio-button class="m-2" value="1">Not Required</mat-radio-button>
-          <mat-radio-button class="m-2" value="2">Archive</mat-radio-button>
-          <mat-radio-button class="m-2" value="3">Handover</mat-radio-button>
+          <mat-radio-button class="m-2" [value]="userSystemData.NotRequired">Not Required</mat-radio-button>
+          <mat-radio-button class="m-2" [value]="userSystemData.Archive">Archive</mat-radio-button>
+          <mat-radio-button class="m-2" [value]="userSystemData.Handover">Handover</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -613,9 +630,15 @@
           <!-- Row 1 -->
           <ng-container [formGroupName]="i">
             <!-- User -->
+
             <mat-form-field class="col-span-2" appearance="outline">
               <mat-label>User </mat-label>
-              <input formControlName="userId" matInput />
+              <input matInput formControlName="userId" [matAutocomplete]="ul" />
+              <mat-autocomplete #ul="matAutocomplete" [displayWith]="displayFnUser">
+                <mat-option *ngFor="let user of users$ | async" [value]="user">
+                  {{ user.firstName + " " + user.lastName }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
 
             <!-- Access / Type-->
