@@ -615,44 +615,71 @@
   <!-- In case of Common Request Type for Multiple Users-->
   <ng-container *ngIf="noOfUser == 'multiple'" formGroupName="userInformation">
     <div class="bg-white px-4 py-2 s sm:px-6">
-      <div class="text-sm font-medium mt-4 mb-2">
+      <div class="text-sm font-medium mt-4 mb-4">
         <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
       </div>
       <!-- Table -->
-      <div
-        class="mt-1 grid grid-cols-6 gap-x-4 gap-y-2 items-center border-gray-300 border rounded-lg p-4 my-2"
-        [style.fontSize.px]="12"
-      >
+      <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="12">
         <ng-container
           formArrayName="users"
-          *ngFor="let usr of uamForm.get('userInformation.users')['controls']; let i = index"
+          *ngFor="let usr of uamForm.get('userInformation.users')['controls']; let i = index; let last = last"
         >
           <!-- Row 1 -->
           <ng-container [formGroupName]="i">
-            <!-- User -->
+            <!-- First Name -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>First Name </mat-label>
+              <input matInput formControlName="userId" />
+            </mat-form-field>
 
-            <mat-form-field class="col-span-2" appearance="outline">
-              <mat-label>User </mat-label>
-              <input matInput formControlName="userId" [matAutocomplete]="ul" />
-              <mat-autocomplete #ul="matAutocomplete" [displayWith]="displayFnUser">
-                <mat-option *ngFor="let user of users$ | async" [value]="user">
-                  {{ user.firstName + " " + user.lastName }}
-                </mat-option>
-              </mat-autocomplete>
+            <!-- Last Name -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>Last Name </mat-label>
+              <input matInput formControlName="userId" />
+            </mat-form-field>
+
+            <!-- Department -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>Department</mat-label>
+              <input matInput formControlName="userId" />
+            </mat-form-field>
+
+            <!-- Designation -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>Designation</mat-label>
+              <input matInput formControlName="userId" />
+            </mat-form-field>
+
+            <!-- Location -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>Location </mat-label>
+              <input matInput formControlName="userId" />
+            </mat-form-field>
+
+            <!-- Email ID -->
+            <mat-form-field class="col-span-1" appearance="outline">
+              <mat-label>Email ID</mat-label>
+              <input matInput formControlName="userId" />
             </mat-form-field>
 
             <!-- Access / Type-->
-            <mat-form-field class="col-span-2" appearance="outline">
+            <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Access Type</mat-label>
               <input formControlName="actionType" matInput />
             </mat-form-field>
 
             <!-- Remark -->
-
-            <mat-form-field class="col-span-2" appearance="outline">
+            <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Remark </mat-label>
               <input formControlName="remark" matInput />
             </mat-form-field>
+
+            <!-- Delete -->
+            <mat-icon
+              svgIcon="heroicons_outline:trash"
+              class="text-red-600"
+              *ngIf="i != 0 && !last"
+            ></mat-icon>
           </ng-container>
         </ng-container>
 
@@ -686,6 +713,7 @@
 
           <span class="sm:ml-3">
             <button
+              *ngIf=""
               type="button"
               class="
                 inline-flex
