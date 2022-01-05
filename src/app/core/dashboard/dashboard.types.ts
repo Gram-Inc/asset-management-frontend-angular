@@ -4,7 +4,7 @@ export interface IDashboard {
   users?: IUserDashboard;
   itUserSpecificDetails?: IITUserSpecificDetailDashboard;
 }
-interface IAssetDashboard {
+export interface IAssetDashboard {
   assetStatusCount?: {
     IN_POOL?: number;
     ASSIGNED?: number;
@@ -23,9 +23,18 @@ interface IAssetDashboard {
     type?: string;
     createdAt?: string;
   }[];
-  branchWiseOverallAssets?: { _id?: string; count?: number; branchCode?: string; name?: string }[];
+  branchWiseOverallAssets?: {
+    _id?: string;
+    count?: number;
+    branchCode?: string;
+    name?: string;
+    IN_POOL?: number;
+    ASSIGNED?: number;
+    SCRAP?: number;
+    DOWN?: number;
+  }[];
 }
-interface ITicketDashboard {
+export interface ITicketDashboard {
   ticketStatusCount?: {
     Assigned?: number;
     Closed?: number;
@@ -35,12 +44,12 @@ interface ITicketDashboard {
     "Vendor Dependency"?: number;
   };
 }
-interface IITUserSpecificDetailDashboard {
+export interface IITUserSpecificDetailDashboard {
   assignedTickets?: number;
   todaysCompletedTickets?: number;
   ongoingTickets?: number;
 }
-interface IUserDashboard {
+export interface IUserDashboard {
   totalUsers?: number;
   thisWeekNewJoinees?: {
     _id?: string;
