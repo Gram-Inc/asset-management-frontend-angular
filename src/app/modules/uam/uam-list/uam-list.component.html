@@ -4,7 +4,7 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <ng-container *ngIf="uams$ | async as uams">
+          <ng-container *ngIf="uams$ | async as uams; else noUAMS">
             <ng-container *ngIf="uams.length > 0; else noUAMS">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -40,64 +40,63 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngIf="uams$ | async as uams">
-                    <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
-                      <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(uam)">
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="flex items-center">
-                            <div class="">
-                              <div class="text-sm font-medium text-gray-900">
-                                <!-- {{ uam?.firstName }} -->
-                              </div>
-                              <div class="text-sm text-gray-500">
-                                <!-- {{ uam?.email }} -->
-                              </div>
+                  <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
+                    <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(uam)">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="">
+                            <div class="text-sm font-medium text-gray-900">
+                              <!-- {{ uam?.firstName }} -->
+                            </div>
+                            <div class="text-sm text-gray-500">
+                              <!-- {{ uam?.email }} -->
                             </div>
                           </div>
-                        </td>
+                        </div>
+                      </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <div class="text-sm text-gray-900">
-                            <!-- {{ uam.email }} -->
-                          </div>
-                        </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">
+                          <!-- {{ uam.email }} -->
+                        </div>
+                      </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          <!-- {{ uam.mobileNumber ?? "" | titlecase }} -->
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          <!-- {{ getBranchShortCode(uam.branch) }} -->
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <div class="">
-                            <!-- Edit Button -->
-                            <button
-                              type="button"
-                              class="
-                                ml-2
-                                m-auto
-                                inline-flex
-                                items-center
-                                px-2
-                                py-1
-                                border border-gray-300
-                                rounded-md
-                                shadow-sm
-                                text-sm
-                                font-medium
-                                text-gray-500
-                                bg-white
-                                hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                              "
-                              matTooltip="Edit"
-                            >
-                              <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                            </button>
-                          </div>
-                        </td>
-                      </tr> </ng-container
-                  ></ng-container>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <!-- {{ uam.mobileNumber ?? "" | titlecase }} -->
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <!-- {{ getBranchShortCode(uam.branch) }} -->
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="">
+                          <!-- Edit Button -->
+                          <button
+                            type="button"
+                            class="
+                              ml-2
+                              m-auto
+                              inline-flex
+                              items-center
+                              px-2
+                              py-1
+                              border border-gray-300
+                              rounded-md
+                              shadow-sm
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              bg-white
+                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+                            "
+                            matTooltip="Edit"
+                          >
+                            <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
                   <tr>
                     <td colspan="6">
                       <mat-paginator

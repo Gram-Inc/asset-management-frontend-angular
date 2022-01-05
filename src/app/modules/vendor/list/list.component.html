@@ -5,7 +5,7 @@
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
           <ng-container *ngIf="vendors$ | async as vendors; else noVendors">
-            <ng-container *ngIf="vendors.length > 0">
+            <ng-container *ngIf="vendors.length > 0; else noVendors">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -51,10 +51,12 @@
                         </div>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-blue-600 cursor-pointer hover:text-orange-500">
+                        <div class="text-sm text-blue-600">
                           {{ vendor.email ?? "-" | titlecase }}
                         </div>
-                        <div class="text-sm text-gray-500 cursor-pointer hover:text-orange-500">
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">
                           {{ vendor.contactNo ?? "-" | titlecase }}
                         </div>
                       </td>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { DepartmentService } from "src/app/core/department/department.service";
@@ -23,7 +24,7 @@ import { UserService } from "src/app/core/user/user.service";
     `,
   ],
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any> = new Subject<any>();
   userForm: FormGroup;
 
@@ -47,9 +48,9 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     //Get All Branch
-    this.branchs$ = this._branchService.branchs$;
+    this.branchs$ = this._branchService.branchs$.pipe(takeUntil(this.unsubscribeAll));
     //Get All Departments
-    this.departments$ = this._departmentService.departments$;
+    this.departments$ = this._departmentService.departments$.pipe(takeUntil(this.unsubscribeAll));
 
     //create User Form
     this.userForm = this._formBuilder.group({

@@ -5,11 +5,13 @@ import { Route, RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { ListModule } from "./list/list.module";
+import { VendorResolver } from "src/app/core/vendor/vendor.resolver";
 
 const vendorRoutes: Route[] = [
   {
     path: "",
     component: VendorComponent,
+    resolve: [VendorResolver],
   },
   {
     path: "create",
