@@ -62,9 +62,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedAsset: IAsset | null = null;
   flashMessage: "success" | "error" | null = null;
 
-  selectedAssetForm: FormGroup;
   isLoading: boolean = false;
-  searchCtrl: FormControl = new FormControl("");
 
   constructor(
     private _assetService: AssetService,
@@ -78,34 +76,6 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Create Asset Form
-    // Create the selected asset form
-    this.selectedAssetForm = this._formBuilder.group({
-      _id: [""],
-      name: ["", [Validators.required]],
-      assetCode: [""],
-      location: [""],
-      venderId: [""],
-      sr_no: [""],
-      life: [""],
-      purchaseDate: [""],
-      poNumber: [""],
-    });
-    // If Search value changes
-    this.searchCtrl.valueChanges
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        debounceTime(300),
-        switchMap((query) => {
-          this.isLoading = true;
-          return this._assetService.getAssets(1, 10, query);
-        }),
-        map(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe();
-
     // Get the Assets
     this.assets$ = this._assetService.assets$;
 
