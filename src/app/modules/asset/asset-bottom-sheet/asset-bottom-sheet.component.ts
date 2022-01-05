@@ -4,7 +4,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from "@angular/material/bott
 import { isFuture, isValid } from "date-fns";
 import { Observable, Subject } from "rxjs";
 import { AssetService } from "src/app/core/asset/asset.service";
-import { IAsset } from "src/app/core/asset/asset.types";
+import { AllocationStatus, IAsset } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
@@ -19,6 +19,7 @@ import { Router } from "@angular/router";
 })
 export class AssetBottomSheetComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  AllocationStatus = AllocationStatus;
   users$: Observable<IUser[]> = new Observable<IUser[]>();
   asset: IAsset;
   searchCtrl: FormControl = new FormControl("", [Validators.required]);
@@ -67,7 +68,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
   }
   updateAllocation() {
     //Check validation only if status Assigned is selected
-    if (this.asset.allocationStatus == "ASSIGNED") {
+    if (this.asset.allocationStatus == AllocationStatus.ASSIGNED) {
       this.searchCtrl.markAllAsTouched();
       //Validate User Control
       if (this.searchCtrl.valid && typeof this.searchCtrl.value == "object") {
@@ -90,7 +91,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
     else {
       //Remove allocationtoUserID section
       delete this.asset.allocationToUserId;
-      this._assetService.updateAsset(this.asset._id, this.asset).subscribe(
+      this._assetService.changeAllocationStatus(this.asset._id, this.asset.allocationStatus).subscribe(
         (_) => {
           console.log(_);
           this.openSnackBar("Success", "Action completed !");
@@ -105,7 +106,8 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
 
   isAssetEdited(): boolean {
     return (
-      JSON.stringify(this.asset) != JSON.stringify(this.data) || this.asset.allocationStatus == "ASSIGNED"
+      JSON.stringify(this.asset) != JSON.stringify(this.data) ||
+      this.asset.allocationStatus == AllocationStatus.ASSIGNED
     );
   }
 

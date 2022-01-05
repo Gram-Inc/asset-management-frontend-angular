@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from "rxjs
 import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IDTO } from "../dto/dto.types";
-import { IAsset, IAssetTypes, IPagination } from "./asset.types";
+import { AllocationStatus, IAsset, IAssetTypes, IPagination } from "./asset.types";
 
 @Injectable({
   providedIn: "root",
@@ -161,6 +161,44 @@ export class AssetService {
     );
   }
 
+  changeAllocationStatus(assetId: string, allocationStatus: AllocationStatus): Observable<IAsset> {
+    return this.assets$.pipe(
+      take(1),
+      switchMap((assets) =>
+        this._httpClient
+          .put<IDTO>(`${this._baseUrl}/asset/${assetId}/update-allocation-status/${allocationStatus}`, "")
+          .pipe(
+            map((response) => {
+              console.log(response);
+              // Find the index of the updated asset
+              const index = assets.findIndex((ast) => ast._id === assetId);
+
+              // Update the asset
+              assets[index] = response.data;
+
+              // Update the assets
+              this._assets.next(assets);
+
+              // Return the updated asset
+              return response.data;
+            }),
+            switchMap((updatedAsset) =>
+              this.asset$.pipe(
+                take(1),
+                filter((item) => item && item._id === assetId),
+                tap(() => {
+                  // Update the asset if it's selected
+                  this._asset.next(updatedAsset);
+
+                  // Return the updated asset
+                  return updatedAsset;
+                })
+              )
+            )
+          )
+      )
+    );
+  }
   /**
    * Update product
    *

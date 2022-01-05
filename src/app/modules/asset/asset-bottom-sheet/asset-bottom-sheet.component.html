@@ -51,11 +51,11 @@
         <button
           class="px-6 rounded-full"
           [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == 'ASSIGNED',
-            'bg-transparent': !(asset.allocationStatus == 'ASSIGNED')
+            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.ASSIGNED,
+            'bg-transparent': !(asset.allocationStatus == AllocationStatus.ASSIGNED)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = 'ASSIGNED'"
+          (click)="asset.allocationStatus = AllocationStatus.ASSIGNED"
           disableRipple
         >
           Assign
@@ -63,11 +63,11 @@
         <button
           class="px-6 rounded-full"
           [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == 'IN_POOL',
-            'bg-transparent': !(asset.allocationStatus == 'IN_POOL')
+            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.IN_POOL,
+            'bg-transparent': !(asset.allocationStatus == AllocationStatus.IN_POOL)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = 'IN_POOL'"
+          (click)="asset.allocationStatus = AllocationStatus.IN_POOL"
           disableRipple
         >
           Move to pool
@@ -76,11 +76,11 @@
         <button
           class="px-6 rounded-full"
           [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == 'SCRAP',
-            'bg-transparent': !(asset.allocationStatus == 'SCRAP')
+            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.SCRAP,
+            'bg-transparent': !(asset.allocationStatus == AllocationStatus.SCRAP)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = 'SCRAP'"
+          (click)="asset.allocationStatus = AllocationStatus.SCRAP"
           disableRipple
         >
           Move to Scrap
@@ -88,11 +88,11 @@
         <button
           class="px-6 rounded-full"
           [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == 'DOWN',
-            'bg-transparent': !(asset.allocationStatus == 'DOWN')
+            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.DOWN,
+            'bg-transparent': !(asset.allocationStatus == AllocationStatus.DOWN)
           }"
           mat-flat-button
-          (click)="asset.allocationStatus = 'DOWN'"
+          (click)="asset.allocationStatus = AllocationStatus.DOWN"
           disableRipple
         >
           Move to Down
@@ -103,7 +103,7 @@
 
   <!-- User List / Selection -->
   <ng-container *ngIf="asset.allocationStatus == 'ASSIGNED'">
-    <span class="mx-3 hidden sm:block">
+    <span class="mx-3 hidden sm:block" style="font-size: small">
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Search User</mat-label>
         <input matInput [formControl]="searchCtrl" [matAutocomplete]="name" />

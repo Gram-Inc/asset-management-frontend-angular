@@ -16,7 +16,7 @@ export interface IAsset {
   amc?: Partial<IWarranty>[];
   client?: Partial<IVendor>;
   ups?: Partial<IUPS>;
-  allocationStatus?: "IN_POOL" | "ASSIGNED" | "SCRAP" | "DOWN";
+  allocationStatus?: AllocationStatus;
   branch?: string | Partial<IBranch>;
   allocationToUserId?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
   perviousUser?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
@@ -30,7 +30,12 @@ export interface IUPS {
   category: string;
   productCode: string;
 }
-
+export enum AllocationStatus {
+  "IN_POOL" = "IN_POOL",
+  "ASSIGNED" = "ASSIGNED",
+  "SCRAP" = "SCRAP",
+  "DOWN" = "DOWN",
+}
 export interface IUPSBattery {
   brand: string;
   sr_no: string;
