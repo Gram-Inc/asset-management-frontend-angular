@@ -1,4 +1,5 @@
 import { IBranch } from "../branch/branch.types";
+import { IDepartment } from "../department/department.types";
 
 export interface IUser {
   _id: string;
@@ -7,7 +8,7 @@ export interface IUser {
   email?: string;
   isActive?: string;
   role?: "level1" | "level2" | "level3";
-  departmentId?: string;
+  departmentId?: string | Partial<IDepartment>;
   mobileNumber?: string;
   branch?: string | Partial<IBranch>;
 }

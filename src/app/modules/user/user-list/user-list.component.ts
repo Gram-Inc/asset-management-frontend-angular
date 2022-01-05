@@ -174,8 +174,15 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Check For Branch Code
   getBranchShortCode(obj: any) {
-    console.log(obj);
     if (obj) return typeof obj === "object" ? obj.branchCode : "-";
     return "NULL";
+  }
+  getUserName(user: IUser) {
+    if (user.firstName.toUpperCase() == user.lastName.toUpperCase()) return user.firstName;
+    return user.firstName + " " + user.lastName;
+  }
+  getDepartmentCode(user: IUser) {
+    if (user.departmentId && typeof user.departmentId == "object") return user.departmentId.name;
+    return "-";
   }
 }

@@ -80,7 +80,6 @@ export class UserService {
             totalPage: response.totalPage,
             totalData: response.totaldata,
           };
-          console.log(response);
           this._pagination.next(_pg);
         })
       );
