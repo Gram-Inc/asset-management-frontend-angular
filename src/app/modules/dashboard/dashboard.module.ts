@@ -8,6 +8,8 @@ import { OverallBranchAssetDetailTableModule } from "./overall-branch-asset-deta
 import { LastCreatedUserTableModule } from "./last-created-user-table/last-created-user-table.module";
 import { LastCreatedAssetTableModule } from "./last-created-asset-table/last-created-asset-table.module";
 import { TotalUserCardModule } from "./total-user-card/total-user-card.module";
+import { NewJoineeStatusTableComponent } from "./new-joinee-status-table/new-joinee-status-table.component";
+import { NewJoineeStatusTableModule } from "./new-joinee-status-table/new-joinee-status-table.module";
 
 const dashboardRoutes: Routes = [
   {
@@ -27,6 +29,7 @@ const dashboardRoutes: Routes = [
     LastCreatedUserTableModule,
     LastCreatedAssetTableModule,
     TotalUserCardModule,
+    NewJoineeStatusTableModule,
   ],
 })
 export class DashboardModule {}

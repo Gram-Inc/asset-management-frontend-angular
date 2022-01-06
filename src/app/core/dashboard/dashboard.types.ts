@@ -51,18 +51,20 @@ export interface IITUserSpecificDetailDashboard {
 }
 export interface IUserDashboard {
   totalUsers?: number;
-  thisWeekNewJoinees?: {
-    _id?: string;
-    firstName?: string;
-    lastName?: string;
-    isAssetAllocated?: boolean;
-    totalAssetsAllocated?: number;
-    createdAt?: string;
-  }[];
+  thisWeekNewJoinees?: INewJoineeDashboard[];
   branchWiseUsers?: {
     _id?: string;
     count?: number;
     branchCode?: string;
     name?: string;
   }[];
+}
+
+export interface INewJoineeDashboard {
+  _id?: string;
+  firstName?: string;
+  lastName?: string;
+  isAssetAllocated?: boolean;
+  totalAssetsAllocated?: number;
+  createdAt?: string;
 }
