@@ -26,7 +26,7 @@
             }"
             mat-flat-button
             (click)="requestType = it.value"
-            disableRipple
+            [disabled]="uamForm.disabled"
           >
             {{ it.key }}
           </button>
@@ -49,7 +49,7 @@
             }"
             mat-flat-button
             (click)="noOfUser = 'single'"
-            disableRipple
+            [disabled]="uamForm.disabled"
           >
             Single
           </button>
@@ -61,7 +61,7 @@
             }"
             mat-flat-button
             (click)="noOfUser = 'multiple'"
-            disableRipple
+            [disabled]="uamForm.disabled"
           >
             Multiple
           </button>
@@ -384,6 +384,7 @@
       <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4">
         <span class="hidden sm:block">
           <button
+            [disabled]="uamForm.disabled"
             type="button"
             class="
               inline-flex
@@ -411,6 +412,7 @@
 
         <span class="sm:ml-3">
           <button
+            [disabled]="uamForm.disabled"
             type="button"
             class="
               inline-flex
@@ -676,7 +678,11 @@
                 'text-gray-500 cursor-not-allowed': i == 0 && last
               }"
             >
-              <mat-icon svgIcon="heroicons_outline:trash" (click)="removeUserFromForm(i)"></mat-icon>
+              <mat-icon
+                *ngIf="uamForm.disabled"
+                svgIcon="heroicons_outline:trash"
+                (click)="removeUserFromForm(i)"
+              ></mat-icon>
             </div>
           </ng-container>
         </ng-container>
@@ -685,6 +691,7 @@
           <span class="hidden sm:block">
             <button
               type="button"
+              [disabled]="uamForm.disabled"
               class="
                 inline-flex
                 items-center

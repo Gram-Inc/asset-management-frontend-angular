@@ -30,3 +30,16 @@ mat-form-field {
 .mat-input-element:disabled {
   color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
 }
+
+.mat-button-disabled {
+  &.bg-card {
+    color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    border: 1px;
+    background-color: white !important;
+    border-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+
+    span {
+      color: rgb(234 88 12) !important;
+    }
+  }
+}

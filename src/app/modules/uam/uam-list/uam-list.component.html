@@ -13,29 +13,29 @@
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      User
+                      Created by
                     </th>
 
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Mobile Number
+                      U A M
                     </th>
                     <th
-                      scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Department
+                      Status
                     </th>
                     <th
-                      scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Branch
+                      Priority
                     </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Edit</span>
+                    <th
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -46,10 +46,11 @@
                         <div class="flex items-center">
                           <div class="">
                             <div class="text-sm font-medium text-gray-900">
-                              <!-- {{ uam?.firstName }} -->
+                              {{ displayFnCreatedBy(uam?.createdBy) ?? "" | titlecase }}
                             </div>
+                            <div class="text-sm text-gray-500">Type: {{ uam?.type ?? "" }}</div>
                             <div class="text-sm text-gray-500">
-                              <!-- {{ uam?.email }} -->
+                              {{ uam?.createdAt ?? "" | date }}
                             </div>
                           </div>
                         </div>
@@ -57,17 +58,32 @@
 
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">
-                          <!-- {{ uam.email }} -->
+                          {{ uam?.uamNo ?? "-" }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                          {{ displayFnNoOfUser(uam?.userInformation) | titlecase }}
                         </div>
                       </td>
 
                       <td class="px-6 py-4 whitespace-nowrap">
-                        <!-- {{ uam.mobileNumber ?? "" | titlecase }} -->
+                        <span
+                          [ngClass]="{
+                            'bg-green-100 ': uam.status == 'IN_POOL',
+                            'text-green-600': uam.status == 'IN_POOL',
+                            'bg-indigo-100': uam.status == 'Created',
+                            'text-indigo-600': uam.status == 'Created',
+                            'bg-red-100': uam.status == 'SCRAP',
+                            'text-red-600': uam.status == 'SCRAP',
+                            'bg-yellow-100': uam.status == 'DOWN',
+                            'text-yellow-600': uam.status == 'DOWN'
+                          }"
+                          class="px-2 inline-flex text-xs leading-5 rounded-full"
+                        >
+                          {{ uam.status | uppercase }}
+                        </span>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <!-- {{ getBranchShortCode(uam.branch) }} -->
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div class="">
                           <!-- Edit Button -->
                           <button

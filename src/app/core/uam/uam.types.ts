@@ -1,36 +1,15 @@
+import { IUser } from "../user/user.types";
+
 export interface IUAM {
   _id?: string;
+  status?: string;
+  createdBy?: string | IUser;
+  createdAt?: string;
   requestTypeAction?: RequestTypeActionUAM;
-  userInformation?: {
-    users?: {
-      remark?: string;
-      actionType?: string;
-      firstName?: string;
-      lastName?: string;
-      department?: string;
-      location?: string;
-      email?: string;
-    }[];
-    dateOfRequest?: string;
-    dateOfJoiningLeaving?: string;
-    userLocation?: string;
-    typeOfAccessRequired?: TypeOfAccessRequiredUAM;
-    ifTemporaryDateForDeactivation?: string;
-    typeOfUser?: TypeOfUserUAM;
-    typeOfUserOtherText?: string;
-    designation?: string;
-    department?: string;
-    networkServicesToBeGrantedRevoked?: {
-      emailAccess?: boolean;
-      serverAccess?: boolean;
-      "sharedDrive/folderAccess"?: boolean;
-      APCERNetworkVPNAccess?: boolean;
-      others?: boolean;
-    };
-    reportingManager?: string;
-    accessToDistributionList?: boolean;
-    comments?: string;
-  };
+  uamNo?: string;
+  priority?: string;
+  type?: string;
+  userInformation?: IUserInformationUAM;
   accessToShareDrives?: {
     driveName?: string;
     folderName?: string;
@@ -79,6 +58,37 @@ export interface IUAM {
       date?: string;
     }[];
   };
+}
+
+export interface IUserInformationUAM {
+  users?: {
+    remark?: string;
+    actionType?: string;
+    firstName?: string;
+    lastName?: string;
+    department?: string;
+    location?: string;
+    email?: string;
+  }[];
+  dateOfRequest?: string;
+  dateOfJoiningLeaving?: string;
+  userLocation?: string;
+  typeOfAccessRequired?: TypeOfAccessRequiredUAM;
+  ifTemporaryDateForDeactivation?: string;
+  typeOfUser?: TypeOfUserUAM;
+  typeOfUserOtherText?: string;
+  designation?: string;
+  department?: string;
+  networkServicesToBeGrantedRevoked?: {
+    emailAccess?: boolean;
+    serverAccess?: boolean;
+    "sharedDrive/folderAccess"?: boolean;
+    APCERNetworkVPNAccess?: boolean;
+    others?: boolean;
+  };
+  reportingManager?: string;
+  accessToDistributionList?: boolean;
+  comments?: string;
 }
 export enum TypeOfUserUAM {
   "ApcerUser" = "ApcerUser",

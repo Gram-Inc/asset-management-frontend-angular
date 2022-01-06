@@ -15,8 +15,9 @@ import { merge, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
 import { UamService } from "src/app/core/uam/uam.service";
-import { IUAM } from "src/app/core/uam/uam.types";
+import { IUAM, IUserInformationUAM } from "src/app/core/uam/uam.types";
 import { UserService } from "src/app/core/user/user.service";
+import { IUser } from "src/app/core/user/user.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 
 @Component({
@@ -177,5 +178,21 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(obj);
     if (obj) return typeof obj === "object" ? obj.branchCode : "-";
     return "NULL";
+  }
+
+  displayFnCreatedBy(createdBy?: string | IUser) {
+    if (createdBy && typeof createdBy == "object") return createdBy.firstName + " " + createdBy.lastName;
+    return "-";
+  }
+  displayFnNoOfUser(userInformation: IUserInformationUAM) {
+    if (userInformation.users && userInformation.users.length > 1)
+      return (
+        userInformation.users[0].firstName +
+        " " +
+        userInformation.users[0].lastName +
+        " + " +
+        userInformation.users.length.toString()
+      );
+    return userInformation.users[0].firstName + " " + userInformation.users[0].lastName;
   }
 }
