@@ -43,6 +43,30 @@ export class NewJoineeStatusTableComponent implements OnInit {
         totalAssetsAllocated: 0,
         createdAt: "2022-01-04T15:52:27.722Z",
       },
+      {
+        _id: "61d46d3b42d1719864316f54",
+        firstName: "Govind",
+        lastName: "Solanki",
+        isAssetAllocated: false,
+        totalAssetsAllocated: 0,
+        createdAt: "2022-01-04T15:52:27.722Z",
+      },
+      {
+        _id: "61d46d3b42d1719864316f54",
+        firstName: "Govind",
+        lastName: "Solanki",
+        isAssetAllocated: false,
+        totalAssetsAllocated: 0,
+        createdAt: "2022-01-04T15:52:27.722Z",
+      },
+      {
+        _id: "61d46d3b42d1719864316f54",
+        firstName: "Govind",
+        lastName: "Solanki",
+        isAssetAllocated: false,
+        totalAssetsAllocated: 0,
+        createdAt: "2022-01-04T15:52:27.722Z",
+      },
     ],
   };
   @ViewChild("recentTransactionsTable", { read: MatSort }) recentTransactionsTableMatSort: MatSort;
