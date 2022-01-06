@@ -1,3 +1,21 @@
+<div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+  <!-- Avatar and name -->
+  <div class="flex flex-auto items-center min-w-0">
+    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden"></div>
+    <div class="flex flex-col min-w-0 ml-4">
+      <div class="text-2xl md:text-5xl tracking-tight leading-7 md:leading-snug truncate">
+        Welcome back, <span class="text-orange-500"> {{ user.firstName ?? "" | titlecase }}</span> !
+      </div>
+
+      <div class="flex items-center">
+        <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:bell'"></mat-icon>
+        <div class="ml-1.5 leading-6 truncate text-secondary">You have 2 new approval and 15 new tasks</div>
+      </div>
+    </div>
+  </div>
+  <!-- Actions -->
+</div>
+
 <div class="card-container">
   <title-card [value]="50" [icon]="'inventory_2'" title="In Pool" bgColor="#C8FACD"></title-card>
   <title-card [value]="50" [icon]="'person_pin'" title="Assigned" bgColor="#D0F2FF"></title-card>

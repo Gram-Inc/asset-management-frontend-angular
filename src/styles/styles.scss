@@ -106,5 +106,13 @@ app-asset {
   min-height: 557px !important;
   max-height: 557px !important;
 }
+.icon-size-4 {
+  width: 1rem !important;
+  height: 1rem !important;
+  min-width: 1rem !important;
+  min-height: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1rem !important;
+}
 
 @tailwind utilities;
