@@ -5,7 +5,11 @@ export interface IUAM {
     users?: {
       remark?: string;
       actionType?: string;
-      userId?: string;
+      firstName?: string;
+      lastName?: string;
+      department?: string;
+      location?: string;
+      email?: string;
     }[];
     dateOfRequest?: string;
     dateOfJoiningLeaving?: string;

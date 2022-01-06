@@ -237,7 +237,7 @@
           <div class="col-span-6" [style.fontSize.px]="12">
             <mat-form-field class="w-full" appearance="outline">
               <mat-label>Department</mat-label>
-              <input matInput formControlName="userLocation" [matAutocomplete]="d" />
+              <input matInput formControlName="department" [matAutocomplete]="d" />
               <mat-autocomplete #d="matAutocomplete">
                 <mat-option *ngFor="let department of departments$ | async" [value]="department.name">
                   {{ department.name }}
@@ -281,8 +281,8 @@
             <mat-form-field class="w-full" appearance="outline">
               <mat-label>Reporting Manager Name</mat-label>
               <input matInput formControlName="reportingManager" [matAutocomplete]="rmn" />
-              <mat-autocomplete #rmn="matAutocomplete">
-                <mat-option *ngFor="let user of users$ | async" [value]="user._id">
+              <mat-autocomplete #rmn="matAutocomplete" [displayWith]="displayFnUser">
+                <mat-option *ngFor="let user of users$ | async" [value]="user">
                   {{ user.firstName + " " + user.lastName }}
                 </mat-option>
               </mat-autocomplete>
@@ -623,37 +623,37 @@
             <!-- First Name -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>First Name </mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="firstName" />
             </mat-form-field>
 
             <!-- Last Name -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Last Name </mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="lastName" />
             </mat-form-field>
 
             <!-- Department -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Department</mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="department" />
             </mat-form-field>
 
             <!-- Designation -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Designation</mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="designation" />
             </mat-form-field>
 
             <!-- Location -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Location </mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="location" />
             </mat-form-field>
 
             <!-- Email ID -->
             <mat-form-field class="col-span-1" appearance="outline">
               <mat-label>Email ID</mat-label>
-              <input matInput formControlName="userId" />
+              <input matInput formControlName="email" />
             </mat-form-field>
 
             <!-- Access / Type-->
