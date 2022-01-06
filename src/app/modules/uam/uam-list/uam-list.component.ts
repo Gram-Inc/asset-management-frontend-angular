@@ -85,7 +85,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe();
 
     // Get the Assets
-    this.uams$ = this._uamService.uams$;
+    this.uams$ = this._uamService.uams$.pipe(takeUntil(this._unsubscribeAll));
 
     this._uamService.pagination$
       .pipe(takeUntil(this._unsubscribeAll))
@@ -141,9 +141,6 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  openDetail(uam: IUAM) {
-    //Open User Detail Page
-  }
   /**
    * Show flash message
    */

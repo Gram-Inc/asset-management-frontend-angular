@@ -41,7 +41,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                   <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
-                    <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(uam)">
+                    <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[uam._id]">
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                           <div class="">

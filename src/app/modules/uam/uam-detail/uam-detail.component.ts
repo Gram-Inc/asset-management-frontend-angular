@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -11,6 +12,7 @@ import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { DepartmentService } from "src/app/core/department/department.service";
@@ -20,6 +22,7 @@ import { UamService } from "src/app/core/uam/uam.service";
 import {
   AccessRightsUAM,
   GrantRevokeUAM,
+  IUAM,
   RequestTypeActionUAM,
   TypeOfAccessRequiredUAM,
   TypeOfUserUAM,
@@ -52,6 +55,8 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   //Department
   departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
 
+  // UAM Detal page open
+  selectedUAM: IUAM;
   uamForm: FormGroup;
 
   constructor(
@@ -62,7 +67,8 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +83,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
     // Create UAM Form
     this.uamForm = this._formBuilder.group({
-      _id: [""],
+      uamNo: [""],
       requestTypeAction: [RequestTypeActionUAM.Delete, [Validators.required]],
       userInformation: this.createUserInformationForm(),
       accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
@@ -86,16 +92,26 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       forITDepartmentUseOnly: this.createITDepartmentUseOnly(),
     });
 
-    //Test
-    this.uamForm.patchValue(this.dummy);
-    this.uamForm.disable();
+    this._uamService.uam$.pipe(takeUntil(this._unsubscribeAll)).subscribe(
+      (val) => {
+        if (val) {
+          this.selectedUAM = val;
+          this.uamForm.patchValue(val);
+          this.uamForm.disable();
+          // Mark for check
+          this._changeDetectorRef.markForCheck();
+        }
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
   }
   //On Destroy
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
   createUserInformationForm(): FormGroup {
     return this._formBuilder.group({
       users: this._formBuilder.array([this.createUser()], [Validators.required]),
@@ -134,7 +150,6 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       ]),
     });
   }
-
   createUserSystemDataAndEmailIdTreatment() {
     return this._formBuilder.group({
       userSystemData: [UserSystemDataUAM.Handover],
@@ -201,12 +216,10 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   generateRequest() {
     this.uamForm.markAllAsTouched();
     //VAlidate Form
-    console.log(this.uamForm.value);
     if (this.uamForm.invalid) return;
+
     let obj = { ...this.uamForm.value };
-    console.log(obj);
     obj.userInformation.reportingManager = obj.userInformation.reportingManager._id;
-    console.log(obj);
     this._uamService.createUAM(obj).subscribe(
       (_) => {
         this.openSnackBar("Success", "U.A.M Created");
@@ -237,107 +250,4 @@ export class UamDetailComponent implements OnInit, OnDestroy {
   displayFnUser(user: IUser): string {
     return user && user.firstName ? user.firstName + " " + user.lastName : "";
   }
-
-  dummy = {
-    _id: "",
-    requestTypeAction: "Delete",
-    userInformation: {
-      users: [
-        {
-          firstName: "First",
-          lastName: "last",
-          department: "depart",
-          location: "locaion",
-          designation: "desgination",
-          email: "email@email.com",
-          remark: "Remark",
-          actionType: "Accesss type",
-        },
-      ],
-      dateOfRequest: "2022-01-06T07:34:20.889Z",
-      dateOfJoiningLeaving: "2022-01-24T18:30:00.000Z",
-      typeOfAccessRequired: "temporary",
-      userLocation: "IT",
-      ifTemporaryDateForDeactivation: "2022-01-25T18:30:00.000Z",
-      typeOfUser: "ApcerUser",
-      typeOfUserOtherText: "",
-      designation: "",
-      department: "Designation",
-      networkServicesToBeGrantedRevoked: {
-        emailAccess: false,
-        serverAccess: true,
-        "sharedDrive/folderAccess": true,
-        APCERNetworkVPNAccess: false,
-        others: false,
-      },
-      reportingManager: {
-        _id: "61d2b13ac142d96ac3c9398f",
-        branch: "61c1452200abe3f6e11582c7",
-        allocatedAssets: ["61d28a6bc142d96ac3c938b3"],
-        departmentId: "61a202012e4001e57ca6f2cb",
-        isActive: true,
-        role: "level2",
-        email: "govinddddddd@gmail.com",
-        lastName: "Solanki",
-        firstName: "Govind",
-        __v: 0,
-        createdAt: "2022-01-03T08:18:02.649Z",
-        updatedAt: "2022-01-05T12:04:46.374Z",
-      },
-      accessToDistributionList: false,
-      comments: "Test",
-    },
-    accessToShareDrives: [
-      {
-        driveName: "Drive",
-        folderName: "Folder",
-        accessRights: "ReadOnly",
-        grantRevoke: "Revoke",
-      },
-    ],
-    userSystemDataAndEmailIdTreatment: {
-      userSystemData: "Handover",
-      dataHandOverTo: "Handover",
-      endUserConfirmationOnReceiptOfData: "Receipt",
-      emailMailboxTransferredTo: "Mailbox",
-      endUserConfirmationOnActivationOfMailbox: "activvation",
-      emailIdForwardedTo: "forwarded",
-      dateTillEmailIdToRemainActive: "2022-01-20T18:30:00.000Z",
-      endUserConfirmatinoOnEmailForwarding: "email for",
-    },
-    uamApprovals: {
-      requestedBy: {
-        name: "Requested",
-        signature: "",
-        approvalDate: "",
-      },
-      headOfDepartmentDesignee: {
-        name: "HOD",
-        signature: "",
-        approvalDate: "",
-      },
-      itHeadDesignee: {
-        name: "IT Hear",
-        signature: "",
-        approvalDate: "",
-      },
-      dpoDesignee: {
-        name: "DPO",
-        signature: "",
-        approvalDate: "",
-      },
-    },
-    forITDepartmentUseOnly: {
-      activeDirectoryAccountDeactivationDate: "2022-01-24T18:30:00.000Z",
-      activeDirectoryAccountDeletionDate: "2022-01-18T18:30:00.000Z",
-      comments: "Comment",
-      executedBy: [
-        {
-          printedName: "Executed",
-          signature: "",
-          date: "",
-        },
-      ],
-    },
-  };
 }

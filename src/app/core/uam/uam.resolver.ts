@@ -42,6 +42,7 @@ export class CreateUAMResolver implements Resolve<any> {
 export class EditUAMResolver implements Resolve<any> {
   constructor(private _uamService: UamService, private _router: Router) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    this._uamService.clrUAM();
     return forkJoin([
       this._uamService.getUAMById(route.paramMap.get("id")).pipe(
         catchError(

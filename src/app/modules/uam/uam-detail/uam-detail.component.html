@@ -3,9 +3,16 @@
   <div class="lg:flex lg:items-center lg:justify-between">
     <div class="flex-1 min-w-0">
       <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
-        <span class="block xl:inline">Create</span>
+        <span class="block xl:inline">{{ selectedUAM ? "Review" : "Create" }}</span>
         <span class="block text-orange-600 xl:inline"> U.A.M</span>
       </h1>
+    </div>
+    <!-- UAM no. -->
+    <div class="\" [style.fontSize.px]="12" [formGroup]="uamForm">
+      <mat-form-field appearance="outline">
+        <mat-label>U.A.M Number</mat-label>
+        <input matInput formControlName="uamNo" />
+      </mat-form-field>
     </div>
   </div>
 </div>
@@ -78,14 +85,6 @@
     <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
 
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
-      <!-- UAM no. -->
-      <div class="col-span-6" [style.fontSize.px]="12">
-        <mat-form-field appearance="outline">
-          <mat-label>U.A.M Number</mat-label>
-          <input matInput disabled />
-        </mat-form-field>
-      </div>
-
       <!-- date of Request -->
       <div class="col-span-3" [style.fontSize.px]="12">
         <mat-form-field appearance="outline">
@@ -381,7 +380,7 @@
           </mat-form-field>
         </ng-container>
       </ng-container>
-      <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4">
+      <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
         <span class="hidden sm:block">
           <button
             [disabled]="uamForm.disabled"
@@ -687,7 +686,7 @@
           </ng-container>
         </ng-container>
 
-        <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4">
+        <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
           <span class="hidden sm:block">
             <button
               type="button"

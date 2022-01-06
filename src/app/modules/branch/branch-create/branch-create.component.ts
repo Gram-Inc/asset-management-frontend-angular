@@ -49,7 +49,6 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
     });
 
     this._branchService.branch$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
-      console.log(val);
       this.branch = val;
       this.branchForm.patchValue(val);
 
