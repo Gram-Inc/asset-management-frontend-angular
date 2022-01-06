@@ -11,11 +11,11 @@ import { IProduct } from "./basic.types";
 })
 export class BasicService {
   private baseUrl = environment.baseUrl;
-  private _category: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>(null);
-  private _products: BehaviorSubject<IProduct[] | null> = new BehaviorSubject<IProduct[] | null>(null);
-  private _warranties: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>(null);
+  private _category: BehaviorSubject<any[] | null> = new BehaviorSubject<any[]>([]);
+  private _products: BehaviorSubject<IProduct[] | null> = new BehaviorSubject<IProduct[]>([]);
+  private _warranties: BehaviorSubject<any[] | null> = new BehaviorSubject<any[]>([]);
   private _amc: BehaviorSubject<any[] | null> = new BehaviorSubject<any | null>(null);
-  private _brand: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>(null);
+  private _brand: BehaviorSubject<any[] | null> = new BehaviorSubject<any[]>([]);
 
   constructor(private _httpClient: HttpClient) {}
 

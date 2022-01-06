@@ -1,0 +1,29 @@
+.mat-radio-button {
+  &.mat-radio-disabled {
+    &.mat-radio-checked .mat-radio-outer-circle {
+      border-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    }
+    &.mat-radio-checked .mat-radio-label-content {
+      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    }
+    &.mat-radio-checked .mat-radio-inner-circle {
+      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    }
+  }
+}
+.mat-checkbox-checked {
+  &.mat-checkbox-disabled {
+    .mat-checkbox-background {
+      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    }
+    .mat-checkbox-label {
+      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+    }
+  }
+}
+.mat-select-disabled .mat-select-value {
+  color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+}
+.mat-input-element:disabled {
+  color: orange;
+}

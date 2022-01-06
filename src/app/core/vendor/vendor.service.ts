@@ -14,7 +14,7 @@ export class VendorService {
   private _baseUrl = environment.baseUrl;
 
   private _vendor: BehaviorSubject<IVendor | null> = new BehaviorSubject<IVendor | null>(null);
-  private _vendors: BehaviorSubject<IVendor[] | null> = new BehaviorSubject<IVendor[] | null>(null);
+  private _vendors: BehaviorSubject<IVendor[] | null> = new BehaviorSubject<IVendor[]>([]);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}

@@ -14,7 +14,7 @@ export class ClientService {
   private _baseUrl = environment.baseUrl;
 
   private _client: BehaviorSubject<IClient | null> = new BehaviorSubject<IClient | null>(null);
-  private _clients: BehaviorSubject<IClient[] | null> = new BehaviorSubject<IClient[] | null>(null);
+  private _clients: BehaviorSubject<IClient[] | null> = new BehaviorSubject<IClient[]>([]);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}

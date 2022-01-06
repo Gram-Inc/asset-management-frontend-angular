@@ -5,13 +5,14 @@ import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { UamListComponent } from "./uam-list/uam-list.component";
 import { UamDetailComponent } from "./uam-detail/uam-detail.component";
-import { CreateUAMResolver, EditUAMResolver } from "src/app/core/uam/uam.resolver";
+import { CreateUAMResolver, EditUAMResolver, UamResolver } from "src/app/core/uam/uam.resolver";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 
 const uamRoutes: Routes = [
   {
     path: "",
     component: UamComponent,
+    resolve: [UamResolver],
   },
   {
     path: "create",

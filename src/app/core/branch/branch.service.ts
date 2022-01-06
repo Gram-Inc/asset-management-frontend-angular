@@ -12,7 +12,7 @@ import { IBranch } from "./branch.types";
 export class BranchService {
   private _baseUrl = environment.baseUrl;
 
-  private _branchs: BehaviorSubject<IBranch[] | null> = new BehaviorSubject<IBranch[] | null>(null);
+  private _branchs: BehaviorSubject<IBranch[] | null> = new BehaviorSubject<IBranch[]>([]);
   private _branch: BehaviorSubject<IBranch | null> = new BehaviorSubject<IBranch | null>(null);
 
   constructor(private _httpClient: HttpClient) {}

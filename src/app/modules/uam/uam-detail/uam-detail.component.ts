@@ -1,4 +1,11 @@
-import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -25,6 +32,7 @@ import { IUser } from "src/app/core/user/user.types";
   selector: "app-uam-detail",
   templateUrl: "./uam-detail.component.html",
   styleUrls: ["./uam-detail.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UamDetailComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -79,6 +87,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     });
 
     this.uamForm.patchValue(this.dummy);
+    this.uamForm.disable();
   }
   //On Destroy
   ngOnDestroy(): void {
@@ -195,7 +204,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     if (this.uamForm.invalid) return;
     let obj = { ...this.uamForm.value };
     console.log(obj);
-    obj.reportingManager = obj.reportingManager._id;
+    obj.userInformation.reportingManager = obj.userInformation.reportingManager._id;
     console.log(obj);
     this._uamService.createUAM(obj).subscribe(
       (_) => {
@@ -205,6 +214,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
         });
       },
       (err) => {
+        console.log(err);
         this.openSnackBar("Error", err.message);
       }
     );

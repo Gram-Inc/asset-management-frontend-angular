@@ -14,7 +14,7 @@ export class UserService {
 
   private _user: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
   private _selectedUser: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
-  private _users: BehaviorSubject<IUser[] | null> = new BehaviorSubject<IUser[] | null>(null);
+  private _users: BehaviorSubject<IUser[] | null> = new BehaviorSubject<IUser[]>([]);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}

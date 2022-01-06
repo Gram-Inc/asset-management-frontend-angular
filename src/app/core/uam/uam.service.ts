@@ -14,7 +14,7 @@ import { IUAM } from "./uam.types";
 export class UamService {
   private _baseUrl = environment.baseUrl;
 
-  private _uams: BehaviorSubject<IUAM[] | null> = new BehaviorSubject<IUAM[] | null>(null);
+  private _uams: BehaviorSubject<IUAM[]> = new BehaviorSubject<IUAM[]>([]);
   private _uam: BehaviorSubject<IUAM | null> = new BehaviorSubject<IUAM | null>(null);
 
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
@@ -47,6 +47,7 @@ export class UamService {
   }
 
   createUAM(uam: IUAM): Observable<IUAM> {
+    delete uam._id;
     return this.uams$.pipe(
       take(1),
       switchMap((uams) =>
