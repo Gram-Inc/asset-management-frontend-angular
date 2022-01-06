@@ -152,8 +152,8 @@
       >
         <mat-hint class="col-span-1">Type of Access Required</mat-hint>
         <mat-radio-group formControlName="typeOfAccessRequired" class="flex gap-6 col-span-2">
-          <mat-radio-button value="Permanent">Permanent</mat-radio-button>
-          <mat-radio-button value="Temporary">Temporary</mat-radio-button>
+          <mat-radio-button [value]="TypeOfAccessRequiredUAM.permanent">Permanent</mat-radio-button>
+          <mat-radio-button [value]="TypeOfAccessRequiredUAM.temporary">Temporary</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -278,12 +278,6 @@
 
           <!-- Reporting Manager -->
           <div class="col-span-6" [style.fontSize.px]="12">
-            <mat-form-field appearance="outline">
-              <mat-label>Reporting Manager Name</mat-label>
-              <input matInput formControlName="reportingManager" />
-              <!-- Load from DB -->
-            </mat-form-field>
-
             <mat-form-field class="w-full" appearance="outline">
               <mat-label>Reporting Manager Name</mat-label>
               <input matInput formControlName="reportingManager" [matAutocomplete]="rmn" />
@@ -619,7 +613,7 @@
         <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
       </div>
       <!-- Table -->
-      <div class="mt-1 grid grid-cols-8 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="12">
+      <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="10">
         <ng-container
           formArrayName="users"
           *ngFor="let usr of uamForm.get('userInformation.users')['controls']; let i = index; let last = last"
@@ -675,11 +669,15 @@
             </mat-form-field>
 
             <!-- Delete -->
-            <mat-icon
-              svgIcon="heroicons_outline:trash"
-              class="text-red-600"
-              *ngIf="i != 0 && !last"
-            ></mat-icon>
+            <div
+              class="col-span-1"
+              [ngClass]="{
+                'text-red-600  cursor-pointer': !(i == 0 && last),
+                'text-gray-500 cursor-not-allowed': i == 0 && last
+              }"
+            >
+              <mat-icon svgIcon="heroicons_outline:trash" (click)="removeUserFromForm(i)"></mat-icon>
+            </div>
           </ng-container>
         </ng-container>
 
@@ -707,11 +705,11 @@
               <!-- Heroicon name: solid/check -->
               <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-              Add
+              Add another user
             </button>
           </span>
 
-          <span class="sm:ml-3">
+          <!-- <span class="sm:ml-3">
             <button
               *ngIf=""
               type="button"
@@ -735,30 +733,30 @@
               <mat-icon class="-ml-1 mr-2 h-5 w-5 text-gray-500" svgIcon="feather:minus"></mat-icon>
               Remove
             </button>
-          </span>
+          </span> -->
         </div>
       </div>
     </div>
   </ng-container>
 
   <!-- Action Button -->
-  <div>
+  <div class="flex justify-center my-6 mb-8">
     <button
       href="#"
       class="
-        ml-8
-        whitespace-nowrap
+        mr-3
         inline-flex
         items-center
-        justify-center
-        px-3
-        py-1
-        border
+        px-4
+        py-2
+        border border-transparent
         rounded-md
         shadow-sm
-        text-base text-orange-600
-        border-orange-600
-        hover:bg-orange-600 hover:text-white
+        text-sm
+        font-medium
+        text-white
+        bg-orange-600
+        hover:bg-orange-700
         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
       "
       (click)="generateRequest()"

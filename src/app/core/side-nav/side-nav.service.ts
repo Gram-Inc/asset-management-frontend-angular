@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MatDrawerMode } from "@angular/material/sidenav";
+import { MatDrawer, MatDrawerMode } from "@angular/material/sidenav";
 import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
 
 @Injectable({
@@ -7,22 +7,18 @@ import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
 })
 export class SideNavService {
   private _mode: ReplaySubject<MatDrawerMode> = new ReplaySubject<MatDrawerMode>(1);
-  private _opened: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  private _opened: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private drawer: MatDrawer;
 
   get mode$(): Observable<MatDrawerMode> {
     return this._mode.asObservable();
   }
 
-  set mode(mde: MatDrawerMode) {
-    this._mode.next(mde);
+  setDrawer(drawer: MatDrawer) {
+    this.drawer = drawer;
   }
-
-  get opened$(): Observable<boolean> {
-    return this._opened.asObservable();
-  }
-
-  set opened(val: boolean) {
-    this._opened.next(val);
+  toggle(): void {
+    this.drawer.toggle();
   }
   constructor() {
     this._mode.next("side");

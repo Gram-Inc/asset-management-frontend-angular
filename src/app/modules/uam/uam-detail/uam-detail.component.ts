@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
@@ -30,6 +31,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
   requestType: RequestTypeActionUAM = RequestTypeActionUAM.Create;
   requestTypes = RequestTypeActionUAM;
+  TypeOfAccessRequiredUAM = TypeOfAccessRequiredUAM;
   noOfUser: "single" | "multiple" = "single";
   typeOfUser = TypeOfUserUAM;
   accessRight = AccessRightsUAM;
@@ -52,13 +54,10 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute,
-    private _sideNavService: SideNavService
+    private _activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    //Close side Nav
-    this._sideNavService.opened = false;
     //Get All Branch
     this.branchs$ = this._branchService.branchs$;
 
@@ -71,7 +70,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     // Create UAM Form
     this.uamForm = this._formBuilder.group({
       _id: [""],
-      requestTypeAction: [RequestTypeActionUAM.Create, [Validators.required]],
+      requestTypeAction: [RequestTypeActionUAM.Delete, [Validators.required]],
       userInformation: this.createUserInformationForm(),
       accessToShareDrives: this._formBuilder.array([this.createAccessShareDrive()]),
       userSystemDataAndEmailIdTreatment: this.createUserSystemDataAndEmailIdTreatment(),
@@ -90,10 +89,10 @@ export class UamDetailComponent implements OnInit, OnDestroy {
       users: this._formBuilder.array([this.createUser()]),
       dateOfRequest: [new Date(Date.now())],
       dateOfJoiningLeaving: [""],
-      typeOfAccessRequired: [null],
+      typeOfAccessRequired: [TypeOfAccessRequiredUAM.permanent],
       userLocation: [""],
       ifTemporaryDateForDeactivation: [""],
-      typeOfUser: [null],
+      typeOfUser: [TypeOfUserUAM.ApcerUser],
       typeOfUserOtherText: [""],
       designation: [""],
       department: [""],
@@ -126,7 +125,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
   createUserSystemDataAndEmailIdTreatment() {
     return this._formBuilder.group({
-      userSystemData: [UserSystemDataUAM["Not Required"]],
+      userSystemData: [UserSystemDataUAM.Handover],
       dataHandOverTo: [""],
       endUserConfirmationOnReceiptOfData: [""],
       emailMailboxTransferredTo: [""],
@@ -160,17 +159,17 @@ export class UamDetailComponent implements OnInit, OnDestroy {
     let frm = this.uamForm.get("userInformation.users") as FormArray;
     frm.push(this.createUser());
   }
-  removeUserFromForm(): void {
+  removeUserFromForm(index: number): void {
     let frm = this.uamForm.get("userInformation.users") as FormArray;
-    if (frm.length >= 0) frm.removeAt(frm.length - 1);
+    if (frm.length >= 0) frm.removeAt(index);
   }
 
   createAccessShareDrive(): FormGroup {
     return this._formBuilder.group({
       driveName: [""],
       folderName: [""],
-      accessRights: [null],
-      grantRevoke: [null],
+      accessRights: [AccessRightsUAM.ReadOnly],
+      grantRevoke: [GrantRevokeUAM.Revoke],
     });
   }
   addAccessToShareDriveForm(): void {
@@ -180,7 +179,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
 
   removeAccessToShareDriveForm(): void {
     let frm = this.uamForm.get("accessToShareDrives") as FormArray;
-    if (frm.length >= 0) frm.removeAt(frm.length - 1);
+    if (frm.length > 0) frm.removeAt(frm.length - 1);
   }
 
   generateRequest() {
