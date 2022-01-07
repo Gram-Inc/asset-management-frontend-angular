@@ -11,7 +11,7 @@ import { IAsset } from "./asset.types";
 @Injectable({
   providedIn: "root",
 })
-export class AssetResolverResolver implements Resolve<any> {
+export class AssetResolver implements Resolve<any> {
   constructor(private _assetService: AssetService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IDTO> {
     this._assetService.clrAst();

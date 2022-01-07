@@ -26,7 +26,6 @@ export class AssetShortDetailComponent implements OnInit {
     //Get data From Server with ID
     this._assetService.getAssetById(this.data._id).subscribe((_) => {
       this.asset = _;
-      console.log(_);
     });
   }
   close() {

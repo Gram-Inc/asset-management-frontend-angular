@@ -196,7 +196,26 @@ export class AssetTimelineComponent implements OnInit {
   trackByFn(index: number, item: any): any {
     return item.id || index;
   }
-  getActivityIcon(activity) {
-    return "check";
+  getActivityIconData(activity: ITimeline) {
+    let v = "heroicons_outline:code";
+    switch (activity.x) {
+      case AllocationStatus.ASSIGNED:
+        v = "heroicons_outline:badge-check";
+        break;
+      case AllocationStatus.IN_POOL:
+        v = "heroicons_outline:office-building";
+        break;
+
+      case AllocationStatus.DOWN:
+        v = "heroicons_outline:exclamation-circle";
+        break;
+      case AllocationStatus.SCRAP:
+        v = "heroicons_outline:x-circle";
+        break;
+
+      default:
+        break;
+    }
+    return v;
   }
 }

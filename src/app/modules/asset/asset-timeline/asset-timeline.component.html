@@ -1,6 +1,5 @@
-<p>user-timeline-card works!</p>
 <!-- Activity feed -->
-<div class="w-full max-w-3xl">
+<div class="w-full text-sm">
   <ng-container *ngIf="data.length; else noActivity">
     <div class="mt-8">
       <ol>
@@ -8,31 +7,36 @@
         <ng-container
           *ngFor="let activity of data; let i = index; let first = first; let last = last; trackBy: trackByFn"
         >
-          <!-- Date separator -->
-          <!-- <ng-container *ngIf="first || !isSameDay(activity.date, activities[i - 1].date)">
-              <li class="relative flex py-7">
-                <div
-                  class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary"
-                >
-                  {{ getRelativeFormat(activity.date) }}
-                </div>
-              </li>
-            </ng-container> -->
-
           <!-- Activity -->
-          <li class="relative flex py-7">
+          <li class="relative flex py-3">
             <!-- Line -->
             <ng-container *ngIf="!last && isSameDay(activity.y[1], data[i + 1].y[0])">
-              <div class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600"></div>
+              <div class="absolute top-7 left-3.5 w-0.5 h-full -ml-px bg-gray-100 dark:bg-gray-600"></div>
             </ng-container>
 
             <div class="relative flex flex-auto">
               <!-- Icon -->
               <ng-container>
                 <div
-                  class="flex flex-shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400"
+                  class="flex flex-shrink-0 items-center justify-center w-7 h-7 mr-3 rounded-full"
+                  [ngClass]="{
+                    'bg-blue-100': activity.x == 'ASSIGNED',
+                    'bg-orange-100': activity.x == 'IN_POOL',
+                    'bg-yellow-100': activity.x == 'DOWN',
+                    'bg-red-100': activity.x == 'SCRAP'
+                  }"
                 >
-                  <mat-icon class="icon-size-5 text-white" [svgIcon]="getActivityIcon(activity)"> </mat-icon>
+                  <mat-icon
+                    class="icon-size-4 text-white"
+                    [ngClass]="{
+                      'text-blue-500': activity.x == 'ASSIGNED',
+                      'text-orange-500': activity.x == 'IN_POOL',
+                      'text-yellow-500': activity.x == 'DOWN',
+                      'text-red-500': activity.x == 'SCRAP'
+                    }"
+                    [svgIcon]="getActivityIconData(activity)"
+                  >
+                  </mat-icon>
                 </div>
               </ng-container>
 
@@ -40,25 +44,25 @@
               <div class="flex flex-col flex-auto items-start">
                 <!-- Description -->
                 <!-- <ng-container *ngIf="activity.description"> -->
-                <div>Test Description</div>
+                <div>{{ activity.x | titlecase }}</div>
                 <!-- </ng-container> -->
                 <div
                   class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5"
                 >
                   <!-- Date -->
-                  <div class="text-secondary">
+                  <div class="text-gray-400">
                     {{ activity.y[0] | date: "MMM dd, h:mm a" }}
                   </div>
                   <!-- Linked content -->
                   <ng-container *ngIf="activity._id">
                     <div class="hidden sm:block">&bull;</div>
                     <!-- Internal link -->
-                    <a class="cursor-pointer text-primary" [routerLink]="activity._id"> Asset </a>
+                    <a class="cursor-pointer text-blue-500" [routerLink]="activity._id"> Asset </a>
                   </ng-container>
                 </div>
                 <!-- Extra content -->
                 <!-- <ng-container *ngIf="activity.extraContent"> -->
-                <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800">Extra Content</div>
+                <!-- <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800">Extra Content</div> -->
                 <!-- </ng-container> -->
               </div>
             </div>
