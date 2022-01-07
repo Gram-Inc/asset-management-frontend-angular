@@ -28,6 +28,7 @@ export class CreateUAMResolver implements Resolve<any> {
     private _branchService: BranchService
   ) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+    this._uamService.clrUAM();
     return forkJoin([
       this._userService.getUsers(),
       this._branchService.getBranchs(),

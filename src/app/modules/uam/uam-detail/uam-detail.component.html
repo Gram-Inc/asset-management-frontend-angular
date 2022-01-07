@@ -18,9 +18,13 @@
 </div>
 
 <div class="px-8" [formGroup]="uamForm">
-  <!-- request Type  -->
+  <!--01 request Type  -->
   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Request Type</h4></div>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">01</div>
+      <h4 class="text-lg font-mono font-black">Request Type</h4>
+    </div>
+
     <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
       <div class="flex flex-col items-center">
         <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
@@ -42,9 +46,12 @@
     </div>
   </div>
 
-  <!-- Single Or Multiple User  -->
+  <!--02 Single Or Multiple User  -->
   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">No. of User</h4></div>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">02</div>
+      <h4 class="text-lg font-mono font-black">No. of User</h4>
+    </div>
     <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
       <div class="flex flex-col items-center">
         <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
@@ -77,12 +84,15 @@
     </div>
   </div>
 
-  <!-- User Information  -->
+  <!--03 User Information  -->
   <div
     class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
     formGroupName="userInformation"
   >
-    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">User Information</h4></div>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">03</div>
+      <h4 class="text-lg font-mono font-black">User Information</h4>
+    </div>
 
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
       <!-- date of Request -->
@@ -321,9 +331,12 @@
   </div>
 
   <!-- Done -->
-  <!--Access to Share Drives  -->
+  <!--04 Access to Share Drives  -->
   <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-    <div class="text-sm font-medium"><h4 class="text-sm font-semibold">Access to Share Drives</h4></div>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">04</div>
+      <h4 class="text-lg font-mono font-black">Access to Share Drives</h4>
+    </div>
 
     <div
       class="
@@ -439,14 +452,16 @@
   </div>
 
   <!-- Done -->
-  <!--User system Data and  -->
+  <!--05 User system Data and  -->
   <div
     class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
     formGroupName="userSystemDataAndEmailIdTreatment"
   >
-    <div class="text-sm font-medium">
-      <h4 class="text-sm font-semibold">User System Data and Email ID Treatment</h4>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">05</div>
+      <h4 class="text-lg font-mono font-black">User System Data and Email ID Treatment</h4>
     </div>
+
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
       <!-- User system Data -->
       <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
@@ -513,14 +528,16 @@
   </div>
 
   <!-- Done -->
-  <!--UAM Approvals -->
+  <!--06 UAM Approvals -->
   <div
     class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
     formGroupName="uamApprovals"
   >
-    <div class="text-sm font-medium">
-      <h4 class="text-sm font-semibold">UAM Approvals</h4>
+    <div>
+      <div class="text-sm text-gray-400 font-medium">06</div>
+      <h4 class="text-lg font-mono font-black">UAM Approvals</h4>
     </div>
+
     <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
       <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
         <!-- Requested By-->
@@ -551,12 +568,14 @@
   </div>
 
   <!-- Done -->
-  <!--For IT Department Only -->
+  <!--07 For IT Department Only -->
   <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
     <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-      <div class="text-sm font-medium">
-        <h4 class="text-sm font-semibold">For IT Department Use Only</h4>
+      <div>
+        <div class="text-sm text-gray-400 font-medium">07</div>
+        <h4 class="text-lg font-mono font-black">For IT Department Use Only</h4>
       </div>
+
       <div
         class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2"
         [style.fontSize.px]="12"
@@ -607,12 +626,16 @@
   </ng-container>
 
   <!-- Done -->
-  <!-- In case of Common Request Type for Multiple Users-->
+  <!--08 In case of Common Request Type for Multiple Users-->
   <ng-container *ngIf="noOfUser == 'multiple'" formGroupName="userInformation">
     <div class="bg-white px-4 py-2 s sm:px-6">
-      <div class="text-sm font-medium mt-4 mb-4">
-        <h4 class="text-sm font-semibold">In case of Common Request Type for Multiple Users</h4>
+      <div>
+        <div class="text-sm text-gray-400 font-medium">08</div>
+        <h4 class="text-lg font-mono font-black truncate">
+          In case of Common Request Type for Multiple Users
+        </h4>
       </div>
+
       <!-- Table -->
       <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="10">
         <ng-container
