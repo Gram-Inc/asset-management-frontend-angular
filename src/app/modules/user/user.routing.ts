@@ -15,4 +15,9 @@ export const userRoutes: Routes = [
     component: DetailsComponent,
     resolve: [CreateUserResolver, DepartmentResolver],
   },
+  {
+    path: "full/:id",
+    loadChildren: () =>
+      import("./user-full-detail/user-full-detail.module").then((x) => x.UserFullDetailModule),
+  },
 ];

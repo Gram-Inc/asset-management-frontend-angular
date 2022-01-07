@@ -5,10 +5,17 @@ import { RouterModule } from "@angular/router";
 import { userRoutes } from "./user.routing";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
-import { UserListComponent } from './user-list/user-list.component';
+import { UserListComponent } from "./user-list/user-list.component";
+import { UserFullDetailModule } from "./user-full-detail/user-full-detail.module";
 
 @NgModule({
   declarations: [UserComponent, UserListComponent],
-  imports: [CommonModule, SharedModule, CustomMaterialModule, RouterModule.forChild(userRoutes)],
+  imports: [
+    CommonModule,
+    SharedModule,
+    CustomMaterialModule,
+    RouterModule.forChild(userRoutes),
+    UserFullDetailModule,
+  ],
 })
 export class UserModule {}
