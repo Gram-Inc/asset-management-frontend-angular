@@ -10,6 +10,7 @@ import { AssetDetailComponent } from "./details/details.component";
 import { SpecCardListModule } from "./spec-card-list/spec-card-list.module";
 import { AssetBottomSheetComponent } from "./asset-bottom-sheet/asset-bottom-sheet.component";
 import { AssetBottomSheetModule } from "./asset-bottom-sheet/asset-bottom-sheet.module";
+import { AssetTimelineModule } from "./asset-timeline/asset-timeline.module";
 
 @NgModule({
   declarations: [AssetComponent, AssetListComponent, AssetDetailComponent],
@@ -20,6 +21,7 @@ import { AssetBottomSheetModule } from "./asset-bottom-sheet/asset-bottom-sheet.
     SpecCardListModule,
     RouterModule.forChild(assetRoutes),
     AssetBottomSheetModule,
+    AssetTimelineModule,
   ],
 })
 export class AssetModule {}

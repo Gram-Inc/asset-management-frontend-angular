@@ -7,6 +7,8 @@ import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { UserListComponent } from "./user-list/user-list.component";
 import { UserFullDetailModule } from "./user-full-detail/user-full-detail.module";
+import { UserTimelineCardComponent } from "./user-timeline-card/user-timeline-card.component";
+import { UserTimelineCardModule } from "./user-timeline-card/user-timeline-card.module";
 
 @NgModule({
   declarations: [UserComponent, UserListComponent],
@@ -16,6 +18,7 @@ import { UserFullDetailModule } from "./user-full-detail/user-full-detail.module
     CustomMaterialModule,
     RouterModule.forChild(userRoutes),
     UserFullDetailModule,
+    UserTimelineCardModule,
   ],
 })
 export class UserModule {}

@@ -20,8 +20,13 @@ export interface IAsset {
   branch?: string | Partial<IBranch>;
   allocationToUserId?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
   perviousUser?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
+  timeline?: Partial<ITimeline>;
 }
-
+export interface ITimeline {
+  x: AllocationStatus;
+  y: any[];
+  _id: string;
+}
 export interface IUPS {
   brand: string;
   make: string;
