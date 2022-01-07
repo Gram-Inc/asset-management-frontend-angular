@@ -17,7 +17,6 @@ import { UserTimelineCardModule } from "./user-timeline-card/user-timeline-card.
     SharedModule,
     CustomMaterialModule,
     RouterModule.forChild(userRoutes),
-    UserFullDetailModule,
     UserTimelineCardModule,
   ],
 })

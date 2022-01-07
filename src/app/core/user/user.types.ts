@@ -1,3 +1,4 @@
+import { IAsset } from "../asset/asset.types";
 import { IBranch } from "../branch/branch.types";
 import { IDepartment } from "../department/department.types";
 
@@ -12,4 +13,7 @@ export interface IUser {
   mobileNumber?: string;
   branch?: string | Partial<IBranch>;
   manager?: string | Partial<IUser>;
+  permission?: string[];
+  createdAt?: string;
+  allocatedAssets?: string | Partial<IAsset[]>;
 }

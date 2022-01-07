@@ -50,13 +50,12 @@ export class EditAssetResolver implements Resolve<any> {
     return forkJoin([
       this._vendorService.getVendors(),
       this._assetService.getAssetTyes(),
+      this._assetService.getAssets(),
       this._assetService.getAssetById(route.paramMap.get("id")).pipe(
         catchError(
           // Asset with ID not found
           (error) => {
             // Log the error
-            console.error(error);
-
             // Get the parent url
             const parentUrl = state.url.split("/").slice(0, -1).join("/");
 

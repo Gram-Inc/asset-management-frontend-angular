@@ -12,8 +12,8 @@ import { AllocationStatus, IAsset, IAssetTypes, IPagination } from "./asset.type
 export class AssetService {
   private _baseUrl = environment.baseUrl;
 
-  private _assets: BehaviorSubject<IAsset[] | null> = new BehaviorSubject<IAsset[]>([]);
   private _asset: BehaviorSubject<IAsset | null> = new BehaviorSubject<IAsset | null>(null);
+  private _assets: BehaviorSubject<IAsset[] | null> = new BehaviorSubject<IAsset[]>([]);
   private _assetTypes: BehaviorSubject<IAssetTypes | null> = new BehaviorSubject<IAssetTypes | null>(null);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
@@ -110,16 +110,13 @@ export class AssetService {
       take(1),
       map((assets) => {
         const ast = assets.find((ast) => ast._id == id || null);
-
         this._asset.next(ast);
-
         return ast;
       }),
       switchMap((ast) => {
         if (!ast) {
           return throwError("Could not found task with id of " + id + "!");
         }
-
         return of(ast);
       })
     );

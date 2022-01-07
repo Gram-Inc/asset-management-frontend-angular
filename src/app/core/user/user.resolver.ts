@@ -29,7 +29,7 @@ export class CreateUserResolver implements Resolve<any> {
 @Injectable({
   providedIn: "root",
 })
-export class EditAssetResolver implements Resolve<any> {
+export class EditUserResolver implements Resolve<any> {
   constructor(private _userService: UserService, private _router: Router) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     return forkJoin([
