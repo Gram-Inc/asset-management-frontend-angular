@@ -1,4 +1,15 @@
-<div class="grid grid-cols-6 gap-6 m-4">
+<div class="p-8">
+  <div class="lg:flex lg:items-center lg:justify-between">
+    <div class="flex-1 min-w-0">
+      <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+        <span class="block xl:inline">User</span>
+        <span class="block text-orange-600 xl:inline"> Information</span>
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-6 gap-6 mx-8">
   <div class="col-span-4 flex flex-col gap-6">
     <!-- Basic Information -->
     <div class="border border-gray-300 rounded-lg p-4 grid grid-cols-2 gap-y-2">
@@ -68,32 +79,60 @@
             </div> -->
       </div>
     </div>
+
+    <!--UAM Information -->
+    <div class="flex flex-col p-3 flex-auto bg-white rounded-lg overflow-hidden border border-gray-300">
+      <div class="flex flex-col sm:flex-row items-start justify-between">
+        <h3 class="font-medium leading-6 text-gray-900">U.A.M Information</h3>
+      </div>
+      <div class="grid grid-cols-2 border-t divide-x -m-4 mt-2 bg-gray-50 dark:bg-transparent">
+        <div class="flex flex-col items-center justify-center p-4">
+          <div class="font-semibold text-blue-600 leading-none tracking-tighter">2</div>
+          <div class="mt-1 text-center text-sm text-gray-600">Open</div>
+        </div>
+        <div class="flex flex-col items-center justify-center p-4">
+          <div class="font-semibold text-green-500 leading-none tracking-tighter">87</div>
+          <div class="mt-1 text-center text-sm text-gray-600">Completed</div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Additional Information -->
   <div class="col-span-2 border-l border-gray-300 p-4 my-4 flex flex-col gap-y-3">
     <!-- Title -->
-    <h3 class="mb-4 font-medium leading-6 text-gray-900">Additional Information</h3>
+    <h3 class="mb-2 font-medium leading-6 text-gray-900">Additional Information</h3>
+
+    <!-- Permission Level -->
+    <div class="flex gap-x-4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="#a65fec"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+        />
+      </svg>
+      <h3 class="font-medium leading-6 text-sm text-gray-900">Level 1</h3>
+    </div>
 
     <!-- created At -->
     <div class="flex gap-x-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="rgb(75 85 99 /0.5)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="grey">
         <path
-          fill-rule="evenodd"
-          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-          clip-rule="evenodd"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
         />
       </svg>
-      <h3 class="font-medium leading-6 text-sm text-gray-900">Created on Dec 02,2021</h3>
-    </div>
 
-    <!-- Open UAM  -->
-    <div class="flex gap-x-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="rgb(74, 222, 128)">
-        <path
-          d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
-        />
-      </svg>
-      <h3 class="font-medium leading-6 text-sm text-gray-900">Open U.A.M</h3>
+      <h3 class="font-medium leading-6 text-sm text-gray-600">Created on Dec 02,2021</h3>
     </div>
 
     <!-- Asset Allocation status -->
@@ -115,29 +154,68 @@
       <h3 class="font-medium leading-6 text-sm text-gray-900">Asset allocated</h3>
     </div>
 
-    <!-- Ticket Information -->
-    <h3 class="m-4 font-medium leading-6 text-gray-900">Ticket Information</h3>
-
-    <!-- <div class="shadow-md rounded-md flex">
-          <div class="fill-red-500 w-4 h-full"></div>
-          <div class="px-4 sm:px-0">
-            <h3 class="font-medium leading-6 text-gray-900">Open Tickets</h3>
-            <p class="mt-1 text-sm text-gray-600">02</p>
-          </div>
-        </div> -->
-
-    <div class="flex flex-row justify-between over h-18 rounded-md shadow-lg">
-      <!-- <div class="relative flex flex-0 items-center justify-center w-10 h-10"></div> -->
-      <div class="flex">
-        <a class="w-5 h-full rounded-l-md bg-red-400"></a>
-
-        <div class="px-4 m-2 sm:px-0">
-          <h3 class="font-medium leading-6 text-gray-900">Open Tickets</h3>
+    <!-- Additional Permission -->
+    <div class="mt-8">
+      <div class="flex flex-col flex-auto bg-white rounded-lg overflow-hidden border border-gray-300">
+        <div class="flex flex-col sm:flex-row items-start justify-between m-2">
+          <h3 class="font-medium leading-6 text-gray-900">Additional Permission</h3>
         </div>
-      </div>
 
-      <div class="self-center mx-2">
-        <p class="text-sm text-gray-600">02</p>
+        <!-- User -->
+        <div class="border-t grid grid-cols-2 p-2">
+          <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
+            <!-- Type of Permission -->
+            <h3 class="font-medium leading-6 text-sm text-gray-900">User</h3>
+          </div>
+          <div class="col-span-1 flex flex-col items-center justify-center">
+            <!-- Permission -->
+            <span class="bg-blue-100 text-blue-600 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
+              Read
+            </span>
+          </div>
+        </div>
+
+        <!-- UAM -->
+        <div class="border-t grid grid-cols-2 p-2">
+          <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
+            <!-- Type of Permission -->
+            <h3 class="font-medium leading-6 text-sm text-gray-900">U.A.M</h3>
+          </div>
+          <div class="col-span-1 flex flex-col items-center justify-center">
+            <!-- Permission -->
+            <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
+              Read / Write</span
+            >
+          </div>
+        </div>
+
+        <!-- Asset -->
+        <div class="border-t grid grid-cols-2 p-2">
+          <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
+            <!-- Type of Permission -->
+            <h3 class="font-medium leading-6 text-sm text-gray-900">Asset</h3>
+          </div>
+          <div class="col-span-1 flex flex-col items-center justify-center">
+            <!-- Permission -->
+            <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
+              Read / Write</span
+            >
+          </div>
+        </div>
+
+        <!-- Ticket -->
+        <div class="border-t grid grid-cols-2 p-2">
+          <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
+            <!-- Type of Permission -->
+            <h3 class="font-medium leading-6 text-sm text-gray-900">Ticket</h3>
+          </div>
+          <div class="col-span-1 flex flex-col items-center justify-center">
+            <!-- Permission -->
+            <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
+              Read / Write</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
