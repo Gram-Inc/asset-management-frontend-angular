@@ -46,7 +46,7 @@ export class AssetShortDetailComponent implements OnInit {
     return false;
   }
   getBranchShortCode(branch: string | Partial<IBranch>): string {
-    if (branch) return typeof branch === "object" ? branch.name : "-";
+    if (branch) return typeof branch === "object" ? branch.branchCode : "-";
     return "NULL";
   }
   deleteAsset() {}
@@ -70,7 +70,9 @@ export class AssetShortDetailComponent implements OnInit {
   }
 
   openCurrentUser(asset: IAsset) {
-    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+    if (asset.allocationToUserId && typeof asset.allocationToUserId == "object") {
+      this.matDialogRef.close();
       this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+    }
   }
 }

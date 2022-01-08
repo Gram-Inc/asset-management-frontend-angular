@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { map, startWith, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
+import { IWarranty } from "src/app/core/asset/asset.types";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { VendorService } from "src/app/core/vendor/vendor.service";
@@ -179,10 +180,15 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     //Check Validation
     if (this.assetForm.invalid) return;
 
-    //Create Asset Object
+    //Create Asset Object chane warranty !!!
+    let obj = { ...this.assetForm.value };
+    let wrnty: IWarranty = {
+      endAt: obj.warranty,
+    };
+    obj.warranty = wrnty;
 
     // Create Asset
-    this._assetService.createAsset(this.assetForm.value).subscribe(
+    this._assetService.createAsset(obj).subscribe(
       (_) => {
         this.openSnackBar("Success", "Asset Created");
         this._router.navigate(["../"], { relativeTo: this._activatedRoute });

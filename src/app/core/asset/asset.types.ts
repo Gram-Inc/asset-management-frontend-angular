@@ -11,29 +11,29 @@ export interface IAsset {
   comment?: string;
   laptop?: Partial<ILaptop>;
   battery?: Partial<IBattery>[];
-  sr_no: string;
+  sr_no?: string;
   warranty?: Partial<IWarranty>[];
   amc?: Partial<IWarranty>[];
   client?: Partial<IVendor>;
   ups?: Partial<IUPS>;
   allocationStatus?: AllocationStatus;
   branch?: string | Partial<IBranch>;
-  allocationToUserId?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
-  perviousUser?: string | Partial<{ _id: string; firstName: string; lastName: string }>;
+  allocationToUserId?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
+  perviousUser?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
   timeline?: Partial<ITimeline>;
 }
 export interface ITimeline {
-  x: AllocationStatus;
-  y: any[];
-  _id: string;
+  x?: AllocationStatus;
+  y?: any[];
+  _id?: string;
 }
 export interface IUPS {
-  brand: string;
-  make: string;
-  kw: string;
-  battery: IUPSBattery[];
-  category: string;
-  productCode: string;
+  brand?: string;
+  make?: string;
+  kw?: string;
+  battery?: IUPSBattery[];
+  category?: string;
+  productCode?: string;
 }
 export enum AllocationStatus {
   "IN_POOL" = "IN_POOL",
@@ -42,29 +42,32 @@ export enum AllocationStatus {
   "DOWN" = "DOWN",
 }
 export interface IUPSBattery {
-  brand: string;
-  sr_no: string;
-  life: string;
-  warranty: IWarranty[];
+  brand?: string;
+  sr_no?: string;
+  life?: string;
+  warranty?: IWarranty[];
 }
 export interface IWarranty {
-  name: string;
-  description: string;
-  type: string;
-  warrantySiteType: string;
-  startAt: string;
-  endAt: string;
+  name?: string;
+  description?: string;
+  type?: string;
+  warrantySiteType?: string;
+  startAt?: string;
+  endAt?: string;
+  purchaseDate?: string;
+  vendor?: string;
+  poNumber?: string;
 }
 export interface IBattery {
-  assetCode: string;
-  name: string;
-  type: string;
-  location: string;
-  vendorId: string;
-  comment: string;
-  brand: string;
-  sr_no: string;
-  life: string;
+  assetCode?: string;
+  name?: string;
+  type?: string;
+  location?: string;
+  vendorId?: string;
+  comment?: string;
+  brand?: string;
+  sr_no?: string;
+  life?: string;
 }
 
 export interface ILaptop {
@@ -75,8 +78,17 @@ export interface ILaptop {
   battery?: Partial<LaptopBattery>;
   baseboard?: Partial<Baseboard>;
   cpu?: Partial<CPU>;
+  diskLayout?: Partial<IDisk[]>;
 }
 
+export interface IDisk {
+  device?: string;
+  type?: string;
+  name?: string;
+  vendor?: string;
+  size?: number;
+  _id?: string;
+}
 export interface IPagination {
   limit?: number;
   page?: number;
@@ -85,8 +97,8 @@ export interface IPagination {
 }
 
 export interface IAssetTypes {
-  commonAssetFields: IAssetSubType[];
-  assetTypeSpecificFieldTypes: IAssetSubType[];
+  commonAssetFields?: IAssetSubType[];
+  assetTypeSpecificFieldTypes?: IAssetSubType[];
 }
 interface IAssetSubType {
   label?: string;
@@ -98,89 +110,89 @@ interface IAssetSubType {
 }
 
 interface LaptopBattery {
-  hasBattery: boolean;
-  cycleCount: number;
-  isCharging: boolean;
-  designedCapacity: number;
-  maxCapacity: number;
-  currentCapacity: number;
-  voltage: number;
-  capacityUnit: string;
-  percent: number;
-  timeRemaining: number;
-  acConnected: boolean;
-  type: string;
-  model: string;
-  manufacturer: string;
-  serial: string;
+  hasBattery?: boolean;
+  cycleCount?: number;
+  isCharging?: boolean;
+  designedCapacity?: number;
+  maxCapacity?: number;
+  currentCapacity?: number;
+  voltage?: number;
+  capacityUnit?: string;
+  percent?: number;
+  timeRemaining?: number;
+  acConnected?: boolean;
+  type?: string;
+  model?: string;
+  manufacturer?: string;
+  serial?: string;
 }
 
 interface CPU {
-  manufacturer: string;
-  brand: string;
-  cores: number;
-  physicalCores: number;
-  processors: number;
+  manufacturer?: string;
+  brand?: string;
+  cores?: number;
+  physicalCores?: number;
+  processors?: number;
 }
 interface Baseboard {
-  manufacturer: string;
-  model: string;
-  version: string;
-  serial: string;
-  assetTag: string;
-  memMax: string;
-  memSlots: number;
+  manufacturer?: string;
+  model?: string;
+  version?: string;
+  serial?: string;
+  assetTag?: string;
+  memMax?: string;
+  memSlots?: number;
 }
 interface MemLayout {
-  size: number;
-  bank: string;
-  type: string;
-  ecc: boolean;
-  clockSpeed: number;
-  formFactor: string;
-  manufacturer: string;
-  partNum: string;
-  serialNum: string;
-  voltageConfigured: string;
-  voltageMin: string;
-  voltageMax: string;
+  size?: number;
+  bank?: string;
+  type?: string;
+  ecc?: boolean;
+  clockSpeed?: number;
+  formFactor?: string;
+  manufacturer?: string;
+  partNum?: string;
+  serialNum?: string;
+  voltageConfigured?: string;
+  voltageMin?: string;
+  voltageMax?: string;
 }
 interface Mem {
-  total: number;
-  free: number;
-  used: number;
-  active: number;
-  available: number;
-  buffers: number;
-  cached: number;
-  slab: number;
-  buffcache: number;
-  swaptotal: number;
-  swapused: number;
-  swapfree: number;
+  total?: number;
+  free?: number;
+  used?: number;
+  active?: number;
+  available?: number;
+  buffers?: number;
+  cached?: number;
+  slab?: number;
+  buffcache?: number;
+  swaptotal?: number;
+  swapused?: number;
+  swapfree?: number;
 }
 interface OS {
-  platform: string;
-  distro: string;
-  release: string;
-  codename: string;
-  kernel: string;
-  arch: string;
-  hostname: string;
-  fqdn: string;
-  codepage: string;
-  logofile: string;
-  serial: string;
-  build: string;
-  servicepack: string;
-  uefi: boolean;
+  platform?: string;
+  distro?: string;
+  release?: string;
+  codename?: string;
+  kernel?: string;
+  arch?: string;
+  hostname?: string;
+  fqdn?: string;
+  codepage?: string;
+  logofile?: string;
+  serial?: string;
+  build?: string;
+  servicepack?: string;
+  uefi?: boolean;
 }
 interface System {
-  manufacturer: string;
-  model: string;
-  version: string;
-  serial: string;
-  uuid: string;
-  sku: string;
-  virtual: boolean;
+  manufacturer?: string;
+  model?: string;
+  version?: string;
+  serial?: string;
+  uuid?: string;
+  sku?: string;
+  virtual?: boolean;
 }
