@@ -17,10 +17,34 @@
 </div>
 
 <div class="card-container">
-  <title-card [value]="50" [icon]="'inventory_2'" title="In Pool" bgColor="#C8FACD"></title-card>
-  <title-card [value]="50" [icon]="'person_pin'" title="Assigned" bgColor="#D0F2FF"></title-card>
-  <title-card [value]="50" [icon]="'delete_outline'" title="Scrap" bgColor="#FFF7CD"></title-card>
-  <title-card [value]="50" [icon]="'warning'" title="Down" bgColor="#FFE7D9"></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'heroicons_outline:archive'"
+    title="In Pool"
+    [color]="'text-orange-500'"
+    [bgColor]="'bg-orange-50'"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'heroicons_outline:user-circle'"
+    title="Assigned"
+    [color]="'text-blue-500'"
+    [bgColor]="'bg-blue-50'"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'heroicons_outline:trash'"
+    title="Scrap"
+    [color]="'text-red-500'"
+    [bgColor]="'bg-red-50'"
+  ></title-card>
+  <title-card
+    [value]="50"
+    [icon]="'heroicons_outline:exclamation'"
+    title="Down"
+    [color]="'text-yellow-500'"
+    [bgColor]="'bg-yellow-50'"
+  ></title-card>
 </div>
 
 <div class="grid grid-cols-6 gap-6 w-full min-w-0 p-6">

@@ -1,18 +1,12 @@
-<div
-  class="card"
-  [style.background-color]="this.bgColor"
-  [class.card-selected]="this.icon == 'pending_actions'"
-  target="_blank"
-  rel="noopener"
->
-  <div>
-    <mat-icon style="font-size: 66px">{{ this.icon }}</mat-icon>
+<div [ngClass]="[this.color, this.bgColor]" class="card" target="_blank" rel="noopener">
+  <div class="font-sans">
+    <mat-icon class="h-14" [svgIcon]="this.icon"></mat-icon>
     <br />
-    <p class="" style="font-weight: 400; font-size: 16px">
+    <p class="text-lg">
       {{ this.title }}
     </p>
 
-    <p class="" style="font-weight: 700; padding-top: 10px; font-size: 36px">
+    <p class="font-bold text-3xl" style="padding-top: 10px">
       {{ this.value }}
     </p>
   </div>

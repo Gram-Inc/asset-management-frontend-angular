@@ -10,6 +10,7 @@ export class TitleCardComponent implements OnInit {
   @Input() title: any;
   @Input() value: any;
   @Input() bgColor: any;
+  @Input() color: any;
   constructor() {}
 
   ngOnInit(): void {}

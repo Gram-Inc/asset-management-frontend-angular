@@ -1,7 +1,3 @@
-.card svg.material-icons path {
-  fill: #888;
-}
-
 .card {
   border-radius: 30px;
   // border: 1px solid #eee;
@@ -16,14 +12,13 @@
   transition: all 0.2s ease-in-out;
   line-height: 24px;
   text-align: center;
-  color: #04297a;
 }
 
-.grey {
-  color: #04297a;
-}
 mat-icon {
-  color: #04297a;
   height: auto;
   width: auto;
+}
+.card:not(.highlight-card):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.1);
 }
