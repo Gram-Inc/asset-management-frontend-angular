@@ -49,6 +49,10 @@ export const routes: Route[] = [
         loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
       },
       {
+        path: "ticket",
+        loadChildren: () => import("./modules/ticket/ticket.module").then((x) => x.TicketModule),
+      },
+      {
         path: "user",
         loadChildren: () => import("./modules/user/user.module").then((x) => x.UserModule),
       },

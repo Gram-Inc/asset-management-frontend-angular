@@ -4,17 +4,16 @@ import { MatDialog } from "@angular/material/dialog";
 import { Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
-import { UserService } from "src/app/core/user/user.service";
-import { IUser } from "src/app/core/user/user.types";
-import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
+import { TicketService } from "src/app/core/ticket/ticket.service";
+import { ITicket } from "src/app/core/ticket/ticket.types";
 @Component({
-  selector: "app-user",
-  templateUrl: "./user.component.html",
-  styleUrls: ["./user.component.scss"],
+  selector: "app-ticket",
+  templateUrl: "./ticket.component.html",
+  styleUrls: ["./ticket.component.scss"],
 })
-export class UserComponent implements OnInit {
+export class TicketComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  users$: Observable<IUser[]>;
+  tickets$: Observable<ITicket[]>;
   types: string[];
   pagination: IPagination;
   flashMessage: "success" | "error" | null = null;
@@ -22,7 +21,7 @@ export class UserComponent implements OnInit {
   isLoading: boolean = false;
   searchCtrl: FormControl = new FormControl("");
 
-  constructor(private _userService: UserService) {}
+  constructor(private _ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.searchCtrl.valueChanges
@@ -31,7 +30,7 @@ export class UserComponent implements OnInit {
         debounceTime(300),
         switchMap((query) => {
           this.isLoading = true;
-          return this._userService.getUsers(1, 10, query);
+          return this._ticketService.getTickets(1, 10, query);
         }),
         map(() => {
           this.isLoading = false;
@@ -40,7 +39,7 @@ export class UserComponent implements OnInit {
       .subscribe();
 
     // Get the Assets
-    this.users$ = this._userService.users$;
+    this.tickets$ = this._ticketService.tickets$;
   }
 
   /**

@@ -57,7 +57,7 @@ export class UserService {
     );
   }
 
-  clrAst() {
+  clrSelectedUser() {
     this._selectedUser.next(null);
   }
 
@@ -171,7 +171,7 @@ export class UserService {
   }
 
   /**
-   * Delete the product
+   * Delete the user
    *
    * @param _id
    */
@@ -181,10 +181,10 @@ export class UserService {
       switchMap((users) =>
         this._httpClient.delete(`${this._baseUrl}/user/${_id}`).pipe(
           map((isDeleted: boolean) => {
-            // Find the index of the deleted asset
+            // Find the index of the deleted user
             const index = users.findIndex((item) => item._id === _id);
 
-            // Delete the product
+            // Delete the user
             users.splice(index, 1);
 
             // Update the users
