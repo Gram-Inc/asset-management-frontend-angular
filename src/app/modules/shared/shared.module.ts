@@ -18,6 +18,7 @@ import { SimpleTimelineModule } from "./simple-timeline/simple-timeline.module";
 import { VendorFilterComponent } from "./vendor-filter/vendor-filter.component";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { RouterModule } from "@angular/router";
+import { TicketFilterComponent } from './ticket-filter/ticket-filter.component';
 
 var sharedComp = [
   TitleCardComponent,
@@ -31,7 +32,7 @@ var sharedComp = [
   VendorFilterComponent,
 ];
 @NgModule({
-  declarations: [...sharedComp, AssetShortDetailComponent],
+  declarations: [...sharedComp, AssetShortDetailComponent, TicketFilterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
