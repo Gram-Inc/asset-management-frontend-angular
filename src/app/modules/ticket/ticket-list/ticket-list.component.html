@@ -14,25 +14,27 @@
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       User
+                      <!-- Call id,raised by,created at -->
                     </th>
 
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Email
+                      Priority
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Department
+                      Category
+                      <!-- category , sub category -->
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Branch
+                      Last Attended By
                     </th>
                     <th scope="col" class="relative px-6 py-3">
                       <span class="sr-only">Edit</span>
@@ -44,7 +46,9 @@
                     <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[ticket._id]">
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                          <div class="text-sm font-medium text-gray-900">{{ getUserName(ticket) }}</div>
+                          <div class="text-sm font-medium text-gray-900">
+                            <!-- {{ getUserName(ticket) }} -->
+                          </div>
                         </div>
                       </td>
 
@@ -53,7 +57,7 @@
                       </td>
 
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ getBranchShortCode(ticket.branch) }}
+                        <!-- {{ getBranchShortCode(ticket.branch) }} -->
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ getDepartmentCode(ticket) }}
@@ -90,7 +94,7 @@
           ></ng-container>
           <ng-template #noTickets>
             <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-              There are no users!
+              There are no tickets!
             </div>
           </ng-template>
         </div>

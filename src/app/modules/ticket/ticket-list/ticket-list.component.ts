@@ -155,12 +155,9 @@ export class TicketListComponent implements OnInit {
     if (obj) return typeof obj === "object" ? obj.branchCode : "-";
     return "NULL";
   }
-  // getTicketName(ticket: ITicket) {
-  //   if (ticket.firstName.toUpperCase() == ticket.lastName.toUpperCase()) return ticket.firstName;
-  //   return ticket.firstName + " " + ticket.lastName;
-  // }
-  // getDepartmentCode(ticket: ITicket) {
-  //   if (ticket.departmentId && typeof ticket.departmentId == "object") return ticket.departmentId.name;
-  //   return "-";
-  // }
+  getTicketName(ticket: ITicket) {}
+  getDepartmentCode(ticket: ITicket) {
+    // if (ticket.departmentId && typeof ticket.departmentId == "object") return ticket.departmentId.name;
+    // return "-";
+  }
 }
