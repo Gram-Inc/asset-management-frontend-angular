@@ -68,4 +68,21 @@ export class BasicService {
       .get(`${this.baseUrl}/brands`, { params: { search: search } })
       .pipe(tap((response: IDTO) => this._brand.next(response.data)));
   }
+
+  getAppropriateBrandLogo(brandName: string) {
+    if (brandName.toUpperCase().includes("LENOVO"))
+      return "https://cdn.worldvectorlogo.com/logos/lenovo-2.svg";
+    if (brandName.toUpperCase().includes("DELL")) return "https://cdn.worldvectorlogo.com/logos/dell-2.svg";
+    if (brandName.toUpperCase().includes("APPLE")) return "https://cdn.worldvectorlogo.com/logos/apple.svg";
+    if (brandName.toUpperCase().includes("HP")) return "https://cdn.worldvectorlogo.com/logos/hp-2012.svg";
+    return "";
+  }
+  getAppropriateCPULogo(cpu: string) {
+    if (cpu.toLowerCase().includes("i3")) return "/assets/Processors/i3.svg";
+    if (cpu.toLowerCase().includes("i5")) return "/assets/Processors/i5.svg";
+    if (cpu.toLowerCase().includes("i7")) return "/assets/Processors/i7.svg";
+    if (cpu.toLowerCase().includes("i9")) return "/assets/Processors/i9.svg";
+    if (cpu.toLowerCase().includes("xeon")) return "/assets/Processors/xeon.svg";
+    return "";
+  }
 }

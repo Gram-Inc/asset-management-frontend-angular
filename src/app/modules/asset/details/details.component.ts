@@ -38,7 +38,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
   branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
 
   //Auto Complete
-  modelNameForAutoComplete: string[] = ["Lenevo V110", "Dell Latitude 5410", "Macbook Air", "Asus Predetor"];
+  modelNameForAutoComplete: string[] = ["Lenovo V110", "Dell Latitude 5410", "Macbook Air", "Asus Predetor"];
   filteredModelNameForAutoComplete: Observable<string[]>;
 
   osAutoComplete: string[] = ["Windows 7", "Windows 8", "Windows 10", "Windows 11"];

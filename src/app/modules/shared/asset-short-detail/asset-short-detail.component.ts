@@ -5,6 +5,7 @@ import { IAsset } from "src/app/core/asset/asset.types";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { isValid, isFuture, formatDistanceToNow } from "date-fns";
 import { Router } from "@angular/router";
+import { BasicService } from "src/app/core/basic/basic.service";
 
 @Component({
   selector: "app-asset-short-detail",
@@ -19,7 +20,8 @@ export class AssetShortDetailComponent implements OnInit {
     private _assetService: AssetService,
     @Inject(MAT_DIALOG_DATA) public data: IAsset,
     private matDialogRef: MatDialogRef<AssetShortDetailComponent>,
-    private router: Router
+    private router: Router,
+    private _basicService: BasicService
   ) {}
 
   ngOnInit(): void {
@@ -74,5 +76,12 @@ export class AssetShortDetailComponent implements OnInit {
       this.matDialogRef.close();
       this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
     }
+  }
+
+  getLogo(): string {
+    return this._basicService.getAppropriateBrandLogo(this.asset.name);
+  }
+  getProcessorLogo(): string {
+    return this._basicService.getAppropriateCPULogo(this.asset.laptop.cpu.brand);
   }
 }
