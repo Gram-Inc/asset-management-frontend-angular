@@ -8,10 +8,9 @@ import { IAsset } from "src/app/core/asset/asset.types";
 export class SpecCardListComponent implements OnInit {
   @Input() asset: IAsset = {
     _id: "61d98c4ad8b20d468de4819f",
-
     laptop: {
       mem: {
-        total: 8,
+        total: 8589934592,
       },
       memLayout: [
         {

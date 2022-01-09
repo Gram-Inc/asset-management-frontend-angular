@@ -16,6 +16,7 @@ import { SignInModule } from "./modules/auth/sign-in/sign-in.module";
 import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AsideComponent } from "./custom/components/aside/aside.component";
 import { DetailsComponent } from "./modules/user/details/details.component";
+import { BytesToGBPipe } from "./core/pipes/bytes-to-gb.pipe";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,

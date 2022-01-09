@@ -247,4 +247,8 @@ export class AssetService {
       })
     );
   }
+
+  convertGBtoBytes(value: any) {
+    return Number.parseInt(value) * 1073741824;
+  }
 }
