@@ -53,6 +53,7 @@
                           <div class="">
                             <div class="text-sm font-medium text-gray-900">{{ asset?.name }}</div>
                             <div class="text-sm text-gray-500">{{ asset?.sr_no }}</div>
+                            <!-- <img style="max-width: 84px; max-height: 18px" [src]="getLogo(asset)" alt="" /> -->
                           </div>
                         </div>
                       </td>
@@ -61,7 +62,8 @@
                           class="text-sm text-blue-600 cursor-pointer hover:text-orange-500"
                           (click)="$event.stopPropagation(); openCurrentUser(asset)"
                         >
-                          {{ getCurrentUser(asset) }}
+                          {{ getCurrentUser(asset) }} &nbsp; &nbsp;
+                          <!-- <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon> -->
                         </div>
                         <div
                           class="text-sm text-gray-500 cursor-pointer hover:text-orange-500"
@@ -99,22 +101,7 @@
                           <!-- Assign Button -->
                           <button
                             type="button"
-                            class="
-                              m-auto
-                              inline-flex
-                              items-center
-                              px-2
-                              py-1
-                              border border-gray-300
-                              rounded-md
-                              shadow-sm
-                              text-sm
-                              font-medium
-                              text-gray-500
-                              bg-white
-                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            "
+                            class="m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                             (click)="$event.stopPropagation(); assignToUser(asset)"
                           >
                             <mat-icon class="h-4 w-4" svgIcon="feather:user-check"></mat-icon>
@@ -122,23 +109,7 @@
                           <!-- Edit Button -->
                           <button
                             type="button"
-                            class="
-                              ml-2
-                              m-auto
-                              inline-flex
-                              items-center
-                              px-2
-                              py-1
-                              border border-gray-300
-                              rounded-md
-                              shadow-sm
-                              text-sm
-                              font-medium
-                              text-gray-500
-                              bg-white
-                              hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
-                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            "
+                            class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                             matTooltip="Edit"
                             (click)="$event.stopPropagation(); edit(asset)"
                           >
@@ -148,23 +119,7 @@
                           <!-- QR Button -->
                           <button
                             type="button"
-                            class="
-                              ml-2
-                              m-auto
-                              inline-flex
-                              items-center
-                              px-2
-                              py-1
-                              border border-gray-300
-                              rounded-md
-                              shadow-sm
-                              text-sm
-                              font-medium
-                              text-gray-500
-                              bg-white
-                              hover:bg-gray-50 hover:text-orange-500 hover:border-orange-500
-                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            "
+                            class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                             matTooltip="Print QR"
                             (click)="$event.stopPropagation(); printQR(asset)"
                           >

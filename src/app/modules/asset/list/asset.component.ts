@@ -19,6 +19,7 @@ import { merge, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
+import { BasicService } from "src/app/core/basic/basic.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { QrService } from "src/app/core/qr/qr.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
@@ -72,7 +73,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
     private _matDialog: MatDialog,
     private _qrService: QrService,
     private _bottomSheet: MatBottomSheet,
-    private router: Router
+    private router: Router,
+    private _basicService: BasicService
   ) {}
 
   ngOnInit(): void {
@@ -235,5 +237,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy {
   openPrevUser(asset: IAsset) {
     if (asset.perviousUser && typeof asset.perviousUser == "object")
       this.router.navigate([`/user/${asset.perviousUser._id}`]);
+  }
+  getLogo(asset): string {
+    return this._basicService.getAppropriateBrandLogo(asset.name);
   }
 }
