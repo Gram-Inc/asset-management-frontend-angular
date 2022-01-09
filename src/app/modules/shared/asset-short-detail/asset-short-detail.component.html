@@ -89,12 +89,10 @@
           {{ getCurrentUser(asset) }}
         </dd>
       </div>
-      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-6 sm:px-6">
-        <dt class="text-sm font-medium text-gray-500">Specifications</dt>
-        <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4">
-          <app-spec-card-list [asset]="asset"></app-spec-card-list>
-        </dd>
-      </div>
+
+      <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4 overflow-scroll max-h-44">
+        <app-spec-card-list [asset]="asset"></app-spec-card-list>
+      </dd>
     </dl>
   </div>
 
