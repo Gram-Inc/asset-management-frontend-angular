@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class BytesToGBPipe implements PipeTransform {
   transform(value: any, replace: string = "N/A"): any {
-    return Number.parseInt(value) / 1073741824;
+    return Math.round(Number.parseInt(value) / 1073741824);
   }
 }

@@ -1,11 +1,11 @@
-<div class="flex flex-col gap-3 my-3">
+<div class="grid grid-cols-2 gap-3 my-3">
   <!-- Cards Section -->
 
   <!-- RAM -->
   <ng-container>
     <!-- if Layout Found -->
     <ng-container *ngIf="asset.laptop.memLayout.length > 0">
-      <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+      <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
         <!-- If No RAM LAYOUT -->
 
         <!-- Icons / Image -->
@@ -39,7 +39,7 @@
 
     <!-- If no layout found -->
     <ng-container *ngIf="asset.laptop.memLayout.length == 0">
-      <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+      <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
         <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
         <!-- <hr class="border border-gray-300" /> -->
 
@@ -73,7 +73,7 @@
 
   <!-- Processor -->
   <ng-container *ngIf="asset.laptop.cpu">
-    <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+    <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
       <!-- Icons / Image -->
       <img class="mx-3 my-auto" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
 
@@ -98,9 +98,50 @@
       </h6>
       <!-- Total -->
       <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-        <h6 class="text-xs text-gray-300">Processor</h6>
+        <h6 class="text-xs text-gray-300">CPU</h6>
         <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.laptop.cpu.brand) }}</h4>
         <h6 class="text-xs"></h6>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Disk Layout -->
+  <ng-container *ngFor="let disk of asset.laptop.diskLayout">
+    <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+      <!-- If No RAM LAYOUT -->
+
+      <!-- Icons / Image -->
+      <ng-container *ngIf="disk.type == 'HDD'">
+        <img class="mx-3 my-auto" src="/assets/icons/harddisk.png" height="45px" width="45px" alt="hdd" />
+      </ng-container>
+      <ng-container *ngIf="disk.type == 'SSD' || disk.type == 'NVMe'">
+        <img class="mx-3 my-auto" src="/assets/icons/ssd.png" height="45px" width="45px" alt="ssd" />
+      </ng-container>
+
+      <!-- Slot  -->
+      <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+        <div class="flex items-center my-1">
+          <h6 class="overf text-xs font-medium text-gray-300">Slot -&nbsp;</h6>
+          <h6 class="overf text-xs text-black truncate">{{ disk.device }}</h6>
+        </div>
+        <div class="flex items-center my-1">
+          <h6 class="overf text-xs font-medium text-gray-300">Name -&nbsp;</h6>
+          <h6 class="overf text-xs text-black truncate">{{ disk.name }}</h6>
+        </div>
+      </div>
+
+      <!-- Type Area  -->
+      <h6
+        class="overf font-semibold border-x-2 text-lg text-center text-green-500"
+        style="writing-mode: vertical-rl"
+      >
+        {{ disk.type }}
+      </h6>
+      <!-- Total -->
+      <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+        <h6 class="text-xs text-gray-300">Total</h6>
+        <h4 class="text-lg font-bold truncate">{{ disk.size ?? "0" | bytesToGB }}</h4>
+        <h6 class="text-xs">GB</h6>
       </div>
     </div>
   </ng-container>
