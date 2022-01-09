@@ -1,70 +1,107 @@
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-3 my-3">
   <!-- Cards Section -->
-  <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
-    <!-- Icons / Image -->
-    <!-- RAM -->
 
-    <!-- If No RAM LAYOUT -->
+  <!-- RAM -->
+  <ng-container>
+    <!-- if Layout Found -->
+    <ng-container *ngIf="asset.laptop.memLayout.length > 0">
+      <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+        <!-- If No RAM LAYOUT -->
 
-    <!-- if Layout FOund -->
-    <!-- <ng-container *ngIf="asset.laptop.memLayout.length > 0"> -->
-    <!-- Icons / Image -->
-    <ng-container>
-      <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
-      <!-- <hr class="border border-gray-300" /> -->
+        <!-- Icons / Image -->
+        <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
 
-      <!-- Sr  -->
-      <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-        <ng-container *ngFor="let memLay of asset.laptop.memLayout">
+        <!-- Sr  -->
+        <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+          <ng-container *ngFor="let memLay of asset.laptop.memLayout">
+            <div class="flex items-center my-1">
+              <h6 class="overf text-xs font-medium text-gray-300">{{ memLay.bank }} -&nbsp;</h6>
+              <h6 class="overf text-xs text-black truncate">{{ memLay.size | bytesToGB }} GB</h6>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- Type Area  -->
+        <h6
+          class="overf font-semibold border-x-2 text-lg text-center"
+          style="writing-mode: vertical-rl; color: #ffb900"
+        >
+          {{ asset.laptop.memLayout[0].type }}
+        </h6>
+        <!-- Total -->
+        <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+          <h6 class="text-xs text-gray-300">Total</h6>
+          <h4 class="text-lg font-bold truncate">{{ asset.laptop.mem.total ?? "0" | bytesToGB }}</h4>
+          <h6 class="text-xs">GB</h6>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- If no layout found -->
+    <ng-container *ngIf="asset.laptop.memLayout.length == 0">
+      <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+        <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+        <!-- <hr class="border border-gray-300" /> -->
+
+        <!-- Sr  -->
+        <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
           <div class="flex items-center my-1">
-            <h6 class="overf text-xs font-medium text-gray-300">{{ memLay.bank }} -&nbsp;</h6>
-            <h6 class="overf text-xs text-black truncate">{{ memLay.size | bytesToGB }} GB</h6>
+            <h6 class="overf text-xs font-medium text-gray-300">S1 -&nbsp;</h6>
+            <h6 class="overf text-xs text-black truncate">N/A</h6>
           </div>
-        </ng-container>
-      </div>
-      <!-- Type Area  -->
-      <h6
-        class="overf font-semibold border-x-2 text-lg text-center"
-        style="writing-mode: vertical-rl; color: #ffb900"
-      >
-        DDR4
-      </h6>
-      <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-        <h6 class="text-xs text-gray-300">Total</h6>
-        <h4 class="text-lg font-bold truncate">{{ asset.laptop.mem.total ?? "0" | bytesToGB }}</h4>
-        <h6 class="text-xs">GB</h6>
+          <div class="flex items-center my-1">
+            <h6 class="overf text-xs font-medium text-gray-300">S2 -&nbsp;</h6>
+            <h6 class="overf text-xs text-black truncate">N/A</h6>
+          </div>
+        </div>
+
+        <!-- Type Area  -->
+        <h6
+          class="overf font-semibold border-x-2 text-lg text-center"
+          style="writing-mode: vertical-rl; color: #ffb900"
+        >
+          RAM
+        </h6>
+        <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+          <h6 class="text-xs text-gray-300">Total</h6>
+          <h4 class="text-lg font-bold">{{ asset.laptop.mem.total ?? "0" }}</h4>
+          <h6 class="text-xs">GB</h6>
+        </div>
       </div>
     </ng-container>
-  </div>
-  <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
-    <ng-container>
-      <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
-      <!-- <hr class="border border-gray-300" /> -->
+  </ng-container>
 
-      <!-- Sr  -->
+  <!-- Processor -->
+  <ng-container *ngIf="asset.laptop.cpu">
+    <div class="flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+      <!-- Icons / Image -->
+      <img class="mx-3 my-auto" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
+
+      <!-- Detail  -->
       <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
         <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">S1 -&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.memLayout[0].size }} GB</h6>
+          <h6 class="overf text-xs font-medium text-gray-300">Manufacturer-&nbsp;</h6>
+          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.cpu.manufacturer }}</h6>
         </div>
         <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">S2 -&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.memLayout[0].size }} GB</h6>
+          <h6 class="overf text-xs font-medium text-gray-300">Brand-&nbsp;</h6>
+          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.cpu.brand }}</h6>
         </div>
       </div>
 
       <!-- Type Area  -->
       <h6
-        class="overf font-semibold border-x-2 text-lg text-center"
-        style="writing-mode: vertical-rl; color: #ffb900"
+        class="overf font-semibold border-x-2 text-lg text-center text-blue-500"
+        style="writing-mode: vertical-rl"
       >
-        DDR4
+        CPU
       </h6>
+      <!-- Total -->
       <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-        <h6 class="text-xs text-gray-300">Total</h6>
-        <h4 class="text-lg font-bold">{{ asset.laptop.mem.total ?? "0" }}</h4>
-        <h6 class="text-xs">GB</h6>
+        <h6 class="text-xs text-gray-300">Processor</h6>
+        <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.laptop.cpu.brand) }}</h4>
+        <h6 class="text-xs"></h6>
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
 </div>
