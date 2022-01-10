@@ -140,66 +140,71 @@
       </ng-template>
     </mat-step>
 
-    <!-- MEM / DISK -->
+    <!-- MEM / DISK / CPU -->
     <mat-step [stepControl]="assetForm.get('laptop')['diskLayout']">
-      <ng-template matStepLabel>System Information</ng-template>
+      <ng-template matStepLabel>Memory / Disk Information</ng-template>
       <ng-template matStepContent>
         <div class="px-4 py-5 bg-white sm:p-6 text-xs">
           <div class="grid grid-cols-4 gap-x-6">
-            <!-- Mem -->
-            <ng-container formGroupName="mem">
-              <!--Manufacturer -->
-              <mat-form-field appearance="outline" class="col-span-2">
-                <mat-label>Memory</mat-label>
-                <input matInput onchange="" />
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="col-span-2 invisible">
-                <input formControlName="total" matInput />
+            <!-- processor -->
+            <ng-container formGroupName="cpu">
+              <!-- manufacturer -->
+              <mat-form-field appearance="outline" class="col-span-1">
+                <mat-label>Manufacturer</mat-label>
+                <input formControlName="manufacturer" matInput />
               </mat-form-field>
 
-              <!-- Serial Number -->
+              <!-- Brand -->
               <mat-form-field appearance="outline" class="col-span-2">
-                <mat-label>Serial Number</mat-label>
-                <input formControlName="serial" matInput />
+                <mat-label>Variant</mat-label>
+                <input formControlName="brand" matInput />
+              </mat-form-field>
+
+              <!-- No. of Processor -->
+              <mat-form-field appearance="outline" class="col-span-1">
+                <mat-label>Variant</mat-label>
+                <input formControlName="processors" matInput />
               </mat-form-field>
             </ng-container>
-            <!-- OS -->
-            <ng-container formGroupName="os">
-              <!-- Platform -->
-              <mat-form-field class="col-span-2" appearance="outline">
-                <mat-label>Platform</mat-label>
-                <mat-select formControlName="platform">
-                  <mat-option>WINDOWS</mat-option>
-                  <mat-option>darwin</mat-option>
-                  <mat-option>linux</mat-option>
-                </mat-select>
-              </mat-form-field>
 
-              <!-- distro -->
-              <mat-form-field class="col-span-2" appearance="outline">
-                <mat-label>Distro</mat-label>
-                <input formControlName="distro" matInput [matAutocomplete]="os" />
-                <mat-autocomplete #os="matAutocomplete">
-                  <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
-                    {{ os }}
-                  </mat-option>
-                </mat-autocomplete>
+            <!-- Mem -->
+            <ng-container formGroupName="mem">
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Memory</mat-label>
+                <input formControlName="total" matInput />
               </mat-form-field>
+            </ng-container>
 
-              <!-- arch -->
-              <mat-form-field class="col-span-2" appearance="outline">
-                <mat-label>Arch</mat-label>
-                <mat-select formControlName="arch">
-                  <mat-option [value]="'x64'"> x64 </mat-option>
-                  <mat-option [value]="'x32'"> x32 </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <!-- Disk Layout -->
+            <ng-container
+              formArrayName="diskLayout"
+              *ngFor="let usr of assetForm.get('laptop.diskLayout')['controls']; let i = index"
+            >
+              <ng-container [formGroupName]="i">
+                <!-- Device -->
+                <mat-form-field appearance="outline" class="col-span-2">
+                  <mat-label>Slot </mat-label>
+                  <input formControlName="device" matInput />
+                </mat-form-field>
 
-              <!-- hostname -->
-              <mat-form-field class="col-span-4" appearance="outline">
-                <mat-label>Hostname</mat-label>
-                <input formControlName="hostname" matInput required />
-              </mat-form-field>
+                <!-- Type -->
+                <mat-form-field appearance="outline" class="col-span-2">
+                  <mat-label>Type </mat-label>
+                  <input formControlName="type" matInput required />
+                </mat-form-field>
+
+                <!--name -->
+                <mat-form-field appearance="outline" class="col-span-2">
+                  <mat-label>Name </mat-label>
+                  <input formControlName="name" matInput />
+                </mat-form-field>
+
+                <!-- size -->
+                <mat-form-field appearance="outline" class="col-span-2">
+                  <mat-label>Size </mat-label>
+                  <input formControlName="size" matInput />
+                </mat-form-field>
+              </ng-container>
             </ng-container>
           </div>
         </div>
@@ -209,4 +214,65 @@
       </ng-template>
     </mat-step>
   </ng-container>
+
+  <!-- Warranty -->
+  <mat-step [stepControl]="assetForm.get('warranty')['controls']">
+    <ng-template matStepLabel>Warranty Information</ng-template>
+    <ng-template matStepContent>
+      <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+        <div class="grid grid-cols-4 gap-x-6">
+          <!-- Warranty -->
+          <ng-container
+            formArrayName="warranty"
+            *ngFor="let wrnty of assetForm.get('warranty')['controls']; let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <!-- Name -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Name </mat-label>
+                <input formControlName="name" matInput />
+              </mat-form-field>
+
+              <!-- Type -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Type </mat-label>
+                <input formControlName="type" matInput required />
+              </mat-form-field>
+
+              <!--Start -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="dor" formControlName="startAt" />
+                <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
+                <mat-datepicker #dor></mat-datepicker>
+              </mat-form-field>
+
+              <!-- End -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="ed" formControlName="endAt" />
+                <mat-datepicker-toggle matSuffix [for]="ed"></mat-datepicker-toggle>
+                <mat-datepicker #ed></mat-datepicker>
+              </mat-form-field>
+
+              <!-- Vendor -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Vendor</mat-label>
+                <mat-select [formControlName]="'vendor'">
+                  <mat-option [value]="null">N/A</mat-option>
+                  <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{
+                    vnd?.name
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
+          <button mat-button (click)="addWarranty()">Add Warranty</button>
+        </div>
+      </div>
+      <!-- Actions -->
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </ng-template>
+  </mat-step>
 </mat-stepper>

@@ -1,8 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import * as moment from "moment";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
@@ -33,6 +34,14 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   assetForm: FormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   types; // All type of asset Types
+
+  private _byteToGb;
+  set byte(value: any) {
+    this._byteToGb = Number.parseInt(value) * 1073741824;
+  }
+  get byte() {
+    return this._byteToGb / 1073741824;
+  }
 
   //Vendors
   vendors$: Observable<IVendor[]> = new Observable<IVendor[]>();
@@ -79,7 +88,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
       type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
       vendorId: [null],
       category: ["", [Validators.required]],
-      warranty: [[]],
+      warranty: this._formBuilder.array([]),
       branch: [null],
     });
 
@@ -191,13 +200,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
             brand: [""], //i3,i5..
             processors: 1,
           }),
-          diskLayout: this._formBuilder.group({
-            device: ["disk0"],
-            type: [""], // NVMe,..
-            name: [""], //"INTEL SSDPEKNW512G8"
-            vendor: [""], // INTEL
-            size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
-          }),
+          diskLayout: this._formBuilder.array([this.createDisk()]),
         });
         break;
 
@@ -287,5 +290,31 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
     });
+  }
+
+  createDisk() {
+    return this._formBuilder.group({
+      device: ["disk0"],
+      type: [""], // NVMe,..
+      name: [""], //"INTEL SSDPEKNW512G8"
+      vendor: [""], // INTEL
+      size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
+    });
+  }
+  createWarranty() {
+    return this._formBuilder.group({
+      name: [""],
+      description: [""],
+      type: [""],
+      warrantySiteType: [""],
+      startAt: [moment().toISOString(), [Validators.required]],
+      endAt: ["", [Validators.required]],
+      purchaseDate: [""],
+      vendor: [""],
+      poNumber: [""],
+    });
+  }
+  addWarranty() {
+    (this.assetForm.get("warranty") as FormArray).push(this.createWarranty());
   }
 }

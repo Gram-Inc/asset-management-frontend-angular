@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -193,13 +193,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
             brand: [""], //i3,i5..
             processors: 1,
           }),
-          diskLayout: this._formBuilder.group({
-            device: ["disk0"],
-            type: [""], // NVMe,..
-            name: [""], //"INTEL SSDPEKNW512G8"
-            vendor: [""], // INTEL
-            size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
-          }),
+          diskLayout: this._formBuilder.array([this.createDisk()]),
         });
         break;
 
@@ -288,6 +282,16 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
       verticalPosition: "top",
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+    });
+  }
+
+  createDisk() {
+    return this._formBuilder.group({
+      device: ["disk0"],
+      type: [""], // NVMe,..
+      name: [""], //"INTEL SSDPEKNW512G8"
+      vendor: [""], // INTEL
+      size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
     });
   }
 }
