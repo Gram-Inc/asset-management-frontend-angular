@@ -165,6 +165,59 @@
     <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
       <div class="px-4 py-5 bg-white sm:p-6">
         <div class="grid grid-cols-6 gap-6">
+          <ng-container [formGroupName]="'system'">
+            <!-- Model Name -->
+            <div class="col-span-4 sm:col-span-4">
+              <label for="first-name" class="block text-sm font-medium text-gray-700">Model </label>
+              <input
+                type="text"
+                [formControlName]="'model'"
+                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+                [matAutocomplete]="mName"
+              />
+              <mat-autocomplete #mName="matAutocomplete">
+                <mat-option
+                  *ngFor="let modelName of filteredModelNameForAutoComplete | async"
+                  [value]="modelName"
+                >
+                  {{ modelName }}
+                </mat-option>
+              </mat-autocomplete>
+              <!-- <span
+                 [class]="
+                  assetForm.controls['model'].invalid && assetForm.controls['model'].touched
+                    ? 'border-red-500'
+                    : 'border-gray-300'
+                "
+                *ngIf="
+                  assetForm.controls['laptop.system.model'].invalid &&
+                  (assetForm.controls['laptop.system.model'].dirty ||
+                    assetForm.controls['laptop.system.model'].touched)
+                "
+                class="text-xs text-red-700"
+                >*Required.</span
+              > -->
+            </div>
+            <!-- Serial Number -->
+            <div class="col-span-2 sm:col-span-2">
+              <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
+              <input
+                type="text"
+                [formControlName]="'serial'"
+                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+              <!-- <span
+                *ngIf="
+                  assetForm.controls['laptop.system.serial'].invalid &&
+                  (assetForm.controls['laptop.system.serial'].dirty ||
+                    assetForm.controls['laptop.system.serial'].touched)
+                "
+                class="text-xs text-red-700"
+                >*Required.</span
+              > -->
+            </div>
+          </ng-container>
+
           <!-- Hostname -->
           <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
             <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
