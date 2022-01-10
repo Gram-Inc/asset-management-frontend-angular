@@ -25,30 +25,52 @@
     </div> -->
       <div class="side-con">
         <app-aside [routerString]="'/dashboard'" [svgIcon]="'feather:home'" [name]="'Dashboard'"></app-aside>
-        <app-aside [routerString]="'/asset'" [svgIcon]="'feather:layers'" [name]="'Asset'"></app-aside>
-        <app-aside [routerString]="'/ticket'" [svgIcon]="'feather:home'" [name]="'Ticket'"></app-aside>
-        <app-aside [routerString]="'/user'" [svgIcon]="'feather:users'" [name]="'User'"></app-aside>
-        <app-aside [routerString]="'/uam'" [svgIcon]="'feather:file-text'" [name]="'U.A.M'"></app-aside>
-
         <app-aside
+          *ngIf="checkAsset() | async"
+          [routerString]="'/asset'"
+          [svgIcon]="'feather:layers'"
+          [name]="'Asset'"
+        ></app-aside>
+        <app-aside
+          *ngIf="checkTicket() | async"
+          [routerString]="'/ticket'"
+          [svgIcon]="'feather:home'"
+          [name]="'Ticket'"
+        ></app-aside>
+        <app-aside
+          *ngIf="checkUser() | async"
+          [routerString]="'/user'"
+          [svgIcon]="'feather:users'"
+          [name]="'User'"
+        ></app-aside>
+        <app-aside
+          *ngIf="checkUAM() | async"
+          [routerString]="'/uam'"
+          [svgIcon]="'feather:file-text'"
+          [name]="'U.A.M'"
+        ></app-aside>
+        <app-aside
+          *ngIf="checkVendor() | async"
           [routerString]="'/vendor'"
           [svgIcon]="'heroicons_outline:identification'"
           [name]="'Vendor'"
         ></app-aside>
         <app-aside
+          *ngIf="checkBranch() | async"
           [routerString]="'/branch'"
           [svgIcon]="'heroicons_outline:office-building'"
           [name]="'Branch'"
           [isDisabled]="false"
         ></app-aside>
-
         <app-aside
+          *ngIf="checkReport() | async"
           [routerString]="'/report'"
           [svgIcon]="'feather:activity'"
           [name]="'Report'"
           [isDisabled]="true"
         ></app-aside>
         <app-aside
+          *ngIf="checkSetting() | async"
           [routerString]="'/setting'"
           [svgIcon]="'feather:sliders'"
           [name]="'Setting'"

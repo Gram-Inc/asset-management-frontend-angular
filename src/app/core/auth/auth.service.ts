@@ -163,4 +163,83 @@ export class AuthService {
     // return this.signInUsingToken();
     return of(false);
   }
+
+  // Check for accessing Ticket Section
+  checkTicket(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Asset Section
+  checkAsset(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Ticket Section
+  checkUser(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+  // Check for accessing UAM Section
+  checkUAM(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Vendor Section
+  checkVendor(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Branch Section
+  checkBranch(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Report Section
+  checkReport(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
+
+  // Check for accessing Setting Section
+  checkSetting(): Observable<boolean> {
+    return this._userService.user$.pipe(
+      switchMap((value) => {
+        if (value.role == "level1" || value.role == "level2") return of(true);
+        return of(false);
+      })
+    );
+  }
 }

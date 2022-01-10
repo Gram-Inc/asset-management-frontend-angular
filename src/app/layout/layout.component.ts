@@ -12,6 +12,7 @@ import { MatDrawer, MatDrawerMode } from "@angular/material/sidenav";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
+import { AuthService } from "../core/auth/auth.service";
 import { SideNavService } from "../core/side-nav/side-nav.service";
 import { UserService } from "../core/user/user.service";
 import { IUser } from "../core/user/user.types";
@@ -31,7 +32,8 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
     private _userService: UserService,
     private _changeDetectorRef: ChangeDetectorRef,
     private _modeService: SideNavService,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService
   ) {}
   //c
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,5 +68,30 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
   }
   toggleDrawer() {
     this.drawer.toggle();
+  }
+
+  checkTicket() {
+    return this._authService.checkTicket();
+  }
+  checkUAM() {
+    return this._authService.checkUAM();
+  }
+  checkAsset() {
+    return this._authService.checkAsset();
+  }
+  checkUser() {
+    return this._authService.checkUser();
+  }
+  checkVendor() {
+    return this._authService.checkVendor();
+  }
+  checkBranch() {
+    return this._authService.checkBranch();
+  }
+  checkReport() {
+    return this._authService.checkReport();
+  }
+  checkSetting() {
+    return this._authService.checkSetting();
   }
 }
