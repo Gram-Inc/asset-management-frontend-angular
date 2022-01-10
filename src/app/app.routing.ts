@@ -2,6 +2,7 @@ import { Route } from "@angular/router";
 import { InitialDataResolver } from "./app.resolvers";
 import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
+import { DashboardResolver } from "./core/dashboard/dashboard.resolver";
 import { LayoutComponent } from "./layout/layout.component";
 
 export const routes: Route[] = [
@@ -42,6 +43,8 @@ export const routes: Route[] = [
     children: [
       {
         path: "dashboard",
+        // resolve: [DashboardResolver],
+
         loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
       },
       {

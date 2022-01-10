@@ -1,32 +1,8 @@
 <div
-  class="
-    flex flex-col
-    sm:flex-row
-    items-center
-    md:items-start
-    sm:justify-center
-    md:justify-start
-    flex-auto
-    min-w-0
-    h-full
-  "
+  class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 h-full"
 >
   <div
-    class="
-      md:flex md:items-center md:justify-end
-      w-full
-      sm:w-auto
-      md:h-full md:w-1/2
-      py-8
-      px-4
-      sm:p-12
-      md:p-16
-      sm:rounded-2xl
-      md:rounded-none
-      sm:shadow
-      md:shadow-none
-      sm:bg-card
-    "
+    class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card"
     style="background-color: white"
   >
     <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
@@ -57,7 +33,7 @@
       <!-- Sign in form -->
       <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
         <!-- Email field -->
-        <mat-form-field class="w-full">
+        <mat-form-field class="w-full" appearance="outline">
           <mat-label>Email address</mat-label>
           <input id="email" matInput [formControlName]="'email'" />
           <mat-error *ngIf="signInForm.get('email').hasError('required')">
@@ -69,7 +45,7 @@
         </mat-form-field>
 
         <!-- Password field -->
-        <mat-form-field class="w-full">
+        <mat-form-field class="w-full" appearance="outline">
           <mat-label>Password</mat-label>
           <input id="password" matInput type="password" [formControlName]="'password'" #passwordField />
           <button
@@ -98,15 +74,16 @@
 
         <!-- Submit button -->
         <button
-          class="fuse-mat-button-large w-full mt-6"
+          class="fuse-mat-button-large w-full mt-6 flex justify-center items-center"
           mat-flat-button
           [color]="'primary'"
           [disabled]="signInForm.disabled"
           (click)="signIn()"
         >
-          <span *ngIf="!signInForm.disabled"> Sign in </span>
+          <span *ngIf="!signInForm.disabled" class="text-white"> Sign in </span>
           <mat-progress-spinner
             *ngIf="signInForm.disabled"
+            class="my-2"
             [diameter]="24"
             [mode]="'indeterminate'"
           ></mat-progress-spinner>
@@ -144,21 +121,7 @@
     </div>
   </div>
   <div
-    class="
-      relative
-      hidden
-      md:flex
-      flex-auto
-      items-center
-      justify-center
-      w-1/2
-      h-full
-      p-16
-      lg:px-28
-      overflow-hidden
-      bg-gray-800
-      dark:border-l
-    "
+    class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l"
   >
     <!-- Background - @formatter:off -->
     <!-- Rings -->
@@ -200,7 +163,7 @@
     <!-- @formatter:on -->
     <!-- Content -->
     <div class="z-10 relative w-full max-w-2xl">
-      <div class="text-7xl font-bold leading-none text-gray-100">
+      <div class="text-5xl font-bold leading-none text-gray-100">
         <div>Welcome to</div>
         <div>Asset Management</div>
       </div>

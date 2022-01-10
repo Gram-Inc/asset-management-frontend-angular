@@ -68,12 +68,12 @@ layout {
   min-width: 0;
 
   /* Base styles for individual layouts */
-  > * {
-    position: relative;
-    display: flex;
-    flex: 1 1 auto;
-    width: 100%;
-  }
+  // > * {
+  //   position: relative;
+  //   display: flex;
+  //   flex: 1 1 auto;
+  //   // width: 100%;
+  // }
 
   /* Base styles for components that load as a route */
   // router-outlet {
@@ -84,6 +84,9 @@ layout {
   //     width: 100%;
   //   }
   // }
+}
+app-sign-in {
+  width: 100%;
 }
 app-asset {
   height: 100% !important;
