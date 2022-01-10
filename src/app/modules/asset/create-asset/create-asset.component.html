@@ -5,6 +5,7 @@
 </div>
 
 <mat-stepper orientation="vertical" [linear]="true" color="accent" [formGroup]="assetForm">
+  <!-- Asset Basic Details -->
   <mat-step [stepControl]="assetForm">
     <ng-template matStepLabel>Asset Type</ng-template>
     <ng-template matStepContent>
@@ -56,17 +57,156 @@
       <button mat-button matStepperNext>Next</button>
     </ng-template>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Step 2</ng-template>
-    <ng-template matStepContent>
-      <p>This content was also rendered lazily</p>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </ng-template>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Step 3</ng-template>
-    <p>This content was rendered eagerly</p>
-    <button mat-button matStepperPrevious>Back</button>
-  </mat-step>
+
+  <!-- Laptop/PC/Server -->
+  <ng-container *ngIf="assetForm.contains('laptop')" formGroupName="laptop">
+    <!-- SYSTEM / OS -->
+    <mat-step [stepControl]="assetForm.get('laptop')['os']">
+      <ng-template matStepLabel>System Information</ng-template>
+      <ng-template matStepContent>
+        <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+          <div class="grid grid-cols-4 gap-x-6">
+            <!-- system -->
+            <ng-container formGroupName="system">
+              <!-- Model NAme -->
+              <mat-form-field appearance="outline" class="col-span-3">
+                <mat-label>Model Name</mat-label>
+                <input formControlName="model" matInput [matAutocomplete]="mName" />
+                <mat-autocomplete #mName="matAutocomplete">
+                  <mat-option
+                    *ngFor="let modelName of filteredModelNameForAutoComplete | async"
+                    [value]="modelName"
+                  >
+                    {{ modelName }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!--Manufacturer -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Manufacturer</mat-label>
+                <input formControlName="manufacturer" matInput />
+              </mat-form-field>
+
+              <!-- Serial Number -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Serial Number</mat-label>
+                <input formControlName="serial" matInput />
+              </mat-form-field>
+            </ng-container>
+            <!-- OS -->
+            <ng-container formGroupName="os">
+              <!-- Platform -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Platform</mat-label>
+                <mat-select formControlName="platform">
+                  <mat-option>WINDOWS</mat-option>
+                  <mat-option>darwin</mat-option>
+                  <mat-option>linux</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- distro -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Distro</mat-label>
+                <input formControlName="distro" matInput [matAutocomplete]="os" />
+                <mat-autocomplete #os="matAutocomplete">
+                  <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
+                    {{ os }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!-- arch -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Arch</mat-label>
+                <mat-select formControlName="arch">
+                  <mat-option [value]="'x64'"> x64 </mat-option>
+                  <mat-option [value]="'x32'"> x32 </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- hostname -->
+              <mat-form-field class="col-span-4" appearance="outline">
+                <mat-label>Hostname</mat-label>
+                <input formControlName="hostname" matInput required />
+              </mat-form-field>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Actions -->
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </ng-template>
+    </mat-step>
+
+    <!-- MEM / DISK -->
+    <mat-step [stepControl]="assetForm.get('laptop')['diskLayout']">
+      <ng-template matStepLabel>System Information</ng-template>
+      <ng-template matStepContent>
+        <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+          <div class="grid grid-cols-4 gap-x-6">
+            <!-- Mem -->
+            <ng-container formGroupName="mem">
+              <!--Manufacturer -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Memory</mat-label>
+                <input matInput onchange="" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="col-span-2 invisible">
+                <input formControlName="total" matInput />
+              </mat-form-field>
+
+              <!-- Serial Number -->
+              <mat-form-field appearance="outline" class="col-span-2">
+                <mat-label>Serial Number</mat-label>
+                <input formControlName="serial" matInput />
+              </mat-form-field>
+            </ng-container>
+            <!-- OS -->
+            <ng-container formGroupName="os">
+              <!-- Platform -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Platform</mat-label>
+                <mat-select formControlName="platform">
+                  <mat-option>WINDOWS</mat-option>
+                  <mat-option>darwin</mat-option>
+                  <mat-option>linux</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- distro -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Distro</mat-label>
+                <input formControlName="distro" matInput [matAutocomplete]="os" />
+                <mat-autocomplete #os="matAutocomplete">
+                  <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
+                    {{ os }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!-- arch -->
+              <mat-form-field class="col-span-2" appearance="outline">
+                <mat-label>Arch</mat-label>
+                <mat-select formControlName="arch">
+                  <mat-option [value]="'x64'"> x64 </mat-option>
+                  <mat-option [value]="'x32'"> x32 </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- hostname -->
+              <mat-form-field class="col-span-4" appearance="outline">
+                <mat-label>Hostname</mat-label>
+                <input formControlName="hostname" matInput required />
+              </mat-form-field>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Actions -->
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </ng-template>
+    </mat-step>
+  </ng-container>
 </mat-stepper>
