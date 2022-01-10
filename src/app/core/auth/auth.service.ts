@@ -145,8 +145,7 @@ export class AuthService {
   check(): Observable<boolean> {
     // Check if the user is logged in
     if (this.accessToken) {
-      return of(true);
-      // return this.signInUsingToken();
+      return this.signInUsingToken();
     }
 
     // Check the access token availability

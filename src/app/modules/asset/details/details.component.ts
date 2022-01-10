@@ -4,11 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { map, startWith, takeUntil } from "rxjs/operators";
+import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IWarranty } from "src/app/core/asset/asset.types";
+import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
+import { IDTO } from "src/app/core/dto/dto.types";
 import { VendorService } from "src/app/core/vendor/vendor.service";
 import { IVendor } from "src/app/core/vendor/vendor.types";
 
@@ -38,13 +40,11 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
   branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
 
   //Auto Complete
-  modelNameForAutoComplete: string[] = ["Lenovo V110", "Dell Latitude 5410", "Macbook Air", "Asus Predetor"];
+
   filteredModelNameForAutoComplete: Observable<string[]>;
 
-  osAutoComplete: string[] = ["Windows 7", "Windows 8", "Windows 10", "Windows 11"];
   filteredOSForAutoComplete: Observable<string[]>;
 
-  processorAutoComplete: string[] = ["Intel® i3", "Intel® i5", "Intel® i7", "Intel® i9"];
   filteredProcessorForAutoComplete: Observable<string[]>;
 
   //Constructor
@@ -55,7 +55,8 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     private _branchService: BranchService,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _autoCompleteService: AutoCompleteService
   ) {}
 
   // Life Cycle Hooks
@@ -88,10 +89,69 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     this.addAssetTypeToAssetForm();
 
     //Enable AutoCompelete Feature for Model Name
-    this.filteredModelNameForAutoComplete = this.assetForm.get("name").valueChanges.pipe(
-      startWith(""),
-      map((value) => this._filterModelName(value))
-    );
+    // this.filteredModelNameForAutoComplete = this.assetForm.get("name").valueChanges.pipe(
+    //   startWith(""),
+    //   map((value) => this._filterModelName(value))
+    // );
+
+    this.assetForm
+      .get("name")
+      .valueChanges.pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(300),
+        switchMap((query) => {
+          return this._autoCompleteService.getModelNames(1, 10, query);
+        }),
+        map(() => {})
+      )
+      .subscribe();
+
+    this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
+
+    this.assetForm.patchValue({
+      name: "Dell ",
+      assetCode: "AST01",
+      type: "laptop",
+      sr_no: "SR",
+      vendorId: "61d8699cd8b20d468de4808e",
+      category: "Hardware",
+      warranty: [
+        {
+          endAt: [],
+        },
+      ],
+      branch: "61dbf5b5810af6c2dc897a93",
+      laptop: {
+        system: {
+          manufacturer: "",
+          model: "",
+          serial: "",
+        },
+        os: {
+          platform: "WINDOWS",
+          distro: "Windwos 10",
+          arch: "x64",
+          hostname: "HST01",
+        },
+        mem: {
+          total: 8,
+        },
+        cpu: {
+          manufacturer: "Intel®",
+          brand: "i5",
+          processors: 1,
+        },
+        diskLayout: [
+          {
+            device: "disk0",
+            type: "SSD",
+            name: "",
+            vendor: "",
+            size: 128,
+          },
+        ],
+      },
+    });
   }
   //On Destroy
   ngOnDestroy(): void {
@@ -158,19 +218,33 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     }
     this.assetForm.addControl(type, fields);
     if (type == "laptop") {
-      //Enable AutoCompelete Feature for OS
-      this.filteredOSForAutoComplete = (this.assetForm.get("laptop") as FormGroup)
+      //Enable AutoCompelete Feature
+
+      (this.assetForm.get("laptop") as FormGroup)
         .get("os.distro")
         .valueChanges.pipe(
-          startWith(""),
-          map((value) => this._filterOS(value))
-        );
-      this.filteredProcessorForAutoComplete = (this.assetForm.get("laptop") as FormGroup)
+          takeUntil(this._unsubscribeAll),
+          debounceTime(300),
+          switchMap((query) => {
+            return this._autoCompleteService.getOSs(1, 10, query);
+          }),
+          map(() => {})
+        )
+        .subscribe();
+      this.filteredOSForAutoComplete = this._autoCompleteService.os;
+
+      (this.assetForm.get("laptop") as FormGroup)
         .get("cpu.brand")
         .valueChanges.pipe(
-          startWith(""),
-          map((value) => this._filterProcessor(value))
-        );
+          takeUntil(this._unsubscribeAll),
+          debounceTime(300),
+          switchMap((query) => {
+            return this._autoCompleteService.getProcessors(1, 10, query);
+          }),
+          map(() => {})
+        )
+        .subscribe();
+      this.filteredProcessorForAutoComplete = this._autoCompleteService.processors;
     }
   }
 
@@ -185,7 +259,8 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     let wrnty: IWarranty = {
       endAt: obj.warranty,
     };
-    obj.warranty = wrnty;
+    obj.warranty = [{ ...wrnty }];
+    obj.laptop.diskLayout = [{ ...obj.laptop.diskLayout }];
 
     // Create Asset
     this._assetService.createAsset(obj).subscribe(
@@ -194,7 +269,9 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
         this._router.navigate(["../"], { relativeTo: this._activatedRoute });
       },
       (err) => {
-        this.openSnackBar("Error", err.message);
+        let e: IDTO = err.error;
+        console.log(err.error);
+        this.openSnackBar("Error", e.message);
       }
     );
   }
@@ -203,29 +280,6 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     for (const [key, value] of Object.entries(this.types)) {
       if (this.assetForm.contains(value as string)) this.assetForm.removeControl(value as string);
     }
-  }
-  // Filter for Autocomplete Model Name Feature
-  private _filterModelName(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.modelNameForAutoComplete
-      .filter((option) => option.toLowerCase().includes(filterValue))
-      .splice(0, 7); //Limited Manually for now @Gramosx
-  }
-
-  // Filter for Autocomplete OS Feature
-  private _filterOS(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.osAutoComplete.filter((option) => option.toLowerCase().includes(filterValue)).splice(0, 7); //Limited Manually for now @Gramosx
-  }
-  // Filter for Autocomplete OS Feature
-  private _filterProcessor(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.processorAutoComplete
-      .filter((option) => option.toLowerCase().includes(filterValue))
-      .splice(0, 7); //Limited Manually for now @Gramosx
   }
 
   openSnackBar(type: "Error" | "Info" | "Success", msg: string) {

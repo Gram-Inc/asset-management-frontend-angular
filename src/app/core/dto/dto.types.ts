@@ -1,7 +1,7 @@
 export interface IDTO {
   isError?: boolean;
   data: any;
-  message?: string[];
+  message?: string;
   exception?: {
     errorCode?: string;
     statusCode?: number;
