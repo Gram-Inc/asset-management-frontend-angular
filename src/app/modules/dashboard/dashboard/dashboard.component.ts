@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { DashboardService } from "src/app/core/dashboard/dashboard.service";
+import { IDashboard } from "src/app/core/dashboard/dashboard.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 
@@ -11,8 +13,13 @@ import { IUser } from "src/app/core/user/user.types";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   user: IUser;
+  dashboard: IDashboard;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  constructor(private _userService: UserService, private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private _userService: UserService,
+    private _dashboardService: DashboardService,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to user changes
@@ -20,6 +27,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (user != null) this.user = user;
       // Mark for check
       this._changeDetectorRef.markForCheck();
+    });
+
+    //Subscribe to Dashboard Data
+    this._dashboardService.dashboard$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val: IDashboard) => {
+      this.dashboard = val;
     });
   }
   ngOnDestroy(): void {

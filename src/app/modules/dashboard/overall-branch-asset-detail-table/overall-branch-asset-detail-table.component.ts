@@ -6,26 +6,7 @@ import { IAssetDashboard } from "src/app/core/dashboard/dashboard.types";
   templateUrl: "./overall-branch-asset-detail-table.component.html",
 })
 export class OverallBranchAssetDetailTableComponent implements OnInit {
-  @Input() data: IAssetDashboard = {
-    branchWiseOverallAssets: [
-      {
-        _id: "Test",
-        branchCode: "CODE",
-        ASSIGNED: 12,
-        IN_POOL: 18,
-        SCRAP: 1,
-        DOWN: 3,
-      },
-      {
-        _id: "Test",
-        branchCode: "Ahmedabad",
-        ASSIGNED: 768,
-        IN_POOL: 28,
-        SCRAP: 168,
-        DOWN: 233,
-      },
-    ],
-  };
+  @Input() data: IAssetDashboard;
 
   displayedColumns: string[] = ["branchCode", "ASSIGNED", "IN_POOL", "DOWN", "SCRAP", "remainingPercentage"];
   constructor() {}

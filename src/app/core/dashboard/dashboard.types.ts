@@ -33,6 +33,17 @@ export interface IAssetDashboard {
     SCRAP?: number;
     DOWN?: number;
   }[];
+  branchWiseAssetAllocationAssets?: [
+    {
+      _id?: string;
+      branchCode?: string;
+      name?: string;
+      IN_POOL?: number;
+      ASSIGNED?: number;
+      SCRAP?: number;
+      DOWN?: number;
+    }
+  ];
 }
 export interface ITicketDashboard {
   ticketStatusCount?: {

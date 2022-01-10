@@ -18,28 +18,28 @@
 
 <div class="card-container">
   <title-card
-    [value]="50"
+    [value]="dashboard.assets.assetStatusCount.IN_POOL"
     [icon]="'heroicons_outline:archive'"
     title="In Pool"
     [color]="'text-orange-500'"
     [bgColor]="'bg-orange-50'"
   ></title-card>
   <title-card
-    [value]="50"
+    [value]="dashboard.assets.assetStatusCount.ASSIGNED"
     [icon]="'heroicons_outline:user-circle'"
     title="Assigned"
     [color]="'text-blue-500'"
     [bgColor]="'bg-blue-50'"
   ></title-card>
   <title-card
-    [value]="50"
+    [value]="dashboard.assets.assetStatusCount.SCRAP"
     [icon]="'heroicons_outline:trash'"
     title="Scrap"
     [color]="'text-red-500'"
     [bgColor]="'bg-red-50'"
   ></title-card>
   <title-card
-    [value]="50"
+    [value]="dashboard.assets.assetStatusCount.DOWN"
     [icon]="'heroicons_outline:exclamation'"
     title="Down"
     [color]="'text-yellow-500'"
@@ -53,15 +53,25 @@
 
   <!-- Overall Asset Details  -->
   <overall-branch-asset-detail-table
+    [data]="dashboard.assets"
     class="sm:col-span-6 md:col-span-6 lg:col-span-6"
   ></overall-branch-asset-detail-table>
 
   <!-- Last Created Asset Details  -->
-  <last-created-asset-table class="sm:col-span-6 md:col-span-3 lg:col-span-3"></last-created-asset-table>
+  <last-created-asset-table
+    [data]="dashboard.assets"
+    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
+  ></last-created-asset-table>
 
   <!-- Overall User Chart  -->
-  <total-user-card class="sm:col-span-6 md:col-span-3 lg:col-span-3"></total-user-card>
+  <total-user-card
+    [data]="dashboard.users"
+    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
+  ></total-user-card>
 
   <!-- New JOinee Status Table -->
-  <new-joinee-status-table class="sm:col-span-6 md:col-span-3 lg:col-span-3"></new-joinee-status-table>
+  <new-joinee-status-table
+    [data]="dashboard.users"
+    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
+  ></new-joinee-status-table>
 </div>

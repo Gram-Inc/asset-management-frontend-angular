@@ -60,9 +60,7 @@ export const routes: Route[] = [
       },
       {
         path: "ticket",
-
         canActivate: [TicketGuard],
-
         loadChildren: () => import("./modules/ticket/ticket.module").then((x) => x.TicketModule),
       },
       {

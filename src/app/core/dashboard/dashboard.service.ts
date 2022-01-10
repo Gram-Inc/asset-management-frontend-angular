@@ -11,7 +11,6 @@ import { IDashboard } from "./dashboard.types";
 })
 export class DashboardService {
   private _baseUrl = environment.baseUrl;
-
   private _dashboard: BehaviorSubject<IDashboard | null> = new BehaviorSubject<IDashboard | null>(null);
 
   constructor(private _httpClient: HttpClient) {}
