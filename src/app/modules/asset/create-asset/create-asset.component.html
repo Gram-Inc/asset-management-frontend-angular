@@ -1,0 +1,72 @@
+<div class="p-8 text-xs">
+  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
+  </div>
+</div>
+
+<mat-stepper orientation="vertical" [linear]="true" color="accent" [formGroup]="assetForm">
+  <mat-step [stepControl]="assetForm">
+    <ng-template matStepLabel>Asset Type</ng-template>
+    <ng-template matStepContent>
+      <!-- Asset Type -->
+      <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+        <div class="grid grid-cols-4 gap-x-6">
+          <!-- Asset Code -->
+          <mat-form-field appearance="outline" class="col-span-3">
+            <mat-label>Asset Code</mat-label>
+            <input formControlName="assetCode" matInput />
+          </mat-form-field>
+
+          <!-- Type -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Asset Type</mat-label>
+            <mat-select formControlName="type" (change)="addAssetTypeToAssetForm()">
+              <mat-option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Category -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Vendor -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Vendor</mat-label>
+            <mat-select [formControlName]="'vendorId'">
+              <mat-option [value]="null">N/A</mat-option>
+              <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Branch -->
+          <mat-form-field class="col-span-2" appearance="outline">
+            <mat-label>Branch / Location</mat-label>
+            <mat-select [formControlName]="'branch'">
+              <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{
+                branch.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-button matStepperNext>Next</button>
+    </ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Step 2</ng-template>
+    <ng-template matStepContent>
+      <p>This content was also rendered lazily</p>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </ng-template>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Step 3</ng-template>
+    <p>This content was rendered eagerly</p>
+    <button mat-button matStepperPrevious>Back</button>
+  </mat-step>
+</mat-stepper>
