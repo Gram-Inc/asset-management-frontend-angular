@@ -1,3 +1,4 @@
+import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
@@ -28,20 +29,18 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
       }
     `,
   ],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false },
+    },
+  ],
 })
 export class CreateAssetComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   assetForm: FormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   types; // All type of asset Types
-
-  private _byteToGb;
-  set byte(value: any) {
-    this._byteToGb = Number.parseInt(value) * 1073741824;
-  }
-  get byte() {
-    return this._byteToGb / 1073741824;
-  }
 
   //Vendors
   vendors$: Observable<IVendor[]> = new Observable<IVendor[]>();
@@ -95,6 +94,15 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
     //Check for AssetTypeChanges
     this.addAssetTypeToAssetForm();
 
+    this.assetForm
+      .get("type")
+      .valueChanges.pipe(
+        takeUntil(this._unsubscribeAll),
+        map(() => {
+          return this.addAssetTypeToAssetForm();
+        })
+      )
+      .subscribe();
     //Enable AutoCompelete Feature for Model Name
     // this.filteredModelNameForAutoComplete = this.assetForm.get("name").valueChanges.pipe(
     //   startWith(""),
@@ -115,50 +123,44 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
 
     // this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
 
-    this.assetForm.patchValue({
-      name: "Dell ",
-      assetCode: "AST01",
-      type: "laptop",
-      sr_no: "SR",
-      vendorId: "61d8699cd8b20d468de4808e",
-      category: "Hardware",
-      warranty: [
-        {
-          endAt: [],
-        },
-      ],
-      branch: "61dbf5b5810af6c2dc897a93",
-      laptop: {
-        system: {
-          manufacturer: "",
-          model: "",
-          serial: "",
-        },
-        os: {
-          platform: "WINDOWS",
-          distro: "Windwos 10",
-          arch: "x64",
-          hostname: "HST01",
-        },
-        mem: {
-          total: 8,
-        },
-        cpu: {
-          manufacturer: "Intel®",
-          brand: "i5",
-          processors: 1,
-        },
-        diskLayout: [
-          {
-            device: "disk0",
-            type: "SSD",
-            name: "",
-            vendor: "",
-            size: 128,
-          },
-        ],
-      },
-    });
+    // this.assetForm.patchValue({
+    //   assetCode: "AST01",
+    //   type: "laptop",
+    //   vendorId: "61d8699cd8b20d468de4808e",
+    //   category: "Hardware",
+    //   warranty: [],
+    //   branch: "61dbf5b5810af6c2dc897a93",
+    //   laptop: {
+    //     system: {
+    //       manufacturer: "",
+    //       model: "",
+    //       serial: "",
+    //     },
+    //     os: {
+    //       platform: "WINDOWS",
+    //       distro: "Windwos 10",
+    //       arch: "x64",
+    //       hostname: "HST01",
+    //     },
+    //     mem: {
+    //       total: 8,
+    //     },
+    //     cpu: {
+    //       manufacturer: "Intel®",
+    //       brand: "i5",
+    //       processors: 1,
+    //     },
+    //     diskLayout: [
+    //       {
+    //         device: "disk0",
+    //         type: "SSD",
+    //         name: "",
+    //         vendor: "",
+    //         size: 128,
+    //       },
+    //     ],
+    //   },
+    // });
   }
   //On Destroy
   ngOnDestroy(): void {
@@ -316,5 +318,9 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   }
   addWarranty() {
     (this.assetForm.get("warranty") as FormArray).push(this.createWarranty());
+  }
+  check() {
+    console.log(this.assetForm.valid);
+    console.log(this.assetForm);
   }
 }
