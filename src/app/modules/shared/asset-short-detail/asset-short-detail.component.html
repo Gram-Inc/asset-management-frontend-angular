@@ -49,11 +49,11 @@
         <div class="flex-auto">
           <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Model Name</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.name }}</dd>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.model }}</dd>
           </div>
           <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.sr_no }}</dd>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.serial }}</dd>
           </div>
           <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Branch</dt>
@@ -65,8 +65,9 @@
           <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
             <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ asset.warranty[0].endAt | date }} &nbsp; &nbsp;
+              {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
               <mat-icon
+                *ngIf="asset.warranty[0]"
                 class="h-4 w-4"
                 [ngClass]="{
                   'text-green-500': !isDateFuture(asset.warranty[0].endAt),

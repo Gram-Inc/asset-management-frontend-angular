@@ -70,6 +70,7 @@ export class BasicService {
   }
 
   getAppropriateBrandLogo(brandName: string) {
+    if (brandName == null || brandName == undefined) return "";
     if (brandName.toUpperCase().includes("LENOVO"))
       return "https://cdn.worldvectorlogo.com/logos/lenovo-2.svg";
     if (brandName.toUpperCase().includes("DELL")) return "https://cdn.worldvectorlogo.com/logos/dell-2.svg";
