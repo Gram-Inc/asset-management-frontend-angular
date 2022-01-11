@@ -4,9 +4,9 @@
   </div>
 </div>
 
-<mat-stepper orientation="vertical" [linear]="true" color="accent" [formGroup]="assetForm">
+<mat-stepper orientation="vertical" [linear]="true" color="accent" [formGroup]="assetForm" #stepper>
   <!-- Asset Basic Details -->
-  <mat-step [stepControl]="assetForm">
+  <mat-step>
     <ng-template matStepLabel>Asset Type</ng-template>
     <ng-template matStepContent>
       <!-- Asset Type -->
@@ -54,7 +54,7 @@
           </mat-form-field>
         </div>
       </div>
-      <button mat-button matStepperNext>Next</button>
+      <button mat-button (click)="goForward('asset', stepper)">Next</button>
     </ng-template>
   </mat-step>
 
@@ -100,9 +100,9 @@
               <mat-form-field class="col-span-2" appearance="outline">
                 <mat-label>Platform</mat-label>
                 <mat-select formControlName="platform">
-                  <mat-option>WINDOWS</mat-option>
-                  <mat-option>darwin</mat-option>
-                  <mat-option>linux</mat-option>
+                  <mat-option value="windows">Windows</mat-option>
+                  <mat-option value="darwin">Darwin</mat-option>
+                  <mat-option value="linux">Linux</mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -136,7 +136,7 @@
         </div>
         <!-- Actions -->
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward('os', stepper)">Next</button>
       </ng-template>
     </mat-step>
 
@@ -171,7 +171,7 @@
             <ng-container formGroupName="mem">
               <mat-form-field appearance="outline" class="col-span-2">
                 <mat-label>Memory</mat-label>
-                <input formControlName="total" matInput />
+                <input type="number" formControlName="total" matInput />
               </mat-form-field>
             </ng-container>
 
@@ -190,7 +190,11 @@
                 <!-- Type -->
                 <mat-form-field appearance="outline" class="col-span-2">
                   <mat-label>Type </mat-label>
-                  <input formControlName="type" matInput required />
+                  <mat-select formControlName="type" required>
+                    <mat-option value="SSD">SSD</mat-option>
+                    <mat-option value="HDD">HDD</mat-option>
+                    <mat-option value="NVMe">NVMe</mat-option>
+                  </mat-select>
                 </mat-form-field>
 
                 <!--name -->
@@ -202,7 +206,7 @@
                 <!-- size -->
                 <mat-form-field appearance="outline" class="col-span-2">
                   <mat-label>Size </mat-label>
-                  <input formControlName="size" matInput />
+                  <input type="number" formControlName="size" matInput />
                 </mat-form-field>
               </ng-container>
             </ng-container>
@@ -210,7 +214,7 @@
         </div>
         <!-- Actions -->
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward('diskLayout', stepper)">Next</button>
       </ng-template>
     </mat-step>
   </ng-container>
@@ -272,7 +276,15 @@
       </div>
       <!-- Actions -->
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
+      <button mat-button (click)="create()">Create</button>
     </ng-template>
   </mat-step>
+
+  <!-- Icon overrides. -->
+  <!-- <ng-template matStepperIcon="phone">
+    <mat-icon>call_end</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="chat">
+    <mat-icon>forum</mat-icon>
+  </ng-template> -->
 </mat-stepper>

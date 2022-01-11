@@ -3,6 +3,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angula
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
+import { MatStepper } from "@angular/material/stepper";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as moment from "moment";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
@@ -86,9 +87,9 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
       assetCode: [""],
       type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
       vendorId: [null],
-      category: ["", [Validators.required]],
+      category: [null, [Validators.required]],
       warranty: this._formBuilder.array([]),
-      branch: [null],
+      branch: [null, [Validators.required]],
     });
 
     //Check for AssetTypeChanges
@@ -122,45 +123,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
     //   .subscribe();
 
     // this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
-
-    // this.assetForm.patchValue({
-    //   assetCode: "AST01",
-    //   type: "laptop",
-    //   vendorId: "61d8699cd8b20d468de4808e",
-    //   category: "Hardware",
-    //   warranty: [],
-    //   branch: "61dbf5b5810af6c2dc897a93",
-    //   laptop: {
-    //     system: {
-    //       manufacturer: "",
-    //       model: "",
-    //       serial: "",
-    //     },
-    //     os: {
-    //       platform: "WINDOWS",
-    //       distro: "Windwos 10",
-    //       arch: "x64",
-    //       hostname: "HST01",
-    //     },
-    //     mem: {
-    //       total: 8,
-    //     },
-    //     cpu: {
-    //       manufacturer: "Intel®",
-    //       brand: "i5",
-    //       processors: 1,
-    //     },
-    //     diskLayout: [
-    //       {
-    //         device: "disk0",
-    //         type: "SSD",
-    //         name: "",
-    //         vendor: "",
-    //         size: 128,
-    //       },
-    //     ],
-    //   },
-    // });
   }
   //On Destroy
   ngOnDestroy(): void {
@@ -185,12 +147,12 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
         fields = this._formBuilder.group({
           system: this._formBuilder.group({
             manufacturer: [""],
-            model: [""],
-            serial: [""],
+            model: [null, [Validators.required]],
+            serial: [null, [Validators.required]],
           }),
           os: this._formBuilder.group({
-            platform: ["WINDOWS"],
-            distro: [""],
+            platform: ["windows"],
+            distro: ["Windows 10"],
             arch: ["x64"], //x64,x32
             hostname: ["", Validators.required],
           }),
@@ -258,15 +220,15 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
     if (this.assetForm.invalid) return;
 
     //Create Asset Object chane warranty !!!
-    let obj = { ...this.assetForm.value };
-    let wrnty: IWarranty = {
-      endAt: obj.warranty,
-    };
-    obj.warranty = [{ ...wrnty }];
-    obj.laptop.diskLayout = [{ ...obj.laptop.diskLayout }];
+    // let obj = { ...this.assetForm.value };
+    // let wrnty: IWarranty = {
+    //   endAt: obj.warranty,
+    // };
+    // obj.warranty = [{ ...wrnty }];
+    // obj.laptop.diskLayout = [{ ...obj.laptop.diskLayout }];
 
     // Create Asset
-    this._assetService.createAsset(obj).subscribe(
+    this._assetService.createAsset(this.assetForm.value).subscribe(
       (_) => {
         this.openSnackBar("Success", "Asset Created");
         this._router.navigate(["../"], { relativeTo: this._activatedRoute });
@@ -297,10 +259,10 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   createDisk() {
     return this._formBuilder.group({
       device: ["disk0"],
-      type: [""], // NVMe,..
+      type: ["HDD"], // NVMe,..
       name: [""], //"INTEL SSDPEKNW512G8"
       vendor: [""], // INTEL
-      size: [0, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
+      size: [500, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
     });
   }
   createWarranty() {
@@ -322,5 +284,41 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   check() {
     console.log(this.assetForm.valid);
     console.log(this.assetForm);
+  }
+  goForward(formGroupName: string, stepper: MatStepper) {
+    //Asset Type
+    if (formGroupName == "asset") {
+      this.assetForm.get("category").markAllAsTouched();
+      this.assetForm.get("branch").markAllAsTouched();
+
+      if (this.assetForm.get("category").valid && this.assetForm.get("category").valid) stepper.next();
+    }
+    //System Information
+    else if (formGroupName == "os") {
+      //Multiple form Groups needs to be validated OS SYSTEM
+      this.assetForm.get("laptop.system").markAllAsTouched();
+      this.assetForm.get("laptop.os").markAllAsTouched();
+
+      //if valid move next
+      if (this.assetForm.get("laptop.system").valid && this.assetForm.get("laptop.os").value) stepper.next();
+    }
+
+    //Memory / Disk
+    else if (formGroupName == "diskLayout") {
+      //Multiple form Groups needs to be validated MEM DiskLayout cpu
+      this.assetForm.get("laptop.cpu").markAllAsTouched();
+      this.assetForm.get("laptop.mem").markAllAsTouched();
+      this.assetForm.get("laptop.diskLayout").markAllAsTouched();
+
+      //if valid move next
+      if (
+        this.assetForm.get("laptop.cpu").valid &&
+        this.assetForm.get("laptop.mem").valid &&
+        this.assetForm.get("laptop.diskLayout").valid
+      )
+        stepper.next();
+    }
+
+    //Warranty will be validated by createFN
   }
 }
