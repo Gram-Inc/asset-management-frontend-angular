@@ -21,6 +21,12 @@ export const assetRoutes: Routes = [
     loadChildren: () => import("./create-asset/create-asset.module").then((x) => x.CreateAssetModule),
   },
   {
+    path: "edit/:id",
+    resolve: [CreateAssetResolver, EditAssetResolver],
+    // component: AssetDetailComponent,
+    loadChildren: () => import("./create-asset/create-asset.module").then((x) => x.CreateAssetModule),
+  },
+  {
     path: ":id",
     resolve: [EditAssetResolver],
     loadChildren: () =>

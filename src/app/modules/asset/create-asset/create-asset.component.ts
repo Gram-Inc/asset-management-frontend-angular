@@ -9,7 +9,7 @@ import * as moment from "moment";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
-import { IWarranty } from "src/app/core/asset/asset.types";
+import { IAsset, IWarranty } from "src/app/core/asset/asset.types";
 import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
@@ -43,6 +43,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   types; // All type of asset Types
 
+  asset: IAsset = null;
   //Vendors
   vendors$: Observable<IVendor[]> = new Observable<IVendor[]>();
   //Branchs
@@ -92,9 +93,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
       branch: [null, [Validators.required]],
     });
 
-    //Check for AssetTypeChanges
-    this.addAssetTypeToAssetForm();
-
     this.assetForm
       .get("type")
       .valueChanges.pipe(
@@ -104,25 +102,22 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-    //Enable AutoCompelete Feature for Model Name
-    // this.filteredModelNameForAutoComplete = this.assetForm.get("name").valueChanges.pipe(
-    //   startWith(""),
-    //   map((value) => this._filterModelName(value))
-    // );
+    //Check for AssetTypeChanges
+    this.addAssetTypeToAssetForm();
 
-    // this.assetForm
-    //   .get("name")
-    //   .valueChanges.pipe(
-    //     takeUntil(this._unsubscribeAll),
-    //     debounceTime(300),
-    //     switchMap((query) => {
-    //       return this._autoCompleteService.getModelNames(1, 10, query);
-    //     }),
-    //     map(() => {})
-    //   )
-    //   .subscribe();
+    this._assetService.asset$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val: IAsset) => {
+      if (val != null) {
+        this.assetForm.get("type").setValue(val.type);
 
-    // this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
+        this.asset = val;
+        //Set Asset Type to formbuilder
+        this.addAssetTypeToAssetForm();
+        console.log(val);
+        this.assetForm.patchValue(val);
+        this.assetForm.get(val.type).patchValue(val[val.type]);
+        this.assetForm.get("branch").setValue(typeof val.branch == "object" ? val.branch._id : null);
+      }
+    });
   }
   //On Destroy
   ngOnDestroy(): void {
@@ -233,26 +228,32 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
     //Check Validation
     if (this.assetForm.invalid) return;
 
-    //Create Asset Object chane warranty !!!
-    // let obj = { ...this.assetForm.value };
-    // let wrnty: IWarranty = {
-    //   endAt: obj.warranty,
-    // };
-    // obj.warranty = [{ ...wrnty }];
-    // obj.laptop.diskLayout = [{ ...obj.laptop.diskLayout }];
-
-    // Create Asset
-    this._assetService.createAsset(this.assetForm.value).subscribe(
-      (_) => {
-        this.openSnackBar("Success", "Asset Created");
-        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-      },
-      (err) => {
-        let e: IDTO = err.error;
-        console.log(err.error);
-        this.openSnackBar("Error", e.message);
-      }
-    );
+    if (this.asset == null)
+      // Create Asset
+      this._assetService.createAsset(this.assetForm.value).subscribe(
+        (_) => {
+          this.openSnackBar("Success", "Asset Created");
+          this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+        },
+        (err) => {
+          let e: IDTO = err.error;
+          console.log(err.error);
+          this.openSnackBar("Error", e.message);
+        }
+      );
+    // update asset
+    else
+      this._assetService.updateAsset(this.asset._id, this.assetForm.value).subscribe(
+        (_) => {
+          this.openSnackBar("Success", "Asset Updated");
+          this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+        },
+        (err) => {
+          let e: IDTO = err.error;
+          console.log(err.error);
+          this.openSnackBar("Error", e.message);
+        }
+      );
   }
 
   removeTypeFromForm() {
