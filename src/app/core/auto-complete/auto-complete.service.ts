@@ -55,7 +55,7 @@ export class AutoCompleteService {
       })
       .pipe(
         tap((response: IDTO) => {
-          this._modelNames.next(response.data);
+          this._processors.next(response.data);
         })
       );
   }
@@ -70,7 +70,7 @@ export class AutoCompleteService {
       })
       .pipe(
         tap((response: IDTO) => {
-          this._modelNames.next(response.data);
+          this._os.next(response.data);
         })
       );
   }

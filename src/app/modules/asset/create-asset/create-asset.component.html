@@ -167,13 +167,18 @@
 
               <!-- Brand -->
               <mat-form-field appearance="outline" class="col-span-2">
-                <mat-label>Variant</mat-label>
-                <input formControlName="brand" matInput />
+                <mat-label>Brand</mat-label>
+                <input formControlName="brand" matInput [matAutocomplete]="cpu" />
+                <mat-autocomplete #cpu="matAutocomplete">
+                  <mat-option *ngFor="let cpu of filteredProcessorForAutoComplete | async" [value]="cpu">
+                    {{ cpu }}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <!-- No. of Processor -->
               <mat-form-field appearance="outline" class="col-span-1">
-                <mat-label>Variant</mat-label>
+                <mat-label>No. of Processors</mat-label>
                 <input formControlName="processors" matInput />
               </mat-form-field>
             </ng-container>

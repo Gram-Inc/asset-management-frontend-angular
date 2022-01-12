@@ -185,6 +185,20 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
     if (type == "laptop") {
       //Enable AutoCompelete Feature
 
+      (this.assetForm.get("laptop.system") as FormGroup)
+        .get("model")
+        .valueChanges.pipe(
+          takeUntil(this._unsubscribeAll),
+          debounceTime(300),
+          switchMap((query) => {
+            return this._autoCompleteService.getModelNames(1, 10, query);
+          }),
+          map(() => {})
+        )
+        .subscribe();
+
+      this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
+
       (this.assetForm.get("laptop") as FormGroup)
         .get("os.distro")
         .valueChanges.pipe(
