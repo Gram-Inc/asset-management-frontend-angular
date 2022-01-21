@@ -182,6 +182,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
     return "-";
   }
   displayFnNoOfUser(userInformation: IUserInformationUAM) {
+    if (!userInformation) return "";
     if (userInformation.users && userInformation.users.length > 1)
       return (
         userInformation.users[0].firstName +

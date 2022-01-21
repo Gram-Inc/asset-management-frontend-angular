@@ -81,7 +81,7 @@ export class AsideComponent implements OnInit {
     // If the aside has a children that is active,
     // always mark it as active
 
-    this.active = this._router.isActive(this.routerString, false);
+    this.active = this._router.isActive(this.routerString, true);
     // Mark for check
     this._changeDetectorRef.markForCheck();
   }

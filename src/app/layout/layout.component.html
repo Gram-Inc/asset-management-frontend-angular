@@ -65,11 +65,21 @@
             </mat-expansion-panel-header>
             <app-aside
               *ngIf="checkUAM() | async"
+              [routerString]="'/uam'"
+              [svgIcon]="''"
+              [name]="'Manage U.A.M'"
+            ></app-aside>
+            <app-aside
+              *ngIf="checkUAM() | async"
               [routerString]="'/uam/create'"
               [svgIcon]="''"
               [name]="'Create'"
             ></app-aside>
-            <app-aside *ngIf="checkUAM() | async" [routerString]="'/uam'" [name]="'Approve'"></app-aside>
+            <app-aside
+              *ngIf="checkUAM() | async"
+              [routerString]="'/uam/approve'"
+              [name]="'Approve'"
+            ></app-aside>
           </mat-expansion-panel>
         </mat-accordion>
         <!-- <app-aside
