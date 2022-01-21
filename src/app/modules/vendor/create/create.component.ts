@@ -37,7 +37,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       address1: ["", [Validators.required]],
       address2: [""],
       address3: [""],
-      contactNo: ["", [Validators.required]],
+      contactNo: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       contactPersonName: [""],
       city: ["", [Validators.required]],
       serviceNo: [""],
