@@ -112,5 +112,11 @@ app-asset {
   font-size: 1rem !important;
   line-height: 1rem !important;
 }
+div.mat-expansion-panel-body {
+  padding: 0px;
+}
 
+.mat-expansion-panel-header.mat-expanded {
+  height: auto;
+}
 @tailwind utilities;

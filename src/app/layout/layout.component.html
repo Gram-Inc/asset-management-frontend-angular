@@ -43,12 +43,41 @@
           [svgIcon]="'feather:users'"
           [name]="'User'"
         ></app-aside>
-        <app-aside
+
+        <!-- UAM Dropdown navigation -->
+        <mat-accordion>
+          <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="p-0 pr-6">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  text-align: left;
+                  height: 44px;
+                  width: 100%;
+                  padding-left: 35px;
+                  color: rgb(99, 115, 129);
+                "
+              >
+                <mat-icon style="margin-right: 12px" [svgIcon]="'feather:file-text'"></mat-icon>
+                <span>U.A.M</span>
+              </div>
+            </mat-expansion-panel-header>
+            <app-aside
+              *ngIf="checkUAM() | async"
+              [routerString]="'/uam/create'"
+              [svgIcon]="''"
+              [name]="'Create'"
+            ></app-aside>
+            <app-aside *ngIf="checkUAM() | async" [routerString]="'/uam'" [name]="'Approve'"></app-aside>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- <app-aside
           *ngIf="checkUAM() | async"
           [routerString]="'/uam'"
           [svgIcon]="'feather:file-text'"
           [name]="'U.A.M'"
-        ></app-aside>
+        ></app-aside> -->
         <app-aside
           *ngIf="checkVendor() | async"
           [routerString]="'/vendor'"

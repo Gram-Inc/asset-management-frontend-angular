@@ -9,7 +9,7 @@ import { filter, takeUntil } from "rxjs/operators";
   styleUrls: ["./aside.component.scss"],
 })
 export class AsideComponent implements OnInit {
-  @Input() svgIcon: string;
+  @Input() svgIcon: string = "";
   @Input() name: string;
   @Input() routerString: string;
   @Input() isDisabled: boolean = false;

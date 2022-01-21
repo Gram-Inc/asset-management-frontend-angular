@@ -11,7 +11,9 @@ export class OverallBranchAssetDetailTableComponent implements OnInit {
   displayedColumns: string[] = ["branchCode", "ASSIGNED", "IN_POOL", "DOWN", "SCRAP", "remainingPercentage"];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data);
+  }
 
   getPercentage(branch) {
     let total = branch.ASSIGNED + branch.IN_POOL + branch.SCRAP + branch.DOWN;
