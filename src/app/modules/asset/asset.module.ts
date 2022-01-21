@@ -12,6 +12,8 @@ import { AssetBottomSheetComponent } from "./asset-bottom-sheet/asset-bottom-she
 import { AssetBottomSheetModule } from "./asset-bottom-sheet/asset-bottom-sheet.module";
 import { AssetTimelineModule } from "./asset-timeline/asset-timeline.module";
 import { BytesToGBPipe } from "src/app/core/pipes/bytes-to-gb.pipe";
+import { ScannedAssetComponent } from "./scanned-asset/scanned-asset.component";
+import { ScannedAssetModule } from "./scanned-asset/scanned-asset.module";
 
 @NgModule({
   declarations: [AssetComponent, AssetListComponent, AssetDetailComponent],

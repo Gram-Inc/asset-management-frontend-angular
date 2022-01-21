@@ -25,12 +25,46 @@
     </div> -->
       <div class="side-con">
         <app-aside [routerString]="'/dashboard'" [svgIcon]="'feather:home'" [name]="'Dashboard'"></app-aside>
-        <app-aside
+
+        <mat-accordion>
+          <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header class="p-0 pr-6">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  text-align: left;
+                  height: 44px;
+                  width: 100%;
+                  padding-left: 35px;
+                  color: rgb(99, 115, 129);
+                "
+              >
+                <mat-icon style="margin-right: 12px" [svgIcon]="'feather:layers'"></mat-icon>
+                <span>Asset</span>
+              </div>
+            </mat-expansion-panel-header>
+            <app-aside
+              *ngIf="checkAsset() | async"
+              [routerString]="'/asset'"
+              [svgIcon]="''"
+              [name]="'Manage Asset'"
+            ></app-aside>
+
+            <app-aside
+              *ngIf="checkAsset() | async"
+              [routerString]="'/asset/scanned'"
+              [name]="'Scanned Asset'"
+            ></app-aside>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <!-- <app-aside
           *ngIf="checkAsset() | async"
           [routerString]="'/asset'"
           [svgIcon]="'feather:layers'"
           [name]="'Asset'"
-        ></app-aside>
+        ></app-aside> -->
         <app-aside
           *ngIf="checkTicket() | async"
           [routerString]="'/ticket'"
