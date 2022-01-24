@@ -1,15 +1,18 @@
-<div class="grid grid-cols-2 gap-3 my-3">
+<div class="flex flex-wrap gap-2 my-3">
   <!-- Cards Section -->
 
   <!-- RAM -->
   <ng-container>
     <!-- if Layout Found -->
-    <ng-container *ngIf="asset.laptop.memLayout.length > 0">
-      <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+    <ng-container *ngIf="asset.laptop?.memLayout?.length > 0">
+      <div
+        class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+        style="height: 68px !important; padding: 2px 4px"
+      >
         <!-- If No RAM LAYOUT -->
 
         <!-- Icons / Image -->
-        <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+        <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
 
         <!-- Sr  -->
         <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
@@ -38,9 +41,12 @@
     </ng-container>
 
     <!-- If no layout found -->
-    <ng-container *ngIf="asset.laptop.memLayout.length == 0">
-      <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
-        <img class="mx-3 my-auto" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+    <ng-container *ngIf="asset.laptop?.memLayout?.length == 0">
+      <div
+        class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+        style="height: 68px !important; padding: 2px 4px"
+      >
+        <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
         <!-- <hr class="border border-gray-300" /> -->
 
         <!-- Sr  -->
@@ -73,9 +79,12 @@
 
   <!-- Processor -->
   <ng-container *ngIf="asset.laptop.cpu">
-    <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+    <div
+      class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+      style="height: 68px !important; padding: 2px 4px"
+    >
       <!-- Icons / Image -->
-      <img class="mx-3 my-auto" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
+      <img class="mx-3" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
 
       <!-- Detail  -->
       <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
@@ -107,15 +116,18 @@
 
   <!-- Disk Layout -->
   <ng-container *ngFor="let disk of asset.laptop.diskLayout">
-    <div class="col-span-1 flex p-1 items-center border border-gray-300 divide-x rounded-2xl">
+    <div
+      class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+      style="height: 68px !important; padding: 2px 4px"
+    >
       <!-- If No RAM LAYOUT -->
 
       <!-- Icons / Image -->
       <ng-container *ngIf="disk.type == 'HDD'">
-        <img class="mx-3 my-auto" src="/assets/icons/harddisk.png" height="45px" width="45px" alt="hdd" />
+        <img class="mx-3" src="/assets/icons/harddisk.png" height="45px" width="45px" alt="hdd" />
       </ng-container>
       <ng-container *ngIf="disk.type == 'SSD' || disk.type == 'NVMe'">
-        <img class="mx-3 my-auto" src="/assets/icons/ssd.png" height="45px" width="45px" alt="ssd" />
+        <img class="mx-3" src="/assets/icons/ssd.png" height="45px" width="45px" alt="ssd" />
       </ng-container>
 
       <!-- Slot  -->

@@ -36,4 +36,11 @@ export class ScannedAssetComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((paginationResponse: IPagination) => (this.pagination = paginationResponse));
   }
+
+  addToPool(assetId: string) {
+    //Move Asset to Pool
+  }
+  remove(assetId: string) {
+    //Remove Asset from Scanned
+  }
 }
