@@ -20,7 +20,12 @@
   </div>
 </div>
 
-<table mat-table [dataSource]="scannedAssets$ | async" multiTemplateDataRows class="mat-elevation-z3">
+<table
+  mat-table
+  [dataSource]="scannedAssets$ | async"
+  multiTemplateDataRows
+  class="mat-elevation-z3 font-sans"
+>
   <!-- Model  -->
   <ng-container matColumnDef="model">
     <th mat-header-cell *matHeaderCellDef>Model Name</th>
