@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<table mat-table [dataSource]="scannedAssets$ | async" multiTemplateDataRows class="mat-elevation-z8">
+<table mat-table [dataSource]="scannedAssets$ | async" multiTemplateDataRows class="mat-elevation-z3">
   <!-- Model  -->
   <ng-container matColumnDef="model">
     <th mat-header-cell *matHeaderCellDef>Model Name</th>
@@ -91,18 +91,15 @@
     [class.example-expanded-row]="expandedElement === element"
     (click)="expandedElement = expandedElement === element ? null : element"
   ></tr>
+
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-  <tr>
-    <td>
-      <mat-paginator
-        class="z-10 dark:bg-transparent"
-        [ngClass]="{ 'pointer-events-none': isLoading }"
-        [length]="pagination.totalPage"
-        [pageIndex]="pagination.page"
-        [pageSize]="pagination.limit"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        [showFirstLastButtons]="true"
-      ></mat-paginator>
-    </td>
-  </tr>
 </table>
+<mat-paginator
+  class="z-10 dark:bg-transparent"
+  [ngClass]="{ 'pointer-events-none': isLoading }"
+  [length]="pagination.totalPage"
+  [pageIndex]="pagination.page"
+  [pageSize]="pagination.limit"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  [showFirstLastButtons]="true"
+></mat-paginator>
