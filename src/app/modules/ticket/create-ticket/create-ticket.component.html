@@ -1,0 +1,272 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="container mx-auto p-8" [formGroup]="ticketForm">
+  <div class="flex-1 min-w-0">
+    <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+      <span class="block xl:inline">{{ this.ticket ? "Update" : "Create" }}</span>
+      <span class="block text-orange-600 xl:inline"> Ticket</span>
+    </h1>
+  </div>
+  <div class="mt-5 lg:ml-4">
+    <div class="px-4 py-5 bg-white sm:p-6">
+      <div class="grid grid-cols-6 gap-6">
+        <!-- User -->
+        <div class="col-span-4 sm:col-span-4">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">User</label>
+          <input
+            type="text"
+            [formControlName]="'requestFromUserId'"
+            [class]="
+              ticketForm.controls['requestFromUserId'].invalid &&
+              ticketForm.controls['requestFromUserId'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['requestFromUserId'].invalid &&
+              (ticketForm.controls['requestFromUserId'].dirty ||
+                ticketForm.controls['requestFromUserId'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+
+        <!-- Call Medium -->
+        <div class="col-span-1 sm:col-span-1">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Call Medium</label>
+          <input
+            type="text"
+            [formControlName]="'callMedium'"
+            [class]="
+              ticketForm.controls['callMedium'].invalid && ticketForm.controls['callMedium'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['callMedium'].invalid &&
+              (ticketForm.controls['callMedium'].dirty || ticketForm.controls['callMedium'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+
+        <!-- Department -->
+        <div class="col-span-1 sm:col-span-1">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Department</label>
+          <input
+            type="text"
+            [formControlName]="'department'"
+            [class]="
+              ticketForm.controls['department'].invalid && ticketForm.controls['department'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['department'].invalid &&
+              (ticketForm.controls['department'].dirty || ticketForm.controls['department'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Invalid.</span
+          >
+        </div>
+
+        <!-- Nature Of Call -->
+        <div class="col-span-6 sm:col-span-4">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Nature Of Call</label>
+          <input
+            type="text"
+            [formControlName]="'natureOfCall'"
+            [class]="
+              ticketForm.controls['natureOfCall'].invalid && ticketForm.controls['natureOfCall'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['natureOfCall'].invalid &&
+              (ticketForm.controls['natureOfCall'].dirty || ticketForm.controls['natureOfCall'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+        <div class="sm:col-span-2"></div>
+
+        <!-- Email -->
+
+        <div class="col-span-6 sm:col-span-4">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="text"
+            [formControlName]="'email'"
+            [class]="
+              ticketForm.controls['email'].invalid && ticketForm.controls['email'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['email'].invalid &&
+              (ticketForm.controls['email'].dirty || ticketForm.controls['email'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+        <div class="sm:col-span-2"></div>
+        <!-- Category -->
+
+        <div class="col-span-6 sm:col-span-4">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Category</label>
+          <input
+            type="text"
+            [formControlName]="'category'"
+            [class]="
+              ticketForm.controls['category'].invalid && ticketForm.controls['category'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['category'].invalid &&
+              (ticketForm.controls['category'].dirty || ticketForm.controls['category'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+        <div class="sm:col-span-2"></div>
+
+        <!-- Sub Category -->
+        <div class="col-span-2 sm:col-span-2">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Sub Category</label>
+          <input
+            type="text"
+            [formControlName]="'subCategory'"
+            [class]="
+              ticketForm.controls['subCategory'].invalid && ticketForm.controls['subCategory'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['subCategory'].invalid &&
+              (ticketForm.controls['subCategory'].dirty || ticketForm.controls['subCategory'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+
+        <!-- Priority -->
+        <div class="col-span-2 sm:col-span-2">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Priority</label>
+          <input
+            type="text"
+            [formControlName]="'priority'"
+            [class]="
+              ticketForm.controls['priority'].invalid && ticketForm.controls['priority'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['priority'].invalid &&
+              (ticketForm.controls['priority'].dirty || ticketForm.controls['priority'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+
+        <!-- Description -->
+        <div class="col-span-2 sm:col-span-2">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Description</label>
+          <input
+            type="text"
+            [formControlName]="'description'"
+            [class]="
+              ticketForm.controls['description'].invalid && ticketForm.controls['description'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['description'].invalid &&
+              (ticketForm.controls['description'].dirty || ticketForm.controls['description'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+
+        <!-- Call Status -->
+        <div class="col-span-2 sm:col-span-2">
+          <label for="first-name" class="block text-sm font-medium text-gray-700">Call Status</label>
+          <input
+            type="text"
+            [formControlName]="'callStatus'"
+            [class]="
+              ticketForm.controls['callStatus'].invalid && ticketForm.controls['callStatus'].touched
+                ? 'border-red-500'
+                : 'border-gray-300'
+            "
+            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          />
+          <span
+            *ngIf="
+              ticketForm.controls['callStatus'].invalid &&
+              (ticketForm.controls['callStatus'].dirty || ticketForm.controls['callStatus'].touched)
+            "
+            class="text-xs text-red-700"
+            >*Required.</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+    <!-- Cancel -->
+    <ng-container>
+      <button mat-stroked-button [routerLink]="['../']">Back</button>
+    </ng-container>
+
+    <!-- Confirm -->
+    <ng-container>
+      <span class="sm:ml-3">
+        <button
+          type="button"
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+          (click)="create()"
+        >
+          <!-- Heroicon name: solid/check -->
+          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+
+          {{ this.ticket ? "Update" : "Create" }}
+        </button>
+      </span>
+    </ng-container>
+  </div>
+</div>

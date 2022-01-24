@@ -4,17 +4,22 @@ import { TicketComponent } from "./ticket.component";
 import { Route, RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
-import { TicketListComponent } from './ticket-list/ticket-list.component';
+import { TicketListComponent } from "./ticket-list/ticket-list.component";
+import { CreateTicketComponent } from './create-ticket/create-ticket.component';
 
 const ticketRoutes: Route[] = [
   {
     path: "",
     component: TicketComponent,
   },
+  {
+    path: "create",
+    loadChildren: () => import("./create-ticket/create-ticket.module").then((x) => x.CreateTicketModule),
+  },
 ];
 
 @NgModule({
-  declarations: [TicketComponent, TicketListComponent],
+  declarations: [TicketComponent, TicketListComponent, CreateTicketComponent],
   imports: [CommonModule, RouterModule.forChild(ticketRoutes), CustomMaterialModule, SharedModule],
 })
 export class TicketModule {}

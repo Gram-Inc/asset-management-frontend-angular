@@ -72,7 +72,7 @@ export class TicketService {
    *
    * @param ticket
    */
-  createUser(ticket: ITicket): Observable<ITicket> {
+  createTicket(ticket: ITicket): Observable<ITicket> {
     delete ticket._id;
     return this.tickets$.pipe(
       take(1),
