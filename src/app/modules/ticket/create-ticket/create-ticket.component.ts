@@ -4,7 +4,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
+import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { TicketService } from "src/app/core/ticket/ticket.service";
 import { ITicket } from "src/app/core/ticket/ticket.types";
 @Component({
@@ -21,6 +22,12 @@ export class CreateTicketComponent implements OnInit {
 
   ticket: ITicket = null;
 
+  //Auto Complete
+
+  filteredCategoryForAutoComplete: Observable<string[]>;
+
+  filteredRequesterForAutoComplete: Observable<string[]>;
+
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -28,7 +35,8 @@ export class CreateTicketComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _autoCompleteService: AutoCompleteService
   ) {}
 
   ngOnInit(): void {
@@ -37,14 +45,11 @@ export class CreateTicketComponent implements OnInit {
     this.ticketForm = this._formBuilder.group({
       _id: [""],
       requestFromUserId: ["", Validators.required],
-      callMedium: ["", Validators.required],
-      department: ["", Validators.required],
-      natureOfCall: ["", Validators.required],
-      email: ["", Validators.required],
+      callMedium: ["chat", Validators.required],
+      natureOfCall: ["request", Validators.required],
       category: ["", Validators.required],
-      subCategory: ["", Validators.required],
-      priority: ["", Validators.required],
-      description: ["", Validators.required],
+      priority: [0, Validators.required],
+      description: [""],
       callStatus: [""],
     });
 
@@ -55,6 +60,34 @@ export class CreateTicketComponent implements OnInit {
       // Mark for check
       this._changeDetectorRef.markForCheck();
     });
+
+    this.ticketForm
+      .get("category")
+      .valueChanges.pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(300),
+        switchMap((query) => {
+          return this._autoCompleteService.getCategories(1, 10, query);
+        }),
+        map(() => {})
+      )
+      .subscribe();
+
+    this.filteredCategoryForAutoComplete = this._autoCompleteService.categories;
+
+    this.ticketForm
+      .get("requestFromUserId")
+      .valueChanges.pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(300),
+        switchMap((query) => {
+          return this._autoCompleteService.getRequesters(1, 10, query);
+        }),
+        map(() => {})
+      )
+      .subscribe();
+
+    this.filteredRequesterForAutoComplete = this._autoCompleteService.requesters;
   }
 
   ngOnDestroy(): void {
@@ -104,5 +137,9 @@ export class CreateTicketComponent implements OnInit {
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
     });
+  }
+
+  setTaskPriority(value: number) {
+    this.ticketForm.controls["priority"].setValue(value);
   }
 }

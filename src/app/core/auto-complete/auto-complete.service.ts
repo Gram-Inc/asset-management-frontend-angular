@@ -16,6 +16,10 @@ export class AutoCompleteService {
   private _processors: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   private _os: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
+  private _categories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
+  private _requesters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
   get modelNames() {
     return this._modelNames.asObservable();
   }
@@ -26,6 +30,13 @@ export class AutoCompleteService {
     return this._os.asObservable();
   }
 
+  get categories() {
+    return this._categories.asObservable();
+  }
+
+  get requesters() {
+    return this._requesters.asObservable();
+  }
   constructor(private _httpClient: HttpClient) {}
 
   getModelNames(page: number = 1, limit: number = 10, searchText: string = "") {
@@ -71,6 +82,40 @@ export class AutoCompleteService {
       .pipe(
         tap((response: IDTO) => {
           this._os.next(response.data);
+        })
+      );
+  }
+
+  //Get Categories for Ticket
+  getCategories(page: number = 1, limit: number = 10, searchText: string = "") {
+    return this._httpClient
+      .get<IDTO>(`${this._baseUrl}/auto-complete/asset/name`, {
+        params: {
+          searchText: searchText,
+          limit: limit,
+          page: page,
+        },
+      })
+      .pipe(
+        tap((response: IDTO) => {
+          this._modelNames.next(response.data);
+        })
+      );
+  }
+
+  //Get Requesters for Ticket
+  getRequesters(page: number = 1, limit: number = 10, searchText: string = "") {
+    return this._httpClient
+      .get<IDTO>(`${this._baseUrl}/auto-complete/asset/name`, {
+        params: {
+          searchText: searchText,
+          limit: limit,
+          page: page,
+        },
+      })
+      .pipe(
+        tap((response: IDTO) => {
+          this._modelNames.next(response.data);
         })
       );
   }
