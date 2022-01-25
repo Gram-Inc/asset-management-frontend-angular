@@ -16,6 +16,11 @@ export const userRoutes: Routes = [
     resolve: [CreateUserResolver, DepartmentResolver],
   },
   {
+    path: "edit/:id",
+    component: DetailsComponent,
+    resolve: [EditUserResolver, CreateUserResolver, DepartmentResolver],
+  },
+  {
     path: ":id",
     resolve: [EditUserResolver],
     loadChildren: () =>

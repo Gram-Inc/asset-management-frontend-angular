@@ -26,11 +26,12 @@ import { IUser } from "src/app/core/user/user.types";
   ],
 })
 export class DetailsComponent implements OnInit, OnDestroy {
-  private unsubscribeAll: Subject<any> = new Subject<any>();
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   users$: Observable<IUser[]> = new Observable<IUser[]>();
 
   userForm: FormGroup;
 
+  user: IUser;
   //Branchs
   branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
   //Department
@@ -52,17 +53,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     //Get All Branch
-    this.branchs$ = this._branchService.branchs$.pipe(takeUntil(this.unsubscribeAll));
+    this.branchs$ = this._branchService.branchs$.pipe(takeUntil(this._unsubscribeAll));
 
     //Get All Departments
-    this.departments$ = this._departmentService.departments$.pipe(takeUntil(this.unsubscribeAll));
+    this.departments$ = this._departmentService.departments$.pipe(takeUntil(this._unsubscribeAll));
 
     //Get All Users
-    this.users$ = this._userService.users$.pipe(takeUntil(this.unsubscribeAll));
+    this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
 
     this.searchCtrl.valueChanges
       .pipe(
-        takeUntil(this.unsubscribeAll),
+        takeUntil(this._unsubscribeAll),
         debounceTime(300),
         switchMap((query) => {
           return this._userService.getUsers(1, 10, query);
@@ -89,11 +90,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
       role: ["", [Validators.required]],
       manager: ["", [Validators.required]],
     });
+
+    //Check for Edit
+    this._userService.selectedUser$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
+      this.userForm.patchValue(val);
+      this.user = val;
+    });
   }
   //On Destroy
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   //Create User
