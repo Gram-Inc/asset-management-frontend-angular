@@ -5,6 +5,7 @@ import { tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IPagination } from "../asset/asset.types";
 import { IDTO } from "../dto/dto.types";
+import { IUser } from "../user/user.types";
 
 @Injectable({
   providedIn: "root",
@@ -18,7 +19,7 @@ export class AutoCompleteService {
 
   private _categories: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
-  private _requesters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  private _requesters: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
 
   get modelNames() {
     return this._modelNames.asObservable();
@@ -106,7 +107,7 @@ export class AutoCompleteService {
   //Get Requesters for Ticket
   getRequesters(page: number = 1, limit: number = 10, searchText: string = "") {
     return this._httpClient
-      .get<IDTO>(`${this._baseUrl}/auto-complete/asset/name`, {
+      .get<IDTO>(`${this._baseUrl}/users/paginate`, {
         params: {
           searchText: searchText,
           limit: limit,
@@ -115,7 +116,7 @@ export class AutoCompleteService {
       })
       .pipe(
         tap((response: IDTO) => {
-          this._modelNames.next(response.data);
+          this._requesters.next(response.data);
         })
       );
   }

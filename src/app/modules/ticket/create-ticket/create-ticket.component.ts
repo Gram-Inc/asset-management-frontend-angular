@@ -8,6 +8,7 @@ import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { TicketService } from "src/app/core/ticket/ticket.service";
 import { ITicket } from "src/app/core/ticket/ticket.types";
+import { IUser } from "src/app/core/user/user.types";
 @Component({
   selector: "app-create-ticket",
   templateUrl: "./create-ticket.component.html",
@@ -26,7 +27,7 @@ export class CreateTicketComponent implements OnInit {
 
   filteredCategoryForAutoComplete: Observable<string[]>;
 
-  filteredRequesterForAutoComplete: Observable<string[]>;
+  filteredRequesterForAutoComplete: Observable<IUser[]>;
 
   constructor(
     private _dialog: MatDialog,
@@ -141,5 +142,9 @@ export class CreateTicketComponent implements OnInit {
 
   setTaskPriority(value: number) {
     this.ticketForm.controls["priority"].setValue(value);
+  }
+
+  displayFn(user: IUser): string {
+    return user && user.firstName ? user.firstName + " " + user.lastName : "";
   }
 }

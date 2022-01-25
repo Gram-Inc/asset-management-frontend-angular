@@ -75,7 +75,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
-      mobileNumber: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      mobileNumber: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern("^[0-9]*$"),
+        ],
+      ],
       branch: ["", [Validators.required]], //ID
       departmentId: ["", [Validators.required]], //ID
       role: ["", [Validators.required]],
