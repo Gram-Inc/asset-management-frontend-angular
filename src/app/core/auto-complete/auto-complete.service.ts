@@ -90,7 +90,7 @@ export class AutoCompleteService {
   //Get Categories for Ticket
   getCategories(page: number = 1, limit: number = 10, searchText: string = "") {
     return this._httpClient
-      .get<IDTO>(`${this._baseUrl}/auto-complete/asset/name`, {
+      .get<IDTO>(`${this._baseUrl}/auto-complete/ticket/category`, {
         params: {
           searchText: searchText,
           limit: limit,
@@ -99,7 +99,7 @@ export class AutoCompleteService {
       })
       .pipe(
         tap((response: IDTO) => {
-          this._modelNames.next(response.data);
+          this._categories.next(response.data);
         })
       );
   }

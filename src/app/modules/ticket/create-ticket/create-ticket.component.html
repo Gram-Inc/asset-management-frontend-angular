@@ -140,8 +140,6 @@
             <mat-label>Category</mat-label>
             <input formControlName="category" matInput [matAutocomplete]="mName" />
             <mat-autocomplete #mName="matAutocomplete">
-              <mat-option value="Hardware">Hardware</mat-option>
-              <mat-option value="Software">Software</mat-option>
               <mat-option
                 *ngFor="let categories of filteredCategoryForAutoComplete | async"
                 [value]="categories"
