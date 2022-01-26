@@ -4,7 +4,7 @@
   <!-- RAM -->
   <ng-container>
     <!-- if Layout Found -->
-    <ng-container *ngIf="asset.laptop?.memLayout?.length > 0">
+    <ng-container *ngIf="asset.memLayout?.length > 0">
       <div
         class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
         style="height: 68px !important; padding: 2px 4px"
@@ -16,7 +16,7 @@
 
         <!-- Sr  -->
         <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-          <ng-container *ngFor="let memLay of asset.laptop.memLayout">
+          <ng-container *ngFor="let memLay of asset.memLayout">
             <div class="flex items-center my-1">
               <h6 class="overf text-xs font-medium text-gray-300">{{ memLay.bank }} -&nbsp;</h6>
               <h6 class="overf text-xs text-black truncate">{{ memLay.size | bytesToGB }} GB</h6>
@@ -29,19 +29,19 @@
           class="overf font-semibold border-x-2 text-lg text-center"
           style="writing-mode: vertical-rl; color: #ffb900"
         >
-          {{ asset.laptop.memLayout[0].type }}
+          {{ asset.memLayout[0].type }}
         </h6>
         <!-- Total -->
         <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
           <h6 class="text-xs text-gray-300">Total</h6>
-          <h4 class="text-lg font-bold truncate">{{ asset.laptop.mem.total ?? "0" | bytesToGB }}</h4>
+          <h4 class="text-lg font-bold truncate">{{ asset.mem.total ?? "0" | bytesToGB }}</h4>
           <h6 class="text-xs">GB</h6>
         </div>
       </div>
     </ng-container>
 
     <!-- If no layout found -->
-    <ng-container *ngIf="asset.laptop?.memLayout?.length == 0">
+    <ng-container *ngIf="asset.memLayout?.length == 0">
       <div
         class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
         style="height: 68px !important; padding: 2px 4px"
@@ -70,7 +70,7 @@
         </h6>
         <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
           <h6 class="text-xs text-gray-300">Total</h6>
-          <h4 class="text-lg font-bold">{{ asset.laptop.mem.total ?? "0" }}</h4>
+          <h4 class="text-lg font-bold">{{ asset.mem.total ?? "0" }}</h4>
           <h6 class="text-xs">GB</h6>
         </div>
       </div>
@@ -78,7 +78,7 @@
   </ng-container>
 
   <!-- Processor -->
-  <ng-container *ngIf="asset.laptop.cpu">
+  <ng-container *ngIf="asset.cpu">
     <div
       class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
       style="height: 68px !important; padding: 2px 4px"
@@ -90,11 +90,11 @@
       <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
         <div class="flex items-center my-1">
           <h6 class="overf text-xs font-medium text-gray-300">Manufacturer-&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.cpu.manufacturer }}</h6>
+          <h6 class="overf text-xs text-black truncate">{{ asset.cpu.manufacturer }}</h6>
         </div>
         <div class="flex items-center my-1">
           <h6 class="overf text-xs font-medium text-gray-300">Brand-&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.laptop.cpu.brand }}</h6>
+          <h6 class="overf text-xs text-black truncate">{{ asset.cpu.brand }}</h6>
         </div>
       </div>
 
@@ -108,14 +108,14 @@
       <!-- Total -->
       <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
         <h6 class="text-xs text-gray-300">CPU</h6>
-        <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.laptop.cpu.brand) }}</h4>
+        <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.cpu.brand) }}</h4>
         <h6 class="text-xs"></h6>
       </div>
     </div>
   </ng-container>
 
   <!-- Disk Layout -->
-  <ng-container *ngFor="let disk of asset.laptop.diskLayout">
+  <ng-container *ngFor="let disk of asset.diskLayout">
     <div
       class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
       style="height: 68px !important; padding: 2px 4px"

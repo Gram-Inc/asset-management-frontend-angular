@@ -14,7 +14,7 @@ export class RikielConfirmationService {
     icon: {
       show: true,
       name: "heroicons_outline:exclamation",
-      color: "warn",
+      color: "error",
     },
     actions: {
       confirm: {

@@ -4,7 +4,7 @@ export interface RikielConfirmationConfig {
   icon?: {
     show?: boolean;
     name?: string;
-    color?: "primary" | "accent" | "warn" | "basic" | "info" | "success" | "warning" | "error";
+    color?: "basic" | "info" | "success" | "warning" | "error";
   };
   actions?: {
     confirm?: {

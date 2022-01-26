@@ -11,6 +11,7 @@
         <button
           type="button"
           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+          (click)="refreshList()"
         >
           <mat-icon class="-ml-1 mr-2 h-5 w-5 text-gray-500" svgIcon="feather:refresh-cw"></mat-icon>
           Refresh
@@ -20,28 +21,23 @@
   </div>
 </div>
 
-<table
-  mat-table
-  [dataSource]="scannedAssets$ | async"
-  multiTemplateDataRows
-  class="mat-elevation-z3 font-sans"
->
+<table mat-table [dataSource]="scannedAssets$" multiTemplateDataRows class="mat-elevation-z3 font-sans">
   <!-- Model  -->
   <ng-container matColumnDef="model">
     <th mat-header-cell *matHeaderCellDef>Model Name</th>
-    <td mat-cell *matCellDef="let element">{{ element?.laptop.system.model }}</td>
+    <td mat-cell *matCellDef="let element">{{ element?.system.model }}</td>
   </ng-container>
 
   <!-- Serial  -->
   <ng-container matColumnDef="serial">
     <th mat-header-cell *matHeaderCellDef>Serial No.</th>
-    <td mat-cell *matCellDef="let element">{{ element?.laptop.system.serial }}</td>
+    <td mat-cell *matCellDef="let element">{{ element?.system.serial }}</td>
   </ng-container>
 
   <!-- HostName  -->
   <ng-container matColumnDef="hostname">
     <th mat-header-cell *matHeaderCellDef>Host Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.laptop.os.hostname }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.os.hostname }}</td>
   </ng-container>
 
   <!-- Date  -->

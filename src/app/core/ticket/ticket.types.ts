@@ -9,7 +9,6 @@ export interface ITicket {
   natureOfCall?: string;
   email?: string;
   category?: string;
-  subCategory?: string;
   callStatus?: string;
   priority?: string;
   createdAt?: string;

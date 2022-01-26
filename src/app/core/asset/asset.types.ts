@@ -100,7 +100,7 @@ export interface IAssetTypes {
   commonAssetFields?: IAssetSubType[];
   assetTypeSpecificFieldTypes?: IAssetSubType[];
 }
-interface IAssetSubType {
+export interface IAssetSubType {
   label?: string;
   dataType?: string;
   fieldName?: string;
@@ -109,7 +109,7 @@ interface IAssetSubType {
   fields?: [];
 }
 
-interface LaptopBattery {
+export interface LaptopBattery {
   hasBattery?: boolean;
   cycleCount?: number;
   isCharging?: boolean;
@@ -127,14 +127,14 @@ interface LaptopBattery {
   serial?: string;
 }
 
-interface CPU {
+export interface CPU {
   manufacturer?: string;
   brand?: string;
   cores?: number;
   physicalCores?: number;
   processors?: number;
 }
-interface Baseboard {
+export interface Baseboard {
   manufacturer?: string;
   model?: string;
   version?: string;
@@ -143,7 +143,7 @@ interface Baseboard {
   memMax?: string;
   memSlots?: number;
 }
-interface MemLayout {
+export interface MemLayout {
   size?: number;
   bank?: string;
   type?: string;
@@ -157,7 +157,7 @@ interface MemLayout {
   voltageMin?: string;
   voltageMax?: string;
 }
-interface Mem {
+export interface Mem {
   total?: number;
   free?: number;
   used?: number;
@@ -171,7 +171,7 @@ interface Mem {
   swapused?: number;
   swapfree?: number;
 }
-interface OS {
+export interface OS {
   platform?: string;
   distro?: string;
   release?: string;
@@ -187,7 +187,7 @@ interface OS {
   servicepack?: string;
   uefi?: boolean;
 }
-interface System {
+export interface System {
   manufacturer?: string;
   model?: string;
   version?: string;

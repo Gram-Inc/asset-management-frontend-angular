@@ -5,13 +5,14 @@ import { map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IDTO } from "../../dto/dto.types";
 import { IAsset, IPagination } from "../asset.types";
+import { IScannedAsset } from "./scanned-asset.types";
 
 @Injectable({
   providedIn: "root",
 })
 export class ScannedAssetService {
   private _baseUrl = environment.baseUrl;
-  private _scannedAssets: BehaviorSubject<IAsset[]> = new BehaviorSubject<IAsset[]>([]);
+  private _scannedAssets: BehaviorSubject<IScannedAsset[]> = new BehaviorSubject<IScannedAsset[]>([]);
   private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}
@@ -39,7 +40,7 @@ export class ScannedAssetService {
     sort: string = "name"
   ): Observable<IDTO> {
     return this._httpClient
-      .get<IDTO>(`${this._baseUrl}/asset/paginate`, {
+      .get<IDTO>(`${this._baseUrl}/exe-agent/paginate`, {
         params: {
           page: "" + page,
           limit: "" + limit,
@@ -62,23 +63,51 @@ export class ScannedAssetService {
       );
   }
 
-  moveAssetTo(assetId: string, type: "Remove" | "Pool") {
+  moveAssetToPool(assetId: string, assetType: "laptop" | "server" | "pc"): Observable<IDTO> {
     return this._scannedAssets.pipe(
       take(1),
       switchMap((scannedAssets) => {
-        return this._httpClient.put<IDTO>(`${this._baseUrl}`, {}).pipe(
+        return this._httpClient
+          .put<IDTO>(`${this._baseUrl}/exe-agent/move-to-in-pull`, {
+            type: assetType,
+            id: assetId,
+          })
+          .pipe(
+            map((response) => {
+              //Find from the Scanned Asset List
+              const index = scannedAssets.findIndex((ast) => ast._id == assetId);
+
+              //Remove Asset From list
+              scannedAssets.splice(index, 1);
+
+              //Update the Assets Subject
+              this._scannedAssets.next(scannedAssets);
+
+              //Return the Udpated Asset
+              return response;
+            })
+          );
+      })
+    );
+  }
+
+  removeAssetFromScanned(assetId: string): Observable<IDTO> {
+    return this._scannedAssets.pipe(
+      take(1),
+      switchMap((scannedAssets) => {
+        return this._httpClient.delete<IDTO>(`${this._baseUrl}/exe-agent/${assetId}`).pipe(
           map((response) => {
             //Find from the Scanned Asset List
             const index = scannedAssets.findIndex((ast) => ast._id == assetId);
-
-            //Update the Asset
-            scannedAssets[index] = response.data;
+            //Remove Asset From list
+            scannedAssets.splice(index, 1);
+            console.log(scannedAssets);
 
             //Update the Assets Subject
             this._scannedAssets.next(scannedAssets);
 
             //Return the Udpated Asset
-            return response.data;
+            return response;
           })
         );
       })
