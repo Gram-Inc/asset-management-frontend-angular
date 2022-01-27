@@ -48,7 +48,6 @@ export const routes: Route[] = [
     children: [
       {
         path: "dashboard",
-        canActivate: [AuthGuard],
         resolve: [DashboardResolver],
         loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
       },
@@ -82,10 +81,11 @@ export const routes: Route[] = [
         canActivate: [VendorGuard],
         loadChildren: () => import("./modules/vendor/vendor.module").then((x) => x.VendorModule),
       },
-      {
-        path: "sign-out",
-        loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
-      },
     ],
+  },
+  {
+    path: "sign-out",
+    canActivate: [AuthGuard],
+    loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
   },
 ];

@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment";
 
 @Injectable()
 export class AuthService {
-  // private _authenticated: boolean = false;
+  private _authenticated: boolean = false;
   private _baseUrl = environment.baseUrl;
   /**
    * Constructor
@@ -85,6 +85,9 @@ export class AuthService {
    * Sign in using the access token
    */
   signInUsingToken(): Observable<any> {
+    if (this._authenticated) {
+      return throwError("User Already Logged in");
+    }
     // Renew token
     return this._httpClient.get<IUser>(this._baseUrl + "/users/current-user").pipe(
       catchError(() =>
@@ -94,6 +97,9 @@ export class AuthService {
       switchMap((response: any) => {
         // Store the user on the user service
         this._userService.user = response.data;
+
+        //Set the Authenticated state to true
+        this._authenticated = true;
 
         // Return true
         return of(true);
@@ -107,9 +113,10 @@ export class AuthService {
   signOut(): Observable<any> {
     // Remove the access token from the local storage
     localStorage.removeItem("accessToken");
-    this._userService.user = undefined;
+
     // Set the authenticated flag to false
-    // this._authenticated = false;
+    this._authenticated = false;
+
     // Return the observable
     return of(true);
   }
@@ -144,6 +151,9 @@ export class AuthService {
    */
   check(): Observable<boolean> {
     // Check if the user is logged in
+    if (this._authenticated) {
+      return of(true);
+    }
     if (this.accessToken) {
       return this.signInUsingToken();
     }

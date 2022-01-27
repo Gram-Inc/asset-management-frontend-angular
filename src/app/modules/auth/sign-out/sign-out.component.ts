@@ -38,7 +38,6 @@ export class SignOutComponent implements OnInit, OnDestroy {
       .pipe(
         finalize(() => {
           // location.reload();
-
           this._router.navigate(["sign-in"]);
         }),
         takeWhile(() => this.countdown > 0),

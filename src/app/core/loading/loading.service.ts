@@ -43,6 +43,7 @@ export class LoadingService {
 
     if (status === true) {
       this._urlMap.set(url, status);
+      console.log(url);
       this._show$.next(true);
     } else if (status === false && this._urlMap.has(url)) {
       this._urlMap.delete(url);
