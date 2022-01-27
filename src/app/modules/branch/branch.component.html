@@ -10,21 +10,7 @@
       <span class="sm:ml-3">
         <button
           type="button"
-          class="
-            inline-flex
-            items-center
-            px-4
-            py-2
-            border border-transparent
-            rounded-md
-            shadow-sm
-            text-sm
-            font-medium
-            text-white
-            bg-orange-600
-            hover:bg-orange-700
-            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-          "
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
           [routerLink]="['create']"
         >
           <!-- Heroicon name: solid/check -->
@@ -37,5 +23,12 @@
   </div>
 </div>
 <div class="px-8 flex gap-5">
-  <app-branch-card [branch]="branch" *ngFor="let branch of branchs$ | async"></app-branch-card>
+  <ng-container *ngIf="branchs$ | async as branchs">
+    <ng-container *ngIf="branchs.length > 0; else noBranch">
+      <app-branch-card [branch]="branch" *ngFor="let branch of branchs$ | async"></app-branch-card>
+    </ng-container>
+  </ng-container>
+  <ng-template #noBranch>
+    <div class="w-full justify-self-center text-center text-gray-600 text-2xl my-6">No Branch !</div>
+  </ng-template>
 </div>

@@ -26,11 +26,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
-import {
-  MatNativeDateModule,
-  MatRippleModule,
-  MAT_DATE_FORMATS,
-} from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS } from "@angular/material/core";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -47,6 +43,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { OverlayModule } from "@angular/cdk/overlay";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 export const MY_FORMATS = {
   parse: {
@@ -167,7 +164,15 @@ export class CustomMaterialModule {
   static forRoot() {
     return {
       ngModule: CustomMaterialModule,
-      providers: [],
+      providers: [
+        {
+          // Use the 'fill' appearance on Angular Material form fields by default
+          provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+          useValue: {
+            appearance: "outline",
+          },
+        },
+      ],
     };
   }
 }

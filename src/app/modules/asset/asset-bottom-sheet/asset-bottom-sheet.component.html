@@ -104,7 +104,7 @@
   <!-- User List / Selection -->
   <ng-container>
     <span class="mx-3 hidden sm:block" style="font-size: small">
-      <mat-form-field class="w-full" appearance="outline">
+      <mat-form-field class="w-full">
         <mat-label>Search User</mat-label>
         <input matInput [formControl]="searchCtrl" [matAutocomplete]="name" />
         <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
@@ -125,17 +125,7 @@
         isAssetEdited(),
       'text-gray-400 bg-gray-100  ': !isAssetEdited()
     }"
-    class="
-      inline-flex
-      items-center
-      px-4
-      py-2
-      border border-transparent
-      rounded-md
-      shadow-sm
-      text-sm
-      font-medium
-    "
+    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium"
     (click)="updateAllocation()"
   >
     <!-- Heroicon name: solid/check -->

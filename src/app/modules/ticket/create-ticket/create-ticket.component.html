@@ -13,7 +13,7 @@
         <div class="grid grid-cols-6 gap-x-3">
           <!-- Requester -->
 
-          <mat-form-field appearance="outline" class="col-span-4">
+          <mat-form-field class="col-span-4">
             <mat-label>Requester</mat-label>
             <input formControlName="requestFromUserId" matInput [matAutocomplete]="mRequester" />
             <mat-autocomplete #mRequester="matAutocomplete" [displayWith]="displayFn">
@@ -116,7 +116,7 @@
           </div>
 
           <!-- Call Medium -->
-          <mat-form-field class="col-span-1" appearance="outline">
+          <mat-form-field class="col-span-1">
             <mat-label>Call Medium</mat-label>
             <mat-select formControlName="callMedium" value="chat">
               <mat-option value="phone">Phone</mat-option>
@@ -127,7 +127,7 @@
           </mat-form-field>
 
           <!-- Nature Of Call -->
-          <mat-form-field class="col-span-1" appearance="outline">
+          <mat-form-field class="col-span-1">
             <mat-label>Nature of Call</mat-label>
             <mat-select formControlName="natureOfCall" value="request">
               <mat-option value="incident">Incident</mat-option>
@@ -136,7 +136,7 @@
           </mat-form-field>
 
           <!-- Category -->
-          <mat-form-field appearance="outline" class="col-span-6">
+          <mat-form-field class="col-span-6">
             <mat-label>Category</mat-label>
             <input formControlName="category" matInput [matAutocomplete]="mName" />
             <mat-autocomplete #mName="matAutocomplete">
@@ -150,7 +150,7 @@
           </mat-form-field>
 
           <!-- Description (Public) -->
-          <mat-form-field appearance="outline" class="col-span-6">
+          <mat-form-field class="col-span-6">
             <mat-label>Description (Public)</mat-label>
             <textarea formControlName="description" class="h-24" matInput></textarea>
           </mat-form-field>

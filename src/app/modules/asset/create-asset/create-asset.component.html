@@ -22,13 +22,13 @@
       <div class="px-4 py-5 bg-white sm:p-6 text-xs">
         <div class="grid grid-cols-4 gap-x-6">
           <!-- Asset Code -->
-          <mat-form-field appearance="outline" class="col-span-3">
+          <mat-form-field class="col-span-3">
             <mat-label>Asset Code</mat-label>
             <input formControlName="assetCode" matInput />
           </mat-form-field>
 
           <!-- Type -->
-          <mat-form-field class="col-span-2" appearance="outline">
+          <mat-form-field class="col-span-2">
             <mat-label>Asset Type</mat-label>
             <mat-select formControlName="type" (change)="addAssetTypeToAssetForm()">
               <mat-option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</mat-option>
@@ -36,7 +36,7 @@
           </mat-form-field>
 
           <!-- Category -->
-          <mat-form-field class="col-span-2" appearance="outline">
+          <mat-form-field class="col-span-2">
             <mat-label>Category</mat-label>
             <mat-select formControlName="category">
               <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
@@ -44,7 +44,7 @@
           </mat-form-field>
 
           <!-- Vendor -->
-          <mat-form-field class="col-span-2" appearance="outline">
+          <mat-form-field class="col-span-2">
             <mat-label>Vendor</mat-label>
             <mat-select [formControlName]="'vendorId'">
               <mat-option [value]="null">N/A</mat-option>
@@ -53,7 +53,7 @@
           </mat-form-field>
 
           <!-- Branch -->
-          <mat-form-field class="col-span-2" appearance="outline">
+          <mat-form-field class="col-span-2">
             <mat-label>Branch / Location</mat-label>
             <mat-select [formControlName]="'branch'">
               <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{
@@ -80,7 +80,7 @@
             <!-- system -->
             <ng-container formGroupName="system">
               <!-- Model NAme -->
-              <mat-form-field appearance="outline" class="col-span-3">
+              <mat-form-field class="col-span-3">
                 <mat-label>Model Name</mat-label>
                 <input formControlName="model" matInput [matAutocomplete]="mName" />
                 <mat-autocomplete #mName="matAutocomplete">
@@ -94,13 +94,13 @@
               </mat-form-field>
 
               <!--Manufacturer -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Manufacturer</mat-label>
                 <input formControlName="manufacturer" matInput />
               </mat-form-field>
 
               <!-- Serial Number -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Serial Number</mat-label>
                 <input formControlName="serial" matInput />
               </mat-form-field>
@@ -108,7 +108,7 @@
             <!-- OS -->
             <ng-container formGroupName="os">
               <!-- Platform -->
-              <mat-form-field class="col-span-2" appearance="outline">
+              <mat-form-field class="col-span-2">
                 <mat-label>Platform</mat-label>
                 <mat-select formControlName="platform">
                   <mat-option value="windows">Windows</mat-option>
@@ -118,7 +118,7 @@
               </mat-form-field>
 
               <!-- distro -->
-              <mat-form-field class="col-span-2" appearance="outline">
+              <mat-form-field class="col-span-2">
                 <mat-label>Distro</mat-label>
                 <input formControlName="distro" matInput [matAutocomplete]="os" />
                 <mat-autocomplete #os="matAutocomplete">
@@ -129,7 +129,7 @@
               </mat-form-field>
 
               <!-- arch -->
-              <mat-form-field class="col-span-2" appearance="outline">
+              <mat-form-field class="col-span-2">
                 <mat-label>Arch</mat-label>
                 <mat-select formControlName="arch">
                   <mat-option [value]="'x64'"> x64 </mat-option>
@@ -138,7 +138,7 @@
               </mat-form-field>
 
               <!-- hostname -->
-              <mat-form-field class="col-span-4" appearance="outline">
+              <mat-form-field class="col-span-4">
                 <mat-label>Hostname</mat-label>
                 <input formControlName="hostname" matInput required />
               </mat-form-field>
@@ -162,13 +162,13 @@
             <!-- processor -->
             <ng-container formGroupName="cpu">
               <!-- manufacturer -->
-              <mat-form-field appearance="outline" class="col-span-1">
+              <mat-form-field class="col-span-1">
                 <mat-label>Manufacturer</mat-label>
                 <input formControlName="manufacturer" matInput />
               </mat-form-field>
 
               <!-- Brand -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Brand</mat-label>
                 <input formControlName="brand" matInput [matAutocomplete]="cpu" />
                 <mat-autocomplete #cpu="matAutocomplete">
@@ -179,7 +179,7 @@
               </mat-form-field>
 
               <!-- No. of Processor -->
-              <mat-form-field appearance="outline" class="col-span-1">
+              <mat-form-field class="col-span-1">
                 <mat-label>No. of Processors</mat-label>
                 <input formControlName="processors" matInput />
               </mat-form-field>
@@ -187,7 +187,7 @@
 
             <!-- Mem -->
             <ng-container formGroupName="mem">
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Memory</mat-label>
                 <input type="number" formControlName="total" matInput />
               </mat-form-field>
@@ -200,13 +200,13 @@
             >
               <ng-container [formGroupName]="i">
                 <!-- Device -->
-                <mat-form-field appearance="outline" class="col-span-2">
+                <mat-form-field class="col-span-2">
                   <mat-label>Slot </mat-label>
                   <input formControlName="device" matInput />
                 </mat-form-field>
 
                 <!-- Type -->
-                <mat-form-field appearance="outline" class="col-span-2">
+                <mat-form-field class="col-span-2">
                   <mat-label>Type </mat-label>
                   <mat-select formControlName="type" required>
                     <mat-option value="SSD">SSD</mat-option>
@@ -216,13 +216,13 @@
                 </mat-form-field>
 
                 <!--name -->
-                <mat-form-field appearance="outline" class="col-span-2">
+                <mat-form-field class="col-span-2">
                   <mat-label>Name </mat-label>
                   <input formControlName="name" matInput />
                 </mat-form-field>
 
                 <!-- size -->
-                <mat-form-field appearance="outline" class="col-span-2">
+                <mat-form-field class="col-span-2">
                   <mat-label>Size </mat-label>
                   <input type="number" formControlName="size" matInput />
                 </mat-form-field>
@@ -252,19 +252,19 @@
           >
             <ng-container [formGroupName]="i">
               <!-- Name -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Name </mat-label>
                 <input formControlName="name" matInput />
               </mat-form-field>
 
               <!-- Type -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Type </mat-label>
                 <input formControlName="type" matInput required />
               </mat-form-field>
 
               <!--Start -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>Start Date</mat-label>
                 <input matInput [matDatepicker]="dor" formControlName="startAt" />
                 <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
@@ -272,7 +272,7 @@
               </mat-form-field>
 
               <!-- End -->
-              <mat-form-field appearance="outline" class="col-span-2">
+              <mat-form-field class="col-span-2">
                 <mat-label>End Date</mat-label>
                 <input matInput [matDatepicker]="ed" formControlName="endAt" />
                 <mat-datepicker-toggle matSuffix [for]="ed"></mat-datepicker-toggle>
@@ -280,7 +280,7 @@
               </mat-form-field>
 
               <!-- Vendor -->
-              <mat-form-field class="col-span-2" appearance="outline">
+              <mat-form-field class="col-span-2">
                 <mat-label>Vendor</mat-label>
                 <mat-select [formControlName]="'vendor'">
                   <mat-option [value]="null">N/A</mat-option>

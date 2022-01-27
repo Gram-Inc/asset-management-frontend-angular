@@ -178,8 +178,11 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy {
     return "NULL";
   }
   getUserName(user: IUser) {
-    if (user.firstName.toUpperCase() == user.lastName.toUpperCase()) return user.firstName;
-    return user.firstName + " " + user.lastName;
+    if (user.firstName && user.lastName) {
+      if (user.firstName?.toUpperCase() == user.lastName?.toUpperCase()) return user.firstName;
+      return user.firstName + " " + user.lastName;
+    }
+    return "N/A";
   }
   getDepartmentCode(user: IUser) {
     if (user.departmentId && typeof user.departmentId == "object") return user.departmentId.name;
