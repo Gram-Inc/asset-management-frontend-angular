@@ -43,7 +43,6 @@ export class LoadingService {
 
     if (status === true) {
       this._urlMap.set(url, status);
-      console.log(url);
       this._show$.next(true);
     } else if (status === false && this._urlMap.has(url)) {
       this._urlMap.delete(url);
@@ -59,14 +58,12 @@ export class LoadingService {
    * Show the splash screen
    */
   show(): void {
-    console.log("Starting");
     this._document.body.classList.remove("rikiel-splash-screen-hidden");
   }
   /**
    * Hide the splash screen
    */
   hide(): void {
-    console.log("Naviagtion remove Spalash");
     this._document.body.classList.add("rikiel-splash-screen-hidden");
   }
 }

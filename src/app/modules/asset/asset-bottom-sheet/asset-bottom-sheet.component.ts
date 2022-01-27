@@ -99,7 +99,6 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy {
       delete this.asset.allocationToUserId;
       this._assetService.changeAllocationStatus(this.asset._id, this.asset.allocationStatus).subscribe(
         (_) => {
-          console.log(_);
           this.openSnackBar("Success", "Action completed !");
           this._bottomSheetRef.dismiss();
         },

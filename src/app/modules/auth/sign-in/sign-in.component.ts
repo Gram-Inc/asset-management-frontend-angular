@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import { throwError } from "rxjs/internal/observable/throwError";
 import { AuthService } from "src/app/core/auth/auth.service";
 import { LoadingService } from "src/app/core/loading/loading.service";
 
@@ -84,7 +85,6 @@ export class SignInComponent implements OnInit {
           this._router.navigateByUrl(redirectURL);
         },
         (response) => {
-          console.log(response);
           // Re-enable the form
           this.signInForm.enable();
 
@@ -96,7 +96,7 @@ export class SignInComponent implements OnInit {
         }
       );
     } catch (err) {
-      console.log(err);
+      throwError(err);
     }
   }
 }

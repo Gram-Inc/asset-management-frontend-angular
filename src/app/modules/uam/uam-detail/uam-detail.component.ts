@@ -11,7 +11,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject, throwError } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
@@ -103,7 +103,7 @@ export class UamDetailComponent implements OnInit, OnDestroy {
         }
       },
       (err) => {
-        console.log(err.message);
+        throwError(err);
       }
     );
   }
@@ -228,7 +228,6 @@ export class UamDetailComponent implements OnInit, OnDestroy {
         });
       },
       (err) => {
-        console.log(err);
         this.openSnackBar("Error", err.message);
       }
     );

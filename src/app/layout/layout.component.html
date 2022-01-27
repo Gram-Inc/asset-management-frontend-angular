@@ -1,4 +1,4 @@
-<div *ngIf="user$ | async as user; else noUser" style="height: 100%">
+<div *ngIf="user$ | async as user; else noUser">
   <mat-drawer-container class="main-container bg-white" hasBackdrop="false">
     <mat-drawer #drawer class="sidenav" [mode]="mode" opened="true">
       <div style="display: flex; justify-content: space-between; padding: 24px 20px; align-items: center">

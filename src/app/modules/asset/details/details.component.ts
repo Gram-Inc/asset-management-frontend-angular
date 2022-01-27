@@ -264,7 +264,6 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
       },
       (err) => {
         let e: IDTO = err.error;
-        console.log(err.error);
         this.openSnackBar("Error", e.message);
       }
     );

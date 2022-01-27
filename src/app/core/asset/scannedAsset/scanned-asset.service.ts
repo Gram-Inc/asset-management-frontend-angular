@@ -101,7 +101,6 @@ export class ScannedAssetService {
             const index = scannedAssets.findIndex((ast) => ast._id == assetId);
             //Remove Asset From list
             scannedAssets.splice(index, 1);
-            console.log(scannedAssets);
 
             //Update the Assets Subject
             this._scannedAssets.next(scannedAssets);

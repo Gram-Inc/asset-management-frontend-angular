@@ -52,7 +52,6 @@ export class TotalUserCardComponent implements OnInit {
         },
       },
       series: this.data.branchWiseUsers.map((x) => {
-        console.log(x);
         return x.count;
       }),
       states: {

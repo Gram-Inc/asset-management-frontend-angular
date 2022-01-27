@@ -172,7 +172,6 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Check For Branch Code
   getBranchShortCode(obj: any) {
-    console.log(obj);
     if (obj) return typeof obj === "object" ? obj.branchCode : "-";
     return "NULL";
   }

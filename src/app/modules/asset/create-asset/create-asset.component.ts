@@ -112,7 +112,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
         this.asset = val;
         //Set Asset Type to formbuilder
         this.addAssetTypeToAssetForm();
-        console.log(val);
         this.assetForm.patchValue(val);
         this.assetForm.get(val.type).patchValue(val[val.type]);
         this.assetForm.get("branch").setValue(typeof val.branch == "object" ? val.branch._id : null);
@@ -237,7 +236,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
         },
         (err) => {
           let e: IDTO = err.error;
-          console.log(err.error);
           this.openSnackBar("Error", e.message);
         }
       );
@@ -250,7 +248,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
         },
         (err) => {
           let e: IDTO = err.error;
-          console.log(err.error);
           this.openSnackBar("Error", e.message);
         }
       );
@@ -296,10 +293,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy {
   addWarranty() {
     (this.assetForm.get("warranty") as FormArray).push(this.createWarranty());
   }
-  check() {
-    console.log(this.assetForm.valid);
-    console.log(this.assetForm);
-  }
+
   goForward(formGroupName: string, stepper: MatStepper) {
     //Asset Type
     if (formGroupName == "asset") {
