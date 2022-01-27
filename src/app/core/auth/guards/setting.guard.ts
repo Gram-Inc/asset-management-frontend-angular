@@ -15,6 +15,7 @@ export class SettingGuard implements CanActivate {
     return this._check();
   }
 
+
   private _check(): Observable<boolean> {
     return this._authService.checkReport();
   }
