@@ -1,20 +1,9 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NgForm,
-  Validators,
-} from "@angular/forms";
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "src/app/core/auth/auth.service";
+import { LoadingService } from "src/app/core/loading/loading.service";
 
 @Component({
   selector: "app-sign-in",
@@ -40,7 +29,8 @@ export class SignInComponent implements OnInit {
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _loadingService: LoadingService
   ) {}
 
   // -----------------------------------------------------------------------------------------------------
@@ -57,6 +47,7 @@ export class SignInComponent implements OnInit {
       password: ["", Validators.required],
       rememberMe: [""],
     });
+    this._loadingService.hide();
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -87,8 +78,7 @@ export class SignInComponent implements OnInit {
           // to the correct page after a successful sign in. This way, that url can be set via
           // routing file and we don't have to touch here.
           const redirectURL =
-            this._activatedRoute.snapshot.queryParamMap.get("redirectURL") ||
-            "/signed-in-redirect";
+            this._activatedRoute.snapshot.queryParamMap.get("redirectURL") || "/signed-in-redirect";
 
           // Navigate to the redirect url
           this._router.navigateByUrl(redirectURL);

@@ -18,7 +18,6 @@ import { UserService } from "src/app/core/user/user.service";
   selector: "user",
   templateUrl: "./user.component.html",
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: "user",
 })
 export class UserComponent implements OnInit, OnDestroy {
@@ -51,8 +50,6 @@ export class UserComponent implements OnInit, OnDestroy {
     // Subscribe to user changes
     this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: IUser) => {
       if (user != null) this.user = user;
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
     });
   }
 

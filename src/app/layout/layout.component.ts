@@ -23,7 +23,7 @@ import { IUser } from "../core/user/user.types";
   styleUrls: ["./layout.component.scss"],
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
-  user: IUser = undefined;
+  user$: Observable<IUser> = undefined;
   mode: MatDrawerMode = "side";
   @ViewChild("drawer") public drawer: MatDrawer;
 
@@ -55,9 +55,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
       this.mode = val;
     });
 
-    this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: IUser) => {
-      this.user = user;
-    });
+    // this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: IUser) => {
+    //   this.user = user;
+    // });
+    this.user$ = this._userService.user$;
   }
   ngOnDestroy() {
     this._unsubscribeAll.next();

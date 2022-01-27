@@ -107,7 +107,7 @@ export class AuthService {
   signOut(): Observable<any> {
     // Remove the access token from the local storage
     localStorage.removeItem("accessToken");
-    this._userService.user = null;
+    this._userService.user = undefined;
     // Set the authenticated flag to false
     // this._authenticated = false;
     // Return the observable
@@ -167,7 +167,7 @@ export class AuthService {
   checkTicket(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -177,7 +177,7 @@ export class AuthService {
   checkAsset(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -187,7 +187,7 @@ export class AuthService {
   checkUser(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -196,7 +196,7 @@ export class AuthService {
   checkUAM(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -206,7 +206,7 @@ export class AuthService {
   checkVendor(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -216,7 +216,7 @@ export class AuthService {
   checkBranch(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -226,7 +226,7 @@ export class AuthService {
   checkReport(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );
@@ -236,7 +236,7 @@ export class AuthService {
   checkSetting(): Observable<boolean> {
     return this._userService.user$.pipe(
       switchMap((value) => {
-        if (value.role == "level1" || value.role == "level2") return of(true);
+        if (value && (value.role == "level1" || value.role == "level2")) return of(true);
         return of(false);
       })
     );

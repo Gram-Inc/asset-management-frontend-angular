@@ -12,7 +12,7 @@ export class OverallBranchAssetDetailTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   getPercentage(branch) {

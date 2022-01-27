@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Import/write your custom styles here.
-/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/*  @ Styles from this file will override 'vendors.scss' and rikiel's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 @use "@angular/material" as mat;
 @tailwind base;
@@ -120,7 +120,7 @@ div.mat-expansion-panel-body {
   height: auto;
 }
 
-body fuse-splash-screen {
+body rikiel-splash-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +130,7 @@ body fuse-splash-screen {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #111827;
+  background-color: white;
   color: #f9fafb;
   z-index: 999999;
   pointer-events: none;
@@ -139,12 +139,12 @@ body fuse-splash-screen {
   transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body fuse-splash-screen img {
-  width: 120px;
-  max-width: 120px;
+body rikiel-splash-screen img {
+  width: 60px;
+  max-width: 60px;
 }
 
-body fuse-splash-screen .spinner {
+body rikiel-splash-screen .spinner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -152,27 +152,28 @@ body fuse-splash-screen .spinner {
   width: 56px;
 }
 
-body fuse-splash-screen .spinner > div {
+body rikiel-splash-screen .spinner > div {
   width: 12px;
   height: 12px;
-  background-color: #1e96f7;
+  background-color: rgb(234 88 12);
+  opacity: 0.9;
   border-radius: 100%;
   display: inline-block;
-  -webkit-animation: fuse-bouncedelay 1s infinite ease-in-out both;
-  animation: fuse-bouncedelay 1s infinite ease-in-out both;
+  -webkit-animation: rikiel-bouncedelay 1s infinite ease-in-out both;
+  animation: rikiel-bouncedelay 1s infinite ease-in-out both;
 }
 
-body fuse-splash-screen .spinner .bounce1 {
+body rikiel-splash-screen .spinner .bounce1 {
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-body fuse-splash-screen .spinner .bounce2 {
+body rikiel-splash-screen .spinner .bounce2 {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
 
-@-webkit-keyframes fuse-bouncedelay {
+@-webkit-keyframes rikiel-bouncedelay {
   0%,
   80%,
   100% {
@@ -183,7 +184,7 @@ body fuse-splash-screen .spinner .bounce2 {
   }
 }
 
-@keyframes fuse-bouncedelay {
+@keyframes rikiel-bouncedelay {
   0%,
   80%,
   100% {
@@ -196,11 +197,11 @@ body fuse-splash-screen .spinner .bounce2 {
   }
 }
 
-body:not(.fuse-splash-screen-hidden) {
+body:not(.rikiel-splash-screen-hidden) {
   overflow: hidden;
 }
 
-body.fuse-splash-screen-hidden fuse-splash-screen {
+body.rikiel-splash-screen-hidden rikiel-splash-screen {
   visibility: hidden;
   opacity: 0;
 }

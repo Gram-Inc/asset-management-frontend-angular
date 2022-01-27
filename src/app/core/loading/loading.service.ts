@@ -57,14 +57,13 @@ export class LoadingService {
    */
   show(): void {
     console.log("Starting");
-
-    this._document.body.classList.remove("fuse-splash-screen-hidden");
+    this._document.body.classList.remove("rikiel-splash-screen-hidden");
   }
   /**
    * Hide the splash screen
    */
   hide(): void {
     console.log("Naviagtion remove Spalash");
-    this._document.body.classList.add("fuse-splash-screen-hidden");
+    this._document.body.classList.add("rikiel-splash-screen-hidden");
   }
 }

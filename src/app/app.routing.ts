@@ -28,7 +28,6 @@ export const routes: Route[] = [
     data: {
       layout: "",
     },
-    component: LayoutComponent,
     children: [
       {
         path: "sign-in",
