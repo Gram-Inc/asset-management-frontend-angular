@@ -13,12 +13,14 @@ export class LoadingService {
 
   constructor(@Inject(DOCUMENT) private _document: any, private _router: Router) {
     // Hide it on the first NavigationEnd event
-    this._router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.hide();
-    });
-    this._router.events.pipe(filter((event) => event instanceof NavigationStart)).subscribe(() => {
-      this.show();
-    });
+    this._router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        take(1)
+      )
+      .subscribe(() => {
+        this.hide();
+      });
   }
   /**
    * Getter for show

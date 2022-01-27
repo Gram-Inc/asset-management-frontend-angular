@@ -17,6 +17,8 @@ import { AuthInterceptor } from "./core/auth/auth.interceptor";
 import { AsideComponent } from "./custom/components/aside/aside.component";
 import { DetailsComponent } from "./modules/user/details/details.component";
 import { BytesToGBPipe } from "./core/pipes/bytes-to-gb.pipe";
+import { LoadingBarComponent } from "./custom/components/loading-bar/loading-bar.component";
+import { LoadingBarModule } from "./custom/components/loading-bar/loading-bar.module";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
@@ -32,6 +34,7 @@ const routerConfig: ExtraOptions = {
     SharedModule,
     BrowserAnimationsModule,
     CustomMaterialModule.forRoot(),
+    LoadingBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
