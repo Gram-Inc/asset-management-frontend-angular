@@ -158,18 +158,35 @@ export class DetailsComponent implements OnInit, OnDestroy
 
         let obj = { ...this.userForm.value };
         obj.manager = obj.manager._id;
-        // Create User
-        this._userService.createUser(obj).subscribe(
-            (_) =>
-            {
-                this.openSnackBar("Success", "User Created");
-                this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-            },
-            (err) =>
-            {
-                this.openSnackBar("Error", err.message);
-            }
-        );
+
+        //Update
+        if (this.user)
+            this._userService.updateUser(this.user._id, obj).subscribe(
+                (_) =>
+                {
+                    this.openSnackBar("Success", "User Updated");
+                    this._router.navigate(["../"], {
+                        relativeTo: this._activatedRoute,
+                    });
+                },
+                (err) =>
+                {
+                    this.openSnackBar("Error", err.message);
+                }
+            );
+        //Create
+        else
+            this._userService.createUser(obj).subscribe(
+                (_) =>
+                {
+                    this.openSnackBar("Success", "User Created");
+                    this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+                },
+                (err) =>
+                {
+                    this.openSnackBar("Error", err.message);
+                }
+            );
     }
 
     openSnackBar(type: "Error" | "Info" | "Success", msg: string)
@@ -197,10 +214,9 @@ export class DetailsComponent implements OnInit, OnDestroy
         // Remove Existing Access
         let x = (this.userForm.get('permissions').value as string[]).filter(x => !(x.toUpperCase().includes(module)))
 
-        console.log(x);
-
         //Set Selected Acess
         this.userForm.get('permissions').setValue([...x, ...this.permissionService.getArrOfPolicyByAccessType(module, accessType)]);
+
     }
 
 }

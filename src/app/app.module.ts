@@ -19,24 +19,25 @@ import { DetailsComponent } from "./modules/user/details/details.component";
 import { BytesToGBPipe } from "./core/pipes/bytes-to-gb.pipe";
 import { LoadingBarComponent } from "./custom/components/loading-bar/loading-bar.component";
 import { LoadingBarModule } from "./custom/components/loading-bar/loading-bar.module";
+import { AccessPillComponent } from './custom/components/access-pill/access-pill.component';
 
 const routerConfig: ExtraOptions = {
-  preloadingStrategy: PreloadAllModules,
-  scrollPositionRestoration: "enabled",
+    preloadingStrategy: PreloadAllModules,
+    scrollPositionRestoration: "enabled",
 };
 
 @NgModule({
-  declarations: [AppComponent, LayoutComponent, AsideComponent, DetailsComponent],
-  imports: [
-    AuthModule,
-    BrowserModule,
-    RouterModule.forRoot(routes, routerConfig),
-    SharedModule,
-    BrowserAnimationsModule,
-    CustomMaterialModule.forRoot(),
-    LoadingBarModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent, LayoutComponent, AsideComponent, DetailsComponent,],
+    imports: [
+        AuthModule,
+        BrowserModule,
+        RouterModule.forRoot(routes, routerConfig),
+        SharedModule,
+        BrowserAnimationsModule,
+        CustomMaterialModule.forRoot(),
+        LoadingBarModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
