@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class PermissionService {
-    constructor() {}
+export class PermissionService
+{
+    constructor() { }
 
     // Check Current
+
 }

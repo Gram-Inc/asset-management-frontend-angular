@@ -12,126 +12,140 @@ import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 
 @Component({
-  selector: "app-details",
-  templateUrl: "./details.component.html",
-  styles: [
-    /* language=SCSS */
-    `
+    selector: "app-details",
+    templateUrl: "./details.component.html",
+    styles: [
+        /* language=SCSS */
+        `
       .fuse-confirmation-dialog-panel {
         .mat-dialog-container {
           padding: 0 !important;
         }
       }
     `,
-  ],
+    ],
 })
-export class DetailsComponent implements OnInit, OnDestroy {
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
-  users$: Observable<IUser[]> = new Observable<IUser[]>();
+export class DetailsComponent implements OnInit, OnDestroy
+{
 
-  userForm: FormGroup;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  user: IUser;
-  //Branchs
-  branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
-  //Department
-  departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
-  searchCtrl: FormControl = new FormControl("", [Validators.required]);
+    users$: Observable<IUser[]> = new Observable<IUser[]>();
 
-  //Constructor
-  constructor(
-    private _formBuilder: FormBuilder,
-    private _userService: UserService,
-    private _branchService: BranchService,
-    private _departmentService: DepartmentService,
-    private _snackBar: MatSnackBar,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute
-  ) {}
+    userForm: FormGroup;
 
-  // Life Cycle Hooks
+    user: IUser;
 
-  ngOnInit(): void {
-    //Get All Branch
-    this.branchs$ = this._branchService.branchs$.pipe(takeUntil(this._unsubscribeAll));
+    //Branchs
+    branchs$: Observable<IBranch[]> = new Observable<IBranch[]>();
 
-    //Get All Departments
-    this.departments$ = this._departmentService.departments$.pipe(takeUntil(this._unsubscribeAll));
+    //Department
+    departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
+    searchCtrl: FormControl = new FormControl("", [Validators.required]);
 
-    //Get All Users
-    this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
+    //Constructor
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _userService: UserService,
+        private _branchService: BranchService,
+        private _departmentService: DepartmentService,
+        private _snackBar: MatSnackBar,
+        private _router: Router,
+        private _activatedRoute: ActivatedRoute
+    ) { }
 
-    this.searchCtrl.valueChanges
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        debounceTime(300),
-        switchMap((query) => {
-          return this._userService.getUsers(1, 10, query);
-        }),
-        map(() => {})
-      )
-      .subscribe();
-    //create User Form
-    this.userForm = this._formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      email: ["", [Validators.required, Validators.email]],
-      mobileNumber: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-          Validators.pattern("^[0-9]*$"),
-        ],
-      ],
-      branch: ["", [Validators.required]], //ID
-      departmentId: ["", [Validators.required]], //ID
-      role: ["", [Validators.required]],
-      manager: ["", [Validators.required]],
-    });
+    // Life Cycle Hooks
 
-    //Check for Edit
-    this._userService.selectedUser$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
-      this.userForm.patchValue(val);
-      this.user = val;
-    });
-  }
-  //On Destroy
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
+    ngOnInit(): void
+    {
+        //Get All Branch
+        this.branchs$ = this._branchService.branchs$.pipe(takeUntil(this._unsubscribeAll));
 
-  //Create User
-  create() {
-    this.userForm.markAllAsTouched();
-    //Check Validation
-    if (this.userForm.invalid) return;
+        //Get All Departments
+        this.departments$ = this._departmentService.departments$.pipe(takeUntil(this._unsubscribeAll));
 
-    let obj = { ...this.userForm.value };
-    obj.manager = obj.manager._id;
-    // Create User
-    this._userService.createUser(obj).subscribe(
-      (_) => {
-        this.openSnackBar("Success", "User Created");
-        this._router.navigate(["../"], { relativeTo: this._activatedRoute });
-      },
-      (err) => {
-        this.openSnackBar("Error", err.message);
-      }
-    );
-  }
+        //Get All Users
+        this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
 
-  openSnackBar(type: "Error" | "Info" | "Success", msg: string) {
-    this._snackBar.open(msg, "Close", {
-      duration: 3000,
-      verticalPosition: "top",
-      horizontalPosition: "center",
-      panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
-    });
-  }
-  displayFn(user: IUser): string {
-    return user && user.firstName ? user.firstName + " " + user.lastName : "";
-  }
+        this.searchCtrl.valueChanges
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                debounceTime(300),
+                switchMap((query) =>
+                {
+                    return this._userService.getUsers(1, 10, query);
+                }),
+                map(() => { })
+            )
+            .subscribe();
+        //create User Form
+        this.userForm = this._formBuilder.group({
+            firstName: ["", [Validators.required]],
+            lastName: ["", [Validators.required]],
+            email: ["", [Validators.required, Validators.email]],
+            mobileNumber: [
+                "",
+                [
+                    Validators.required,
+                    Validators.minLength(10),
+                    Validators.maxLength(10),
+                    Validators.pattern("^[0-9]*$"),
+                ],
+            ],
+            branch: ["", [Validators.required]], //ID
+            departmentId: ["", [Validators.required]], //ID
+            role: ["level3", [Validators.required]],
+            manager: ["", [Validators.required]],
+        });
+
+        //Check for Edit
+        this._userService.selectedUser$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
+        {
+            this.userForm.patchValue(val);
+            this.user = val;
+        });
+    }
+    //On Destroy
+    ngOnDestroy(): void
+    {
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+    }
+
+    //Create User
+    create()
+    {
+        this.userForm.markAllAsTouched();
+        //Check Validation
+        if (this.userForm.invalid) return;
+
+        let obj = { ...this.userForm.value };
+        obj.manager = obj.manager._id;
+        // Create User
+        this._userService.createUser(obj).subscribe(
+            (_) =>
+            {
+                this.openSnackBar("Success", "User Created");
+                this._router.navigate(["../"], { relativeTo: this._activatedRoute });
+            },
+            (err) =>
+            {
+                this.openSnackBar("Error", err.message);
+            }
+        );
+    }
+
+    openSnackBar(type: "Error" | "Info" | "Success", msg: string)
+    {
+        this._snackBar.open(msg, "Close", {
+            duration: 3000,
+            verticalPosition: "top",
+            horizontalPosition: "center",
+            panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+        });
+    }
+    displayFn(user: IUser): string
+    {
+        return user && user.firstName ? user.firstName + " " + user.lastName : "";
+    }
 }

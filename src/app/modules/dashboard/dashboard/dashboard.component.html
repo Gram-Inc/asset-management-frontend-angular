@@ -1,77 +1,48 @@
 <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
-  <!-- Avatar and name -->
-  <div class="flex flex-auto items-center min-w-0">
-    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden"></div>
-    <div class="flex flex-col min-w-0 ml-4">
-      <div class="text-2xl md:text-5xl tracking-tight leading-7 md:leading-snug truncate">
-        Welcome back, <span class="text-orange-500"> {{ user.firstName ?? "" | titlecase }}</span> !
-      </div>
+    <!-- Avatar and name -->
+    <div class="flex flex-auto items-center min-w-0">
+        <div class="flex-0 w-16 h-16 rounded-full overflow-hidden"></div>
+        <div class="flex flex-col min-w-0 ml-4">
+            <div class="text-2xl md:text-5xl tracking-tight leading-7 md:leading-snug truncate">
+                Welcome back, <span class="text-orange-500"> {{ user.firstName | titlecase }}</span> !
+            </div>
 
-      <div class="flex items-center">
-        <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:bell'"></mat-icon>
-        <div class="ml-1.5 leading-6 truncate text-secondary">You have 2 new approval and 15 new tasks</div>
-      </div>
+            <div class="flex items-center">
+                <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:bell'"></mat-icon>
+                <div class="ml-1.5 leading-6 truncate text-secondary">You have 2 new approval and 15 new tasks</div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Actions -->
+    <!-- Actions -->
 </div>
 
 <div class="card-container">
-  <title-card
-    [value]="dashboard.assets.assetStatusCount.IN_POOL"
-    [icon]="'heroicons_outline:archive'"
-    title="In Pool"
-    [color]="'text-orange-500'"
-    [bgColor]="'bg-orange-50'"
-  ></title-card>
-  <title-card
-    [value]="dashboard.assets.assetStatusCount.ASSIGNED"
-    [icon]="'heroicons_outline:user-circle'"
-    title="Assigned"
-    [color]="'text-blue-500'"
-    [bgColor]="'bg-blue-50'"
-  ></title-card>
-  <title-card
-    [value]="dashboard.assets.assetStatusCount.SCRAP"
-    [icon]="'heroicons_outline:trash'"
-    title="Scrap"
-    [color]="'text-red-500'"
-    [bgColor]="'bg-red-50'"
-  ></title-card>
-  <title-card
-    [value]="dashboard.assets.assetStatusCount.DOWN"
-    [icon]="'heroicons_outline:exclamation'"
-    title="Down"
-    [color]="'text-yellow-500'"
-    [bgColor]="'bg-yellow-50'"
-  ></title-card>
+    <title-card [value]="dashboard.assets.assetStatusCount.IN_POOL" [icon]="'heroicons_outline:archive'" title="In Pool"
+        [color]="'text-green-500'" [bgColor]="'bg-green-50'"></title-card>
+    <title-card [value]="dashboard.assets.assetStatusCount.ASSIGNED" [icon]="'heroicons_outline:user-circle'"
+        title="Assigned" [color]="'text-blue-500'" [bgColor]="'bg-blue-50'"></title-card>
+    <title-card [value]="dashboard.assets.assetStatusCount.SCRAP" [icon]="'heroicons_outline:trash'" title="Scrap"
+        [color]="'text-red-500'" [bgColor]="'bg-red-50'"></title-card>
+    <title-card [value]="dashboard.assets.assetStatusCount.DOWN" [icon]="'heroicons_outline:exclamation'" title="Down"
+        [color]="'text-yellow-500'" [bgColor]="'bg-yellow-50'"></title-card>
 </div>
 
 <div class="grid grid-cols-6 gap-6 w-full min-w-0 p-6">
-  <!-- Steps -->
-  <simple-timeline></simple-timeline>
+    <!-- Steps -->
+    <simple-timeline></simple-timeline>
 
-  <!-- Overall Asset Details  -->
-  <overall-branch-asset-detail-table
-    [data]="dashboard.assets"
-    class="sm:col-span-6 md:col-span-6 lg:col-span-6"
-  ></overall-branch-asset-detail-table>
+    <!-- Overall Asset Details  -->
+    <overall-branch-asset-detail-table [data]="dashboard.assets" class="sm:col-span-6 md:col-span-6 lg:col-span-6">
+    </overall-branch-asset-detail-table>
 
-  <!-- Last Created Asset Details  -->
-  <last-created-asset-table
-    [data]="dashboard.assets"
-    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
-  ></last-created-asset-table>
+    <!-- Last Created Asset Details  -->
+    <last-created-asset-table [data]="dashboard.assets" class="sm:col-span-6 md:col-span-3 lg:col-span-3">
+    </last-created-asset-table>
 
-  <!-- Overall User Chart  -->
-  <total-user-card
-    [data]="dashboard.users"
-    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
-  ></total-user-card>
+    <!-- Overall User Chart  -->
+    <total-user-card [data]="dashboard.users" class="sm:col-span-6 md:col-span-3 lg:col-span-3"></total-user-card>
 
-  <!-- New JOinee Status Table -->
-  <new-joinee-status-table
-    [data]="dashboard.users"
-    class="sm:col-span-6 md:col-span-3 lg:col-span-3"
-  ></new-joinee-status-table>
+    <!-- New JOinee Status Table -->
+    <new-joinee-status-table [data]="dashboard.users" class="sm:col-span-6 md:col-span-3 lg:col-span-3">
+    </new-joinee-status-table>
 </div>

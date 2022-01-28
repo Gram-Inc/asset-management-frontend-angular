@@ -1,170 +1,167 @@
 <div class="container mx-auto p-5" [formGroup]="userForm">
-  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-      {{ user ? "Update" : "Create" }} User
-    </h2>
-  </div>
+    <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+            {{ user ? "Update" : "Create" }} User
+        </h2>
+    </div>
 
-  <div class="px-4 py-5 bg-white sm:p-6">
-    <div class="grid grid-cols-6 gap-6">
-      <div class="col-span-6 sm:col-span-3">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-        <input
-          type="text"
-          [formControlName]="'firstName'"
-          [class]="
+    <div class="px-4 py-5 bg-white sm:p-6">
+        <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-3">
+                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                <input type="text" [formControlName]="'firstName'" [class]="
             userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched
               ? 'border-red-500'
               : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
+          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
 
-      <div class="col-span-6 sm:col-span-3">
-        <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-        <input
-          type="text"
-          [formControlName]="'lastName'"
-          [class]="
+            <div class="col-span-6 sm:col-span-3">
+                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                <input type="text" [formControlName]="'lastName'" [class]="
             userForm.controls['lastName'].invalid && userForm.controls['lastName'].touched
               ? 'border-red-500'
               : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
+          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
 
-      <!-- Email Address -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-        <input
-          type="text"
-          [formControlName]="'email'"
-          [class]="
+            <!-- Email Address -->
+            <div class="col-span-6 sm:col-span-3">
+                <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+                <input type="text" [formControlName]="'email'" [class]="
             userForm.controls['email'].invalid && userForm.controls['email'].touched
               ? 'border-red-500'
               : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
+          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
 
-      <!-- Mobile Number -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="street-address" class="block text-sm font-medium text-gray-700">Mobile Number</label>
-        <input
-          type="text"
-          [formControlName]="'mobileNumber'"
-          [class]="
+            <!-- Mobile Number -->
+            <div class="col-span-6 sm:col-span-3">
+                <label for="street-address" class="block text-sm font-medium text-gray-700">Mobile Number</label>
+                <input type="text" [formControlName]="'mobileNumber'" [class]="
             userForm.controls['mobileNumber'].invalid && userForm.controls['mobileNumber'].touched
               ? 'border-red-500'
               : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
+          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            </div>
 
-      <!-- Branch -->
-      <div class="col-span-6 sm:col-span-6">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Branch</label>
-        <select
-          [formControlName]="'branch'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
-        </select>
-        <span
-          *ngIf="
+            <!-- Branch -->
+            <div class="lg:col-span-3 sm:col-span-6">
+                <label for="email-address" class="block text-sm font-medium text-gray-700">Branch</label>
+                <select [formControlName]="'branch'"
+                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                    <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
+                </select>
+                <span *ngIf="
             userForm.controls['branch'].invalid &&
             (userForm.controls['branch'].dirty || userForm.controls['branch'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
+          " class="text-xs text-red-700">*Required.</span>
+            </div>
+            <!-- Department -->
+            <div class="lg:col-span-3 sm:col-span-6">
+                <label class="block text-sm font-medium text-gray-700">Department</label>
+                <select [formControlName]="'departmentId'"
+                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                    <option *ngFor="let department of departments$ | async" [value]="department?._id">
+                        {{ department.name }}
+                    </option>
+                </select>
+                <span *ngIf="
+                        userForm.controls['departmentId'].invalid &&
+                        (userForm.controls['departmentId'].dirty || userForm.controls['departmentId'].touched)
+                      " class="text-xs text-red-700">*Required.</span>
+            </div>
 
-      <!-- Role -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="country" class="block text-sm font-medium text-gray-700">Role</label>
-        <select
-          [formControlName]="'role'"
-          [class]="
-            userForm.controls['role'].invalid && userForm.controls['role'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option value="level1">Level 1</option>
-          <option value="level2">Level 2</option>
-          <option value="level3">Level 3</option>
-        </select>
-        <span
-          *ngIf="
-            userForm.controls['role'].invalid &&
-            (userForm.controls['role'].dirty || userForm.controls['role'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
+            <!-- Roles -->
+            <!-- <label class="block text-sm font-medium text-gray-700">Role</label> -->
+            <div class="col-span-6 flex flex-wrap my-4 gap-5 justify-center">
+                <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level1'}"
+                    (click)="userForm.get('role').setValue('level1')" style="min-width:220px;max-width: 300px;"
+                    class=" cursor-pointer group block   rounded-lg p-6 bg-whitering-1  shadow-lg space-y-3 hover:bg-sky-500 ">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex h-7 w-7">
+                            <div class="animate-ping relative h-full w-full bg-yellow-100 rounded-full"></div>
+                            <mat-icon class=" absolute text-yellow-400 h-7 w-7"
+                                svgIcon="heroicons_outline:shield-check">
+                            </mat-icon>
+                        </div>
+                        <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 1</h3>
+                    </div>
+                    <p class="text-slate-500 group-hover:text-white text-sm">Create a Admin user with full access to all
+                        the
+                        modules.
+                    </p>
+                </div>
+                <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level2'}"
+                    (click)="userForm.get('role').setValue('level2')" style="min-width:220px ;max-width: 300px;"
+                    class="cursor-pointer group block rounded-lg p-6 bg-whitering-1  shadow-lg space-y-3 hover:bg-sky-500 ">
+                    <div class="flex items-center space-x-3">
 
-      <!-- Department -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="city" class="block text-sm font-medium text-gray-700">Department</label>
-        <select
-          [formControlName]="'departmentId'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let department of departments$ | async" [value]="department?._id">
-            {{ department.name }}
-          </option>
-        </select>
-        <span
-          *ngIf="
-            userForm.controls['departmentId'].invalid &&
-            (userForm.controls['departmentId'].dirty || userForm.controls['departmentId'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
+                        <mat-icon class="text-purple-600" svgIcon="heroicons_outline:shield-check"></mat-icon>
 
-      <!-- Manager List / Selection -->
-      <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">
-        <mat-form-field class="w-full">
-          <mat-label>Search Manager</mat-label>
-          <input matInput formControlName="manager" [matAutocomplete]="name" />
-          <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let user of users$ | async" [value]="user">
-              {{ user.firstName + " " + user.lastName }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
+
+                        <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 2</h3>
+                    </div>
+                    <p class="text-slate-500 group-hover:text-white text-sm">Creat a Super Admin user whose permission
+                        can be
+                        customized at grain level.
+                    </p>
+                </div>
+                <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level3'}"
+                    (click)="userForm.get('role').setValue('level3')" style="min-width:220px ;max-width: 300px;"
+                    class="cursor-pointer group block  rounded-lg p-6 bg-whitering-1 shadow-lg space-y-3 hover:bg-sky-500 ">
+                    <div class="flex items-center space-x-3">
+                        <mat-icon class="text-gray-600" svgIcon="heroicons_outline:shield-check"></mat-icon>
+                        <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 3</h3>
+                    </div>
+                    <p class="text-slate-500 group-hover:text-white text-sm">Create a user who is not part of IT
+                        department.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Level 1 -->
+            <ng-container *ngIf="userForm.get('role').value == 'level1'">
+
+            </ng-container>
+
+            <!-- Level 2 -->
+            <ng-container *ngIf="userForm.get('role').value == 'level2'">
+
+            </ng-container>
+
+            <!-- Manager List / Selection -->
+            <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">
+                <mat-form-field class="w-full">
+                    <mat-label>Search Manager</mat-label>
+                    <input matInput formControlName="manager" [matAutocomplete]="name" />
+                    <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let user of users$ | async" [value]="user">
+                            {{ user.firstName + " " + user.lastName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
-    <!-- Cancel -->
-    <ng-container>
-      <button mat-stroked-button [routerLink]="['../']">Back</button>
-    </ng-container>
+    <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+        <!-- Cancel -->
+        <ng-container>
+            <button mat-stroked-button [routerLink]="['../']">Back</button>
+        </ng-container>
 
-    <!-- Confirm -->
-    <ng-container>
-      <span class="sm:ml-3">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-          (click)="create()"
-        >
-          <!-- Heroicon name: solid/check -->
-          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+        <!-- Confirm -->
+        <ng-container>
+            <span class="sm:ml-3">
+                <button type="button"
+                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                    (click)="create()">
+                    <!-- Heroicon name: solid/check -->
+                    <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-          Create
-        </button>
-      </span>
-    </ng-container>
-  </div>
+                    Create
+                </button>
+            </span>
+        </ng-container>
+    </div>
 </div>
