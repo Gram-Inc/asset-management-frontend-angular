@@ -111,7 +111,7 @@
                     (click)="userForm.get('role').setValue('level3')" style="min-width:220px ;max-width: 300px;"
                     class="cursor-pointer group block  rounded-lg p-6 bg-whitering-1 shadow-lg space-y-3 hover:bg-sky-500 ">
                     <div class="flex items-center space-x-3">
-                        <mat-icon class="text-gray-600" svgIcon="heroicons_outline:shield-check"></mat-icon>
+                        <mat-icon class="text-green-300" svgIcon="heroicons_outline:shield-check"></mat-icon>
                         <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 3</h3>
                     </div>
                     <p class="text-slate-500 group-hover:text-white text-sm">Create a user who is not part of IT
@@ -120,15 +120,218 @@
                 </div>
             </div>
 
-            <!-- Level 1 -->
-            <ng-container *ngIf="userForm.get('role').value == 'level1'">
+            <!-- Level 1 & Level 2-->
+            <ng-container *ngIf="userForm.get('role').value == 'level1'|| userForm.get('role').value =='level2'">
+
+                <div class="col-span-6 flex flex-col">
+                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col"
+                                                class="pl-10 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Feature
+                                            </th>
+
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Access Type
+                                            </th>
+
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+
+                                            <!-- Feature / Module Name -->
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.Asset) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.Asset) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.Asset) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        Asset
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- Access Policy  -->
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.Asset)}}
+                                                </div>
+                                            </td>
+
+                                            <!-- Access Type Dropdown -->
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class=" text-gray-900">
+                                                    <button mat-button [matMenuTriggerFor]="assetMenu">Change</button>
+                                                    <mat-menu #assetMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.Asset)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.Asset)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.Asset)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.Asset)">Full</button>
+                                                    </mat-menu>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="hover:bg-orange-50 cursor-pointer">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.Ticket) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.Ticket) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.Ticket) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        Ticket
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.Ticket) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50 cursor-pointer">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.User) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.User) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.User) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        User
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.User) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50 cursor-pointer">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.UAM) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.UAM) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.UAM) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        U.A.M
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.UAM) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50 cursor-pointer">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.Vendor) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.Vendor) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.Vendor) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        Vendor
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.Vendor) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-orange-50 cursor-pointer">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center  pl-4 gap-4">
+                                                    <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
+                                                    {
+                                                        'bg-yellow-300' : getAccessPolicy(features.Branch) == accessTypes.FullAccess,
+                                                        'bg-purple-300' : getAccessPolicy(features.Branch) == accessTypes.ReadWrite,
+                                                        'bg-green-300' : getAccessPolicy(features.Branch) == accessTypes.Read
+                                                }"></div>
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        Branch
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-blue-600">
+                                                    {{getAccessPolicy(features.Branch) }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </ng-container>
 
-            <!-- Level 2 -->
-            <ng-container *ngIf="userForm.get('role').value == 'level2'">
+            <!-- Level 3 -->
+            <ng-container *ngIf="userForm.get('role').value == 'level3'">
 
             </ng-container>
+
 
             <!-- Manager List / Selection -->
             <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">

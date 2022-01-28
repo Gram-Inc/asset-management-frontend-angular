@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
+import { PermissionService } from "src/app/core/auth/permission.service";
+import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { DepartmentService } from "src/app/core/department/department.service";
@@ -21,6 +23,12 @@ import { IUser } from "src/app/core/user/user.types";
         .mat-dialog-container {
           padding: 0 !important;
         }
+      }
+      .mat-form-field-appearance-outline .mat-form-field-wrapper{
+          margin : 0px !important;
+      }
+      .mat-form-field-wrapper{
+          padding:0px !important;
       }
     `,
     ],
@@ -43,6 +51,12 @@ export class DetailsComponent implements OnInit, OnDestroy
     departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
     searchCtrl: FormControl = new FormControl("", [Validators.required]);
 
+    //permission
+    //Features
+    features = ModuleTypes;
+    accessTypes = AccessType;
+
+    assetCtrl
     //Constructor
     constructor(
         private _formBuilder: FormBuilder,
@@ -51,8 +65,13 @@ export class DetailsComponent implements OnInit, OnDestroy
         private _departmentService: DepartmentService,
         private _snackBar: MatSnackBar,
         private _router: Router,
-        private _activatedRoute: ActivatedRoute
-    ) { }
+        private _activatedRoute: ActivatedRoute,
+        public permissionService: PermissionService,
+        private _changeDetectorRef: ChangeDetectorRef
+    )
+    {
+
+    }
 
     // Life Cycle Hooks
 
@@ -94,8 +113,9 @@ export class DetailsComponent implements OnInit, OnDestroy
             ],
             branch: ["", [Validators.required]], //ID
             departmentId: ["", [Validators.required]], //ID
-            role: ["level3", [Validators.required]],
+            role: ["level1", [Validators.required]],
             manager: ["", [Validators.required]],
+            permissions: [this.permissionService.permssions,]
         });
 
         //Check for Edit
@@ -104,6 +124,23 @@ export class DetailsComponent implements OnInit, OnDestroy
             this.userForm.patchValue(val);
             this.user = val;
         });
+
+        //Check For Changes in Policy / Permission
+        this.userForm.get('role').valueChanges.subscribe((val) =>
+        {
+            if (val == 'level1') { this.userForm.get('permissions').setValue(this.permissionService.permssions); }
+            if (val == 'level2')
+
+                this.userForm.get('permissions').setValue([]);
+
+            if (val == 'level3')
+
+                this.userForm.get('permissions').setValue([]);
+
+
+            this._changeDetectorRef.detectChanges();
+
+        })
     }
     //On Destroy
     ngOnDestroy(): void
@@ -148,4 +185,22 @@ export class DetailsComponent implements OnInit, OnDestroy
     {
         return user && user.firstName ? user.firstName + " " + user.lastName : "";
     }
+
+    getAccessPolicy(module)
+    {
+        return this.permissionService.checkPermission(this.userForm.get('permissions').value, module)
+
+    }
+
+    setAccessType(accessType, module)
+    {
+        // Remove Existing Access
+        let x = (this.userForm.get('permissions').value as string[]).filter(x => !(x.toUpperCase().includes(module)))
+
+        console.log(x);
+
+        //Set Selected Acess
+        this.userForm.get('permissions').setValue([...x, ...this.permissionService.getArrOfPolicyByAccessType(module, accessType)]);
+    }
+
 }
