@@ -19,6 +19,8 @@ import { DetailsComponent } from "./modules/user/details/details.component";
 import { BytesToGBPipe } from "./core/pipes/bytes-to-gb.pipe";
 import { LoadingBarComponent } from "./custom/components/loading-bar/loading-bar.component";
 import { LoadingBarModule } from "./custom/components/loading-bar/loading-bar.module";
+import { NotFoundComponent } from "./modules/error/not-found/not-found.component";
+import { ServerUnavailableComponent } from "./modules/error/server-unavailable/server-unavailable.component";
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy: PreloadAllModules,
@@ -27,15 +29,7 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent, AsideComponent, DetailsComponent],
-  imports: [
-    AuthModule,
-    BrowserModule,
-    RouterModule.forRoot(routes, routerConfig),
-    SharedModule,
-    BrowserAnimationsModule,
-    CustomMaterialModule.forRoot(),
-    LoadingBarModule,
-  ],
+  imports: [AuthModule, BrowserModule, RouterModule.forRoot(routes, routerConfig), SharedModule, BrowserAnimationsModule, CustomMaterialModule.forRoot(), LoadingBarModule],
   providers: [],
   bootstrap: [AppComponent],
 })

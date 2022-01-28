@@ -12,6 +12,7 @@ export class LoadingService {
   private _urlMap: Map<string, boolean> = new Map<string, boolean>();
 
   constructor(@Inject(DOCUMENT) private _document: any, private _router: Router) {
+    console.log("Service");
     // Hide it on the first NavigationEnd event
     this._router.events
       .pipe(
@@ -64,6 +65,7 @@ export class LoadingService {
    * Hide the splash screen
    */
   hide(): void {
+    console.log("Navigation End");
     this._document.body.classList.add("rikiel-splash-screen-hidden");
   }
 }
