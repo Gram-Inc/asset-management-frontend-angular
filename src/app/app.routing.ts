@@ -12,91 +12,92 @@ import { DashboardResolver } from "./core/dashboard/dashboard.resolver";
 import { LayoutComponent } from "./layout/layout.component";
 
 export const routes: Route[] = [
-  { path: "", pathMatch: "full", redirectTo: "dashboard" },
+    { path: "", pathMatch: "full", redirectTo: "dashboard" },
 
-  {
-    path: "signed-in-redirect",
-    pathMatch: "full",
-    redirectTo: "dashboard",
-  },
-  {
-    path: "not-found",
-    loadChildren: () => import("./modules/error/not-found/not-found.module").then((x) => x.NotFoundModule),
-  },
-  {
-    path: "unauthorized",
-    loadChildren: () => import("./modules/error/unauthorized/unauthorized.module").then((x) => x.UnauthorizedModule),
-  },
-  {
-    path: "server-unavailable",
-    loadChildren: () => import("./modules/error/server-unavailable/server-unavailable.module").then((x) => x.ServerUnavailableModule),
-  },
-  //No Auth Guard
-  {
-    path: "",
-    canActivate: [NoAuthGuard],
-    canActivateChild: [NoAuthGuard],
-    data: {
-      layout: "",
-    },
-    children: [
-      {
-        path: "sign-in",
-        loadChildren: () => import("./modules/auth/sign-in/sign-in.module").then((x) => x.SignInModule),
-      },
-    ],
-  },
-  // Admin routes
-  {
-    path: "",
-    component: LayoutComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    resolve: {
-      initialData: InitialDataResolver,
+    {
+        path: "signed-in-redirect",
+        pathMatch: "full",
+        redirectTo: "dashboard",
     },
 
-    children: [
-      {
-        path: "dashboard",
-        resolve: [DashboardResolver],
-        loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
-      },
-      {
-        path: "asset",
-        canActivate: [AssetGuard],
-        loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
-      },
-      {
-        path: "ticket",
-        canActivate: [TicketGuard],
-        loadChildren: () => import("./modules/ticket/ticket.module").then((x) => x.TicketModule),
-      },
-      {
-        path: "user",
-        canActivate: [UserGuard],
-        loadChildren: () => import("./modules/user/user.module").then((x) => x.UserModule),
-      },
-      {
-        path: "branch",
-        canActivate: [BranchGuard],
-        loadChildren: () => import("./modules/branch/branch.module").then((x) => x.BranchModule),
-      },
-      {
-        path: "uam",
-        canActivate: [UamGuard],
-        loadChildren: () => import("./modules/uam/uam.module").then((x) => x.UamModule),
-      },
-      {
-        path: "vendor",
-        canActivate: [VendorGuard],
-        loadChildren: () => import("./modules/vendor/vendor.module").then((x) => x.VendorModule),
-      },
-    ],
-  },
-  {
-    path: "sign-out",
-    canActivate: [AuthGuard],
-    loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
-  },
+    //No Auth Guard
+    {
+        path: "",
+        canActivate: [NoAuthGuard],
+        canActivateChild: [NoAuthGuard],
+        data: {
+            layout: "",
+        },
+        children: [
+            {
+                path: "sign-in",
+                loadChildren: () => import("./modules/auth/sign-in/sign-in.module").then((x) => x.SignInModule),
+            },
+            {
+                path: "not-found",
+                loadChildren: () => import("./modules/error/not-found/not-found.module").then((x) => x.NotFoundModule),
+            },
+            {
+                path: "unauthorized",
+                loadChildren: () => import("./modules/error/unauthorized/unauthorized.module").then((x) => x.UnauthorizedModule),
+            },
+            {
+                path: "server-unavailable",
+                loadChildren: () => import("./modules/error/server-unavailable/server-unavailable.module").then((x) => x.ServerUnavailableModule),
+            },
+        ],
+    },
+    // Admin routes
+    {
+        path: "",
+        component: LayoutComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        resolve: {
+            initialData: InitialDataResolver,
+        },
+
+        children: [
+            {
+                path: "dashboard",
+                resolve: [DashboardResolver],
+                loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
+            },
+            {
+                path: "asset",
+                canActivate: [AssetGuard],
+                loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
+            },
+            {
+                path: "ticket",
+                canActivate: [TicketGuard],
+                loadChildren: () => import("./modules/ticket/ticket.module").then((x) => x.TicketModule),
+            },
+            {
+                path: "user",
+                canActivate: [UserGuard],
+                loadChildren: () => import("./modules/user/user.module").then((x) => x.UserModule),
+            },
+            {
+                path: "branch",
+                canActivate: [BranchGuard],
+                loadChildren: () => import("./modules/branch/branch.module").then((x) => x.BranchModule),
+            },
+            {
+                path: "uam",
+                canActivate: [UamGuard],
+                loadChildren: () => import("./modules/uam/uam.module").then((x) => x.UamModule),
+            },
+            {
+                path: "vendor",
+                canActivate: [VendorGuard],
+                loadChildren: () => import("./modules/vendor/vendor.module").then((x) => x.VendorModule),
+            },
+        ],
+    },
+    {
+        path: "sign-out",
+        canActivate: [AuthGuard],
+        loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
+    },
 ];
