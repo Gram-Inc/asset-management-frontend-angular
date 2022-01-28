@@ -88,7 +88,7 @@ export class PermissionService
             case AccessType.Read:
                 return per.filter((x) => x.toUpperCase().includes('VIEW'))
             case AccessType.ReadWrite:
-                return per.filter((x) => x.toUpperCase().includes('UPDATE') || x.toUpperCase().includes('CREATE'))
+                return per.filter((x) => x.toUpperCase().includes('UPDATE') || x.toUpperCase().includes('CREATE') || x.toUpperCase().includes('VIEW'))
             default:
                 new Error("Access Type not defined");
                 return [];

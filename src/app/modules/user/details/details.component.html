@@ -111,7 +111,7 @@
                     (click)="userForm.get('role').setValue('level3')" style="min-width:220px ;max-width: 300px;"
                     class="cursor-pointer group block  rounded-lg p-6 bg-whitering-1 shadow-lg space-y-3 hover:bg-sky-500 ">
                     <div class="flex items-center space-x-3">
-                        <mat-icon class="text-green-300" svgIcon="heroicons_outline:shield-check"></mat-icon>
+                        <mat-icon class="text-green-500" svgIcon="heroicons_outline:shield-check"></mat-icon>
                         <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 3</h3>
                     </div>
                     <p class="text-slate-500 group-hover:text-white text-sm">Create a user who is not part of IT
@@ -149,16 +149,16 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
+                                        <!-- Asset -->
                                         <tr>
-
                                             <!-- Feature / Module Name -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.Asset) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.Asset) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.Asset) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.Asset) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.Asset) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         Asset
@@ -176,7 +176,11 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button mat-button [matMenuTriggerFor]="assetMenu">Change</button>
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="assetMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
                                                     <mat-menu #assetMenu="matMenu">
                                                         <button mat-menu-item
                                                             (click)="setAccessType(accessTypes.NoAcess,features.Asset)">N/A</button>
@@ -191,15 +195,15 @@
                                                 </div>
                                             </td>
                                         </tr>
-
+                                        <!-- Ticket -->
                                         <tr class="hover:bg-orange-50 cursor-pointer">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.Ticket) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.Ticket) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.Ticket) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.Ticket) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.Ticket) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         Ticket
@@ -211,20 +215,38 @@
                                                     {{getAccessPolicy(features.Ticket) }}
                                                 </div>
                                             </td>
+                                            <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-
+                                                <div class=" text-gray-900">
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="ticketMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #ticketMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.Ticket)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.Ticket)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.Ticket)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.Ticket)">Full</button>
+                                                    </mat-menu>
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <!-- User -->
                                         <tr class="hover:bg-orange-50 cursor-pointer">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.User) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.User) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.User) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.User) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.User) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         User
@@ -236,20 +258,38 @@
                                                     {{getAccessPolicy(features.User) }}
                                                 </div>
                                             </td>
+                                            <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-
+                                                <div class=" text-gray-900">
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="userMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #userMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.User)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.User)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.User)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.User)">Full</button>
+                                                    </mat-menu>
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <!-- UAM -->
                                         <tr class="hover:bg-orange-50 cursor-pointer">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.UAM) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.UAM) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.UAM) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.UAM) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.UAM) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         U.A.M
@@ -261,20 +301,37 @@
                                                     {{getAccessPolicy(features.UAM) }}
                                                 </div>
                                             </td>
+                                            <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-
+                                                <div class=" text-gray-900">
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="uamMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #uamMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.UAM)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.UAM)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.UAM)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.UAM)">Full</button>
+                                                    </mat-menu>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <!-- Vendor -->
                                         <tr class="hover:bg-orange-50 cursor-pointer">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.Vendor) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.Vendor) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.Vendor) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.Vendor) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.Vendor) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         Vendor
@@ -286,20 +343,37 @@
                                                     {{getAccessPolicy(features.Vendor) }}
                                                 </div>
                                             </td>
+                                            <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-
+                                                <div class=" text-gray-900">
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="vendorMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #vendorMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.Vendor)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.Vendor)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.Vendor)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.Vendor)">Full</button>
+                                                    </mat-menu>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <!-- Branch -->
                                         <tr class="hover:bg-orange-50 cursor-pointer">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center  pl-4 gap-4">
                                                     <div class="w-6 block bg-gray-200 h-6 rounded-md " [ngClass]="
                                                     {
                                                         'bg-yellow-300' : getAccessPolicy(features.Branch) == accessTypes.FullAccess,
-                                                        'bg-purple-300' : getAccessPolicy(features.Branch) == accessTypes.ReadWrite,
-                                                        'bg-green-300' : getAccessPolicy(features.Branch) == accessTypes.Read
+                                                        'bg-purple-500' : getAccessPolicy(features.Branch) == accessTypes.ReadWrite,
+                                                        'bg-green-500' : getAccessPolicy(features.Branch) == accessTypes.Read
                                                 }"></div>
                                                     <div class="text-sm font-medium text-gray-900">
                                                         Branch
@@ -311,9 +385,25 @@
                                                     {{getAccessPolicy(features.Branch) }}
                                                 </div>
                                             </td>
+                                            <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">
-
+                                                <div class=" text-gray-900">
+                                                    <button type="button"
+                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                                        matTooltip="Edit" [matMenuTriggerFor]="branchMenu">
+                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                                    </button>
+                                                    <mat-menu #branchMenu="matMenu">
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.NoAcess,features.Branch)">N/A</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.Read,features.Branch)">Read</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.ReadWrite,features.Branch)">Read
+                                                            / Write</button>
+                                                        <button mat-menu-item
+                                                            (click)="setAccessType(accessTypes.FullAccess,features.Branch)">Full</button>
+                                                    </mat-menu>
                                                 </div>
                                             </td>
                                         </tr>
