@@ -61,7 +61,7 @@
             </mat-form-field>
 
             <!-- Roles -->
-            <div class="col-span-6 flex flex-wrap my-4 gap-5 justify-center">
+            <div class="col-span-6 flex flex-wrap my-4 mb-8 gap-5 justify-center">
                 <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level1'}"
                     (click)="userForm.get('role').setValue('level1')" style="min-width:220px;max-width: 300px;"
                     class=" cursor-pointer group block   rounded-lg p-6 bg-whitering-1  shadow-lg space-y-3 hover:bg-sky-500 ">
@@ -167,9 +167,9 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="assetMenu">
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="assetMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #assetMenu="matMenu">
@@ -217,9 +217,9 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="ticketMenu">
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="ticketMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #ticketMenu="matMenu">
@@ -270,9 +270,9 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="userMenu">
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="userMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #userMenu="matMenu">
@@ -320,9 +320,9 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="uamMenu">
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="uamMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #uamMenu="matMenu">
@@ -373,9 +373,10 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="vendorMenu">
+
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="vendorMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #vendorMenu="matMenu">
@@ -425,9 +426,9 @@
                                             <!-- Access Type Dropdown -->
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class=" text-gray-900">
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" [matMenuTriggerFor]="branchMenu">
+                                                    <button type="button" mat-stroked-button matTooltip="Edit"
+                                                        [disabled]="userForm.get('role').value == 'level1'"
+                                                        [matMenuTriggerFor]="branchMenu">
                                                         Edit
                                                     </button>
                                                     <mat-menu #branchMenu="matMenu">

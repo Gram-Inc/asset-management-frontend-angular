@@ -33,7 +33,11 @@ export class PermissionService
         "VendorCreate",
         "VendorView",
         "VendorUpdate",
-        "VendorDelete"
+        "VendorDelete",
+        "UserCreate",
+        "UserView",
+        "UserUpdate",
+        "UserDelete"
     ];
     constructor() { }
 
