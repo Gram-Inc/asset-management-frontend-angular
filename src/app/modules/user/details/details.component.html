@@ -53,8 +53,8 @@
             <mat-form-field class="col-span-6 sm:col-span-6" style="font-size: small">
                 <mat-label>Search Manager</mat-label>
                 <input matInput formControlName="manager" [matAutocomplete]="name" />
-                <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let user of users$ | async" [value]="user">
+                <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn.bind(this) ">
+                    <mat-option *ngFor="let user of users" [value]="user._id">
                         {{ user.firstName + " " + user.lastName }}
                     </mat-option>
                 </mat-autocomplete>

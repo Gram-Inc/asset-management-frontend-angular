@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
-import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
+import { debounceTime, filter, map, switchMap, take, takeUntil } from "rxjs/operators";
 import { PermissionService } from "src/app/core/auth/permission.service";
 import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
 import { BranchService } from "src/app/core/branch/branch.service";
@@ -38,7 +38,7 @@ export class DetailsComponent implements OnInit, OnDestroy
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    users$: Observable<IUser[]> = new Observable<IUser[]>();
+    users: IUser[] = [];
 
     userForm: FormGroup;
 
@@ -84,7 +84,10 @@ export class DetailsComponent implements OnInit, OnDestroy
         this.departments$ = this._departmentService.departments$.pipe(takeUntil(this._unsubscribeAll));
 
         //Get All Users
-        this.users$ = this._userService.users$.pipe(takeUntil(this._unsubscribeAll));
+        this._userService.users$.pipe(takeUntil(this._unsubscribeAll)).subscribe((users) =>
+        {
+            this.users = users;
+        });
 
         this.searchCtrl.valueChanges
             .pipe(
@@ -207,9 +210,10 @@ export class DetailsComponent implements OnInit, OnDestroy
             panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
         });
     }
-    displayFn(user: IUser): string
+    displayFn(userId)
     {
-        return user && user.firstName ? user.firstName + " " + user.lastName : "";
+        let x = this.users.find(usr => usr._id == userId);
+        return x?.firstName ?? '';
     }
 
     compareFn(c1, c2): boolean

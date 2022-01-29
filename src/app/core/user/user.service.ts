@@ -188,17 +188,12 @@ export class UserService
 
     getUserById(id: string): Observable<IUser>
     {
-        return this._users.pipe(
-            take(1),
-            map((users) =>
+        return this._httpClient.get<IDTO>(`${this._baseUrl}/users/${id}`).pipe(
+            map((response) =>
             {
-                const usr = users.find((usr) => usr._id == id || null);
-
-                this._selectedUser.next(usr); // Change this
-
-                return usr;
-            }),
-            switchMap((usr) =>
+                this._selectedUser.next(response.data);
+                return response.data;
+            }), switchMap((usr) =>
             {
                 if (!usr)
                 {
@@ -209,7 +204,29 @@ export class UserService
 
                 return of(usr);
             })
-        );
+        )
+        // return this._users.pipe(
+        //     take(1),
+        //     map((users) =>
+        //     {
+        //         const usr = users.find((usr) => usr._id == id || null);
+
+        //         this._selectedUser.next(usr); // Change this
+
+        //         return usr;
+        //     }),
+        //     switchMap((usr) =>
+        //     {
+        //         if (!usr)
+        //         {
+        //             return throwError(
+        //                 'Could not found user with id of ' + id + '!'
+        //             );
+        //         }
+
+        //         return of(usr);
+        //     })
+        // );
     }
 
     /**
