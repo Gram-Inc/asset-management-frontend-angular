@@ -121,7 +121,12 @@ export class DetailsComponent implements OnInit, OnDestroy
         //Check for Edit
         this._userService.selectedUser$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
         {
+            if (!val) return;
             this.userForm.patchValue(val);
+            // Patch Value of Deparment
+            this.userForm.get('departmentId').setValue(typeof val.departmentId == "object" ? val.departmentId._id : val.departmentId)
+            this.userForm.get('branch').setValue(typeof val.branch == "object" ? val.branch._id : val.branch)
+            // this.userForm.get('manager').setValue(this._use)
             this.user = val;
         });
 
@@ -164,13 +169,17 @@ export class DetailsComponent implements OnInit, OnDestroy
             this._userService.updateUser(this.user._id, obj).subscribe(
                 (_) =>
                 {
+                    console.log("Updated")
                     this.openSnackBar("Success", "User Updated");
-                    this._router.navigate(["../"], {
-                        relativeTo: this._activatedRoute,
-                    });
+                    this._router.navigate(["../../"]
+                        , {
+                            relativeTo: this._activatedRoute,
+                        }
+                    );
                 },
                 (err) =>
                 {
+                    console.log("Err")
                     this.openSnackBar("Error", err.message);
                 }
             );
@@ -203,6 +212,10 @@ export class DetailsComponent implements OnInit, OnDestroy
         return user && user.firstName ? user.firstName + " " + user.lastName : "";
     }
 
+    compareFn(c1, c2): boolean
+    {
+        return c1 && c2 ? c1._id == c2._id : c1 == c2;
+    }
     getAccessPolicy(module)
     {
         return this.permissionService.checkPermission(this.userForm.get('permissions').value, module)

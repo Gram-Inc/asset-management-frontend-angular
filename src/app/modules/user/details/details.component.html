@@ -6,74 +6,61 @@
     </div>
 
     <div class="px-4 py-5 bg-white sm:p-6">
-        <div class="grid grid-cols-6 gap-6">
-            <div class="col-span-6 sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                <input type="text" [formControlName]="'firstName'" [class]="
-            userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-            </div>
+        <div class="grid grid-cols-6 gap-x-6 text-xs">
+            <!-- First NAme -->
+            <mat-form-field class="col-span-6 sm:col-span-3">
+                <mat-label>First Name</mat-label>
+                <input [formControlName]="'firstName'" matInput />
+            </mat-form-field>
 
-            <div class="col-span-6 sm:col-span-3">
-                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                <input type="text" [formControlName]="'lastName'" [class]="
-            userForm.controls['lastName'].invalid && userForm.controls['lastName'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-            </div>
+            <!-- First NAme -->
+            <mat-form-field class="col-span-6 sm:col-span-3">
+                <mat-label>Last Name</mat-label>
+                <input [formControlName]="'lastName'" matInput />
+            </mat-form-field>
 
             <!-- Email Address -->
-            <div class="col-span-6 sm:col-span-3">
-                <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                <input type="text" [formControlName]="'email'" [class]="
-            userForm.controls['email'].invalid && userForm.controls['email'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-            </div>
+            <mat-form-field class="col-span-6 sm:col-span-3">
+                <mat-label>Email Address</mat-label>
+                <input [formControlName]="'email'" matInput />
+            </mat-form-field>
 
             <!-- Mobile Number -->
-            <div class="col-span-6 sm:col-span-3">
-                <label for="street-address" class="block text-sm font-medium text-gray-700">Mobile Number</label>
-                <input type="text" [formControlName]="'mobileNumber'" [class]="
-            userForm.controls['mobileNumber'].invalid && userForm.controls['mobileNumber'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-            </div>
+            <mat-form-field class="col-span-6 sm:col-span-3">
+                <mat-label>Mobile Number</mat-label>
+                <input [formControlName]="'mobileNumber'" matInput />
+            </mat-form-field>
 
             <!-- Branch -->
-            <div class="lg:col-span-3 sm:col-span-6">
-                <label for="email-address" class="block text-sm font-medium text-gray-700">Branch</label>
-                <select [formControlName]="'branch'"
-                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
-                    <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
-                </select>
-                <span *ngIf="
-            userForm.controls['branch'].invalid &&
-            (userForm.controls['branch'].dirty || userForm.controls['branch'].touched)
-          " class="text-xs text-red-700">*Required.</span>
-            </div>
+            <mat-form-field class="lg:col-span-3 sm:col-span-6">
+                <mat-label>Branch</mat-label>
+                <mat-select formControlName="branch">
+                    <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <!-- Department -->
-            <div class="lg:col-span-3 sm:col-span-6">
-                <label class="block text-sm font-medium text-gray-700">Department</label>
-                <select [formControlName]="'departmentId'"
-                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
-                    <option *ngFor="let department of departments$ | async" [value]="department?._id">
-                        {{ department.name }}
-                    </option>
-                </select>
-                <span *ngIf="
-                        userForm.controls['departmentId'].invalid &&
-                        (userForm.controls['departmentId'].dirty || userForm.controls['departmentId'].touched)
-                      " class="text-xs text-red-700">*Required.</span>
-            </div>
+            <mat-form-field class="lg:col-span-3 sm:col-span-6">
+                <mat-label>Department</mat-label>
+                <mat-select [compareWith]="compareFn" formControlName="departmentId">
+                    <mat-option *ngFor="let department of departments$ | async" [value]="department?._id">
+                        {{ department.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Manager List / Selection -->
+            <mat-form-field class="col-span-6 sm:col-span-6" style="font-size: small">
+                <mat-label>Search Manager</mat-label>
+                <input matInput formControlName="manager" [matAutocomplete]="name" />
+                <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let user of users$ | async" [value]="user">
+                        {{ user.firstName + " " + user.lastName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
 
             <!-- Roles -->
-            <!-- <label class="block text-sm font-medium text-gray-700">Role</label> -->
             <div class="col-span-6 flex flex-wrap my-4 gap-5 justify-center">
                 <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level1'}"
                     (click)="userForm.get('role').setValue('level1')" style="min-width:220px;max-width: 300px;"
@@ -471,20 +458,6 @@
             <ng-container *ngIf="userForm.get('role').value == 'level3'">
 
             </ng-container>
-
-
-            <!-- Manager List / Selection -->
-            <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">
-                <mat-form-field class="w-full">
-                    <mat-label>Search Manager</mat-label>
-                    <input matInput formControlName="manager" [matAutocomplete]="name" />
-                    <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
-                        <mat-option *ngFor="let user of users$ | async" [value]="user">
-                            {{ user.firstName + " " + user.lastName }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </div>
         </div>
     </div>
     <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">

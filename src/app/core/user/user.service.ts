@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
+import
+{
     Observable,
     ReplaySubject,
     of,
@@ -15,7 +16,8 @@ import { IUser } from './user.types';
 @Injectable({
     providedIn: 'root',
 })
-export class UserService {
+export class UserService
+{
     private _baseUrl = environment.baseUrl;
 
     private _user: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
@@ -26,53 +28,63 @@ export class UserService {
     private _pagination: BehaviorSubject<IPagination | null> =
         new BehaviorSubject<IPagination | null>(null);
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
     /**
      *   @param value
      **/
-    set user(value: IUser) {
+    set user(value: IUser)
+    {
         this._user.next(value);
     }
 
-    get user$(): Observable<IUser> {
+    get user$(): Observable<IUser>
+    {
         return this._user.asObservable();
     }
 
-    set selectedUser(value: IUser) {
+    set selectedUser(value: IUser)
+    {
         this._selectedUser.next(value);
     }
 
-    get selectedUser$(): Observable<IUser> {
+    get selectedUser$(): Observable<IUser>
+    {
         return this._selectedUser.asObservable();
     }
 
-    get users$(): Observable<IUser[]> {
+    get users$(): Observable<IUser[]>
+    {
         return this._users.asObservable();
     }
 
-    get pagination$(): Observable<IPagination> {
+    get pagination$(): Observable<IPagination>
+    {
         return this._pagination.asObservable();
     }
     // /* Get current logged in user data */
     /**
      * Get the current logged in user data
      */
-    get(): Observable<IUser> {
+    get(): Observable<IUser>
+    {
         return this._httpClient
             .get<any>(this._baseUrl + '/users/current-user')
             .pipe(
-                tap((res) => {
+                tap((res) =>
+                {
                     this._user.next(res.data);
                 })
             );
     }
 
-    clrSelectedUser() {
+    clrSelectedUser()
+    {
         this._selectedUser.next(null);
     }
 
-    getUsers(page: number = 1, limit: number = 10, searchText: string = '') {
+    getUsers(page: number = 1, limit: number = 10, searchText: string = '')
+    {
         return this._httpClient
             .get<IDTO>(`${this._baseUrl}/users/paginate`, {
                 params: {
@@ -82,7 +94,8 @@ export class UserService {
                 },
             })
             .pipe(
-                tap((response: IDTO) => {
+                tap((response: IDTO) =>
+                {
                     this._users.next(response.data);
 
                     let _pg: IPagination = {
@@ -101,7 +114,8 @@ export class UserService {
      *
      * @param user
      */
-    createUser(user: IUser): Observable<IUser> {
+    createUser(user: IUser): Observable<IUser>
+    {
         delete user._id;
         return this.users$.pipe(
             take(1),
@@ -109,7 +123,8 @@ export class UserService {
                 this._httpClient
                     .post<IDTO>(`${this._baseUrl}/auth/sign-up`, user)
                     .pipe(
-                        map((response) => {
+                        map((response) =>
+                        {
                             // Update the tags with the new tag
                             this._users.next([...users, response.data]);
                             // Return new tag from observable
@@ -126,7 +141,8 @@ export class UserService {
      * @param _id
      * @param ast
      */
-    updateUser(_id: string, ast: IUser): Observable<IUser> {
+    updateUser(_id: string, ast: IUser): Observable<IUser>
+    {
         delete ast._id;
         return this.users$.pipe(
             take(1),
@@ -134,7 +150,8 @@ export class UserService {
                 this._httpClient
                     .put<IUser>(`${this._baseUrl}/users/${_id}`, ast)
                     .pipe(
-                        map((updatedUser) => {
+                        map((updatedUser) =>
+                        {
                             // Find the index of the updated user
                             const index = users.findIndex(
                                 (item) => item._id === _id
@@ -149,36 +166,42 @@ export class UserService {
                             // Return the updated user
                             return updatedUser;
                         }),
-                        switchMap((updatedUser) =>
-                            this.user$.pipe(
-                                take(1),
-                                filter((asmnt) => asmnt && asmnt._id === _id),
-                                tap(() => {
-                                    // Update the user if it's selected
-                                    this._selectedUser.next(updatedUser);
-
-                                    // Return the updated user
-                                    return updatedUser;
-                                })
-                            )
-                        )
+                        // switchMap((updatedUser) =>
+                        //     this.user$.pipe(
+                        //         take(1),
+                        //         filter((usr) => usr && usr._id === _id),
+                        //         tap((_) =>
+                        //         {
+                        //             console.log(_)
+                        //             // Update the user if it's selected
+                        //             this._selectedUser.next(updatedUser);
+                        //             console.log(updatedUser)
+                        //             // Return the updated user
+                        //             return updatedUser;
+                        //         })
+                        //     )
+                        // )
                     )
             )
         );
     }
 
-    getUserById(id: string): Observable<IUser> {
+    getUserById(id: string): Observable<IUser>
+    {
         return this._users.pipe(
             take(1),
-            map((users) => {
+            map((users) =>
+            {
                 const usr = users.find((usr) => usr._id == id || null);
 
                 this._selectedUser.next(usr); // Change this
 
                 return usr;
             }),
-            switchMap((usr) => {
-                if (!usr) {
+            switchMap((usr) =>
+            {
+                if (!usr)
+                {
                     return throwError(
                         'Could not found user with id of ' + id + '!'
                     );
@@ -194,12 +217,14 @@ export class UserService {
      *
      * @param _id
      */
-    deleteUser(_id: string): Observable<boolean> {
+    deleteUser(_id: string): Observable<boolean>
+    {
         return this.users$.pipe(
             take(1),
             switchMap((users) =>
                 this._httpClient.delete(`${this._baseUrl}/user/${_id}`).pipe(
-                    map((isDeleted: boolean) => {
+                    map((isDeleted: boolean) =>
+                    {
                         // Find the index of the deleted user
                         const index = users.findIndex(
                             (item) => item._id === _id

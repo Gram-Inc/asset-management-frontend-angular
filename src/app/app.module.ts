@@ -22,7 +22,7 @@ import { LoadingBarModule } from "./custom/components/loading-bar/loading-bar.mo
 import { AccessPillComponent } from './custom/components/access-pill/access-pill.component';
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy: PreloadAllModules,
+    // preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: "enabled",
 };
 
