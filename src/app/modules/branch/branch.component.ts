@@ -26,7 +26,7 @@ export class BranchComponent implements OnInit
   */
    canExport(): Observable<boolean>
    {
-      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Ticket).pipe(
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Branch).pipe(
          switchMap(value =>
          {
             //User should be able to Export only if He has full access
@@ -38,7 +38,7 @@ export class BranchComponent implements OnInit
 
    canCreate(): Observable<boolean>
    {
-      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Ticket).pipe(
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Branch).pipe(
          switchMap(value =>
          {
             //User should be able to Create only if He has Readwrite or full access

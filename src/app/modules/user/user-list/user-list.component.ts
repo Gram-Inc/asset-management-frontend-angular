@@ -225,7 +225,7 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
       return this._permissionService.checkCurrentUserPermission(ModuleTypes.User).pipe(
          switchMap(value =>
          {
-            //User should be able to Create only if He has Readwrite or full access
+            //User should be able to Edit only if He has Readwrite or full access
             if (value == AccessType.ReadWrite || value == AccessType.FullAccess) return of(true);
             return of(false);
          })
