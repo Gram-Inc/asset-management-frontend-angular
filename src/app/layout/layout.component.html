@@ -83,8 +83,10 @@
                      </div>
                   </mat-expansion-panel-header>
                   <app-aside [routerString]="'/uam'" [svgIcon]="''" [name]="'Manage U.A.M'"></app-aside>
-                  <app-aside [routerString]="'/uam/create'" [svgIcon]="''" [name]="'Create'"></app-aside>
-                  <app-aside [routerString]="'/uam/approve'" [name]="'Approve'">
+                  <app-aside *ngIf="canCreateUAM() | async" [routerString]="'/uam/create'" [svgIcon]="''"
+                     [name]="'Create'">
+                  </app-aside>
+                  <app-aside *ngIf="checkUAM() | async" [routerString]="'/uam/approve'" [name]="'Approve'">
                   </app-aside>
                </mat-expansion-panel>
             </mat-accordion>

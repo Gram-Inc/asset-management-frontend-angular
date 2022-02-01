@@ -1,73 +1,65 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div style="display: block; padding: 24px">
-  <div class="flex flex-col">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <ng-container *ngIf="uams$ | async as uams; else noUAMS">
-            <ng-container *ngIf="uams.length > 0; else noUAMS">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Created by
-                    </th>
+   <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+               <ng-container *ngIf="uams$ | async as uams; else noUAMS">
+                  <ng-container *ngIf="uams.length > 0; else noUAMS">
+                     <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                           <tr>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Created by
+                              </th>
 
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      U A M
-                    </th>
-                    <th
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Status
-                    </th>
-                    <th
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Priority
-                    </th>
-                    <th
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
-                    <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[uam._id]">
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                          <div class="">
-                            <div class="text-sm font-medium text-gray-900">
-                              {{ displayFnCreatedBy(uam?.createdBy) ?? "" | titlecase }}
-                            </div>
-                            <div class="text-sm text-gray-500">Type: {{ uam?.type ?? "" }}</div>
-                            <div class="text-sm text-gray-500">
-                              {{ uam?.createdAt ?? "" | date }}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 U A M
+                              </th>
+                              <th
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Status
+                              </th>
+                              <th
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Priority
+                              </th>
+                              <th
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Action
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                           <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
+                              <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[uam._id]">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                       <div class="">
+                                          <div class="text-sm font-medium text-gray-900">
+                                             {{ displayFnCreatedBy(uam?.createdBy) | titlecase }}
+                                          </div>
+                                          <div class="text-sm text-gray-500">Type: {{ uam?.type }}</div>
+                                          <div class="text-sm text-gray-500">
+                                             {{ uam?.createdAt | date }}
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </td>
 
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">
-                          {{ uam?.uamNo ?? "-" }}
-                        </div>
-                        <div class="text-sm text-gray-500">
-                          {{ displayFnNoOfUser(uam?.userInformation) | titlecase }}
-                        </div>
-                      </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                       {{ uam?.uamNo }}
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                       {{ displayFnNoOfUser(uam?.userInformation) | titlecase }}
+                                    </div>
+                                 </td>
 
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <span
-                          [ngClass]="{
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <span [ngClass]="{
                             'bg-green-100 ': uam.status == 'IN_POOL',
                             'text-green-600': uam.status == 'IN_POOL',
                             'bg-indigo-100': uam.status == 'Created',
@@ -76,19 +68,15 @@
                             'text-red-600': uam.status == 'SCRAP',
                             'bg-yellow-100': uam.status == 'DOWN',
                             'text-yellow-600': uam.status == 'DOWN'
-                          }"
-                          class="px-2 inline-flex text-xs leading-5 rounded-full"
-                        >
-                          {{ uam.status | uppercase }}
-                        </span>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div class="">
-                          <!-- Edit Button -->
-                          <button
-                            type="button"
-                            class="
+                          }" class="px-2 inline-flex text-xs leading-5 rounded-full">
+                                       {{ uam.status | uppercase }}
+                                    </span>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
+                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="">
+                                       <!-- Edit Button -->
+                                       <button type="button" class="
                               ml-2
                               m-auto
                               inline-flex
@@ -104,38 +92,32 @@
                               bg-white
                               hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            "
-                            matTooltip="Edit"
-                          >
-                            <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                            " matTooltip="Edit" *ngIf="canEdit() | async">
+                                          <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                       </button>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </ng-container>
+                           <tr>
+                              <td colspan="6">
+                                 <mat-paginator class="z-10 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }" [length]="pagination.totalPage"
+                                    [pageIndex]="pagination.page" [pageSize]="pagination.limit"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </ng-container>
-                  <tr>
-                    <td colspan="6">
-                      <mat-paginator
-                        class="z-10 dark:bg-transparent"
-                        [ngClass]="{ 'pointer-events-none': isLoading }"
-                        [length]="pagination.totalPage"
-                        [pageIndex]="pagination.page"
-                        [pageSize]="pagination.limit"
-                        [pageSizeOptions]="[5, 10, 25, 100]"
-                        [showFirstLastButtons]="true"
-                      ></mat-paginator>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> </ng-container
-          ></ng-container>
-          <ng-template #noUAMS>
-            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-              There are no U.A.M.!
+               </ng-container>
+               <ng-template #noUAMS>
+                  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                     There are no U.A.M.!
+                  </div>
+               </ng-template>
             </div>
-          </ng-template>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 </div>
