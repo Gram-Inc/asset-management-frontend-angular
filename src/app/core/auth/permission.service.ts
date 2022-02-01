@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
 import { IPermissions } from '../user/user.types';
 import { AccessType, ModuleTypes } from './permission.types';
 
@@ -39,7 +41,7 @@ export class PermissionService
       "UserUpdate",
       "UserDelete"
    ];
-   constructor() { }
+   constructor(private _userService: UserService) { }
 
    // Check Current
 
@@ -71,6 +73,37 @@ export class PermissionService
 
    }
 
+   checkCurrentUserPermission(moduleName: ModuleTypes): Observable<AccessType>
+   {
+      return this._userService.user$.pipe(
+         switchMap(user =>
+         {
+            // Get All accessType by policy name
+            let accType = this.filterPolicyByModule(user.permissions, moduleName);
+            if (
+               this.arrContaints(accType, 'CREATE') &&
+               this.arrContaints(accType, 'UPDATE') &&
+               this.arrContaints(accType, 'VIEW') &&
+               this.arrContaints(accType, 'DELETE'))
+
+               return of(AccessType.FullAccess);
+
+            if (
+               this.arrContaints(accType, 'CREATE') &&
+               this.arrContaints(accType, 'UPDATE') &&
+               this.arrContaints(accType, 'VIEW'))
+
+               return of(AccessType.ReadWrite);
+
+            if (
+               this.arrContaints(accType, 'VIEW'))
+
+               return of(AccessType.Read);
+
+            return of(AccessType.NoAcess);
+         })
+      )
+   }
    private getAllPermissionByModule(moduleName: ModuleTypes): string[]
    {
       return [...this.permssions.filter(x => x.toUpperCase().includes(moduleName))]
