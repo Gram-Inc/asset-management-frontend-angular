@@ -43,13 +43,10 @@ export const routes: Route[] = [
    // Admin routes
    {
       path: "",
+      resolve: [InitialDataResolver],
       component: LayoutComponent,
       canActivate: [AuthGuard],
       canActivateChild: [AuthGuard],
-      resolve: {
-         initialData: InitialDataResolver,
-      },
-
       children: [
          {
             path: "dashboard",
@@ -68,6 +65,7 @@ export const routes: Route[] = [
          },
          {
             path: "user",
+            // canLoad: [UserGuard],
             canActivate: [UserGuard],
             loadChildren: () => import("./modules/user/user.module").then((x) => x.UserModule),
          },
@@ -93,4 +91,9 @@ export const routes: Route[] = [
       canActivate: [AuthGuard],
       loadChildren: () => import("./modules/auth/sign-out/sign-out.module").then((x) => x.SignOutModule),
    },
+   {
+      path: '**',
+      redirectTo: 'dashboard',
+
+   }
 ];
