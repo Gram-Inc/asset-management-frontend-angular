@@ -1,98 +1,97 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div style="display: block; padding: 24px">
-    <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <ng-container *ngIf="users$ | async as users; else noUsers">
-                        <ng-container *ngIf="users.length > 0; else noUsers">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            User
-                                        </th>
+   <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+               <ng-container *ngIf="users$ | async as users; else noUsers">
+                  <ng-container *ngIf="users.length > 0; else noUsers">
+                     <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                           <tr>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 User
+                              </th>
 
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Email
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Branch
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Department
-                                        </th>
-                                        <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <ng-container *ngFor="let user of users; trackBy: trackByFn">
-                                        <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[user._id]">
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <div class="text-sm font-medium text-gray-900">{{ getUserName(user)
-                                                        }}</div>
-                                                </div>
-                                            </td>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Email
+                              </th>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Branch
+                              </th>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Department
+                              </th>
+                              <th scope="col" class="relative px-6 py-3">
+                                 <span class="sr-only">Edit</span>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                           <ng-container *ngFor="let user of users; trackBy: trackByFn">
+                              <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[user._id]">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                       <div class="text-sm font-medium text-gray-900">{{ getUserName(user)
+                                          }}</div>
+                                    </div>
+                                 </td>
 
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">{{ user.email }}</div>
-                                            </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ user.email }}</div>
+                                 </td>
 
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ getBranchShortCode(user.branch) }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{ getDepartmentCode(user) }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <div class="">
-                                                    <!-- Reset Password Button -->
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Reset Password" (click)="$event.stopPropagation()">
-                                                        <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:key">
-                                                        </mat-icon>
-                                                    </button>
+                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ getBranchShortCode(user.branch) }}
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ getDepartmentCode(user) }}
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="">
+                                       <!-- Reset Password Button -->
+                                       <button type="button"
+                                          class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                          matTooltip="Reset Password" (click)="$event.stopPropagation()"
+                                          (click)="resetPassword(user)">
+                                          <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:key">
+                                          </mat-icon>
+                                       </button>
 
-                                                    <!-- Edit Button -->
-                                                    <button type="button"
-                                                        class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                                        matTooltip="Edit" (click)="$event.stopPropagation()"
-                                                        [routerLink]="['edit/' + user._id]">
-                                                        <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                                                    </button>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </ng-container>
-                                    <tr>
-                                        <td colspan="6">
-                                            <mat-paginator class="z-10 dark:bg-transparent"
-                                                [ngClass]="{ 'pointer-events-none': isLoading }"
-                                                [length]="pagination.totalPage" [pageIndex]="pagination.page"
-                                                [pageSize]="pagination.limit" [pageSizeOptions]="[5, 10, 25, 100]"
-                                                [showFirstLastButtons]="true"></mat-paginator>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ng-container>
-                    </ng-container>
-                    <ng-template #noUsers>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                            There are no users!
-                        </div>
-                    </ng-template>
-                </div>
+                                       <!-- Edit Button -->
+                                       <button type="button"
+                                          class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                          matTooltip="Edit" (click)="$event.stopPropagation()"
+                                          [routerLink]="['edit/' + user._id]">
+                                          <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                       </button>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </ng-container>
+                           <tr>
+                              <td colspan="6">
+                                 <mat-paginator class="z-10 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }" [length]="pagination.totalPage"
+                                    [pageIndex]="pagination.page" [pageSize]="pagination.limit"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </ng-container>
+               </ng-container>
+               <ng-template #noUsers>
+                  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                     There are no users!
+                  </div>
+               </ng-template>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
