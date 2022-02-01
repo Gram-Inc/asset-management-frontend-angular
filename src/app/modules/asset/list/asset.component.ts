@@ -270,7 +270,24 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
    {
       return this._basicService.getAppropriateBrandLogo(asset.name);
    }
+
+   /**
+    *
+    * Font View Manipulators ------Permissions
+    */
    canChangeStatus(): Observable<boolean>
+   {
+      return this.permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
+         switchMap(value =>
+         {
+            //User should be able to change status only if He has Readwrite or full access
+            if (value == AccessType.ReadWrite || value == AccessType.FullAccess) return of(true);
+            return of(false);
+         })
+      );
+   }
+
+   canEditAsset(): Observable<boolean>
    {
       return this.permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
          switchMap(value =>

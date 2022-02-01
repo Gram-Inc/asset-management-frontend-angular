@@ -282,7 +282,7 @@ export class AuthService
       return this._userService.user$.pipe(
          switchMap((value) =>
          {
-            return of(true);
+            return of(false);  //@Gramosx
          })
       );
    }
