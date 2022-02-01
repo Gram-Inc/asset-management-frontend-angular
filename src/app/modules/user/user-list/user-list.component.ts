@@ -1,20 +1,22 @@
 import
-   {
-      AfterViewInit,
-      ChangeDetectorRef,
-      Component,
-      OnDestroy,
-      OnInit,
-      ViewChild,
-      ViewEncapsulation,
-   } from "@angular/core";
+{
+   AfterViewInit,
+   ChangeDetectorRef,
+   Component,
+   OnDestroy,
+   OnInit,
+   ViewChild,
+   ViewEncapsulation,
+} from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { merge, Observable, Subject } from "rxjs";
+import { merge, Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
+import { PermissionService } from "src/app/core/auth/permission.service";
+import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
@@ -66,7 +68,8 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
       private _formBuilder: FormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _rikielConfirmationService: RikielConfirmationService,
-      private _matDialog: MatDialog
+      private _matDialog: MatDialog,
+      private _permissionService: PermissionService
    ) { }
 
    ngOnInit(): void
@@ -209,6 +212,23 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
    }
    resetPassword(user: IUser)
    {
-      alert("")
+      alert(""); // @Gramosx
+   }
+
+   /**
+ *
+ * Font View Manipulators ------Permissions
+ */
+
+   canEdit(): Observable<boolean>
+   {
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.User).pipe(
+         switchMap(value =>
+         {
+            //User should be able to Create only if He has Readwrite or full access
+            if (value == AccessType.ReadWrite || value == AccessType.FullAccess) return of(true);
+            return of(false);
+         })
+      );
    }
 }

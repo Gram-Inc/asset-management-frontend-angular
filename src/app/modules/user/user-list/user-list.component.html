@@ -56,8 +56,9 @@
                                        <!-- Reset Password Button -->
                                        <button type="button"
                                           class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                          matTooltip="Reset Password" (click)="$event.stopPropagation()"
-                                          (click)="resetPassword(user)">
+                                          matTooltip="Reset Password"
+                                          (click)="$event.stopPropagation();resetPassword(user)"
+                                          *ngIf="canEdit() | async">
                                           <mat-icon class="h-4 w-4" svgIcon="heroicons_outline:key">
                                           </mat-icon>
                                        </button>
@@ -66,7 +67,7 @@
                                        <button type="button"
                                           class="ml-2 m-auto inline-flex items-center px-2 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                                           matTooltip="Edit" (click)="$event.stopPropagation()"
-                                          [routerLink]="['edit/' + user._id]">
+                                          [routerLink]="['edit/' + user._id]" *ngIf="canEdit() | async">
                                           <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
                                        </button>
                                     </div>
