@@ -77,7 +77,8 @@
                               bg-white
                               hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            " matTooltip="Edit" [routerLink]="[vendor._id]" (click)="$event.stopPropagation()">
+                            " matTooltip="Edit" [routerLink]="[vendor._id]" (click)="$event.stopPropagation()"
+                                          *ngIf="canEdit() | async">
                                           <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
                                        </button>
                                     </div>
