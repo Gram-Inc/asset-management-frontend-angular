@@ -27,7 +27,7 @@ export class UserGuard implements CanActivate, CanLoad
       return this._authService.checkUser().pipe(switchMap(auth =>
       {
          if (auth) return of(true);
-         this._router.navigate(["/error/401"]);
+         this._router.navigate(["unauthorized"]);
          return of(false);
       }));;
    }

@@ -1,77 +1,67 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div style="display: block; padding: 24px">
-  <div class="flex flex-col">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <ng-container *ngIf="vendors$ | async as vendors; else noVendors">
-            <ng-container *ngIf="vendors.length > 0; else noVendors">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Vendor
-                    </th>
+   <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+               <ng-container *ngIf="vendors$ | async as vendors; else noVendors">
+                  <ng-container *ngIf="vendors.length > 0; else noVendors">
+                     <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                           <tr>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Vendor
+                              </th>
 
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Contact No.
-                    </th>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Email
+                              </th>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 Contact No.
+                              </th>
 
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      City
-                    </th>
-                    <th scope="col" class="relative px-6 py-3">
-                      <span class="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <ng-container *ngFor="let vendor of vendors; trackBy: trackByFn">
-                    <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(vendor)">
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                          <div class="text-sm font-medium text-gray-900">
-                            {{ vendor?.name ?? "-" | titlecase }}
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-blue-600">
-                          {{ vendor.email ?? "-" | titlecase }}
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-500">
-                          {{ vendor.contactNo ?? "-" | titlecase }}
-                        </div>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">
-                          {{ vendor.city ?? "-" | titlecase }}
-                        </div>
-                      </td>
+                              <th scope="col"
+                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                 City
+                              </th>
+                              <th scope="col" class="relative px-6 py-3">
+                                 <span class="sr-only">Edit</span>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                           <ng-container *ngFor="let vendor of vendors; trackBy: trackByFn">
+                              <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(vendor)">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                       <div class="text-sm font-medium text-gray-900">
+                                          {{ vendor?.name | titlecase }}
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-blue-600">
+                                       {{ vendor.email | titlecase }}
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                       {{ vendor.contactNo | titlecase }}
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                       {{ vendor.city | titlecase }}
+                                    </div>
+                                 </td>
 
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div class="">
-                          <!-- Edit Button -->
-                          <button
-                            type="button"
-                            class="
+                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="">
+                                       <!-- Edit Button -->
+                                       <button type="button" class="
                               ml-2
                               m-auto
                               inline-flex
@@ -87,40 +77,32 @@
                               bg-white
                               hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-                            "
-                            matTooltip="Edit"
-                            [routerLink]="[vendor._id]"
-                            (click)="$event.stopPropagation()"
-                          >
-                            <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                            " matTooltip="Edit" [routerLink]="[vendor._id]" (click)="$event.stopPropagation()">
+                                          <mat-icon class="h-4 w-4" svgIcon="feather:edit"></mat-icon>
+                                       </button>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </ng-container>
+                           <tr>
+                              <td colspan="6">
+                                 <mat-paginator class="z-10 dark:bg-transparent"
+                                    [ngClass]="{ 'pointer-events-none': isLoading }" [length]="pagination.totalPage"
+                                    [pageIndex]="pagination.page" [pageSize]="pagination.limit"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </ng-container>
-                  <tr>
-                    <td colspan="6">
-                      <mat-paginator
-                        class="z-10 dark:bg-transparent"
-                        [ngClass]="{ 'pointer-events-none': isLoading }"
-                        [length]="pagination.totalPage"
-                        [pageIndex]="pagination.page"
-                        [pageSize]="pagination.limit"
-                        [pageSizeOptions]="[5, 10, 25, 100]"
-                        [showFirstLastButtons]="true"
-                      ></mat-paginator>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> </ng-container
-          ></ng-container>
-          <ng-template #noVendors>
-            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-              There are no vendors!
+               </ng-container>
+               <ng-template #noVendors>
+                  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+                     There are no vendors!
+                  </div>
+               </ng-template>
             </div>
-          </ng-template>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 </div>
