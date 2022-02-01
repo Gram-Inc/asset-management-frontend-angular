@@ -199,7 +199,7 @@ export class AuthService
       return this._userService.user$.pipe(
          switchMap((value) =>
          {
-            if (this._permissionService.checkPermission(value.permissions, ModuleTypes.User) == AccessType.NoAcess) return of(false);
+            if (this._permissionService.checkPermission(value.permissions, ModuleTypes.Ticket) == AccessType.NoAcess) return of(false);
             return of(true);
          })
       );
