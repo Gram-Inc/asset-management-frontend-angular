@@ -13,6 +13,7 @@ import { DashboardResolver } from "./core/dashboard/dashboard.resolver";
 import { LayoutComponent } from "./layout/layout.component";
 
 export const routes: Route[] = [
+
    { path: "", pathMatch: "full", redirectTo: "dashboard" },
    {
       path: "error/401",
@@ -37,7 +38,18 @@ export const routes: Route[] = [
          {
             path: "sign-in",
             loadChildren: () => import("./modules/auth/sign-in/sign-in.module").then((x) => x.SignInModule),
-         },
+         },  {
+                path: "not-found",
+                loadChildren: () => import("./modules/error/not-found/not-found.module").then((x) => x.NotFoundModule),
+            },
+            {
+                path: "unauthorized",
+                loadChildren: () => import("./modules/error/unauthorized/unauthorized.module").then((x) => x.UnauthorizedModule),
+            },
+            {
+                path: "server-unavailable",
+                loadChildren: () => import("./modules/error/server-unavailable/server-unavailable.module").then((x) => x.ServerUnavailableModule),
+            },
       ],
    },
    // Admin routes
