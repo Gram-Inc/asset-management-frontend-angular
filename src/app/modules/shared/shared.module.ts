@@ -20,41 +20,43 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { RouterModule } from "@angular/router";
 import { TicketFilterComponent } from "./ticket-filter/ticket-filter.component";
 import { BytesToGBPipe } from "src/app/core/pipes/bytes-to-gb.pipe";
+import { AccessPillComponent } from "src/app/custom/components/access-pill/access-pill.component";
 
 var sharedComp = [
-  TitleCardComponent,
-  FullscreenComponent,
-  UserComponent,
-  ThemeTogglerComponent,
-  AssetFilterComponent,
-  AssetSubDetailCardComponent,
-  UserFilterComponent,
-  QrcodeComponent,
-  VendorFilterComponent,
+    TitleCardComponent,
+    FullscreenComponent,
+    UserComponent,
+    ThemeTogglerComponent,
+    AssetFilterComponent,
+    AssetSubDetailCardComponent,
+    UserFilterComponent,
+    QrcodeComponent,
+    VendorFilterComponent,
+    AccessPillComponent
 ];
 @NgModule({
-  declarations: [...sharedComp, AssetShortDetailComponent, TicketFilterComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    CustomMaterialModule,
-    ConfirmationModule,
-    IconsModule,
-    SpecCardListModule,
-    SimpleTimelineModule,
-    NgApexchartsModule,
-    RouterModule,
-  ],
-  exports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ConfirmationModule,
-    SimpleTimelineModule,
-    IconsModule,
-    NgApexchartsModule,
-    ...sharedComp,
-  ],
+    declarations: [...sharedComp, AssetShortDetailComponent, TicketFilterComponent],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        CustomMaterialModule,
+        ConfirmationModule,
+        IconsModule,
+        SpecCardListModule,
+        SimpleTimelineModule,
+        NgApexchartsModule,
+        RouterModule,
+    ],
+    exports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ConfirmationModule,
+        SimpleTimelineModule,
+        IconsModule,
+        NgApexchartsModule,
+        ...sharedComp,
+    ],
 })
-export class SharedModule {}
+export class SharedModule { }

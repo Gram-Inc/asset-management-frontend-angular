@@ -5,25 +5,25 @@ import { DetailsComponent } from "./details/details.component";
 import { UserComponent } from "./user.component";
 
 export const userRoutes: Routes = [
-  {
-    path: "",
-    resolve: [UserResolver],
-    component: UserComponent,
-  },
-  {
-    path: "create",
-    component: DetailsComponent,
-    resolve: [CreateUserResolver, DepartmentResolver],
-  },
-  {
-    path: "edit/:id",
-    component: DetailsComponent,
-    resolve: [EditUserResolver, CreateUserResolver, DepartmentResolver],
-  },
-  {
-    path: ":id",
-    resolve: [EditUserResolver],
-    loadChildren: () =>
-      import("./user-full-detail/user-full-detail.module").then((x) => x.UserFullDetailModule),
-  },
+    {
+        path: "",
+        resolve: [UserResolver],
+        component: UserComponent,
+    },
+    {
+        path: "create",
+        component: DetailsComponent,
+        resolve: [CreateUserResolver, DepartmentResolver],
+    },
+    {
+        path: "edit/:id",
+        component: DetailsComponent,
+        resolve: [UserResolver, CreateUserResolver, DepartmentResolver, EditUserResolver,],
+    },
+    {
+        path: ":id",
+        resolve: [EditUserResolver],
+        loadChildren: () =>
+            import("./user-full-detail/user-full-detail.module").then((x) => x.UserFullDetailModule),
+    },
 ];

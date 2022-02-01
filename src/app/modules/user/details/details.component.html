@@ -1,170 +1,483 @@
 <div class="container mx-auto p-5" [formGroup]="userForm">
-  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-      {{ user ? "Update" : "Create" }} User
-    </h2>
-  </div>
+   <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+         {{ user ? "Update" : "Create" }} User
+      </h2>
+   </div>
 
-  <div class="px-4 py-5 bg-white sm:p-6">
-    <div class="grid grid-cols-6 gap-6">
-      <div class="col-span-6 sm:col-span-3">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-        <input
-          type="text"
-          [formControlName]="'firstName'"
-          [class]="
-            userForm.controls['firstName'].invalid && userForm.controls['firstName'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
+   <div class="px-4 py-5 bg-white sm:p-6">
+      <div class="grid grid-cols-6 gap-x-6 text-xs">
+         <!-- First NAme -->
+         <mat-form-field class="col-span-6 sm:col-span-3">
+            <mat-label>First Name</mat-label>
+            <input [formControlName]="'firstName'" matInput />
+         </mat-form-field>
+
+         <!-- First NAme -->
+         <mat-form-field class="col-span-6 sm:col-span-3">
+            <mat-label>Last Name</mat-label>
+            <input [formControlName]="'lastName'" matInput />
+         </mat-form-field>
+
+         <!-- Email Address -->
+         <mat-form-field class="col-span-6 sm:col-span-3">
+            <mat-label>Email Address</mat-label>
+            <input [formControlName]="'email'" matInput />
+         </mat-form-field>
+
+         <!-- Mobile Number -->
+         <mat-form-field class="col-span-6 sm:col-span-3">
+            <mat-label>Mobile Number</mat-label>
+            <input [formControlName]="'mobileNumber'" matInput />
+         </mat-form-field>
+
+         <!-- Branch -->
+         <mat-form-field class="lg:col-span-3 sm:col-span-6">
+            <mat-label>Branch</mat-label>
+            <mat-select formControlName="branch">
+               <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}
+               </mat-option>
+            </mat-select>
+         </mat-form-field>
+
+         <!-- Department -->
+         <mat-form-field class="lg:col-span-3 sm:col-span-6">
+            <mat-label>Department</mat-label>
+            <mat-select [compareWith]="compareFn" formControlName="departmentId">
+               <mat-option *ngFor="let department of departments$ | async" [value]="department?._id">
+                  {{ department.name }}</mat-option>
+            </mat-select>
+         </mat-form-field>
+
+         <!-- Manager List / Selection -->
+         <mat-form-field class="col-span-6 sm:col-span-6" style="font-size: small">
+            <mat-label>Search Manager</mat-label>
+            <input matInput formControlName="manager" [matAutocomplete]="name" />
+            <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn.bind(this) ">
+               <mat-option *ngFor="let user of users" [value]="user._id">
+                  {{ user.firstName + " " + user.lastName }}
+               </mat-option>
+            </mat-autocomplete>
+         </mat-form-field>
+
+         <!-- Roles -->
+         <div class="col-span-6 flex flex-wrap my-4 mb-8 gap-5 justify-center">
+            <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level1'}"
+               (click)="userForm.get('role').setValue('level1')" style="min-width:220px;max-width: 300px;"
+               class=" cursor-pointer group block   rounded-lg p-6 bg-whitering-1  shadow-lg space-y-3 hover:bg-sky-500 ">
+               <div class="flex items-center space-x-3">
+                  <div class="flex h-7 w-7">
+                     <div class="animate-ping relative h-full w-full bg-yellow-100 rounded-full"></div>
+                     <mat-icon class=" absolute text-yellow-400 h-7 w-7" svgIcon="heroicons_outline:shield-check">
+                     </mat-icon>
+                  </div>
+                  <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 1</h3>
+               </div>
+               <p class="text-slate-500 group-hover:text-white text-sm">Create a Admin user with full access to all
+                  the
+                  modules.
+               </p>
+            </div>
+            <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level2'}"
+               (click)="userForm.get('role').setValue('level2')" style="min-width:220px ;max-width: 300px;"
+               class="cursor-pointer group block rounded-lg p-6 bg-whitering-1  shadow-lg space-y-3 hover:bg-sky-500 ">
+               <div class="flex items-center space-x-3">
+
+                  <mat-icon class="text-purple-600" svgIcon="heroicons_outline:shield-check"></mat-icon>
+
+
+                  <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 2</h3>
+               </div>
+               <p class="text-slate-500 group-hover:text-white text-sm">Creat a Super Admin user whose permission
+                  can be
+                  customized at grain level.
+               </p>
+            </div>
+            <div [ngClass]="{'ring-2 ring-offset-2 ring-sky-500' : userForm.get('role').value == 'level3'}"
+               (click)="userForm.get('role').setValue('level3')" style="min-width:220px ;max-width: 300px;"
+               class="cursor-pointer group block  rounded-lg p-6 bg-whitering-1 shadow-lg space-y-3 hover:bg-sky-500 ">
+               <div class="flex items-center space-x-3">
+                  <mat-icon class="text-green-500" svgIcon="heroicons_outline:shield-check"></mat-icon>
+                  <h3 class="text-slate-900 group-hover:text-white text-sm font-semibold">Level 3</h3>
+               </div>
+               <p class="text-slate-500 group-hover:text-white text-sm">Create a user who is not part of IT
+                  department.
+               </p>
+            </div>
+         </div>
+
+         <!-- Level 1 & Level 2-->
+         <ng-container *ngIf="userForm.get('role').value == 'level1'|| userForm.get('role').value =='level2'">
+
+            <div class="col-span-6 flex flex-col">
+               <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+
+                        <table class="min-w-full divide-y divide-gray-200">
+                           <thead class="bg-gray-50">
+                              <tr>
+                                 <th scope="col"
+                                    class="pl-10 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Feature
+                                 </th>
+
+                                 <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Access Type
+                                 </th>
+
+                                 <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Action
+                                 </th>
+                              </tr>
+                           </thead>
+                           <tbody class="bg-white divide-y divide-gray-200">
+                              <!-- Asset -->
+                              <tr>
+                                 <!-- Feature / Module Name -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Asset) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Asset) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Asset) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Asset) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Asset
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <!-- Access Policy  -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.Asset)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="assetMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #assetMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Asset)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Asset)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Asset)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Asset)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- Ticket -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Ticket) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Ticket) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Ticket) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Ticket) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Ticket
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.Ticket)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="ticketMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #ticketMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Ticket)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Ticket)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Ticket)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Ticket)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- User -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+
+
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.User) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.User) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.User) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.User) == accessTypes.NoAcess">
+                                          </mat-icon>
+
+                                       </div>
+
+                                       <div class="text-sm font-medium text-gray-900">
+                                          User
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.User)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="userMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #userMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.User)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.User)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.User)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.User)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- UAM -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.UAM) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.UAM) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.UAM) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.UAM) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          U.A.M
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.UAM)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="uamMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #uamMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.UAM)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.UAM)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.UAM)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.UAM)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- Vendor -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+
+
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Vendor) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Vendor) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Vendor) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Vendor) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Vendor
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+
+                                    <app-access-pill [data]="getAccessPolicy(features.Vendor)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="vendorMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #vendorMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Vendor)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Vendor)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Vendor)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Vendor)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- Branch -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+
+
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Branch) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Branch) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Branch) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Branch) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Branch
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+
+                                    <app-access-pill [data]="getAccessPolicy(features.Branch)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="branchMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #branchMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Branch)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Branch)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Branch)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Branch)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </ng-container>
+
+         <!-- Level 3 -->
+         <ng-container *ngIf="userForm.get('role').value == 'level3'">
+
+         </ng-container>
       </div>
+   </div>
+   <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+      <!-- Cancel -->
+      <ng-container>
+         <button mat-stroked-button [routerLink]="['../']">Back</button>
+      </ng-container>
 
-      <div class="col-span-6 sm:col-span-3">
-        <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-        <input
-          type="text"
-          [formControlName]="'lastName'"
-          [class]="
-            userForm.controls['lastName'].invalid && userForm.controls['lastName'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
+      <!-- Confirm -->
+      <ng-container>
+         <span class="sm:ml-3">
+            <button type="button"
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               (click)="create()">
+               <!-- Heroicon name: solid/check -->
+               <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-      <!-- Email Address -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-        <input
-          type="text"
-          [formControlName]="'email'"
-          [class]="
-            userForm.controls['email'].invalid && userForm.controls['email'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
-
-      <!-- Mobile Number -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="street-address" class="block text-sm font-medium text-gray-700">Mobile Number</label>
-        <input
-          type="text"
-          [formControlName]="'mobileNumber'"
-          [class]="
-            userForm.controls['mobileNumber'].invalid && userForm.controls['mobileNumber'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-      </div>
-
-      <!-- Branch -->
-      <div class="col-span-6 sm:col-span-6">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Branch</label>
-        <select
-          [formControlName]="'branch'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
-        </select>
-        <span
-          *ngIf="
-            userForm.controls['branch'].invalid &&
-            (userForm.controls['branch'].dirty || userForm.controls['branch'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-
-      <!-- Role -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="country" class="block text-sm font-medium text-gray-700">Role</label>
-        <select
-          [formControlName]="'role'"
-          [class]="
-            userForm.controls['role'].invalid && userForm.controls['role'].touched
-              ? 'border-red-500'
-              : 'border-gray-300'
-          "
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option value="level1">Level 1</option>
-          <option value="level2">Level 2</option>
-          <option value="level3">Level 3</option>
-        </select>
-        <span
-          *ngIf="
-            userForm.controls['role'].invalid &&
-            (userForm.controls['role'].dirty || userForm.controls['role'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-
-      <!-- Department -->
-      <div class="col-span-6 sm:col-span-3">
-        <label for="city" class="block text-sm font-medium text-gray-700">Department</label>
-        <select
-          [formControlName]="'departmentId'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let department of departments$ | async" [value]="department?._id">
-            {{ department.name }}
-          </option>
-        </select>
-        <span
-          *ngIf="
-            userForm.controls['departmentId'].invalid &&
-            (userForm.controls['departmentId'].dirty || userForm.controls['departmentId'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-
-      <!-- Manager List / Selection -->
-      <div class="col-span-6 sm:col-span-6 mt-2" style="font-size: small">
-        <mat-form-field class="w-full">
-          <mat-label>Search Manager</mat-label>
-          <input matInput formControlName="manager" [matAutocomplete]="name" />
-          <mat-autocomplete #name="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let user of users$ | async" [value]="user">
-              {{ user.firstName + " " + user.lastName }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
-    <!-- Cancel -->
-    <ng-container>
-      <button mat-stroked-button [routerLink]="['../']">Back</button>
-    </ng-container>
-
-    <!-- Confirm -->
-    <ng-container>
-      <span class="sm:ml-3">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-          (click)="create()"
-        >
-          <!-- Heroicon name: solid/check -->
-          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
-
-          Create
-        </button>
-      </span>
-    </ng-container>
-  </div>
+               {{ user ? "Update" : "Create" }}
+            </button>
+         </span>
+      </ng-container>
+   </div>
 </div>

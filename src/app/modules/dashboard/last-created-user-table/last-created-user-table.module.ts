@@ -4,8 +4,8 @@ import { LastCreatedUserTableComponent } from "./last-created-user-table.compone
 import { CustomMaterialModule } from "../../custom-material/custom-material.module";
 
 @NgModule({
-  declarations: [LastCreatedUserTableComponent],
-  imports: [CommonModule, CustomMaterialModule],
-  exports: [LastCreatedUserTableComponent],
+    declarations: [LastCreatedUserTableComponent],
+    imports: [CommonModule, CustomMaterialModule],
+    exports: [LastCreatedUserTableComponent],
 })
-export class LastCreatedUserTableModule {}
+export class LastCreatedUserTableModule { }

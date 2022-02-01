@@ -7,144 +7,166 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { TicketService } from "src/app/core/ticket/ticket.service";
-import { ITicket } from "src/app/core/ticket/ticket.types";
+import { ITicket, TicketPriority, TicketStatus } from "src/app/core/ticket/ticket.types";
 import { IUser } from "src/app/core/user/user.types";
 @Component({
-  selector: "app-create-ticket",
-  templateUrl: "./create-ticket.component.html",
-  styleUrls: ["./create-ticket.component.scss"],
+   selector: "app-create-ticket",
+   templateUrl: "./create-ticket.component.html",
+   styleUrls: ["./create-ticket.component.scss"],
 })
-export class CreateTicketComponent implements OnInit {
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+export class CreateTicketComponent implements OnInit
+{
 
-  ticket$: Observable<ITicket>;
+   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  ticketForm: FormGroup;
+   ticket$: Observable<ITicket>;
 
-  ticket: ITicket = null;
+   ticketForm: FormGroup;
 
-  //Auto Complete
+   ticket: ITicket = null;
 
-  filteredCategoryForAutoComplete: Observable<string[]>;
+   priorityTypes = TicketPriority;
+   //Auto Complete
 
-  filteredRequesterForAutoComplete: Observable<IUser[]>;
+   filteredCategoryForAutoComplete: Observable<string[]>;
 
-  constructor(
-    private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
-    private _ticketService: TicketService,
-    private _formBuilder: FormBuilder,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute,
-    private _autoCompleteService: AutoCompleteService
-  ) {}
+   filteredRequesterForAutoComplete: IUser[] = [];
 
-  ngOnInit(): void {
-    //Create Branch Form
+   constructor(
+      private _dialog: MatDialog,
+      private _snackBar: MatSnackBar,
+      private _ticketService: TicketService,
+      private _formBuilder: FormBuilder,
+      private _changeDetectorRef: ChangeDetectorRef,
+      private _router: Router,
+      private _activatedRoute: ActivatedRoute,
+      private _autoCompleteService: AutoCompleteService
+   ) { }
 
-    this.ticketForm = this._formBuilder.group({
-      _id: [""],
-      requestFromUserId: ["", Validators.required],
-      callMedium: ["chat", Validators.required],
-      natureOfCall: ["request", Validators.required],
-      category: ["", Validators.required],
-      priority: [0, Validators.required],
-      description: [""],
-      callStatus: [""],
-    });
+   ngOnInit(): void
+   {
+      //Create Branch Form
 
-    this._ticketService.ticket$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => {
-      this.ticket = val;
-      this.ticketForm.patchValue(val);
+      this.ticketForm = this._formBuilder.group({
+         _id: [""],
+         requestFromUserId: ["", Validators.required],
+         callMedium: ["chat", Validators.required],
+         natureOfCall: ["request", Validators.required],
+         category: ["", Validators.required],
+         priority: [TicketPriority.Medium, Validators.required],
+         description: [""],
+         callStatus: [TicketStatus.Open],
 
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    });
+      });
 
-    this.ticketForm
-      .get("category")
-      .valueChanges.pipe(
-        takeUntil(this._unsubscribeAll),
-        debounceTime(300),
-        switchMap((query) => {
-          return this._autoCompleteService.getCategories(1, 10, query);
-        }),
-        map(() => {})
-      )
-      .subscribe();
+      this._ticketService.ticket$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
+      {
+         this.ticket = val;
+         this.ticketForm.patchValue(val);
 
-    this.filteredCategoryForAutoComplete = this._autoCompleteService.categories;
+         // Mark for check
+         this._changeDetectorRef.markForCheck();
+      });
 
-    this.ticketForm
-      .get("requestFromUserId")
-      .valueChanges.pipe(
-        takeUntil(this._unsubscribeAll),
-        debounceTime(300),
-        switchMap((query) => {
-          return this._autoCompleteService.getRequesters(1, 10, query);
-        }),
-        map(() => {})
-      )
-      .subscribe();
+      this.ticketForm
+         .get("category")
+         .valueChanges.pipe(
+            takeUntil(this._unsubscribeAll),
+            debounceTime(300),
+            switchMap((query) =>
+            {
+               return this._autoCompleteService.getCategories(1, 10, query);
+            }),
+            map(() => { })
+         )
+         .subscribe();
 
-    this.filteredRequesterForAutoComplete = this._autoCompleteService.requesters;
-  }
+      this.filteredCategoryForAutoComplete = this._autoCompleteService.categories;
 
-  ngOnDestroy(): void {
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-  create() {
-    //Validate the Form
-    this.ticketForm.markAllAsTouched();
+      this.ticketForm
+         .get("requestFromUserId")
+         .valueChanges.pipe(
+            takeUntil(this._unsubscribeAll),
+            debounceTime(300),
+            switchMap((query) =>
+            {
+               return this._autoCompleteService.getRequesters(1, 10, query);
+            }),
+            map(() => { })
+         )
+         .subscribe();
 
-    if (this.ticketForm.invalid) return;
+      this._autoCompleteService.requesters.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
+      {
+         this.filteredRequesterForAutoComplete = val;
+      });
+   }
 
-    //CHECK IF UPDATE or Create
+   ngOnDestroy(): void
+   {
+      this._unsubscribeAll.next(null);
+      this._unsubscribeAll.complete();
+   }
+   create()
+   {
+      //Validate the Form
+      this.ticketForm.markAllAsTouched();
 
-    //Update
-    if (this.ticket)
-      this._ticketService.updateTicket(this.ticket._id, this.ticketForm.value).subscribe(
-        (_) => {
-          this.openSnackBar("Success", "Ticket Updated");
-          this._router.navigate(["../"], {
-            relativeTo: this._activatedRoute,
-          });
-        },
-        (err) => {
-          this.openSnackBar("Error", err.message);
-        }
-      );
-    //Create
-    else
-      this._ticketService.createTicket(this.ticketForm.value).subscribe(
-        (_) => {
-          this.openSnackBar("Success", "Ticket Created");
-          this._router.navigate(["../"], {
-            relativeTo: this._activatedRoute,
-          });
-        },
-        (err) => {
-          this.openSnackBar("Error", err.message);
-        }
-      );
-  }
+      if (this.ticketForm.invalid) return;
 
-  openSnackBar(type: "Error" | "Info" | "Success", msg: string) {
-    this._snackBar.open(msg, "Close", {
-      duration: 3000,
-      verticalPosition: "top",
-      horizontalPosition: "center",
-      panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
-    });
-  }
+      //CHECK IF UPDATE or Create
 
-  setTaskPriority(value: number) {
-    this.ticketForm.controls["priority"].setValue(value);
-  }
+      //Update
+      if (this.ticket)
+         this._ticketService.updateTicket(this.ticket._id, this.ticketForm.value).subscribe(
+            (_) =>
+            {
+               this.openSnackBar("Success", "Ticket Updated");
+               this._router.navigate(["../"], {
+                  relativeTo: this._activatedRoute,
+               });
+            },
+            (err) =>
+            {
+               this.openSnackBar("Error", err.message);
+            }
+         );
+      //Create
+      else
+         this._ticketService.createTicket(this.ticketForm.value).subscribe(
+            (_) =>
+            {
+               this.openSnackBar("Success", "Ticket Created");
+               this._router.navigate(["../"], {
+                  relativeTo: this._activatedRoute,
+               });
+            },
+            (err) =>
+            {
+               this.openSnackBar("Error", err.message);
+            }
+         );
+   }
 
-  displayFn(user: IUser): string {
-    return user && user.firstName ? user.firstName + " " + user.lastName : "";
-  }
+   openSnackBar(type: "Error" | "Info" | "Success", msg: string)
+   {
+      this._snackBar.open(msg, "Close", {
+         duration: 3000,
+         verticalPosition: "top",
+         horizontalPosition: "center",
+         panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+      });
+   }
+
+   setTaskPriority(value: TicketPriority)
+   {
+      this.ticketForm.controls["priority"].setValue(value);
+   }
+
+   displayFn(userId): string
+   {
+      let x = this.filteredRequesterForAutoComplete.find(usr => usr._id == userId);
+      return x?.firstName ?? '';
+
+   }
 }

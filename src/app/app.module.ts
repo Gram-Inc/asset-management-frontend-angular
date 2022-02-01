@@ -21,16 +21,26 @@ import { LoadingBarComponent } from "./custom/components/loading-bar/loading-bar
 import { LoadingBarModule } from "./custom/components/loading-bar/loading-bar.module";
 import { NotFoundComponent } from "./modules/error/not-found/not-found.component";
 import { ServerUnavailableComponent } from "./modules/error/server-unavailable/server-unavailable.component";
+import { AccessPillComponent } from './custom/components/access-pill/access-pill.component';
 
 const routerConfig: ExtraOptions = {
-  preloadingStrategy: PreloadAllModules,
-  scrollPositionRestoration: "enabled",
+    // preloadingStrategy: PreloadAllModules,
+    scrollPositionRestoration: "enabled",
 };
 
 @NgModule({
-  declarations: [AppComponent, LayoutComponent, AsideComponent, DetailsComponent],
-  imports: [AuthModule, BrowserModule, RouterModule.forRoot(routes, routerConfig), SharedModule, BrowserAnimationsModule, CustomMaterialModule.forRoot(), LoadingBarModule],
-  providers: [],
-  bootstrap: [AppComponent],
+
+    declarations: [AppComponent, LayoutComponent, AsideComponent, DetailsComponent,],
+    imports: [
+        AuthModule,
+        BrowserModule,
+        RouterModule.forRoot(routes, routerConfig),
+        SharedModule,
+        BrowserAnimationsModule,
+        CustomMaterialModule.forRoot(),
+        LoadingBarModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

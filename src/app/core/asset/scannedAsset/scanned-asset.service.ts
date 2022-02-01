@@ -12,8 +12,10 @@ import { IScannedAsset } from "./scanned-asset.types";
 })
 export class ScannedAssetService {
   private _baseUrl = environment.baseUrl;
-  private _scannedAssets: BehaviorSubject<IScannedAsset[]> = new BehaviorSubject<IScannedAsset[]>([]);
-  private _pagination: BehaviorSubject<IPagination | null> = new BehaviorSubject<IPagination | null>(null);
+  private _scannedAssets: BehaviorSubject<IScannedAsset[]> =
+    new BehaviorSubject<IScannedAsset[]>([]);
+  private _pagination: BehaviorSubject<IPagination | null> =
+    new BehaviorSubject<IPagination | null>(null);
 
   constructor(private _httpClient: HttpClient) {}
 
@@ -63,7 +65,10 @@ export class ScannedAssetService {
       );
   }
 
-  moveAssetToPool(assetId: string, assetType: "laptop" | "server" | "pc"): Observable<IDTO> {
+  moveAssetToPool(
+    assetId: string,
+    assetType: "laptop" | "server" | "pc"
+  ): Observable<IDTO> {
     return this._scannedAssets.pipe(
       take(1),
       switchMap((scannedAssets) => {
@@ -75,7 +80,9 @@ export class ScannedAssetService {
           .pipe(
             map((response) => {
               //Find from the Scanned Asset List
-              const index = scannedAssets.findIndex((ast) => ast._id == assetId);
+              const index = scannedAssets.findIndex(
+                (ast) => ast._id == assetId
+              );
 
               //Remove Asset From list
               scannedAssets.splice(index, 1);
@@ -95,20 +102,24 @@ export class ScannedAssetService {
     return this._scannedAssets.pipe(
       take(1),
       switchMap((scannedAssets) => {
-        return this._httpClient.delete<IDTO>(`${this._baseUrl}/exe-agent/${assetId}`).pipe(
-          map((response) => {
-            //Find from the Scanned Asset List
-            const index = scannedAssets.findIndex((ast) => ast._id == assetId);
-            //Remove Asset From list
-            scannedAssets.splice(index, 1);
+        return this._httpClient
+          .delete<IDTO>(`${this._baseUrl}/exe-agent/${assetId}`)
+          .pipe(
+            map((response) => {
+              //Find from the Scanned Asset List
+              const index = scannedAssets.findIndex(
+                (ast) => ast._id == assetId
+              );
+              //Remove Asset From list
+              scannedAssets.splice(index, 1);
 
-            //Update the Assets Subject
-            this._scannedAssets.next(scannedAssets);
+              //Update the Assets Subject
+              this._scannedAssets.next(scannedAssets);
 
-            //Return the Udpated Asset
-            return response;
-          })
-        );
+              //Return the Udpated Asset
+              return response;
+            })
+          );
       })
     );
   }

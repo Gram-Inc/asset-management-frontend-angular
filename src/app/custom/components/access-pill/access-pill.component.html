@@ -1,0 +1,9 @@
+<span class="px-3  inline-flex text-xs leading-5 rounded-full" [ngClass]="
+    {
+        'bg-yellow-100 text-yellow-500': data == accessTypes.FullAccess,
+        'bg-purple-100 text-purple-500': data == accessTypes.ReadWrite,
+        'bg-green-100 text-green-500': data == accessTypes.Read,
+        'bg-gray-100 text-gray-500': data == accessTypes.NoAcess
+}
+    ">
+    {{data}}</span>
