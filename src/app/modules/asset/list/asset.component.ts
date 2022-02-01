@@ -14,6 +14,7 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { merge, Observable, of, Subject } from "rxjs";
@@ -81,7 +82,8 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
       private _bottomSheet: MatBottomSheet,
       private router: Router,
       private _basicService: BasicService,
-      public permissionService: PermissionService
+      public _permissionService: PermissionService,
+      private _snackBar: MatSnackBar
    ) { }
 
    ngOnInit(): void
@@ -258,13 +260,21 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
 
    openCurrentUser(asset: IAsset)
    {
-      if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
-         this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+      this.canOpenUserDetails().pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
+      {
+         if (!val) return;
+         if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
+            this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
+      })
    }
    openPrevUser(asset: IAsset)
    {
-      if (asset.perviousUser && typeof asset.perviousUser == "object")
-         this.router.navigate([`/user/${asset.perviousUser._id}`]);
+      this.canOpenUserDetails().pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
+      {
+         if (!val) return;
+         if (asset.perviousUser && typeof asset.perviousUser == "object")
+            this.router.navigate([`/user/${asset.perviousUser._id}`]);
+      })
    }
    getLogo(asset): string
    {
@@ -277,7 +287,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
     */
    canChangeStatus(): Observable<boolean>
    {
-      return this.permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
          switchMap(value =>
          {
             //User should be able to change status only if He has Readwrite or full access
@@ -289,12 +299,27 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
 
    canEditAsset(): Observable<boolean>
    {
-      return this.permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
          switchMap(value =>
          {
             //User should be able to change status only if He has Readwrite or full access
             if (value == AccessType.ReadWrite || value == AccessType.FullAccess) return of(true);
             return of(false);
+         })
+      );
+   }
+   canOpenUserDetails()
+   {
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.User).pipe(
+         switchMap(value =>
+         {
+            //Block Navigation if noAccess
+            if (value == AccessType.NoAcess)
+            {
+               this._snackBar.open('You dont have enough permission !')._dismissAfter(4000);
+               return of(false);
+            }
+            return of(true);
          })
       );
    }

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
@@ -27,7 +28,8 @@ export class AssetComponent implements OnInit, OnDestroy
    isLoading: boolean = false;
    searchCtrl: FormControl = new FormControl("");
 
-   constructor(private _assetService: AssetService, private _formBuilder: FormBuilder, private _permissionService: PermissionService) { }
+   constructor(private _assetService: AssetService,
+      private _permissionService: PermissionService,) { }
 
    ngOnInit(): void
    {

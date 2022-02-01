@@ -1,18 +1,13 @@
 <div class="bg-white shadow overflow-hidden sm:rounded-lg max-w-3xl" style="min-width: 768px">
-  <div class="px-4 py-5 flex items-center justify-between">
-    <div class="flex items-center">
-      <!-- <h1 class="">Test</h1> -->
-      <mat-icon
-        style="height: 40px; width: 40px"
-        class="mx-12 text-gray-400 hover:text-orange-500"
-        matTooltip="Asset Type : Laptop"
-        svgIcon="mat_outline:laptop_mac"
-      ></mat-icon>
-      <div>
-        <h3 class="mb-1 text-lg leading-6 font-medium text-gray-900">
-          Asset Information &nbsp; &nbsp;
-          <span
-            [ngClass]="{
+   <div class="px-4 py-5 flex items-center justify-between">
+      <div class="flex items-center">
+         <!-- <h1 class="">Test</h1> -->
+         <mat-icon style="height: 40px; width: 40px" class="mx-12 text-gray-400 hover:text-orange-500"
+            matTooltip="Asset Type : Laptop" svgIcon="mat_outline:laptop_mac"></mat-icon>
+         <div>
+            <h3 class="mb-1 text-lg leading-6 font-medium text-gray-900">
+               Asset Information &nbsp; &nbsp;
+               <span [ngClass]="{
               'bg-green-100 ': asset.allocationStatus == 'IN_POOL',
               'text-green-600': asset.allocationStatus == 'IN_POOL',
               'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
@@ -21,127 +16,105 @@
               'text-red-600': asset.allocationStatus == 'SCRAP',
               'bg-yellow-100': asset.allocationStatus == 'DOWN',
               'text-yellow-600': asset.allocationStatus == 'DOWN'
-            }"
-            class="px-2 inline-flex text-xs leading-5 rounded-full"
-          >
-            {{ asset.allocationStatus.replace("_", " ") | titlecase }}
-          </span>
-        </h3>
-        <p class="max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
+            }" class="px-2 inline-flex text-xs leading-5 rounded-full">
+                  {{ asset.allocationStatus.replace("_", " ") | titlecase }}
+               </span>
+            </h3>
+            <p class="max-w-2xl text-sm text-gray-500">{{ asset.sr_no }}</p>
+         </div>
       </div>
-    </div>
 
-    <div class="flex gap-x-2">
-      <!-- Brand IMage / Icon  -->
-      <img style="max-width: 84px; max-height: 48px" [src]="getLogo()" alt="" />
-      <img
-        style="max-width: 84px; max-height: 48px"
-        *ngIf="asset.laptop.cpu"
-        [src]="getProcessorLogo()"
-        alt=""
-      />
-    </div>
-  </div>
+      <div class="flex gap-x-2">
+         <!-- Brand IMage / Icon  -->
+         <img style="max-width: 84px; max-height: 48px" [src]="getLogo()" alt="" />
+         <img style="max-width: 84px; max-height: 48px" *ngIf="asset.laptop.cpu" [src]="getProcessorLogo()" alt="" />
+      </div>
+   </div>
 
-  <div class="border-t border-gray-200">
-    <dl class="">
-      <div class="flex flex-row items-center">
-        <div class="flex-auto">
-          <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Model Name</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.model }}</dd>
-          </div>
-          <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.serial }}</dd>
-          </div>
-          <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Branch</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
-              <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
-            </dd>
-          </div>
-          <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
-            <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
-              <mat-icon
-                *ngIf="asset.warranty[0]"
-                class="h-4 w-4"
-                [ngClass]="{
+   <div class="border-t border-gray-200">
+      <dl class="">
+         <div class="flex flex-row items-center">
+            <div class="flex-auto">
+               <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">Model Name</dt>
+                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.model }}</dd>
+               </div>
+               <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
+                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.serial }}</dd>
+               </div>
+               <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">Branch</dt>
+                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                     {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+                     <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
+                  </dd>
+               </div>
+               <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
+                  <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                     {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
+                     <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
                   'text-green-500': !isDateFuture(asset.warranty[0].endAt),
                   'text-red-500': isDateFuture(asset.warranty[0].endAt)
-                }"
-                [svgIcon]="
+                }" [svgIcon]="
                   !isDateFuture(asset.warranty[0].endAt)
                     ? 'heroicons_solid:badge-check'
                     : 'heroicons_solid:x-circle'
-                "
-              ></mat-icon>
-            </dd>
-          </div>
-          <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Current User</dt>
-            <dd
-              class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 hover:text-orange-500 hover:cursor-pointer"
-              (click)="openCurrentUser(asset)"
-              matTooltip="Open User Details"
-            >
-              {{ getCurrentUser(asset) }} &nbsp; &nbsp;
-              <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon>
-            </dd>
-          </div>
-        </div>
+                "></mat-icon>
+                  </dd>
+               </div>
+               <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-500">Current User</dt>
+                  <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 hover:text-orange-500 hover:cursor-pointer"
+                     (click)="openCurrentUser(asset)" matTooltip="Open User Details">
+                     {{ getCurrentUser(asset) }} &nbsp; &nbsp;
+                     <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon>
+                  </dd>
+               </div>
+            </div>
 
-        <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+            <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+         </div>
+
+         <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4 overflow-scroll max-h-44">
+            <app-spec-card-list [asset]="asset.laptop"></app-spec-card-list>
+         </dd>
+      </dl>
+   </div>
+
+   <!-- Bottom Action Bar -->
+   <div class="px-4 py-2 border-t border-gray-200 bg-gray-50 flex justify-between sm:px-6 items-center">
+      <!-- Left Side Action -->
+      <div>
+         <!-- Delete Asset -->
+         <button type="button"
+            class="ml-2 m-auto inline-flex items-center px-1 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-red-500 bg-white focus:outline-none hover:bg-gray-50 hover:text-red-600 hover:border-red-500 focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            matTooltip="Delete Asset Permanently" *ngIf="canDelete() | async " (click)="deleteAsset()">
+            <mat-icon class="h-5 w-5" svgIcon="feather:trash"></mat-icon>
+         </button>
       </div>
 
-      <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4 overflow-scroll max-h-44">
-        <app-spec-card-list [asset]="asset.laptop"></app-spec-card-list>
-      </dd>
-    </dl>
-  </div>
+      <!-- Right Side Action -->
+      <div class="flex lg:mt-0 lg:ml-4">
+         <span class="hidden sm:block">
+            <button type="button"
+               class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               [mat-dialog-close]>
+               Close
+            </button>
+         </span>
 
-  <!-- Bottom Action Bar -->
-  <div class="px-4 py-2 border-t border-gray-200 bg-gray-50 flex justify-between sm:px-6 items-center">
-    <!-- Left Side Action -->
-    <div>
-      <!-- Delete Asset -->
-      <button
-        type="button"
-        class="ml-2 m-auto inline-flex items-center px-1 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-red-500 bg-white focus:outline-none hover:bg-gray-50 hover:text-red-600 hover:border-red-500 focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-        matTooltip="Delete Asset Permanently"
-        (click)="deleteAsset()"
-      >
-        <mat-icon class="h-5 w-5" svgIcon="feather:trash"></mat-icon>
-      </button>
-    </div>
+         <span class="sm:ml-3">
+            <button type="button"
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               [routerLink]="[asset._id]" *ngIf="canViewFullDetails() | async ">
+               <!-- Heroicon name: solid/check -->
+               <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:information-circle"></mat-icon>
 
-    <!-- Right Side Action -->
-    <div class="flex lg:mt-0 lg:ml-4">
-      <span class="hidden sm:block">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-          [mat-dialog-close]
-        >
-          Close
-        </button>
-      </span>
-
-      <span class="sm:ml-3">
-        <button
-          type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-          [routerLink]="[asset._id]"
-        >
-          <!-- Heroicon name: solid/check -->
-          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:information-circle"></mat-icon>
-
-          More Details
-        </button>
-      </span>
-    </div>
-  </div>
+               More Details
+            </button>
+         </span>
+      </div>
+   </div>
 </div>
