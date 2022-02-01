@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from "@angular/router";
 import { Observable, of } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { AuthService } from "../auth.service";
 
 @Injectable({
@@ -8,7 +9,7 @@ import { AuthService } from "../auth.service";
 })
 export class TicketGuard implements CanActivate, CanLoad
 {
-   constructor(private _authService: AuthService) { }
+   constructor(private _authService: AuthService, private _router: Router) { }
    canActivate(
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot
@@ -21,19 +22,16 @@ export class TicketGuard implements CanActivate, CanLoad
       route: Route,
       segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
    {
-      // let x = this._authService.checkTicket();
-      // console.log(x)
-      // return x
       return this._check();
 
    }
    private _check(): Observable<boolean>
    {
-
-      this._authService.checkTicket().subscribe((x) =>
+      return this._authService.checkTicket().pipe(switchMap(auth =>
       {
-         console.log(x)
-      })
-      return of(false)
+         if (auth) return of(true);
+         this._router.navigate(["/error/401"]);
+         return of(false);
+      }));
    }
 }

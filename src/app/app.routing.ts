@@ -14,7 +14,11 @@ import { LayoutComponent } from "./layout/layout.component";
 
 export const routes: Route[] = [
    { path: "", pathMatch: "full", redirectTo: "dashboard" },
-
+   {
+      path: "error/401",
+      pathMatch: 'full',
+      redirectTo: 'dashboard'
+   },
    {
       path: "signed-in-redirect",
       pathMatch: "full",
@@ -41,7 +45,7 @@ export const routes: Route[] = [
       path: "",
       component: LayoutComponent,
       canActivate: [AuthGuard],
-      // canActivateChild: [AuthGuard],
+      canActivateChild: [AuthGuard],
       resolve: {
          initialData: InitialDataResolver,
       },
@@ -59,7 +63,6 @@ export const routes: Route[] = [
          },
          {
             path: "ticket",
-            canLoad: [TicketGuard],
             canActivate: [TicketGuard],
             loadChildren: () => import("./modules/ticket/ticket.module").then((x) => x.TicketModule),
          },
