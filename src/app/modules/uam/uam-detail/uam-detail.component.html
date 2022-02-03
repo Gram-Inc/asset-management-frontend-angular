@@ -1,236 +1,215 @@
 <!-- Title -->
 <div class="p-8">
-  <div class="lg:flex lg:items-center lg:justify-between">
-    <div class="flex-1 min-w-0">
-      <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
-        <span class="block xl:inline">{{ selectedUAM ? "Review" : "Create" }}</span>
-        <span class="block text-orange-600 xl:inline"> U.A.M</span>
-      </h1>
-    </div>
-    <!-- UAM no. -->
-    <div class="\" [style.fontSize.px]="12" [formGroup]="uamForm">
-      <mat-form-field>
-        <mat-label>U.A.M Number</mat-label>
-        <input matInput formControlName="uamNo" />
-      </mat-form-field>
-    </div>
-  </div>
+   <div class="lg:flex lg:items-center lg:justify-between">
+      <div class="flex-1 min-w-0">
+         <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+            <span class="block xl:inline">{{ selectedUAM ? "Review" : "Create" }}</span>
+            <span class="block text-orange-600 xl:inline"> U.A.M</span>
+         </h1>
+      </div>
+      <!-- UAM no. -->
+      <div class="\" [style.fontSize.px]="12" [formGroup]="uamForm">
+         <mat-form-field>
+            <mat-label>U.A.M Number</mat-label>
+            <input matInput formControlName="uamNo" />
+         </mat-form-field>
+      </div>
+   </div>
 </div>
 
 <div class="px-8" [formGroup]="uamForm">
-  <!--01 request Type  -->
-  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
-    <div>
-      <div class="text-sm text-gray-400 font-medium">01</div>
-      <h4 class="text-lg font-mono font-black">Request Type</h4>
-    </div>
+   <!--01 request Type  -->
+   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
+      <div>
+         <div class="text-sm text-gray-400 font-medium">01</div>
+         <h4 class="text-lg font-sans font-black">Request Type</h4>
+      </div>
 
-    <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-      <div class="flex flex-col items-center">
-        <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-          <button
-            *ngFor="let it of requestTypes | keyvalue"
-            class="px-6 rounded-full"
-            [ngClass]="{
+      <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+         <div class="flex flex-col items-center">
+            <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+               <button *ngFor="let it of requestTypes | keyvalue" class="px-6 rounded-full" [ngClass]="{
               'bg-card pointer-events-none shadow': requestType == it.value,
               'bg-transparent': !(requestType == it.value)
-            }"
-            mat-flat-button
-            (click)="requestType = it.value"
-            [disabled]="uamForm.disabled"
-          >
-            {{ it.key }}
-          </button>
-        </div>
+            }" mat-flat-button (click)="requestType = it.value" [disabled]="uamForm.disabled">
+                  {{ it.key }}
+               </button>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 
-  <!--02 Single Or Multiple User  -->
-  <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-    <div>
-      <div class="text-sm text-gray-400 font-medium">02</div>
-      <h4 class="text-lg font-mono font-black">No. of User</h4>
-    </div>
-    <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
-      <div class="flex flex-col items-center">
-        <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-          <button
-            class="px-6 rounded-full"
-            [ngClass]="{
+   <!-- UAM Type Windows  -->
+   <ng-container formGroupName="windows">
+
+      <!--02 Single Or Multiple User  -->
+      <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+         <div>
+            <div class="text-sm text-gray-400 font-medium">02</div>
+            <h4 class="text-lg font-sans font-black">No. of User</h4>
+         </div>
+         <div class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+            <div class="flex flex-col items-center">
+               <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                  <button class="px-6 rounded-full" [ngClass]="{
               'bg-card pointer-events-none shadow': noOfUser == 'single',
               'bg-transparent': !(noOfUser == 'single')
-            }"
-            mat-flat-button
-            (click)="noOfUser = 'single'"
-            [disabled]="uamForm.disabled"
-          >
-            Single
-          </button>
-          <button
-            class="px-6 rounded-full"
-            [ngClass]="{
+            }" mat-flat-button (click)="noOfUser = 'single'" [disabled]="uamForm.disabled">
+                     Single
+                  </button>
+                  <button class="px-6 rounded-full" [ngClass]="{
               'bg-card pointer-events-none shadow': noOfUser == 'multiple',
               'bg-transparent': !(noOfUser == 'multiple')
-            }"
-            mat-flat-button
-            (click)="noOfUser = 'multiple'"
-            [disabled]="uamForm.disabled"
-          >
-            Multiple
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--03 User Information  -->
-  <div
-    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
-    formGroupName="userInformation"
-  >
-    <div>
-      <div class="text-sm text-gray-400 font-medium">03</div>
-      <h4 class="text-lg font-mono font-black">User Information</h4>
-    </div>
-
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
-      <!-- date of Request -->
-      <div class="col-span-3" [style.fontSize.px]="12">
-        <mat-form-field>
-          <mat-label>Date of Request</mat-label>
-          <input matInput [matDatepicker]="dor" formControlName="dateOfRequest" />
-          <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
-          <mat-datepicker #dor></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <!-- Date of Joining / Leaving -->
-      <div class="col-span-3" [style.fontSize.px]="12">
-        <mat-form-field>
-          <mat-label>Date of Joining / Leaving </mat-label>
-          <input matInput [matDatepicker]="doj" formControlName="dateOfJoiningLeaving" />
-          <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
-          <mat-datepicker #doj></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <!-- Check if Single  -->
-      <ng-container *ngIf="noOfUser == 'single'">
-        <h4 class="text-sm col-span-full">Name of the Employee</h4>
-        <h6 class="text-xs text-gray-500 col-span-full">(Service Request For)</h6>
-        <!-- First Name -->
-        <div class="col-span-3" [style.fontSize.px]="12">
-          <mat-form-field>
-            <mat-label>First Name </mat-label>
-            <input matInput disabled />
-          </mat-form-field>
-        </div>
-
-        <!-- Last Name -->
-        <div class="col-span-3" [style.fontSize.px]="12">
-          <mat-form-field>
-            <mat-label>Last Name </mat-label>
-            <input matInput disabled />
-          </mat-form-field>
-        </div>
-
-        <!-- User ID -->
-        <div class="col-span-3" [style.fontSize.px]="12">
-          <mat-form-field>
-            <mat-label>User ID</mat-label>
-            <input matInput disabled />
-            <mat-hint>(For Apcer IT)</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <!-- Email ID -->
-        <div class="col-span-3" [style.fontSize.px]="12">
-          <mat-form-field>
-            <mat-label>Email ID </mat-label>
-            <input matInput disabled />
-            <mat-hint>(For Apcer IT)</mat-hint>
-          </mat-form-field>
-        </div>
-      </ng-container>
-
-      <!-- Type of Access Required  -->
-      <div
-        class="col-span-6 p-4 my-2 grid grid-cols-3 border-gray-300 border rounded-lg"
-        [style.fontSize.px]="12"
-      >
-        <mat-hint class="col-span-1">Type of Access Required</mat-hint>
-        <mat-radio-group formControlName="typeOfAccessRequired" class="flex gap-6 col-span-2">
-          <mat-radio-button [value]="TypeOfAccessRequiredUAM.permanent">Permanent</mat-radio-button>
-          <mat-radio-button [value]="TypeOfAccessRequiredUAM.temporary">Temporary</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <!-- If Temporary -->
-      <ng-container *ngIf="true">
-        <div class="col-span-6" [style.fontSize.px]="12">
-          <mat-form-field>
-            <mat-label>Date for deactivation</mat-label>
-            <input formControlName="ifTemporaryDateForDeactivation" matInput [matDatepicker]="dod" />
-            <mat-datepicker-toggle matSuffix [for]="dod"></mat-datepicker-toggle>
-            <mat-datepicker #dod></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </ng-container>
-
-      <!-- Type of User -->
-      <ng-container>
-        <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
-          <div class="flex flex-col" [style.fontSize.px]="12">
-            <mat-hint class="mr-3 mb-3">Type of User</mat-hint>
-            <mat-radio-group formControlName="typeOfUser" class="flex flex-row mb-3">
-              <mat-radio-button class="m-2" [value]="typeOfUser.ApcerUser">Apcer User</mat-radio-button>
-              <mat-radio-button class="m-2" [value]="typeOfUser.ApcerClientEmp"
-                >Apcer Client Emp</mat-radio-button
-              >
-              <mat-radio-button class="m-2" [value]="typeOfUser.Other">Other</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <!-- If Other -->
-          <ng-container *ngIf="uamForm.get('userInformation.typeOfUser').value == typeOfUser.Other">
-            <div class="col-span-6 mb-2" [style.fontSize.px]="12">
-              <mat-form-field>
-                <mat-label>Other</mat-label>
-                <input matInput formControlName="typeOfUserOtherText" />
-                <mat-hint>Other if the person is not an APCER employee</mat-hint>
-              </mat-form-field>
+            }" mat-flat-button (click)="noOfUser = 'multiple'" [disabled]="uamForm.disabled">
+                     Multiple
+                  </button>
+               </div>
             </div>
-          </ng-container>
+         </div>
+      </div>
 
-          <!-- Designation -->
-          <div class="col-span-6" [style.fontSize.px]="12">
-            <mat-form-field>
-              <mat-label>Designation</mat-label>
-              <input matInput formControlName="department" />
-            </mat-form-field>
-          </div>
-        </div>
-      </ng-container>
+      <!--03 User Information  -->
+      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6" formGroupName="userInformation">
+         <div>
+            <div class="text-sm text-gray-400 font-medium">03</div>
+            <h4 class="text-lg font-sans font-black">User Information</h4>
+         </div>
 
-      <!-- User Location -->
-      <ng-container>
-        <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
-          <div class="flex flex-col" [style.fontSize.px]="12">
-            <mat-hint class="mr-3 mb-3">User Location</mat-hint>
+         <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center">
+            <!-- date of Request -->
+            <div class="col-span-3" [style.fontSize.px]="12">
+               <mat-form-field>
+                  <mat-label>Date of Request</mat-label>
+                  <input matInput [matDatepicker]="dor" formControlName="dateOfRequest" />
+                  <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
+                  <mat-datepicker #dor></mat-datepicker>
+               </mat-form-field>
+            </div>
 
-            <mat-form-field class="w-full">
-              <mat-label>User Location</mat-label>
-              <input matInput formControlName="userLocation" [matAutocomplete]="ul" />
-              <mat-autocomplete #ul="matAutocomplete">
-                <mat-option *ngFor="let branch of branchs$ | async" [value]="branch.name">
-                  {{ branch.name }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-          <!-- If Other -->
-          <!-- <ng-container *ngIf="uamForm.get('userInformation.userLocation').value == 'Other'">
+            <!-- Date of Joining / Leaving -->
+            <div class="col-span-3" [style.fontSize.px]="12">
+               <mat-form-field>
+                  <mat-label>Date of Joining / Leaving </mat-label>
+                  <input matInput [matDatepicker]="doj" formControlName="dateOfJoiningLeaving" />
+                  <mat-datepicker-toggle matSuffix [for]="doj"></mat-datepicker-toggle>
+                  <mat-datepicker #doj></mat-datepicker>
+               </mat-form-field>
+            </div>
+
+            <!-- Check if Single  -->
+            <ng-container *ngIf="noOfUser == 'single'">
+               <h4 class="text-sm col-span-full">Name of the Employee</h4>
+               <h6 class="text-xs text-gray-500 col-span-full">(Service Request For)</h6>
+               <!-- First Name -->
+               <div class="col-span-3" [style.fontSize.px]="12">
+                  <mat-form-field>
+                     <mat-label>First Name </mat-label>
+                     <input matInput disabled />
+                  </mat-form-field>
+               </div>
+
+               <!-- Last Name -->
+               <div class="col-span-3" [style.fontSize.px]="12">
+                  <mat-form-field>
+                     <mat-label>Last Name </mat-label>
+                     <input matInput disabled />
+                  </mat-form-field>
+               </div>
+
+               <!-- User ID -->
+               <div class="col-span-3" [style.fontSize.px]="12">
+                  <mat-form-field>
+                     <mat-label>User ID</mat-label>
+                     <input matInput disabled />
+                     <mat-hint>(For Apcer IT)</mat-hint>
+                  </mat-form-field>
+               </div>
+
+               <!-- Email ID -->
+               <div class="col-span-3" [style.fontSize.px]="12">
+                  <mat-form-field>
+                     <mat-label>Email ID </mat-label>
+                     <input matInput disabled />
+                     <mat-hint>(For Apcer IT)</mat-hint>
+                  </mat-form-field>
+               </div>
+            </ng-container>
+
+            <!-- Type of Access Required  -->
+            <div class="col-span-6 p-4 my-2 grid grid-cols-3 border-gray-300 border rounded-lg"
+               [style.fontSize.px]="12">
+               <mat-hint class="col-span-1">Type of Access Required</mat-hint>
+               <mat-radio-group formControlName="typeOfAccessRequired" class="flex gap-6 col-span-2">
+                  <mat-radio-button [value]="TypeOfAccessRequiredUAM.permanent">Permanent</mat-radio-button>
+                  <mat-radio-button [value]="TypeOfAccessRequiredUAM.temporary">Temporary</mat-radio-button>
+               </mat-radio-group>
+            </div>
+
+            <!-- If Temporary -->
+            <ng-container *ngIf="uamForm.get('windows.userInformation.typeOfAccessRequired').value != 'permanent'">
+               <div class="col-span-6" [style.fontSize.px]="12">
+                  <mat-form-field>
+                     <mat-label>Date for deactivation</mat-label>
+                     <input formControlName="ifTemporaryDateForDeactivation" matInput [matDatepicker]="dod" />
+                     <mat-datepicker-toggle matSuffix [for]="dod"></mat-datepicker-toggle>
+                     <mat-datepicker #dod></mat-datepicker>
+                     <mat-hint>if Temporary ,specify the date for deactivation</mat-hint>
+                  </mat-form-field>
+               </div>
+            </ng-container>
+
+            <!-- Type of User -->
+            <ng-container>
+               <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
+                  <div class="flex flex-col" [style.fontSize.px]="12">
+                     <mat-hint class="mr-3 mb-3">Type of User</mat-hint>
+                     <mat-radio-group formControlName="typeOfUser" class="flex flex-row mb-3">
+                        <mat-radio-button class="m-2" [value]="typeOfUser.ApcerUser">Apcer User</mat-radio-button>
+                        <mat-radio-button class="m-2" [value]="typeOfUser.ApcerClientEmp">Apcer Client Emp
+                        </mat-radio-button>
+                        <mat-radio-button class="m-2" [value]="typeOfUser.Other">Other</mat-radio-button>
+                     </mat-radio-group>
+                  </div>
+
+                  <!-- If Other -->
+                  <ng-container *ngIf="uamForm.get('windows.userInformation.typeOfUser').value == typeOfUser.Other">
+                     <div class="col-span-6 mb-2" [style.fontSize.px]="12">
+                        <mat-form-field>
+                           <mat-label>Other</mat-label>
+                           <input matInput formControlName="typeOfUserOtherText" />
+                           <mat-hint>Other if the person is not an APCER employee</mat-hint>
+                        </mat-form-field>
+                     </div>
+                  </ng-container>
+
+                  <!-- Designation -->
+                  <div class="col-span-6" [style.fontSize.px]="12">
+                     <mat-form-field>
+                        <mat-label>Designation</mat-label>
+                        <input matInput formControlName="department" />
+                     </mat-form-field>
+                  </div>
+               </div>
+            </ng-container>
+
+            <!-- User Location -->
+            <ng-container>
+               <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
+                  <div class="flex flex-col" [style.fontSize.px]="12">
+                     <mat-hint class="mr-3 mb-3">User Location</mat-hint>
+
+                     <mat-form-field class="w-full">
+                        <mat-label>User Location</mat-label>
+                        <input matInput formControlName="userLocation" [matAutocomplete]="ul" />
+                        <mat-autocomplete #ul="matAutocomplete">
+                           <mat-option *ngFor="let branch of branchs$ | async" [value]="branch.name">
+                              {{ branch.name }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
+                  </div>
+                  <!-- If Other -->
+                  <!-- <ng-container *ngIf="uamForm.get('windows.userInformation.userLocation').value == 'Other'">
             <div class="col-span-6 mb-2" [style.fontSize.px]="12">
               <mat-form-field >
                 <mat-label>Other</mat-label>
@@ -242,451 +221,414 @@
             </div>
           </ng-container> -->
 
-          <!-- Department -->
-          <div class="col-span-6" [style.fontSize.px]="12">
-            <mat-form-field class="w-full">
-              <mat-label>Department</mat-label>
-              <input matInput formControlName="department" [matAutocomplete]="d" />
-              <mat-autocomplete #d="matAutocomplete">
-                <mat-option *ngFor="let department of departments$ | async" [value]="department.name">
-                  {{ department.name }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-        </div>
+                  <!-- Department -->
+                  <div class="col-span-6" [style.fontSize.px]="12">
+                     <mat-form-field class="w-full">
+                        <mat-label>Department</mat-label>
+                        <input matInput formControlName="department" [matAutocomplete]="d" />
+                        <mat-autocomplete #d="matAutocomplete">
+                           <mat-option *ngFor="let department of departments$ | async" [value]="department.name">
+                              {{ department.name }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
+                  </div>
+               </div>
+            </ng-container>
+
+            <!-- Network Services -->
+            <ng-container>
+               <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
+                  <div class="flex flex-col" [style.fontSize.px]="12">
+                     <section class="my-4" formGroupName="networkServicesToBeGrantedRevoked">
+                        <mat-hint class="mb-2">Network Services to be Granted / Revoked</mat-hint>
+                        <p>
+                           <mat-checkbox formControlName="emailAccess">Email Access</mat-checkbox>
+                        </p>
+                        <p>
+                           <mat-checkbox formControlName="serverAccess">Server Access</mat-checkbox>
+                        </p>
+                        <p>
+                           <mat-checkbox formControlName="sharedDrive/folderAccess">Shared Drive / Folder Access
+                           </mat-checkbox>
+                        </p>
+                        <p>
+                           <mat-checkbox formControlName="APCERNetworkVPNAccess">APCER Network VPN Access</mat-checkbox>
+                        </p>
+                        <p>
+                           <mat-checkbox formControlName="others">Others (e.g.Mobile Access, Guest Wi-Fi etc)
+                           </mat-checkbox>
+                        </p>
+                     </section>
+                     <mat-hint class="mb-2">Other & capture the server details in the comments section. E.g. IRMS
+                        Terminal
+                        Server pr
+                        docuBridge Terminal Server</mat-hint>
+                  </div>
+
+                  <!-- Reporting Manager -->
+                  <div class="col-span-6" [style.fontSize.px]="12">
+                     <mat-form-field class="w-full">
+                        <mat-label>Reporting Manager Name</mat-label>
+                        <input matInput formControlName="reportingManager" [matAutocomplete]="rmn" />
+                        <mat-autocomplete #rmn="matAutocomplete" [displayWith]="displayFnUser">
+                           <mat-option *ngFor="let user of users$ | async" [value]="user">
+                              {{ user.firstName + " " + user.lastName }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
+                  </div>
+               </div>
+            </ng-container>
+
+            <!-- Access to Distribution List -->
+            <ng-container>
+               <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
+                  <mat-hint class="mr-3 mb-3">Access to Distribution List (DL)? </mat-hint>
+                  <mat-radio-group formControlName="accessToDistributionList" class="flex flex-row mb-3">
+                     <mat-radio-button class="m-2" [value]="true">Yes</mat-radio-button>
+                     <mat-radio-button class="m-2" [value]="false">No</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-hint>if checked Yes,mention the group email id in the comments section.</mat-hint>
+               </div>
+            </ng-container>
+
+            <!-- Comments  -->
+            <ng-container>
+               <div class="col-span-6">
+                  <mat-form-field>
+                     <mat-label>Comments (if any)</mat-label>
+                     <textarea class="focus:ring-0" style="height: 140px" matInput formControlName="comments"
+                        placeholder="22/Nov/2021 is the last day for Annapurna Chandra in the Organization. Hence User window account, Network access group, Email access and VPN access needs to be removed. &NewLine; &NewLine;Employee E Mail ID: Annapurna.Chandra@apcerls.com"></textarea>
+                  </mat-form-field>
+               </div>
+            </ng-container>
+         </div>
+      </div>
+
+      <!-- Done -->
+      <!--04 Access to Share Drives  -->
+      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+         <div>
+            <div class="text-sm text-gray-400 font-medium">04</div>
+            <h4 class="text-lg font-sans font-black">Access to Share Drives</h4>
+         </div>
+
+         <div
+            class="mt-1 col-span-3 grid grid-cols-8 gap-x-4 gap-y-2 items-center border-gray-300 border rounded-lg p-4 my-2"
+            [style.fontSize.px]="12">
+            <ng-container formArrayName="accessToShareDrives"
+               *ngFor="let usr of uamForm.get('windows.accessToShareDrives')['controls']; let i = index">
+               <!-- Row 1 -->
+
+               <ng-container [formGroupName]="i">
+                  <!-- Drive Name -->
+                  <div class="col-span-2">
+                     <mat-form-field>
+                        <mat-label>Drive Name </mat-label>
+                        <input formControlName="driveName" matInput />
+                     </mat-form-field>
+                  </div>
+
+                  <!--Folder Name/s-->
+                  <div class="col-span-2">
+                     <mat-form-field>
+                        <mat-label>Folder Name/s</mat-label>
+                        <input matInput formControlName="folderName" />
+                     </mat-form-field>
+                  </div>
+                  <!-- Access Rights -->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Access Rights</mat-label>
+                     <mat-select formControlName="accessRights">
+                        <mat-option [value]="accessRight.ReadOnly">Read Only</mat-option>
+                        <mat-option [value]="accessRight.ReadWrite">Read / Write</mat-option>
+                     </mat-select>
+                  </mat-form-field>
+
+                  <!-- Grant / Revoked -->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Grant / Revoke</mat-label>
+                     <mat-select formControlName="grantRevoke">
+                        <mat-option [value]="grantRevoke.Grant">Grant</mat-option>
+                        <mat-option [value]="grantRevoke.Revoke">Revoke</mat-option>
+                     </mat-select>
+                  </mat-form-field>
+               </ng-container>
+            </ng-container>
+            <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
+               <span class="hidden sm:block">
+                  <button [disabled]="uamForm.disabled" type="button"
+                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                     (click)="addAccessToShareDriveForm()">
+                     <!-- Heroicon name: solid/check -->
+                     <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+
+                     Add
+                  </button>
+               </span>
+
+               <span class="sm:ml-3">
+                  <button [disabled]="uamForm.disabled" type="button"
+                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                     (click)="removeAccessToShareDriveForm()">
+                     <mat-icon class="-ml-1 mr-2 h-5 w-5 text-gray-500" svgIcon="feather:minus"></mat-icon>
+                     Remove
+                  </button>
+               </span>
+            </div>
+         </div>
+      </div>
+
+      <!-- Done -->
+      <!--05 User system Data and  -->
+      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+         formGroupName="userSystemDataAndEmailIdTreatment">
+         <div>
+            <div class="text-sm text-gray-400 font-medium">05</div>
+            <h4 class="text-lg font-sans font-black">User System Data and Email ID Treatment</h4>
+         </div>
+
+         <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
+            <!-- User system Data -->
+            <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
+               <mat-hint class="mr-3 mb-3">User System Data</mat-hint>
+               <mat-radio-group formControlName="userSystemData" class="flex flex-row mb-3">
+                  <mat-radio-button class="m-2" [value]="userSystemData.NotRequired">Not Required</mat-radio-button>
+                  <mat-radio-button class="m-2" [value]="userSystemData.Archive">Archive</mat-radio-button>
+                  <mat-radio-button class="m-2" [value]="userSystemData.Handover">Handover</mat-radio-button>
+               </mat-radio-group>
+            </div>
+
+            <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+               <!-- Data Handover to -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Data Handover To </mat-label>
+                  <input matInput formControlName="dataHandOverTo" />
+               </mat-form-field>
+
+               <!-- End User configuration -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>End User Confirmation on receipt of data </mat-label>
+                  <input matInput formControlName="endUserConfirmationOnReceiptOfData" />
+               </mat-form-field>
+            </div>
+
+            <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+               <!-- Email Mailbox Transterred  -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Email Mailbox Transferred to </mat-label>
+                  <input matInput formControlName="emailMailboxTransferredTo" />
+               </mat-form-field>
+
+               <!-- End User Confirmation on activation of Mailbox -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>End User Confirmation on activation of Mailbox </mat-label>
+                  <input matInput formControlName="endUserConfirmationOnActivationOfMailbox" />
+               </mat-form-field>
+            </div>
+
+            <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+               <!-- Email ID Forwarded to#-->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Email ID Forwarded to#</mat-label>
+                  <input matInput formControlName="emailIdForwardedTo" />
+               </mat-form-field>
+
+               <!-- End User Confirmation on Email Forwarding-->
+               <mat-form-field class="col-span-2">
+                  <mat-label>End User Confirmation on Email Forwarding </mat-label>
+                  <input matInput formControlName="endUserConfirmatinoOnEmailForwarding" />
+               </mat-form-field>
+            </div>
+
+            <!-- Date Till Email ID to remain Active-->
+            <div class="col-span-6" [style.fontSize.px]="12">
+               <mat-form-field>
+                  <mat-label>Date Till Email ID to remain Active</mat-label>
+                  <input matInput formControlName="dateTillEmailIdToRemainActive" [matDatepicker]="dte" />
+                  <mat-datepicker-toggle matSuffix [for]="dte"></mat-datepicker-toggle>
+                  <mat-datepicker #dte></mat-datepicker>
+               </mat-form-field>
+            </div>
+         </div>
+      </div>
+
+      <!-- Done -->
+      <!--06 UAM Approvals -->
+      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6" formGroupName="uamApprovals">
+         <div>
+            <div class="text-sm text-gray-400 font-medium">06</div>
+            <h4 class="text-lg font-sans font-black">UAM Approvals</h4>
+         </div>
+
+         <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
+            <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+               <!-- Requested By-->
+               <mat-form-field formGroupName="requestedBy" class="col-span-2">
+                  <mat-label>Requested By</mat-label>
+                  <input matInput formControlName="name" />
+               </mat-form-field>
+
+               <!-- Head of Department / Designee-->
+               <mat-form-field formGroupName="headOfDepartmentDesignee" class="col-span-2">
+                  <mat-label>Head of Department / Designee </mat-label>
+                  <input matInput formControlName="name" />
+               </mat-form-field>
+
+               <!--IT Head/Designee (Mandatory in case of Email Forwarding)  -->
+               <mat-form-field formGroupName="itHeadDesignee" class="col-span-2">
+                  <mat-label>IT Head/Designee (Mandatory in case of Email Forwarding)</mat-label>
+                  <input matInput formControlName="name" />
+               </mat-form-field>
+
+               <!-- DPO/ Designee (Mandatory in case of Email Forwarding)-->
+               <mat-form-field class="col-span-2" formGroupName="dpoDesignee">
+                  <mat-label>DPO/ Designee (Mandatory in case of Email Forwarding) </mat-label>
+                  <input matInput formControlName="name" />
+               </mat-form-field>
+            </div>
+         </div>
+      </div>
+
+      <!-- Done -->
+      <!--07 For IT Department Only -->
+      <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
+         <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+            <div>
+               <div class="text-sm text-gray-400 font-medium">07</div>
+               <h4 class="text-lg font-sans font-black">For IT Department Use Only</h4>
+            </div>
+
+            <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
+               <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
+                  <!-- Active Directory Account Deactivation Date-->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Active Directory Account Deactivation Date</mat-label>
+                     <input matInput formControlName="activeDirectoryAccountDeactivationDate" [matDatepicker]="ada" />
+                     <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
+                     <mat-datepicker #ada></mat-datepicker>
+                  </mat-form-field>
+
+                  <!-- Active Directory Account Deletion Date-->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Active Directory Account Deletion Date </mat-label>
+                     <input matInput formControlName="activeDirectoryAccountDeletionDate" [matDatepicker]="adad" />
+                     <mat-datepicker-toggle matSuffix [for]="adad"></mat-datepicker-toggle>
+                     <mat-datepicker #adad></mat-datepicker>
+                  </mat-form-field>
+
+                  <!-- Comments -->
+                  <mat-form-field class="col-span-4">
+                     <mat-label>Comments (if any)</mat-label>
+                     <textarea class="focus:ring-0" formControlName="comments" style="height: 140px"
+                        matInput></textarea>
+                  </mat-form-field>
+               </div>
+
+               <ng-container formArrayName="executedBy"
+                  *ngFor="let exe of uamForm.get('windows.forITDepartmentUseOnly.executedBy')['controls']; let i = index">
+                  <!-- Executed By-->
+
+                  <mat-form-field class="col-span-2" [formGroupName]="i">
+                     <mat-label>Executed By (Server Administrator / Designee) </mat-label>
+                     <input matInput formControlName="printedName" />
+                     <mat-hint>Printed Name</mat-hint>
+                  </mat-form-field>
+               </ng-container>
+            </div>
+         </div>
       </ng-container>
 
-      <!-- Network Services -->
-      <ng-container>
-        <div class="col-span-6 border-gray-300 border rounded-lg p-4 my-2">
-          <div class="flex flex-col" [style.fontSize.px]="12">
-            <section class="my-4" formGroupName="networkServicesToBeGrantedRevoked">
-              <mat-hint class="mb-2">Network Services to be Granted / Revoked</mat-hint>
-              <p><mat-checkbox formControlName="emailAccess">Email Access</mat-checkbox></p>
-              <p><mat-checkbox formControlName="serverAccess">Server Access</mat-checkbox></p>
-              <p>
-                <mat-checkbox formControlName="sharedDrive/folderAccess"
-                  >Shared Drive / Folder Access</mat-checkbox
-                >
-              </p>
-              <p>
-                <mat-checkbox formControlName="APCERNetworkVPNAccess">APCER Network VPN Access</mat-checkbox>
-              </p>
-              <p>
-                <mat-checkbox formControlName="others"
-                  >Others (e.g.Mobile Access, Guest Wi-Fi etc)</mat-checkbox
-                >
-              </p>
-            </section>
-            <mat-hint class="mb-2"
-              >Other & capture the server details in the comments section. E.g. IRMS Terminal Server pr
-              docuBridge Terminal Server</mat-hint
-            >
-          </div>
+      <!-- Done -->
+      <!--08 In case of Common Request Type for Multiple Users-->
+      <ng-container formGroupName="userInformation">
+         <div class="bg-white px-4 py-2 s sm:px-6">
+            <div>
+               <div class="text-sm text-gray-400 font-medium">08</div>
+               <h4 class="text-lg font-sans font-black truncate">
+                  In case of Common Request Type for Multiple Users
+               </h4>
+            </div>
 
-          <!-- Reporting Manager -->
-          <div class="col-span-6" [style.fontSize.px]="12">
-            <mat-form-field class="w-full">
-              <mat-label>Reporting Manager Name</mat-label>
-              <input matInput formControlName="reportingManager" [matAutocomplete]="rmn" />
-              <mat-autocomplete #rmn="matAutocomplete" [displayWith]="displayFnUser">
-                <mat-option *ngFor="let user of users$ | async" [value]="user">
-                  {{ user.firstName + " " + user.lastName }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-        </div>
-      </ng-container>
+            <!-- Table -->
+            <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="10">
+               <ng-container formArrayName="users"
+                  *ngFor="let usr of uamForm.get('windows.userInformation.users')['controls']; let i = index; let last = last">
+                  <!-- Row 1 -->
+                  <ng-container [formGroupName]="i">
+                     <!-- First Name -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>First Name </mat-label>
+                        <input matInput formControlName="firstName" />
+                     </mat-form-field>
 
-      <!-- Access to Distribution List -->
-      <ng-container>
-        <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
-          <mat-hint class="mr-3 mb-3">Access to Distribution List (DL)? </mat-hint>
-          <mat-radio-group formControlName="accessToDistributionList" class="flex flex-row mb-3">
-            <mat-radio-button class="m-2" [value]="true">Yes</mat-radio-button>
-            <mat-radio-button class="m-2" [value]="false">No</mat-radio-button>
-          </mat-radio-group>
-          <mat-hint>if checked Yes,mention the group email id in the comments section.</mat-hint>
-        </div>
-      </ng-container>
+                     <!-- Last Name -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Last Name </mat-label>
+                        <input matInput formControlName="lastName" />
+                     </mat-form-field>
 
-      <!-- Comments  -->
-      <ng-container>
-        <div class="col-span-6">
-          <mat-form-field>
-            <mat-label>Comments (if any)</mat-label>
-            <textarea
-              class="focus:ring-0"
-              style="height: 140px"
-              matInput
-              formControlName="comments"
-              placeholder="22/Nov/2021 is the last day for Annapurna Chandra in the Organization. Hence User window account, Network access group, Email access and VPN access needs to be removed. &NewLine; &NewLine;Employee E Mail ID: Annapurna.Chandra@apcerls.com"
-            ></textarea>
-          </mat-form-field>
-        </div>
-      </ng-container>
-    </div>
-  </div>
+                     <!-- Department -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Department</mat-label>
+                        <input matInput formControlName="department" />
+                     </mat-form-field>
 
-  <!-- Done -->
-  <!--04 Access to Share Drives  -->
-  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-    <div>
-      <div class="text-sm text-gray-400 font-medium">04</div>
-      <h4 class="text-lg font-mono font-black">Access to Share Drives</h4>
-    </div>
+                     <!-- Designation -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Designation</mat-label>
+                        <input matInput formControlName="designation" />
+                     </mat-form-field>
 
-    <div
-      class="mt-1 col-span-3 grid grid-cols-8 gap-x-4 gap-y-2 items-center border-gray-300 border rounded-lg p-4 my-2"
-      [style.fontSize.px]="12"
-    >
-      <ng-container
-        formArrayName="accessToShareDrives"
-        *ngFor="let usr of uamForm.get('accessToShareDrives')['controls']; let i = index"
-      >
-        <!-- Row 1 -->
+                     <!-- Location -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Location </mat-label>
+                        <input matInput formControlName="location" />
+                     </mat-form-field>
 
-        <ng-container [formGroupName]="i">
-          <!-- Drive Name -->
-          <div class="col-span-2">
-            <mat-form-field>
-              <mat-label>Drive Name </mat-label>
-              <input formControlName="driveName" matInput />
-            </mat-form-field>
-          </div>
+                     <!-- Email ID -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Email ID</mat-label>
+                        <input matInput formControlName="email" />
+                     </mat-form-field>
 
-          <!--Folder Name/s-->
-          <div class="col-span-2">
-            <mat-form-field>
-              <mat-label>Folder Name/s</mat-label>
-              <input matInput formControlName="folderName" />
-            </mat-form-field>
-          </div>
-          <!-- Access Rights -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Access Rights</mat-label>
-            <mat-select formControlName="accessRights">
-              <mat-option [value]="accessRight.ReadOnly">Read Only</mat-option>
-              <mat-option [value]="accessRight.ReadWrite">Read / Write</mat-option>
-            </mat-select>
-          </mat-form-field>
+                     <!-- Access / Type-->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Access Type</mat-label>
+                        <input formControlName="actionType" matInput />
+                     </mat-form-field>
 
-          <!-- Grant / Revoked -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Grant / Revoke</mat-label>
-            <mat-select formControlName="grantRevoke">
-              <mat-option [value]="grantRevoke.Grant">Grant</mat-option>
-              <mat-option [value]="grantRevoke.Revoke">Revoke</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-      </ng-container>
-      <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
-        <span class="hidden sm:block">
-          <button
-            [disabled]="uamForm.disabled"
-            type="button"
-            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-            (click)="addAccessToShareDriveForm()"
-          >
-            <!-- Heroicon name: solid/check -->
-            <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+                     <!-- Remark -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Remark </mat-label>
+                        <input formControlName="remark" matInput />
+                     </mat-form-field>
 
-            Add
-          </button>
-        </span>
-
-        <span class="sm:ml-3">
-          <button
-            [disabled]="uamForm.disabled"
-            type="button"
-            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-            (click)="removeAccessToShareDriveForm()"
-          >
-            <mat-icon class="-ml-1 mr-2 h-5 w-5 text-gray-500" svgIcon="feather:minus"></mat-icon>
-            Remove
-          </button>
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Done -->
-  <!--05 User system Data and  -->
-  <div
-    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
-    formGroupName="userSystemDataAndEmailIdTreatment"
-  >
-    <div>
-      <div class="text-sm text-gray-400 font-medium">05</div>
-      <h4 class="text-lg font-mono font-black">User System Data and Email ID Treatment</h4>
-    </div>
-
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
-      <!-- User system Data -->
-      <div class="flex flex-col col-span-6" [style.fontSize.px]="12">
-        <mat-hint class="mr-3 mb-3">User System Data</mat-hint>
-        <mat-radio-group formControlName="userSystemData" class="flex flex-row mb-3">
-          <mat-radio-button class="m-2" [value]="userSystemData.NotRequired">Not Required</mat-radio-button>
-          <mat-radio-button class="m-2" [value]="userSystemData.Archive">Archive</mat-radio-button>
-          <mat-radio-button class="m-2" [value]="userSystemData.Handover">Handover</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
-        <!-- Data Handover to -->
-        <mat-form-field class="col-span-2">
-          <mat-label>Data Handover To </mat-label>
-          <input matInput formControlName="dataHandOverTo" />
-        </mat-form-field>
-
-        <!-- End User configuration -->
-        <mat-form-field class="col-span-2">
-          <mat-label>End User Confirmation on receipt of data </mat-label>
-          <input matInput formControlName="endUserConfirmationOnReceiptOfData" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
-        <!-- Email Mailbox Transterred  -->
-        <mat-form-field class="col-span-2">
-          <mat-label>Email Mailbox Transferred to </mat-label>
-          <input matInput formControlName="emailMailboxTransferredTo" />
-        </mat-form-field>
-
-        <!-- End User Confirmation on activation of Mailbox -->
-        <mat-form-field class="col-span-2">
-          <mat-label>End User Confirmation on activation of Mailbox </mat-label>
-          <input matInput formControlName="endUserConfirmationOnActivationOfMailbox" />
-        </mat-form-field>
-      </div>
-
-      <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
-        <!-- Email ID Forwarded to#-->
-        <mat-form-field class="col-span-2">
-          <mat-label>Email ID Forwarded to#</mat-label>
-          <input matInput formControlName="emailIdForwardedTo" />
-        </mat-form-field>
-
-        <!-- End User Confirmation on Email Forwarding-->
-        <mat-form-field class="col-span-2">
-          <mat-label>End User Confirmation on Email Forwarding </mat-label>
-          <input matInput formControlName="endUserConfirmatinoOnEmailForwarding" />
-        </mat-form-field>
-      </div>
-
-      <!-- Date Till Email ID to remain Active-->
-      <div class="col-span-6" [style.fontSize.px]="12">
-        <mat-form-field>
-          <mat-label>Date Till Email ID to remain Active</mat-label>
-          <input matInput formControlName="dateTillEmailIdToRemainActive" [matDatepicker]="dte" />
-          <mat-datepicker-toggle matSuffix [for]="dte"></mat-datepicker-toggle>
-          <mat-datepicker #dte></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-
-  <!-- Done -->
-  <!--06 UAM Approvals -->
-  <div
-    class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
-    formGroupName="uamApprovals"
-  >
-    <div>
-      <div class="text-sm text-gray-400 font-medium">06</div>
-      <h4 class="text-lg font-mono font-black">UAM Approvals</h4>
-    </div>
-
-    <div class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2" [style.fontSize.px]="12">
-      <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
-        <!-- Requested By-->
-        <mat-form-field formGroupName="requestedBy" class="col-span-2">
-          <mat-label>Requested By</mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-
-        <!-- Head of Department / Designee-->
-        <mat-form-field formGroupName="headOfDepartmentDesignee" class="col-span-2">
-          <mat-label>Head of Department / Designee </mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-
-        <!--IT Head/Designee (Mandatory in case of Email Forwarding)  -->
-        <mat-form-field formGroupName="itHeadDesignee" class="col-span-2">
-          <mat-label>IT Head/Designee (Mandatory in case of Email Forwarding)</mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-
-        <!-- DPO/ Designee (Mandatory in case of Email Forwarding)-->
-        <mat-form-field class="col-span-2" formGroupName="dpoDesignee">
-          <mat-label>DPO/ Designee (Mandatory in case of Email Forwarding) </mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-
-  <!-- Done -->
-  <!--07 For IT Department Only -->
-  <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
-    <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
-      <div>
-        <div class="text-sm text-gray-400 font-medium">07</div>
-        <h4 class="text-lg font-mono font-black">For IT Department Use Only</h4>
-      </div>
-
-      <div
-        class="mt-1 col-span-3 grid grid-cols-6 gap-x-4 gap-y-2 items-center my-2"
-        [style.fontSize.px]="12"
-      >
-        <div class="col-span-6 grid grid-cols-4 gap-x-4" [style.fontSize.px]="12">
-          <!-- Active Directory Account Deactivation Date-->
-          <mat-form-field class="col-span-2">
-            <mat-label>Active Directory Account Deactivation Date</mat-label>
-            <input matInput formControlName="activeDirectoryAccountDeactivationDate" [matDatepicker]="ada" />
-            <mat-datepicker-toggle matSuffix [for]="ada"></mat-datepicker-toggle>
-            <mat-datepicker #ada></mat-datepicker>
-          </mat-form-field>
-
-          <!-- Active Directory Account Deletion Date-->
-          <mat-form-field class="col-span-2">
-            <mat-label>Active Directory Account Deletion Date </mat-label>
-            <input matInput formControlName="activeDirectoryAccountDeletionDate" [matDatepicker]="adad" />
-            <mat-datepicker-toggle matSuffix [for]="adad"></mat-datepicker-toggle>
-            <mat-datepicker #adad></mat-datepicker>
-          </mat-form-field>
-
-          <!-- Comments -->
-          <mat-form-field class="col-span-4">
-            <mat-label>Comments (if any)</mat-label>
-            <textarea
-              class="focus:ring-0"
-              formControlName="comments"
-              style="height: 140px"
-              matInput
-            ></textarea>
-          </mat-form-field>
-        </div>
-
-        <ng-container
-          formArrayName="executedBy"
-          *ngFor="let exe of uamForm.get('forITDepartmentUseOnly.executedBy')['controls']; let i = index"
-        >
-          <!-- Executed By-->
-
-          <mat-form-field class="col-span-2" [formGroupName]="i">
-            <mat-label>Executed By (Server Administrator / Designee) </mat-label>
-            <input matInput formControlName="printedName" />
-            <mat-hint>Printed Name</mat-hint>
-          </mat-form-field>
-        </ng-container>
-      </div>
-    </div>
-  </ng-container>
-
-  <!-- Done -->
-  <!--08 In case of Common Request Type for Multiple Users-->
-  <ng-container *ngIf="noOfUser == 'multiple'" formGroupName="userInformation">
-    <div class="bg-white px-4 py-2 s sm:px-6">
-      <div>
-        <div class="text-sm text-gray-400 font-medium">08</div>
-        <h4 class="text-lg font-mono font-black truncate">
-          In case of Common Request Type for Multiple Users
-        </h4>
-      </div>
-
-      <!-- Table -->
-      <div class="mt-1 grid grid-cols-9 gap-x-2 gap-y-1 items-center my-2" [style.fontSize.px]="10">
-        <ng-container
-          formArrayName="users"
-          *ngFor="let usr of uamForm.get('userInformation.users')['controls']; let i = index; let last = last"
-        >
-          <!-- Row 1 -->
-          <ng-container [formGroupName]="i">
-            <!-- First Name -->
-            <mat-form-field class="col-span-1">
-              <mat-label>First Name </mat-label>
-              <input matInput formControlName="firstName" />
-            </mat-form-field>
-
-            <!-- Last Name -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Last Name </mat-label>
-              <input matInput formControlName="lastName" />
-            </mat-form-field>
-
-            <!-- Department -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Department</mat-label>
-              <input matInput formControlName="department" />
-            </mat-form-field>
-
-            <!-- Designation -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Designation</mat-label>
-              <input matInput formControlName="designation" />
-            </mat-form-field>
-
-            <!-- Location -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Location </mat-label>
-              <input matInput formControlName="location" />
-            </mat-form-field>
-
-            <!-- Email ID -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Email ID</mat-label>
-              <input matInput formControlName="email" />
-            </mat-form-field>
-
-            <!-- Access / Type-->
-            <mat-form-field class="col-span-1">
-              <mat-label>Access Type</mat-label>
-              <input formControlName="actionType" matInput />
-            </mat-form-field>
-
-            <!-- Remark -->
-            <mat-form-field class="col-span-1">
-              <mat-label>Remark </mat-label>
-              <input formControlName="remark" matInput />
-            </mat-form-field>
-
-            <!-- Delete -->
-            <div
-              class="col-span-1"
-              [ngClass]="{
+                     <!-- Delete -->
+                     <div class="col-span-1" [ngClass]="{
                 'text-red-600  cursor-pointer': !(i == 0 && last),
                 'text-gray-500 cursor-not-allowed': i == 0 && last
-              }"
-            >
-              <mat-icon
-                *ngIf="uamForm.disabled"
-                svgIcon="heroicons_outline:trash"
-                (click)="removeUserFromForm(i)"
-              ></mat-icon>
-            </div>
-          </ng-container>
-        </ng-container>
+              }">
+                        <mat-icon *ngIf="uamForm.disabled" svgIcon="heroicons_outline:trash"
+                           (click)="removeUserFromForm(i)"></mat-icon>
+                     </div>
+                  </ng-container>
+               </ng-container>
 
-        <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
-          <span class="hidden sm:block">
-            <button
-              type="button"
-              [disabled]="uamForm.disabled"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-              (click)="addUserToForm()"
-            >
-              <!-- Heroicon name: solid/check -->
-              <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+               <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
+                  <span class="hidden sm:block">
+                     <button type="button" [disabled]="uamForm.disabled"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                        (click)="addUserToForm()">
+                        <!-- Heroicon name: solid/check -->
+                        <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-              Add another user
-            </button>
-          </span>
+                        Add another user
+                     </button>
+                  </span>
 
-          <!-- <span class="sm:ml-3">
+                  <!-- <span class="sm:ml-3">
             <button
               *ngIf=""
               type="button"
@@ -711,25 +653,21 @@
               Remove
             </button>
           </span> -->
-        </div>
-      </div>
-    </div>
-  </ng-container>
-
-  <!-- Action Button -->
-  <div class="flex justify-center my-6 mb-8">
-    <button
-      href="#"
-      class="mr-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-      (click)="generateRequest()"
-    >
-      Generate Request
-    </button>
-    <button
-      type="submit"
-      class="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 hover:text-orange-700"
-    >
-      Close
-    </button>
-  </div>
+               </div>
+            </div>
+         </div>
+      </ng-container>
+   </ng-container>
+   <!-- Action Button -->
+   <div class="flex justify-center my-6 mb-8">
+      <button href="#"
+         class="mr-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+         (click)="generateRequest()">
+         Generate Request
+      </button>
+      <button type="submit"
+         class="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-gray-800 hover:text-orange-700">
+         Close
+      </button>
+   </div>
 </div>

@@ -91,41 +91,53 @@ export class UamDetailComponent implements OnInit, OnDestroy
          priority: ['low'],
          uamType: ['windows'],
          requestTypeAction: [RequestTypeActionUAM.Delete, [Validators.required]],
-         userInformation: this.createUserInformationForm(),
-         accessToShareDrives: this._formBuilder.array([]),
-         userSystemDataAndEmailIdTreatment: this.createUserSystemDataAndEmailIdTreatment(),
-         uamApprovals: this.createUAMApprovals(),
-         forITDepartmentUseOnly: this.createITDepartmentUseOnly(),
-
+         windows: this._formBuilder.group({
+            userInformation: this.createUserInformationForm(),
+            accessToShareDrives: this._formBuilder.array([]),
+            userSystemDataAndEmailIdTreatment: this.createUserSystemDataAndEmailIdTreatment(),
+            uamApprovals: this.createUAMApprovals(),
+            forITDepartmentUseOnly: this.createITDepartmentUseOnly(),
+         })
       });
 
-      this.uamForm.get('userSystemDataAndEmailIdTreatment').get('userSystemData').valueChanges.subscribe((value: UserSystemDataUAM) =>
+      this.uamForm.get('windows.userSystemDataAndEmailIdTreatment').get('userSystemData').valueChanges.subscribe((value: UserSystemDataUAM) =>
       {
          if (value == UserSystemDataUAM.NotRequired)
          {
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.dataHandOverTo').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailIdForwardedTo').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').clearValidators();
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.dataHandOverTo').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.emailIdForwardedTo').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').clearValidators();
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').clearValidators();
          } else
          {
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.dataHandOverTo').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailIdForwardedTo').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').setValidators([Validators.required]);
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.dataHandOverTo').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.emailIdForwardedTo').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').setValidators([Validators.required]);
+            this.uamForm.get('windows.userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').setValidators([Validators.required]);
          }
 
-         Object.keys(this.uamForm.get('userSystemDataAndEmailIdTreatment')['controls']).forEach(field =>
+         Object.keys(this.uamForm.get('windows.userSystemDataAndEmailIdTreatment')['controls']).forEach(field =>
          {
-            let control = this.uamForm.get('userSystemDataAndEmailIdTreatment').get(field);
+            let control = this.uamForm.get('windows.userSystemDataAndEmailIdTreatment').get(field);
             control.updateValueAndValidity({ emitEvent: false });
          });
+      })
+
+      //Date of DeActivation Validator
+      this.uamForm.get('windows.userInformation.typeOfAccessRequired').valueChanges.subscribe((value: TypeOfAccessRequiredUAM) =>
+      {
+         if (value == TypeOfAccessRequiredUAM.permanent)
+            this.uamForm.get('windows.userInformation.ifTemporaryDateForDeactivation').clearValidators();
+         else
+            this.uamForm.get('windows.userInformation.ifTemporaryDateForDeactivation').setValidators([Validators.required]);
+
+         this.uamForm.get('windows.userInformation.ifTemporaryDateForDeactivation').updateValueAndValidity({ emitEvent: false });
       })
 
       this._uamService.uam$.pipe(takeUntil(this._unsubscribeAll)).subscribe(
@@ -201,7 +213,7 @@ export class UamDetailComponent implements OnInit, OnDestroy
          emailMailboxTransferredTo: ["", [Validators.required]],
          endUserConfirmationOnActivationOfMailbox: ["", [Validators.required]],
          emailIdForwardedTo: ["", [Validators.required]],
-         dateTillEmailIdToRemainActive: [new Date(Date.now()), [Validators.required]],
+         dateTillEmailIdToRemainActive: ["", [Validators.required]],
          endUserConfirmatinoOnEmailForwarding: ["", [Validators.required]],
       });
    }
@@ -272,7 +284,7 @@ export class UamDetailComponent implements OnInit, OnDestroy
       if (this.uamForm.invalid) return;
 
       let obj = { ...this.uamForm.value };
-      obj.userInformation.reportingManager = obj.userInformation.reportingManager._id;
+      obj.windows.userInformation.reportingManager = obj.windows.userInformation.reportingManager._id;
       this._uamService.createUAM(obj).subscribe(
          (_) =>
          {
