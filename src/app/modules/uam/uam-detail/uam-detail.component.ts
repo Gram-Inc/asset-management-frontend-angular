@@ -13,7 +13,7 @@ import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject, throwError } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
 import { BranchService } from "src/app/core/branch/branch.service";
 import { IBranch } from "src/app/core/branch/branch.types";
 import { DepartmentService } from "src/app/core/department/department.service";
@@ -99,13 +99,33 @@ export class UamDetailComponent implements OnInit, OnDestroy
 
       });
 
-      this.uamForm.get('userSystemDataAndEmailIdTreatment.userSystemData').valueChanges.subscribe((value: UserSystemDataUAM) =>
+      this.uamForm.get('userSystemDataAndEmailIdTreatment').get('userSystemData').valueChanges.subscribe((value: UserSystemDataUAM) =>
       {
-         console.log(value)
          if (value == UserSystemDataUAM.NotRequired)
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.userSystemData.dataHandOverTo').clearValidators();
-         else
-            this.uamForm.get('userSystemDataAndEmailIdTreatment.userSystemData.dataHandOverTo').setValidators(Validators.required);
+         {
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.dataHandOverTo').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailIdForwardedTo').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').clearValidators();
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').clearValidators();
+         } else
+         {
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.dataHandOverTo').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnReceiptOfData').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailMailboxTransferredTo').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmationOnActivationOfMailbox').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.emailIdForwardedTo').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.dateTillEmailIdToRemainActive').setValidators([Validators.required]);
+            this.uamForm.get('userSystemDataAndEmailIdTreatment.endUserConfirmatinoOnEmailForwarding').setValidators([Validators.required]);
+         }
+
+         Object.keys(this.uamForm.get('userSystemDataAndEmailIdTreatment')['controls']).forEach(field =>
+         {
+            let control = this.uamForm.get('userSystemDataAndEmailIdTreatment').get(field);
+            control.updateValueAndValidity({ emitEvent: false });
+         });
       })
 
       this._uamService.uam$.pipe(takeUntil(this._unsubscribeAll)).subscribe(
@@ -176,13 +196,13 @@ export class UamDetailComponent implements OnInit, OnDestroy
    {
       return this._formBuilder.group({
          userSystemData: [UserSystemDataUAM.Handover],
-         dataHandOverTo: [""],
-         endUserConfirmationOnReceiptOfData: [""],
-         emailMailboxTransferredTo: [""],
-         endUserConfirmationOnActivationOfMailbox: [""],
-         emailIdForwardedTo: [""],
-         dateTillEmailIdToRemainActive: [""],
-         endUserConfirmatinoOnEmailForwarding: [""],
+         dataHandOverTo: ["", [Validators.required]],
+         endUserConfirmationOnReceiptOfData: ["", [Validators.required]],
+         emailMailboxTransferredTo: ["", [Validators.required]],
+         endUserConfirmationOnActivationOfMailbox: ["", [Validators.required]],
+         emailIdForwardedTo: ["", [Validators.required]],
+         dateTillEmailIdToRemainActive: [new Date(Date.now()), [Validators.required]],
+         endUserConfirmatinoOnEmailForwarding: ["", [Validators.required]],
       });
    }
    createUAMApprovals(): FormGroup
@@ -246,6 +266,8 @@ export class UamDetailComponent implements OnInit, OnDestroy
    generateRequest()
    {
       this.uamForm.markAllAsTouched();
+
+      console.log(this.uamForm)
       //VAlidate Form
       if (this.uamForm.invalid) return;
 
