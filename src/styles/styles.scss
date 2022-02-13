@@ -63,9 +63,9 @@ body {
 layout {
   display: flex;
   flex: 1 1 auto;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
+//   width: 100%;
+//   max-width: 100%;
+//   min-width: 0;
   height: 100%;
   max-height: 100%;
 
@@ -75,17 +75,21 @@ layout {
     display: flex;
     flex: 1 1 auto;
     // width: 100%;
+    height: 100% !important;
   }
 
   /* Base styles for components that load as a route */
-  // router-outlet {
-  //   + * {
-  //     position: relative;
-  //     display: flex;
-  //     flex: 1 1 auto;
-  //     width: 100%;
-  //   }
-  // }
+  router-outlet {
+    + * {
+      // position: relative;
+      // display: flex;
+      // flex: 1 1 auto;
+      // width: 100%;
+      height: 100% !important;
+      //  background-color: rgba(243, 242, 242, 0.753);
+
+    }
+  }
 }
 app-sign-in {
   width: 100%;
