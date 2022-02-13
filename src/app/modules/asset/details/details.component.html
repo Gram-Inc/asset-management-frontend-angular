@@ -1,189 +1,129 @@
 <div class="p-8" [formGroup]="assetForm">
-  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
-  </div>
+   <div class="px-4 py-5 color-custom sm:p-6 flex-1 min-w-0">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
+   </div>
 
-  <div class="px-4 py-5 bg-white sm:p-6">
-    <div class="grid grid-cols-6 gap-6">
-      <!-- Name -->
-      <div class="col-span-4 sm:col-span-4">
-        <label for="first-name" class="block text-sm font-medium text-gray-700">Model Name</label>
-        <input
-          type="text"
-          [formControlName]="'name'"
-          [class]="
+   <div class="px-4 py-5 color-custom sm:p-6">
+      <div class="grid grid-cols-6 gap-6">
+         <!-- Name -->
+         <div class="col-span-4 sm:col-span-4">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Model Name</label>
+            <input type="text" [formControlName]="'name'" [class]="
             assetForm.controls['name'].invalid && assetForm.controls['name'].touched
               ? 'border-red-500'
               : 'border-gray-300'
-          "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-          [matAutocomplete]="name"
-        />
-        <mat-autocomplete #name="matAutocomplete">
-          <mat-option *ngFor="let modelName of filteredModelNameForAutoComplete | async" [value]="modelName">
-            {{ modelName }}
-          </mat-option>
-        </mat-autocomplete>
-        <span
-          *ngIf="
+          " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+               [matAutocomplete]="name" />
+            <mat-autocomplete #name="matAutocomplete">
+               <mat-option *ngFor="let modelName of filteredModelNameForAutoComplete | async" [value]="modelName">
+                  {{ modelName }}
+               </mat-option>
+            </mat-autocomplete>
+            <span *ngIf="
             assetForm.controls['name'].invalid &&
             (assetForm.controls['name'].dirty || assetForm.controls['name'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- Asset Code -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="last-name" class="block text-sm font-medium text-gray-700">Asset Code</label>
-        <input
-          type="text"
-          [formControlName]="'assetCode'"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- Asset Code -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="last-name" class="block text-sm font-medium text-gray-700">Asset Code</label>
+            <input type="text" [formControlName]="'assetCode'"
+               class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <span *ngIf="
             assetForm.controls['assetCode'].invalid &&
             (assetForm.controls['assetCode'].dirty || assetForm.controls['assetCode'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- Category -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
-        <select
-          [formControlName]="'category'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select>
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- Category -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
+            <select [formControlName]="'category'"
+               class="mt-1 block w-full py-2 px-3 border border-gray-300 color-custom rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+               <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+            <span *ngIf="
             assetForm.controls['category'].invalid &&
             (assetForm.controls['category'].dirty || assetForm.controls['category'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- Serial Number -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
-        <input
-          type="text"
-          [formControlName]="'sr_no'"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- Serial Number -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
+            <input type="text" [formControlName]="'sr_no'"
+               class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <span *ngIf="
             assetForm.controls['sr_no'].invalid &&
             (assetForm.controls['sr_no'].dirty || assetForm.controls['sr_no'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- Location / Branch -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="country" class="block text-sm font-medium text-gray-700">Location / Branch</label>
-        <select
-          [formControlName]="'branch'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
-        </select>
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- Location / Branch -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="country" class="block text-sm font-medium text-gray-700">Location / Branch</label>
+            <select [formControlName]="'branch'"
+               class="mt-1 block w-full py-2 px-3 border border-gray-300 color-custom rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+               <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
+            </select>
+            <span *ngIf="
             assetForm.controls['branch'].invalid &&
             (assetForm.controls['branch'].dirty || assetForm.controls['branch'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- vendor -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="country" class="block text-sm font-medium text-gray-700">Vendor</label>
-        <select
-          [formControlName]="'vendorId'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option [value]="null"></option>
-          <option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</option>
-        </select>
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- vendor -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="country" class="block text-sm font-medium text-gray-700">Vendor</label>
+            <select [formControlName]="'vendorId'"
+               class="mt-1 block w-full py-2 px-3 border border-gray-300 color-custom rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+               <option [value]="null"></option>
+               <option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</option>
+            </select>
+            <span *ngIf="
             assetForm.controls['vendorId'].invalid &&
             (assetForm.controls['vendorId'].dirty || assetForm.controls['vendorId'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- Type -->
-      <div class="col-span-2 sm:col-span-2">
-        <label for="email-address" class="block text-sm font-medium text-gray-700">Type</label>
-        <select
-          (change)="addAssetTypeToAssetForm()"
-          [formControlName]="'type'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-        >
-          <option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</option>
-        </select>
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- Type -->
+         <div class="col-span-2 sm:col-span-2">
+            <label for="email-address" class="block text-sm font-medium text-gray-700">Type</label>
+            <select (change)="addAssetTypeToAssetForm()" [formControlName]="'type'"
+               class="mt-1 block w-full py-2 px-3 border border-gray-300 color-custom rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+               <option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</option>
+            </select>
+            <span *ngIf="
             assetForm.controls['type'].invalid &&
             (assetForm.controls['type'].dirty || assetForm.controls['type'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
-      </div>
-      <!-- warranty -->
-      <div class="col-span-2 sm:col-span-2 lg:col-span-2">
-        <label for="city" class="block text-sm font-medium text-gray-700">Warranty</label>
-        <input
-          [formControlName]="'warranty'"
-          type="date"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        />
-        <span
-          *ngIf="
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
+         <!-- warranty -->
+         <div class="col-span-2 sm:col-span-2 lg:col-span-2">
+            <label for="city" class="block text-sm font-medium text-gray-700">Warranty</label>
+            <input [formControlName]="'warranty'" type="date"
+               class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <span *ngIf="
             assetForm.controls['warranty'].invalid &&
             (assetForm.controls['warranty'].dirty || assetForm.controls['warranty'].touched)
-          "
-          class="text-xs text-red-700"
-          >*Required.</span
-        >
+          " class="text-xs text-red-700">*Required.</span>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 
-  <ng-container *ngIf="assetForm.contains('laptop')">
-    <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
-      <div class="px-4 py-5 bg-white sm:p-6">
-        <div class="grid grid-cols-6 gap-6">
-          <ng-container [formGroupName]="'system'">
-            <!-- Model Name -->
-            <div class="col-span-4 sm:col-span-4">
-              <label for="first-name" class="block text-sm font-medium text-gray-700">Model </label>
-              <input
-                type="text"
-                [formControlName]="'model'"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-                [matAutocomplete]="mName"
-              />
-              <mat-autocomplete #mName="matAutocomplete">
-                <mat-option
-                  *ngFor="let modelName of filteredModelNameForAutoComplete | async"
-                  [value]="modelName"
-                >
-                  {{ modelName }}
-                </mat-option>
-              </mat-autocomplete>
-              <!-- <span
+   <ng-container *ngIf="assetForm.contains('laptop')">
+      <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
+         <div class="px-4 py-5 color-custom sm:p-6">
+            <div class="grid grid-cols-6 gap-6">
+               <ng-container [formGroupName]="'system'">
+                  <!-- Model Name -->
+                  <div class="col-span-4 sm:col-span-4">
+                     <label for="first-name" class="block text-sm font-medium text-gray-700">Model </label>
+                     <input type="text" [formControlName]="'model'"
+                        class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+                        [matAutocomplete]="mName" />
+                     <mat-autocomplete #mName="matAutocomplete">
+                        <mat-option *ngFor="let modelName of filteredModelNameForAutoComplete | async"
+                           [value]="modelName">
+                           {{ modelName }}
+                        </mat-option>
+                     </mat-autocomplete>
+                     <!-- <span
                  [class]="
                   assetForm.controls['model'].invalid && assetForm.controls['model'].touched
                     ? 'border-red-500'
@@ -197,16 +137,13 @@
                 class="text-xs text-red-700"
                 >*Required.</span
               > -->
-            </div>
-            <!-- Serial Number -->
-            <div class="col-span-2 sm:col-span-2">
-              <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
-              <input
-                type="text"
-                [formControlName]="'serial'"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-              <!-- <span
+                  </div>
+                  <!-- Serial Number -->
+                  <div class="col-span-2 sm:col-span-2">
+                     <label for="email-address" class="block text-sm font-medium text-gray-700">Serial Number</label>
+                     <input type="text" [formControlName]="'serial'"
+                        class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                     <!-- <span
                 *ngIf="
                   assetForm.controls['laptop.system.serial'].invalid &&
                   (assetForm.controls['laptop.system.serial'].dirty ||
@@ -215,187 +152,132 @@
                 class="text-xs text-red-700"
                 >*Required.</span
               > -->
-            </div>
-          </ng-container>
+                  </div>
+               </ng-container>
 
-          <!-- Hostname -->
-          <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
-            <input
-              type="text"
-              [formControlName]="'hostname'"
-              [class]="
+               <!-- Hostname -->
+               <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">Hostname</label>
+                  <input type="text" [formControlName]="'hostname'" [class]="
                 assetForm.controls['laptop'].get('os.hostname').invalid &&
                 assetForm.controls['laptop'].get('os.hostname').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
-              "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-            />
-            <span
-              *ngIf="
+              " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md" />
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('os.hostname').invalid &&
                 (assetForm.controls['laptop'].get('os.hostname').dirty ||
                   assetForm.controls['laptop'].get('os.hostname').touched)
-              "
-              class="text-xs text-red-700"
-              >*Required.</span
-            >
-          </div>
-          <!-- OS -->
-          <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Operating System</label>
-            <input
-              type="text"
-              [formControlName]="'distro'"
-              [class]="
+              " class="text-xs text-red-700">*Required.</span>
+               </div>
+               <!-- OS -->
+               <div class="col-span-3 sm:col-span-3" [formGroupName]="'os'">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">Operating System</label>
+                  <input type="text" [formControlName]="'distro'" [class]="
                 assetForm.controls['laptop'].get('os.distro').invalid &&
                 assetForm.controls['laptop'].get('os.distro').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
-              "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-              [matAutocomplete]="os"
-            />
-            <mat-autocomplete #os="matAutocomplete">
-              <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
-                {{ os }}
-              </mat-option>
-            </mat-autocomplete>
-            <span
-              *ngIf="
+              " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+                     [matAutocomplete]="os" />
+                  <mat-autocomplete #os="matAutocomplete">
+                     <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
+                        {{ os }}
+                     </mat-option>
+                  </mat-autocomplete>
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('os.distro').invalid &&
                 (assetForm.controls['laptop'].get('os.distro').dirty ||
                   assetForm.controls['laptop'].get('os.distro').touched)
-              "
-              class="text-xs text-red-700"
-              >*Required.</span
-            >
-          </div>
-          <!-- RAM -->
-          <div class="col-span-3 sm:col-span-3" formGroupName="mem">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">RAM</label>
-            <input
-              type="number"
-              [formControlName]="'total'"
-              [class]="
+              " class="text-xs text-red-700">*Required.</span>
+               </div>
+               <!-- RAM -->
+               <div class="col-span-3 sm:col-span-3" formGroupName="mem">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">RAM</label>
+                  <input type="number" [formControlName]="'total'" [class]="
                 assetForm.controls['laptop'].get('mem.total').invalid &&
                 assetForm.controls['laptop'].get('mem.total').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
-              "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-            />
-            <div class="text-xs text-gray-300 mt-1">In GB</div>
-            <span
-              *ngIf="
+              " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md" />
+                  <div class="text-xs text-gray-300 mt-1">In GB</div>
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('mem.total').invalid &&
                 (assetForm.controls['laptop'].get('mem.total').dirty ||
                   assetForm.controls['laptop'].get('mem.total').touched)
-              "
-              class="text-xs text-red-700"
-              >*Invalid.</span
-            >
-          </div>
-          <!-- Processor -->
-          <div class="col-span-3 sm:col-span-3" formGroupName="cpu">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Processor</label>
-            <input
-              type="text"
-              [formControlName]="'brand'"
-              [class]="
+              " class="text-xs text-red-700">*Invalid.</span>
+               </div>
+               <!-- Processor -->
+               <div class="col-span-3 sm:col-span-3" formGroupName="cpu">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">Processor</label>
+                  <input type="text" [formControlName]="'brand'" [class]="
                 assetForm.controls['laptop'].get('cpu.brand').invalid &&
                 assetForm.controls['laptop'].get('cpu.brand').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
-              "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-              [matAutocomplete]="processor"
-            />
-            <mat-autocomplete #processor="matAutocomplete">
-              <mat-option
-                *ngFor="let processor of filteredProcessorForAutoComplete | async"
-                [value]="processor"
-              >
-                {{ processor }}
-              </mat-option>
-            </mat-autocomplete>
-            <span
-              *ngIf="
+              " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+                     [matAutocomplete]="processor" />
+                  <mat-autocomplete #processor="matAutocomplete">
+                     <mat-option *ngFor="let processor of filteredProcessorForAutoComplete | async" [value]="processor">
+                        {{ processor }}
+                     </mat-option>
+                  </mat-autocomplete>
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('cpu.brand').invalid &&
                 (assetForm.controls['laptop'].get('cpu.brand').dirty ||
                   assetForm.controls['laptop'].get('cpu.brand').touched)
-              "
-              class="text-xs text-red-700"
-              >*Required.</span
-            >
-          </div>
-          <!-- Storage Type -->
-          <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
-            <select
-              [formControlName]="'type'"
-              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-            >
-              <option value="HDD">HDD</option>
-              <option value="SSD">SSD</option>
-              <option value="NVMe">NVMe</option>
-            </select>
-            <span
-              *ngIf="
+              " class="text-xs text-red-700">*Required.</span>
+               </div>
+               <!-- Storage Type -->
+               <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
+                  <select [formControlName]="'type'"
+                     class="mt-1 block w-full py-2 px-3 border border-gray-300 color-custom rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm">
+                     <option value="HDD">HDD</option>
+                     <option value="SSD">SSD</option>
+                     <option value="NVMe">NVMe</option>
+                  </select>
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('diskLayout.type').invalid &&
                 (assetForm.controls['laptop'].get('diskLayout.type').dirty ||
                   assetForm.controls['laptop'].get('diskLayout.type').touched)
-              "
-              class="text-xs text-red-700"
-              >*Required.</span
-            >
-          </div>
-          <!-- Storage Size -->
-          <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Size</label>
-            <input
-              type="number"
-              [formControlName]="'size'"
-              [class]="
+              " class="text-xs text-red-700">*Required.</span>
+               </div>
+               <!-- Storage Size -->
+               <div class="col-span-3 sm:col-span-3" formGroupName="diskLayout">
+                  <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Size</label>
+                  <input type="number" [formControlName]="'size'" [class]="
                 assetForm.controls['laptop'].get('diskLayout.size').invalid &&
                 assetForm.controls['laptop'].get('diskLayout.size').touched
                   ? 'border-red-500'
                   : 'border-gray-300'
-              "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
-            />
-            <div class="text-xs text-gray-300 mt-1">In GB</div>
+              " class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md" />
+                  <div class="text-xs text-gray-300 mt-1">In GB</div>
 
-            <span
-              *ngIf="
+                  <span *ngIf="
                 assetForm.controls['laptop'].get('diskLayout.size').invalid &&
                 (assetForm.controls['laptop'].get('diskLayout.size').dirty ||
                   assetForm.controls['laptop'].get('diskLayout.size').touched)
-              "
-              class="text-xs text-red-700"
-              >Invalid
-            </span>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
-  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
-    <!-- Cancel -->
+              " class="text-xs text-red-700">Invalid
+                  </span>
+               </div>
+            </div>
+         </div>
+      </ng-container>
+   </ng-container>
+   <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+      <!-- Cancel -->
 
-    <button mat-stroked-button [routerLink]="['../']">Back</button>
+      <button mat-stroked-button [routerLink]="['../']">Back</button>
 
-    <!-- Confirm -->
-    <button
-      type="button"
-      class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-      (click)="create()"
-    >
-      <!-- Heroicon name: solid/check -->
-      <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+      <!-- Confirm -->
+      <button type="button"
+         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+         (click)="create()">
+         <!-- Heroicon name: solid/check -->
+         <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-      Create
-    </button>
-  </div>
+         Create
+      </button>
+   </div>
 </div>

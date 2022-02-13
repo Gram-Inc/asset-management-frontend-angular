@@ -32,7 +32,7 @@
                               </th>
                            </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="color-custom divide-y divide-gray-200">
                            <ng-container *ngFor="let uam of uams; trackBy: trackByFn">
                               <tr class="hover:bg-orange-50 cursor-pointer" [routerLink]="[uam._id]">
                                  <td class="px-6 py-4 whitespace-nowrap">
@@ -89,7 +89,7 @@
                               text-sm
                               font-medium
                               text-gray-500
-                              bg-white
+                              color-custom
                               hover:bg-gray-50 hover:text-orange-600 hover:border-orange-500
                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
                             " matTooltip="Edit" *ngIf="canEdit() | async">

@@ -1,26 +1,22 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="container mx-auto p-8" [formGroup]="branchForm">
-  <div class="flex-1 min-w-0">
-    <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
-      <span class="block xl:inline">{{ this.branch ? "Update" : "Create" }}</span>
-      <span class="block text-orange-600 xl:inline"> Branch</span>
-    </h1>
-  </div>
-  <div class="mt-5 lg:ml-4">
-    <div class="px-4 py-5 bg-white sm:p-6">
-      <div class="grid grid-cols-6 gap-6">
-        <!-- Branch Name -->
-        <div class="col-span-4 sm:col-span-4">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Branch Name</label>
-          <input
-            type="text"
-            [formControlName]="'name'"
-            [class]="
+   <div class="flex-1 min-w-0">
+      <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+         <span class="block xl:inline">{{ this.branch ? "Update" : "Create" }}</span>
+         <span class="block text-orange-600 xl:inline"> Branch</span>
+      </h1>
+   </div>
+   <div class="mt-5 lg:ml-4">
+      <div class="px-4 py-5 color-custom sm:p-6">
+         <div class="grid grid-cols-6 gap-6">
+            <!-- Branch Name -->
+            <div class="col-span-4 sm:col-span-4">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Branch Name</label>
+               <input type="text" [formControlName]="'name'" [class]="
               branchForm.controls['name'].invalid && branchForm.controls['name'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -29,30 +25,21 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['name'].invalid &&
               (branchForm.controls['name'].dirty || branchForm.controls['name'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
 
-        <!-- Branch Code -->
-        <div class="col-span-1 sm:col-span-1">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Branch Code</label>
-          <input
-            type="text"
-            [formControlName]="'branchCode'"
-            [class]="
+            <!-- Branch Code -->
+            <div class="col-span-1 sm:col-span-1">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Branch Code</label>
+               <input type="text" [formControlName]="'branchCode'" [class]="
               branchForm.controls['branchCode'].invalid && branchForm.controls['branchCode'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -61,30 +48,21 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['branchCode'].invalid &&
               (branchForm.controls['branchCode'].dirty || branchForm.controls['branchCode'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
 
-        <!-- FQDN -->
-        <div class="col-span-1 sm:col-span-1">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">FQDN</label>
-          <input
-            type="text"
-            [formControlName]="'fqdn'"
-            [class]="
+            <!-- FQDN -->
+            <div class="col-span-1 sm:col-span-1">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">FQDN</label>
+               <input type="text" [formControlName]="'fqdn'" [class]="
               branchForm.controls['fqdn'].invalid && branchForm.controls['fqdn'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -93,30 +71,21 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['fqdn'].invalid &&
               (branchForm.controls['fqdn'].dirty || branchForm.controls['fqdn'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Invalid.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Invalid.</span>
+            </div>
 
-        <!-- Address Line 1 -->
-        <div class="col-span-6 sm:col-span-4">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 1</label>
-          <input
-            type="text"
-            [formControlName]="'address1'"
-            [class]="
+            <!-- Address Line 1 -->
+            <div class="col-span-6 sm:col-span-4">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+               <input type="text" [formControlName]="'address1'" [class]="
               branchForm.controls['address1'].invalid && branchForm.controls['address1'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -125,32 +94,23 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['address1'].invalid &&
               (branchForm.controls['address1'].dirty || branchForm.controls['address1'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
-        <div class="sm:col-span-2"></div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
+            <div class="sm:col-span-2"></div>
 
-        <!-- Address Line 2 -->
+            <!-- Address Line 2 -->
 
-        <div class="col-span-6 sm:col-span-4">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 2</label>
-          <input
-            type="text"
-            [formControlName]="'address2'"
-            [class]="
+            <div class="col-span-6 sm:col-span-4">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+               <input type="text" [formControlName]="'address2'" [class]="
               branchForm.controls['address2'].invalid && branchForm.controls['address2'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -159,31 +119,22 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['address2'].invalid &&
               (branchForm.controls['address2'].dirty || branchForm.controls['address2'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
-        <div class="sm:col-span-2"></div>
-        <!-- Address Line 3 -->
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
+            <div class="sm:col-span-2"></div>
+            <!-- Address Line 3 -->
 
-        <div class="col-span-6 sm:col-span-4">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 3</label>
-          <input
-            type="text"
-            [formControlName]="'address3'"
-            [class]="
+            <div class="col-span-6 sm:col-span-4">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Address Line 3</label>
+               <input type="text" [formControlName]="'address3'" [class]="
               branchForm.controls['address3'].invalid && branchForm.controls['address3'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -192,31 +143,22 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['address3'].invalid &&
               (branchForm.controls['address3'].dirty || branchForm.controls['address3'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
-        <div class="sm:col-span-2"></div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
+            <div class="sm:col-span-2"></div>
 
-        <!-- City -->
-        <div class="col-span-2 sm:col-span-2">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">City</label>
-          <input
-            type="text"
-            [formControlName]="'city'"
-            [class]="
+            <!-- City -->
+            <div class="col-span-2 sm:col-span-2">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">City</label>
+               <input type="text" [formControlName]="'city'" [class]="
               branchForm.controls['city'].invalid && branchForm.controls['city'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -225,30 +167,21 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['city'].invalid &&
               (branchForm.controls['city'].dirty || branchForm.controls['city'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
 
-        <!-- State -->
-        <div class="col-span-2 sm:col-span-2">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">State</label>
-          <input
-            type="text"
-            [formControlName]="'state'"
-            [class]="
+            <!-- State -->
+            <div class="col-span-2 sm:col-span-2">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">State</label>
+               <input type="text" [formControlName]="'state'" [class]="
               branchForm.controls['state'].invalid && branchForm.controls['state'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -257,30 +190,21 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['state'].invalid &&
               (branchForm.controls['state'].dirty || branchForm.controls['state'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
 
-        <!-- Country -->
-        <div class="col-span-2 sm:col-span-2">
-          <label for="first-name" class="block text-sm font-medium text-gray-700">Country</label>
-          <input
-            type="text"
-            [formControlName]="'country'"
-            [class]="
+            <!-- Country -->
+            <div class="col-span-2 sm:col-span-2">
+               <label for="first-name" class="block text-sm font-medium text-gray-700">Country</label>
+               <input type="text" [formControlName]="'country'" [class]="
               branchForm.controls['country'].invalid && branchForm.controls['country'].touched
                 ? 'border-red-500'
                 : 'border-gray-300'
-            "
-            class="
+            " class="
               mt-1
               focus:ring-orange-500 focus:border-orange-500
               block
@@ -289,32 +213,25 @@
               sm:text-sm
               border-gray-300
               rounded-md
-            "
-          />
-          <span
-            *ngIf="
+            " />
+               <span *ngIf="
               branchForm.controls['country'].invalid &&
               (branchForm.controls['country'].dirty || branchForm.controls['country'].touched)
-            "
-            class="text-xs text-red-700"
-            >*Required.</span
-          >
-        </div>
+            " class="text-xs text-red-700">*Required.</span>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
-  <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
-    <!-- Cancel -->
-    <ng-container>
-      <button mat-stroked-button [routerLink]="['../']">Back</button>
-    </ng-container>
+   </div>
+   <div class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3">
+      <!-- Cancel -->
+      <ng-container>
+         <button mat-stroked-button [routerLink]="['../']">Back</button>
+      </ng-container>
 
-    <!-- Confirm -->
-    <ng-container>
-      <span class="sm:ml-3">
-        <button
-          type="button"
-          class="
+      <!-- Confirm -->
+      <ng-container>
+         <span class="sm:ml-3">
+            <button type="button" class="
             inline-flex
             items-center
             px-4
@@ -328,15 +245,13 @@
             bg-orange-600
             hover:bg-orange-700
             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
-          "
-          (click)="create()"
-        >
-          <!-- Heroicon name: solid/check -->
-          <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
+          " (click)="create()">
+               <!-- Heroicon name: solid/check -->
+               <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
 
-          {{ this.branch ? "Update" : "Create" }}
-        </button>
-      </span>
-    </ng-container>
-  </div>
+               {{ this.branch ? "Update" : "Create" }}
+            </button>
+         </span>
+      </ng-container>
+   </div>
 </div>

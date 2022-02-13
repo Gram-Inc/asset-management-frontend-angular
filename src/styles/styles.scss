@@ -42,7 +42,7 @@ body {
 
 .card.highlight-card {
   background-color: #1976d2;
-  color: white;
+  color: #FAFAFA;
   font-weight: 600;
   border: none;
   width: auto;
@@ -91,6 +91,30 @@ layout {
     }
   }
 }
+.color-custom{
+   background-color: #FAFAFA;
+}
+mat-stepper {
+   background-color: #FAFAFA !important;
+
+}
+mat-expansion-panel{
+   background-color: transparent !important;
+
+}
+mat-table{
+   background-color: transparent !important;
+   background: transparent !important;
+}
+.mat-table{
+   background-color: transparent !important;
+   background: transparent !important;
+}
+
+mat-paginator{
+   background-color: transparent !important;
+}
+
 app-sign-in {
   width: 100%;
 }

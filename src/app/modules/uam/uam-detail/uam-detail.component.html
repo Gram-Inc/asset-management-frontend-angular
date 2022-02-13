@@ -19,7 +19,7 @@
 
 <div class="px-8" [formGroup]="uamForm">
    <!--01 request Type  -->
-   <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
+   <div class="color-custom px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-2 sm:px-6">
       <div>
          <div class="text-sm text-gray-400 font-medium">01</div>
          <h4 class="text-lg font-sans font-black">Request Type</h4>
@@ -43,7 +43,7 @@
    <ng-container formGroupName="windows">
 
       <!--02 Single Or Multiple User  -->
-      <div class="bg-white px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+      <div class="color-custom px-4 py-2 mb-4 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
          <div>
             <div class="text-sm text-gray-400 font-medium">02</div>
             <h4 class="text-lg font-sans font-black">No. of User</h4>
@@ -69,7 +69,8 @@
       </div>
 
       <!--03 User Information  -->
-      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6" formGroupName="userInformation">
+      <div class="color-custom px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+         formGroupName="userInformation">
          <div>
             <div class="text-sm text-gray-400 font-medium">03</div>
             <h4 class="text-lg font-sans font-black">User Information</h4>
@@ -308,7 +309,7 @@
 
       <!-- Done -->
       <!--04 Access to Share Drives  -->
-      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+      <div class="color-custom px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
          <div>
             <div class="text-sm text-gray-400 font-medium">04</div>
             <h4 class="text-lg font-sans font-black">Access to Share Drives</h4>
@@ -359,7 +360,7 @@
             <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
                <span class="hidden sm:block">
                   <button [disabled]="uamForm.disabled" type="button"
-                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 color-custom hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                      (click)="addAccessToShareDriveForm()">
                      <!-- Heroicon name: solid/check -->
                      <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
@@ -370,7 +371,7 @@
 
                <span class="sm:ml-3">
                   <button [disabled]="uamForm.disabled" type="button"
-                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 color-custom hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                      (click)="removeAccessToShareDriveForm()">
                      <mat-icon class="-ml-1 mr-2 h-5 w-5 text-gray-500" svgIcon="feather:minus"></mat-icon>
                      Remove
@@ -382,7 +383,7 @@
 
       <!-- Done -->
       <!--05 User system Data and  -->
-      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+      <div class="color-custom px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
          formGroupName="userSystemDataAndEmailIdTreatment">
          <div>
             <div class="text-sm text-gray-400 font-medium">05</div>
@@ -456,7 +457,8 @@
 
       <!-- Done -->
       <!--06 UAM Approvals -->
-      <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6" formGroupName="uamApprovals">
+      <div class="color-custom px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6"
+         formGroupName="uamApprovals">
          <div>
             <div class="text-sm text-gray-400 font-medium">06</div>
             <h4 class="text-lg font-sans font-black">UAM Approvals</h4>
@@ -494,7 +496,7 @@
       <!-- Done -->
       <!--07 For IT Department Only -->
       <ng-container *ngIf="true" formGroupName="forITDepartmentUseOnly">
-         <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
+         <div class="color-custom px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-x-4 gap-y-2 sm:px-6">
             <div>
                <div class="text-sm text-gray-400 font-medium">07</div>
                <h4 class="text-lg font-sans font-black">For IT Department Use Only</h4>
@@ -543,7 +545,7 @@
       <!-- Done -->
       <!--08 In case of Common Request Type for Multiple Users-->
       <ng-container formGroupName="userInformation">
-         <div class="bg-white px-4 py-2 s sm:px-6">
+         <div class="color-custom px-4 py-2 s sm:px-6">
             <div>
                <div class="text-sm text-gray-400 font-medium">08</div>
                <h4 class="text-lg font-sans font-black truncate">
@@ -619,7 +621,7 @@
                <div class="col-span-full mt-5 flex lg:mt-0 lg:ml-4" *ngIf="!uamForm.disabled">
                   <span class="hidden sm:block">
                      <button type="button" [disabled]="uamForm.disabled"
-                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 color-custom hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                         (click)="addUserToForm()">
                         <!-- Heroicon name: solid/check -->
                         <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:plus"></mat-icon>
@@ -643,7 +645,7 @@
                 text-sm
                 font-medium
                 text-gray-700
-                bg-white
+                color-custom
                 hover:bg-gray-50
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
               "

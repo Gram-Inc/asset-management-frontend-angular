@@ -21,9 +21,12 @@
 .sidenav {
   width: 280px;
   /* background-color: #f5f5f5; */
-    background-color: rgb(229, 229, 229);
+    background-color: rgb(247, 247, 247);
 
 }
+
+
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -47,8 +50,8 @@
 .red {
   color: #ff453a;
 }
-.bg-white {
-  background-color: white;
+.color-custom {
+ background-color: #FAFAFA;
 }
 .title {
   font-weight: 600;
@@ -94,7 +97,7 @@ h1 {
   margin-bottom: 40px;
   margin-left: 20px;
   margin-right: 20px;
-  background-color: #f4f6f8;
+  background-color: white;
   border-radius: 0.75rem;
 }
 
