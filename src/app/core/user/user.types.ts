@@ -16,6 +16,7 @@ export interface IUser
    manager?: string | Partial<IUser>;
    permissions?: IPermissions[];
    createdAt?: string;
+   updatedAt?: string;
    allocatedAssets?: string | Partial<IAsset[]>;
 }
 

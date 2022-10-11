@@ -120,6 +120,15 @@
 
             <h3 class="font-medium leading-6 text-sm text-gray-600">Created on {{ user.createdAt | date }}</h3>
         </div>
+         <!-- updated At -->
+         <div class="flex gap-x-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="grey">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+
+            <h3 class="font-medium leading-6 text-sm text-gray-600">Last updated on {{ user.updatedAt | date }}</h3>
+        </div>
 
         <!-- Asset Allocation status -->
         <div class="flex gap-x-4" *ngIf="user.allocatedAssets.length > 0">
