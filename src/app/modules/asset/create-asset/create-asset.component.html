@@ -188,7 +188,7 @@
 
                   <!-- Disk Layout -->
                   <ng-container formArrayName="diskLayout"
-                     *ngFor="let usr of assetForm.get(assetForm.get('type').value+'diskLayout')['controls']; let i = index">
+                     *ngFor="let usr of assetForm.get(assetForm.get('type').value+'.diskLayout')['controls']; let i = index">
                      <ng-container [formGroupName]="i">
                         <!-- Device -->
                         <mat-form-field class="col-span-2">

@@ -134,7 +134,7 @@ export class AssetShortDetailComponent implements OnInit, OnDestroy
 
    getLogo(): string
    {
-      return this._basicService.getAppropriateBrandLogo(this.asset.laptop.system.model);
+      return this._basicService.getAppropriateBrandLogo(this.asset.laptop?.system?.model ?? this.asset.type);
    }
    getProcessorLogo(): string
    {

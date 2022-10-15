@@ -3,7 +3,7 @@
       <div class="flex items-center">
          <!-- <h1 class="">Test</h1> -->
          <mat-icon style="height: 40px; width: 40px" class="mx-12 text-gray-400 hover:text-orange-500"
-            matTooltip="Asset Type : Laptop" svgIcon="mat_outline:laptop_mac"></mat-icon>
+            [matTooltip]="'Asset Type : ' + asset.type" svgIcon="heroicons_outline:desktop-computer"></mat-icon>
          <div>
             <h3 class="mb-1 text-lg leading-6 font-medium text-gray-900">
                Asset Information &nbsp; &nbsp;
@@ -27,34 +27,38 @@
       <div class="flex gap-x-2">
          <!-- Brand IMage / Icon  -->
          <img style="max-width: 84px; max-height: 48px" [src]="getLogo()" alt="" />
-         <img style="max-width: 84px; max-height: 48px" *ngIf="asset.laptop.cpu" [src]="getProcessorLogo()" alt="" />
+         <img style="max-width: 84px; max-height: 48px" *ngIf="asset[asset.type]?.cpu" [src]="getProcessorLogo()"
+            alt="" />
       </div>
    </div>
 
-   <div class="border-t border-gray-200">
-      <dl class="">
-         <div class="flex flex-row items-center">
-            <div class="flex-auto">
-               <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Model Name</dt>
-                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.model }}</dd>
-               </div>
-               <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
-                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.laptop.system.serial }}</dd>
-               </div>
-               <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Branch</dt>
-                  <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                     {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
-                     <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
-                  </dd>
-               </div>
-               <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
-                  <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                     {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
-                     <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
+   <ng-container *ngIf="asset.type == 'laptop' || asset.type == 'pc' || asset.type == 'server';else otherAsset ">
+      <div class="border-t border-gray-200">
+         <dl class="">
+            <div class="flex flex-row items-center">
+               <div class="flex-auto">
+                  <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Model Name</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset[asset.type].system.model }}
+                     </dd>
+                  </div>
+                  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset[asset.type].system.serial }}
+                     </dd>
+                  </div>
+                  <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Branch</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+                        <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
+                     </dd>
+                  </div>
+                  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
+                     <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
+                        <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
                   'text-green-500': !isDateFuture(asset.warranty[0].endAt),
                   'text-red-500': isDateFuture(asset.warranty[0].endAt)
                 }" [svgIcon]="
@@ -62,27 +66,80 @@
                     ? 'heroicons_solid:badge-check'
                     : 'heroicons_solid:x-circle'
                 "></mat-icon>
-                  </dd>
+                     </dd>
+                  </div>
+                  <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Current User</dt>
+                     <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 hover:text-orange-500 hover:cursor-pointer"
+                        (click)="openCurrentUser(asset)" matTooltip="Open User Details">
+                        {{ getCurrentUser(asset) }} &nbsp; &nbsp;
+                        <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon>
+                     </dd>
+                  </div>
                </div>
-               <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt class="text-sm font-medium text-gray-500">Current User</dt>
-                  <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 hover:text-orange-500 hover:cursor-pointer"
-                     (click)="openCurrentUser(asset)" matTooltip="Open User Details">
-                     {{ getCurrentUser(asset) }} &nbsp; &nbsp;
-                     <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon>
-                  </dd>
-               </div>
+
+               <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
             </div>
 
-            <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
-         </div>
+            <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4  max-h-44">
+               <app-spec-card-list [asset]="asset[asset.type]"></app-spec-card-list>
+            </dd>
+         </dl>
+      </div>
+   </ng-container>
 
-         <dd class="mx-3 text-sm text-gray-900 sm:mt-0 sm:col-span-4  max-h-44">
-            <app-spec-card-list [asset]="asset.laptop"></app-spec-card-list>
-         </dd>
-      </dl>
-   </div>
+   <ng-template #otherAsset>
+      <div class="border-t border-gray-200">
+         <dl class="">
+            <div class="flex flex-row items-center">
+               <div class="flex-auto">
+                  <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Model Name</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.assetCode }}</dd>
+                  </div>
+                  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Asset Type</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.type }}
+                     </dd>
+                  </div>
+                  <div class="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Branch</dt>
+                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+                        <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
+                     </dd>
+                  </div>
+                  <div class="bg-white px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
+                     <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
+                        <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
+                  'text-green-500': !isDateFuture(asset.warranty[0].endAt),
+                  'text-red-500': isDateFuture(asset.warranty[0].endAt)
+                }" [svgIcon]="
+                  !isDateFuture(asset.warranty[0].endAt)
+                    ? 'heroicons_solid:badge-check'
+                    : 'heroicons_solid:x-circle'
+                "></mat-icon>
+                     </dd>
+                  </div>
+                  <div class="bg-gray-50 px-4 py-2 sm:grid grid-cols-3 sm:gap-4 sm:px-6">
+                     <dt class="text-sm font-medium text-gray-500">Current User</dt>
+                     <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 hover:text-orange-500 hover:cursor-pointer"
+                        (click)="openCurrentUser(asset)" matTooltip="Open User Details">
+                        {{ getCurrentUser(asset) }} &nbsp; &nbsp;
+                        <mat-icon class="text-gray-300" svgIcon="mat_outline:link"></mat-icon>
+                     </dd>
+                  </div>
+               </div>
 
+               <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+            </div>
+
+
+         </dl>
+      </div>
+   </ng-template>
 
    <!-- Bottom Action Bar -->
    <div class="px-4 py-2 border-t border-gray-200 bg-gray-50 flex justify-between sm:px-6 items-center">
