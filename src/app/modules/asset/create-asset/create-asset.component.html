@@ -1,311 +1,302 @@
 <div class="p-8 text-xs">
-  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-      {{ asset == null ? "Create" : "Update" }} Asset
-    </h2>
-  </div>
+   <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+         {{ asset == null ? "Create" : "Update" }} Asset
+      </h2>
+   </div>
 </div>
 
-<mat-stepper
-  orientation="vertical"
-  [linear]="true"
-  class="font-sans"
-  color="accent"
-  [formGroup]="assetForm"
-  #stepper
->
-  <!-- Asset Basic Details -->
-  <mat-step>
-    <ng-template matStepLabel>Asset Type</ng-template>
-    <ng-template matStepContent>
-      <!-- Asset Type -->
-      <div class="px-4 py-5 bg-white sm:p-6 text-xs">
-        <div class="grid grid-cols-4 gap-x-6">
-          <!-- Asset Code -->
-          <mat-form-field class="col-span-3">
-            <mat-label>Asset Code</mat-label>
-            <input formControlName="assetCode" matInput />
-          </mat-form-field>
-
-          <!-- Type -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Asset Type</mat-label>
-            <mat-select formControlName="type" (change)="addAssetTypeToAssetForm()">
-              <mat-option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- Category -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName="category">
-              <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- Vendor -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Vendor</mat-label>
-            <mat-select [formControlName]="'vendorId'">
-              <mat-option [value]="null">N/A</mat-option>
-              <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <!-- Branch -->
-          <mat-form-field class="col-span-2">
-            <mat-label>Branch / Location</mat-label>
-            <mat-select [formControlName]="'branch'">
-              <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{
-                branch.name
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('asset', stepper)">
-        Next
-      </button>
-    </ng-template>
-  </mat-step>
-
-  <!-- Laptop/PC/Server -->
-  <ng-container *ngIf="assetForm.contains('laptop')" formGroupName="laptop">
-    <!-- SYSTEM / OS -->
-    <mat-step [stepControl]="assetForm.get('laptop')['os']">
-      <ng-template matStepLabel>System Information</ng-template>
+<mat-stepper orientation="vertical" [linear]="true" class="font-sans" color="accent" [formGroup]="assetForm" #stepper>
+   <!-- Asset Basic Details -->
+   <mat-step>
+      <ng-template matStepLabel>Asset Type</ng-template>
       <ng-template matStepContent>
-        <div class="px-4 py-5 bg-white sm:p-6 text-xs">
-          <div class="grid grid-cols-4 gap-x-6">
-            <!-- system -->
-            <ng-container formGroupName="system">
-              <!-- Model NAme -->
-              <mat-form-field class="col-span-3">
-                <mat-label>Model Name</mat-label>
-                <input formControlName="model" matInput [matAutocomplete]="mName" />
-                <mat-autocomplete #mName="matAutocomplete">
-                  <mat-option
-                    *ngFor="let modelName of filteredModelNameForAutoComplete | async"
-                    [value]="modelName"
-                  >
-                    {{ modelName }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+         <!-- Asset Type -->
+         <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+            <div class="grid grid-cols-4 gap-x-6">
+               <!-- Asset Code -->
+               <mat-form-field class="col-span-3">
+                  <mat-label>Asset Code</mat-label>
+                  <input formControlName="assetCode" matInput />
+               </mat-form-field>
 
-              <!--Manufacturer -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Manufacturer</mat-label>
-                <input formControlName="manufacturer" matInput />
-              </mat-form-field>
-
-              <!-- Serial Number -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Serial Number</mat-label>
-                <input formControlName="serial" matInput />
-              </mat-form-field>
-            </ng-container>
-            <!-- OS -->
-            <ng-container formGroupName="os">
-              <!-- Platform -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Platform</mat-label>
-                <mat-select formControlName="platform">
-                  <mat-option value="windows">Windows</mat-option>
-                  <mat-option value="darwin">Darwin</mat-option>
-                  <mat-option value="linux">Linux</mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <!-- distro -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Distro</mat-label>
-                <input formControlName="distro" matInput [matAutocomplete]="os" />
-                <mat-autocomplete #os="matAutocomplete">
-                  <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
-                    {{ os }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-
-              <!-- arch -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Arch</mat-label>
-                <mat-select formControlName="arch">
-                  <mat-option [value]="'x64'"> x64 </mat-option>
-                  <mat-option [value]="'x32'"> x32 </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <!-- hostname -->
-              <mat-form-field class="col-span-4">
-                <mat-label>Hostname</mat-label>
-                <input formControlName="hostname" matInput required />
-              </mat-form-field>
-            </ng-container>
-          </div>
-        </div>
-        <!-- Actions -->
-        <button mat-stroked-button matStepperPrevious>Back</button>
-        <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('os', stepper)">
-          Next
-        </button>
-      </ng-template>
-    </mat-step>
-
-    <!-- MEM / DISK / CPU -->
-    <mat-step [stepControl]="assetForm.get('laptop')['diskLayout']">
-      <ng-template matStepLabel>Memory / Disk Information</ng-template>
-      <ng-template matStepContent>
-        <div class="px-4 py-5 bg-white sm:p-6 text-xs">
-          <div class="grid grid-cols-4 gap-x-6">
-            <!-- processor -->
-            <ng-container formGroupName="cpu">
-              <!-- manufacturer -->
-              <mat-form-field class="col-span-1">
-                <mat-label>Manufacturer</mat-label>
-                <input formControlName="manufacturer" matInput />
-              </mat-form-field>
-
-              <!-- Brand -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Brand</mat-label>
-                <input formControlName="brand" matInput [matAutocomplete]="cpu" />
-                <mat-autocomplete #cpu="matAutocomplete">
-                  <mat-option *ngFor="let cpu of filteredProcessorForAutoComplete | async" [value]="cpu">
-                    {{ cpu }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-
-              <!-- No. of Processor -->
-              <mat-form-field class="col-span-1">
-                <mat-label>No. of Processors</mat-label>
-                <input formControlName="processors" matInput />
-              </mat-form-field>
-            </ng-container>
-
-            <!-- Mem -->
-            <ng-container formGroupName="mem">
-              <mat-form-field class="col-span-2">
-                <mat-label>Memory</mat-label>
-                <input type="number" formControlName="total" matInput />
-              </mat-form-field>
-            </ng-container>
-
-            <!-- Disk Layout -->
-            <ng-container
-              formArrayName="diskLayout"
-              *ngFor="let usr of assetForm.get('laptop.diskLayout')['controls']; let i = index"
-            >
-              <ng-container [formGroupName]="i">
-                <!-- Device -->
-                <mat-form-field class="col-span-2">
-                  <mat-label>Slot </mat-label>
-                  <input formControlName="device" matInput />
-                </mat-form-field>
-
-                <!-- Type -->
-                <mat-form-field class="col-span-2">
-                  <mat-label>Type </mat-label>
-                  <mat-select formControlName="type" required>
-                    <mat-option value="SSD">SSD</mat-option>
-                    <mat-option value="HDD">HDD</mat-option>
-                    <mat-option value="NVMe">NVMe</mat-option>
+               <!-- Type -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Asset Type</mat-label>
+                  <mat-select formControlName="type" (change)="addAssetTypeToAssetForm()">
+                     <mat-option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</mat-option>
                   </mat-select>
-                </mat-form-field>
+               </mat-form-field>
 
-                <!--name -->
-                <mat-form-field class="col-span-2">
-                  <mat-label>Name </mat-label>
-                  <input formControlName="name" matInput />
-                </mat-form-field>
+               <!-- Category -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Category</mat-label>
+                  <mat-select formControlName="category">
+                     <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+                  </mat-select>
+               </mat-form-field>
 
-                <!-- size -->
-                <mat-form-field class="col-span-2">
-                  <mat-label>Size </mat-label>
-                  <input type="number" formControlName="size" matInput />
-                </mat-form-field>
-              </ng-container>
-            </ng-container>
-          </div>
-        </div>
-        <!-- Actions -->
-        <button mat-stroked-button matStepperPrevious>Back</button>
-        <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('diskLayout', stepper)">
-          Next
-        </button>
+               <!-- Vendor -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Vendor</mat-label>
+                  <mat-select [formControlName]="'vendorId'">
+                     <mat-option [value]="null">N/A</mat-option>
+                     <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</mat-option>
+                  </mat-select>
+               </mat-form-field>
+
+               <!-- Branch -->
+               <mat-form-field class="col-span-2">
+                  <mat-label>Branch / Location</mat-label>
+                  <mat-select [formControlName]="'branch'">
+                     <mat-option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{
+                        branch.name
+                        }}</mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+         </div>
+         <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('asset', stepper)">
+            Next
+         </button>
       </ng-template>
-    </mat-step>
-  </ng-container>
+   </mat-step>
 
-  <!-- Warranty -->
-  <mat-step [stepControl]="assetForm.get('warranty')['controls']">
-    <ng-template matStepLabel>Warranty Information</ng-template>
-    <ng-template matStepContent>
-      <div class="px-4 py-5 bg-white sm:p-6 text-xs">
-        <div class="grid grid-cols-4 gap-x-6">
-          <!-- Warranty -->
-          <ng-container
-            formArrayName="warranty"
-            *ngFor="let wrnty of assetForm.get('warranty')['controls']; let i = index"
-          >
-            <ng-container [formGroupName]="i">
-              <!-- Name -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Name </mat-label>
-                <input formControlName="name" matInput />
-              </mat-form-field>
 
-              <!-- Type -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Type </mat-label>
-                <input formControlName="type" matInput required />
-              </mat-form-field>
+   <!-- Laptop/PC/Server -->
+   <ng-container *ngIf="assetForm.contains('laptop') || assetForm.contains('pc') || assetForm.contains('server')"
+      [formGroupName]="assetForm.get('type').value">
+      <!-- SYSTEM / OS -->
+      <mat-step [stepControl]="assetForm.get(assetForm.get('type').value)['os']">
+         <ng-template matStepLabel>System Information</ng-template>
+         <ng-template matStepContent>
+            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+               <div class="grid grid-cols-4 gap-x-6">
+                  <!-- system -->
+                  <ng-container formGroupName="system">
+                     <!-- Model NAme -->
+                     <mat-form-field class="col-span-3">
+                        <mat-label>Model Name</mat-label>
+                        <input formControlName="model" matInput [matAutocomplete]="mName" />
+                        <mat-autocomplete #mName="matAutocomplete">
+                           <mat-option *ngFor="let modelName of filteredModelNameForAutoComplete | async"
+                              [value]="modelName">
+                              {{ modelName }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
 
-              <!--Start -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="dor" formControlName="startAt" />
-                <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
-                <mat-datepicker #dor></mat-datepicker>
-              </mat-form-field>
+                     <!--Manufacturer -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Manufacturer</mat-label>
+                        <input formControlName="manufacturer" matInput />
+                     </mat-form-field>
 
-              <!-- End -->
-              <mat-form-field class="col-span-2">
-                <mat-label>End Date</mat-label>
-                <input matInput [matDatepicker]="ed" formControlName="endAt" />
-                <mat-datepicker-toggle matSuffix [for]="ed"></mat-datepicker-toggle>
-                <mat-datepicker #ed></mat-datepicker>
-              </mat-form-field>
+                     <!-- Serial Number -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Serial Number</mat-label>
+                        <input formControlName="serial" matInput />
+                     </mat-form-field>
+                  </ng-container>
+                  <!-- OS -->
+                  <ng-container formGroupName="os">
+                     <!-- Platform -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Platform</mat-label>
+                        <mat-select formControlName="platform">
+                           <mat-option value="windows">Windows</mat-option>
+                           <mat-option value="darwin">Darwin</mat-option>
+                           <mat-option value="linux">Linux</mat-option>
+                        </mat-select>
+                     </mat-form-field>
 
-              <!-- Vendor -->
-              <mat-form-field class="col-span-2">
-                <mat-label>Vendor</mat-label>
-                <mat-select [formControlName]="'vendor'">
-                  <mat-option [value]="null">N/A</mat-option>
-                  <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{
-                    vnd?.name
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-          </ng-container>
-          <button mat-stroked-button color="primary" class="mx-2" (click)="addWarranty()">
-            Add Warranty
-          </button>
-        </div>
-      </div>
-      <!-- Actions -->
-      <button mat-stroked-button matStepperPrevious>Back</button>
-      <button mat-stroked-button color="primary" class="mx-2" (click)="create()">
-        {{ asset == null ? "Create" : "Update" }}
-      </button>
-    </ng-template>
-  </mat-step>
+                     <!-- distro -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Distro</mat-label>
+                        <input formControlName="distro" matInput [matAutocomplete]="os" />
+                        <mat-autocomplete #os="matAutocomplete">
+                           <mat-option *ngFor="let os of filteredOSForAutoComplete | async" [value]="os">
+                              {{ os }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
 
-  <!-- Icon overrides. -->
-  <!-- <ng-template matStepperIcon="phone">
+                     <!-- arch -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Arch</mat-label>
+                        <mat-select formControlName="arch">
+                           <mat-option [value]="'x64'"> x64 </mat-option>
+                           <mat-option [value]="'x32'"> x32 </mat-option>
+                        </mat-select>
+                     </mat-form-field>
+
+                     <!-- hostname -->
+                     <mat-form-field class="col-span-4">
+                        <mat-label>Hostname</mat-label>
+                        <input formControlName="hostname" matInput required />
+                     </mat-form-field>
+                  </ng-container>
+               </div>
+            </div>
+            <!-- Actions -->
+            <button mat-stroked-button matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('os', stepper)">
+               Next
+            </button>
+         </ng-template>
+      </mat-step>
+
+      <!-- MEM / DISK / CPU -->
+      <mat-step [stepControl]="assetForm.get(assetForm.get('type').value)['diskLayout']">
+         <ng-template matStepLabel>Memory / Disk Information</ng-template>
+         <ng-template matStepContent>
+            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+               <div class="grid grid-cols-4 gap-x-6">
+                  <!-- processor -->
+                  <ng-container formGroupName="cpu">
+                     <!-- manufacturer -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>Manufacturer</mat-label>
+                        <input formControlName="manufacturer" matInput />
+                     </mat-form-field>
+
+                     <!-- Brand -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Brand</mat-label>
+                        <input formControlName="brand" matInput [matAutocomplete]="cpu" />
+                        <mat-autocomplete #cpu="matAutocomplete">
+                           <mat-option *ngFor="let cpu of filteredProcessorForAutoComplete | async" [value]="cpu">
+                              {{ cpu }}
+                           </mat-option>
+                        </mat-autocomplete>
+                     </mat-form-field>
+
+                     <!-- No. of Processor -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label>No. of Processors</mat-label>
+                        <input formControlName="processors" matInput />
+                     </mat-form-field>
+                  </ng-container>
+
+                  <!-- Mem -->
+                  <ng-container formGroupName="mem">
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Memory</mat-label>
+                        <input type="number" formControlName="total" matInput />
+                     </mat-form-field>
+                  </ng-container>
+
+                  <!-- Disk Layout -->
+                  <ng-container formArrayName="diskLayout"
+                     *ngFor="let usr of assetForm.get(assetForm.get('type').value+'diskLayout')['controls']; let i = index">
+                     <ng-container [formGroupName]="i">
+                        <!-- Device -->
+                        <mat-form-field class="col-span-2">
+                           <mat-label>Slot </mat-label>
+                           <input formControlName="device" matInput />
+                        </mat-form-field>
+
+                        <!-- Type -->
+                        <mat-form-field class="col-span-2">
+                           <mat-label>Type </mat-label>
+                           <mat-select formControlName="type" required>
+                              <mat-option value="SSD">SSD</mat-option>
+                              <mat-option value="HDD">HDD</mat-option>
+                              <mat-option value="NVMe">NVMe</mat-option>
+                           </mat-select>
+                        </mat-form-field>
+
+                        <!--name -->
+                        <mat-form-field class="col-span-2">
+                           <mat-label>Name </mat-label>
+                           <input formControlName="name" matInput />
+                        </mat-form-field>
+
+                        <!-- size -->
+                        <mat-form-field class="col-span-2">
+                           <mat-label>Size </mat-label>
+                           <input type="number" formControlName="size" matInput />
+                        </mat-form-field>
+                     </ng-container>
+                  </ng-container>
+               </div>
+            </div>
+            <!-- Actions -->
+            <button mat-stroked-button matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('diskLayout', stepper)">
+               Next
+            </button>
+         </ng-template>
+      </mat-step>
+
+
+   </ng-container>
+
+   <!-- Warranty -->
+   <mat-step [stepControl]="assetForm.get('warranty')['controls']">
+      <ng-template matStepLabel>Warranty Information</ng-template>
+      <ng-template matStepContent>
+         <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+            <div class="grid grid-cols-4 gap-x-6">
+               <!-- Warranty -->
+               <ng-container formArrayName="warranty"
+                  *ngFor="let wrnty of assetForm.get('warranty')['controls']; let i = index">
+                  <ng-container [formGroupName]="i">
+                     <!-- Name -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Name </mat-label>
+                        <input formControlName="name" matInput />
+                     </mat-form-field>
+
+                     <!-- Type -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Type </mat-label>
+                        <input formControlName="type" matInput required />
+                     </mat-form-field>
+
+                     <!--Start -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="dor" formControlName="startAt" />
+                        <mat-datepicker-toggle matSuffix [for]="dor"></mat-datepicker-toggle>
+                        <mat-datepicker #dor></mat-datepicker>
+                     </mat-form-field>
+
+                     <!-- End -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="ed" formControlName="endAt" />
+                        <mat-datepicker-toggle matSuffix [for]="ed"></mat-datepicker-toggle>
+                        <mat-datepicker #ed></mat-datepicker>
+                     </mat-form-field>
+
+                     <!-- Vendor -->
+                     <mat-form-field class="col-span-2">
+                        <mat-label>Vendor</mat-label>
+                        <mat-select [formControlName]="'vendor'">
+                           <mat-option [value]="null">N/A</mat-option>
+                           <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{
+                              vnd?.name
+                              }}</mat-option>
+                        </mat-select>
+                     </mat-form-field>
+                  </ng-container>
+               </ng-container>
+               <button mat-stroked-button color="primary" class="mx-2" (click)="addWarranty()">
+                  Add Warranty
+               </button>
+            </div>
+         </div>
+         <!-- Actions -->
+         <button mat-stroked-button matStepperPrevious>Back</button>
+         <button mat-stroked-button color="primary" class="mx-2" (click)="create()">
+            {{ asset == null ? "Create" : "Update" }}
+         </button>
+      </ng-template>
+   </mat-step>
+
+   <!-- Icon overrides. -->
+   <!-- <ng-template matStepperIcon="phone">
     <mat-icon>call_end</mat-icon>
   </ng-template>
   <ng-template matStepperIcon="chat">

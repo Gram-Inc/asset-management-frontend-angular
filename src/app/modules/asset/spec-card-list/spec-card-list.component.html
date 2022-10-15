@@ -1,160 +1,176 @@
 <div class="flex flex-wrap gap-2 my-3">
-  <!-- Cards Section -->
+   <!-- Cards Section -->
 
-  <!-- RAM -->
-  <ng-container>
-    <!-- if Layout Found -->
-    <ng-container *ngIf="asset.memLayout?.length > 0">
-      <div
-        class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-        style="height: 68px !important; padding: 2px 4px"
-      >
-        <!-- If No RAM LAYOUT -->
+   <!-- RAM -->
+   <ng-container>
+      <!-- if Layout Found -->
+      <ng-container *ngIf="asset.memLayout?.length > 0">
+         <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+            style="height: 68px !important; padding: 2px 4px">
+            <!-- If No RAM LAYOUT -->
 
-        <!-- Icons / Image -->
-        <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+            <!-- Icons / Image -->
+            <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
 
-        <!-- Sr  -->
-        <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-          <ng-container *ngFor="let memLay of asset.memLayout">
-            <div class="flex items-center my-1">
-              <h6 class="overf text-xs font-medium text-gray-300">{{ memLay.bank }} -&nbsp;</h6>
-              <h6 class="overf text-xs text-black truncate">{{ memLay.size | bytesToGB }} GB</h6>
+            <!-- Sr  -->
+            <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+               <ng-container *ngFor="let memLay of asset.memLayout">
+                  <div class="flex items-center my-1">
+                     <h6 class="overf text-xs font-medium text-gray-300">{{ memLay.bank }} -&nbsp;</h6>
+                     <h6 class="overf text-xs text-black truncate">{{ memLay.size }} GB</h6>
+                  </div>
+               </ng-container>
             </div>
-          </ng-container>
-        </div>
 
-        <!-- Type Area  -->
-        <h6
-          class="overf font-semibold border-x-2 text-lg text-center"
-          style="writing-mode: vertical-rl; color: #ffb900"
-        >
-          {{ asset.memLayout[0].type }}
-        </h6>
-        <!-- Total -->
-        <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-          <h6 class="text-xs text-gray-300">Total</h6>
-          <h4 class="text-lg font-bold truncate">{{ asset.mem.total ?? "0" | bytesToGB }}</h4>
-          <h6 class="text-xs">GB</h6>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- If no layout found -->
-    <ng-container *ngIf="asset.memLayout?.length == 0">
-      <div
-        class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-        style="height: 68px !important; padding: 2px 4px"
-      >
-        <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
-        <!-- <hr class="border border-gray-300" /> -->
-
-        <!-- Sr  -->
-        <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-          <div class="flex items-center my-1">
-            <h6 class="overf text-xs font-medium text-gray-300">S1 -&nbsp;</h6>
-            <h6 class="overf text-xs text-black truncate">N/A</h6>
-          </div>
-          <div class="flex items-center my-1">
-            <h6 class="overf text-xs font-medium text-gray-300">S2 -&nbsp;</h6>
-            <h6 class="overf text-xs text-black truncate">N/A</h6>
-          </div>
-        </div>
-
-        <!-- Type Area  -->
-        <h6
-          class="overf font-semibold border-x-2 text-lg text-center"
-          style="writing-mode: vertical-rl; color: #ffb900"
-        >
-          RAM
-        </h6>
-        <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-          <h6 class="text-xs text-gray-300">Total</h6>
-          <h4 class="text-lg font-bold">{{ asset.mem.total ?? "0" }}</h4>
-          <h6 class="text-xs">GB</h6>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
-
-  <!-- Processor -->
-  <ng-container *ngIf="asset.cpu">
-    <div
-      class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-      style="height: 68px !important; padding: 2px 4px"
-    >
-      <!-- Icons / Image -->
-      <img class="mx-3" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
-
-      <!-- Detail  -->
-      <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-        <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">Manufacturer-&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.cpu.manufacturer }}</h6>
-        </div>
-        <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">Brand-&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ asset.cpu.brand }}</h6>
-        </div>
-      </div>
-
-      <!-- Type Area  -->
-      <h6
-        class="overf font-semibold border-x-2 text-lg text-center text-blue-500"
-        style="writing-mode: vertical-rl"
-      >
-        CPU
-      </h6>
-      <!-- Total -->
-      <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-        <h6 class="text-xs text-gray-300">CPU</h6>
-        <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.cpu.brand) }}</h4>
-        <h6 class="text-xs"></h6>
-      </div>
-    </div>
-  </ng-container>
-
-  <!-- Disk Layout -->
-  <ng-container *ngFor="let disk of asset.diskLayout">
-    <div
-      class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-      style="height: 68px !important; padding: 2px 4px"
-    >
-      <!-- If No RAM LAYOUT -->
-
-      <!-- Icons / Image -->
-      <ng-container *ngIf="disk.type == 'HDD'">
-        <img class="mx-3" src="/assets/icons/harddisk.png" height="45px" width="45px" alt="hdd" />
-      </ng-container>
-      <ng-container *ngIf="disk.type == 'SSD' || disk.type == 'NVMe'">
-        <img class="mx-3" src="/assets/icons/ssd.png" height="45px" width="45px" alt="ssd" />
+            <!-- Type Area  -->
+            <h6 class="overf font-semibold border-x-2 text-lg text-center"
+               style="writing-mode: vertical-rl; color: #ffb900">
+               {{ asset.memLayout[0].type }}
+            </h6>
+            <!-- Total -->
+            <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+               <h6 class="text-xs text-gray-300">Total</h6>
+               <h4 class="text-lg font-bold truncate">{{ asset.mem.total ?? "0" }}</h4>
+               <h6 class="text-xs">GB</h6>
+            </div>
+         </div>
       </ng-container>
 
-      <!-- Slot  -->
-      <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
-        <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">Slot -&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ disk.device }}</h6>
-        </div>
-        <div class="flex items-center my-1">
-          <h6 class="overf text-xs font-medium text-gray-300">Name -&nbsp;</h6>
-          <h6 class="overf text-xs text-black truncate">{{ disk.name }}</h6>
-        </div>
-      </div>
+      <!-- if Layout Found -->
+      <ng-container *ngIf="asset.mem">
+         <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+            style="height: 68px !important; padding: 2px 4px">
+            <!-- If No RAM LAYOUT -->
 
-      <!-- Type Area  -->
-      <h6
-        class="overf font-semibold border-x-2 text-lg text-center text-green-500"
-        style="writing-mode: vertical-rl"
-      >
-        {{ disk.type }}
-      </h6>
-      <!-- Total -->
-      <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
-        <h6 class="text-xs text-gray-300">Total</h6>
-        <h4 class="text-lg font-bold truncate">{{ disk.size ?? "0" | bytesToGB }}</h4>
-        <h6 class="text-xs">GB</h6>
+            <!-- Icons / Image -->
+            <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+
+            <!-- Sr  -->
+            <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+
+               <div class="flex items-center my-1">
+                  <h6 class="overf text-xs font-medium text-gray-300">Slot 1 -&nbsp;</h6>
+                  <h6 class="overf text-xs text-black truncate">{{ asset.mem.total }} GB</h6>
+               </div>
+
+            </div>
+
+            <!-- Type Area  -->
+            <h6 class="overf font-semibold border-x-2 text-lg text-center"
+               style="writing-mode: vertical-rl; color: #ffb900">
+               RAM
+            </h6>
+            <!-- Total -->
+            <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+               <h6 class="text-xs text-gray-300">Total</h6>
+               <h4 class="text-lg font-bold truncate">{{ asset.mem.total ?? "0" }}</h4>
+               <h6 class="text-xs">GB</h6>
+            </div>
+         </div>
+      </ng-container>
+
+      <!-- If no layout found -->
+      <ng-container *ngIf="asset.memLayout?.length == 0">
+         <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+            style="height: 68px !important; padding: 2px 4px">
+            <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
+            <!-- <hr class="border border-gray-300" /> -->
+
+            <!-- Sr  -->
+            <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+               <div class="flex items-center my-1">
+                  <h6 class="overf text-xs font-medium text-gray-300">S1 -&nbsp;</h6>
+                  <h6 class="overf text-xs text-black truncate">N/A</h6>
+               </div>
+               <div class="flex items-center my-1">
+                  <h6 class="overf text-xs font-medium text-gray-300">S2 -&nbsp;</h6>
+                  <h6 class="overf text-xs text-black truncate">N/A</h6>
+               </div>
+            </div>
+
+            <!-- Type Area  -->
+            <h6 class="overf font-semibold border-x-2 text-lg text-center"
+               style="writing-mode: vertical-rl; color: #ffb900">
+               RAM
+            </h6>
+            <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+               <h6 class="text-xs text-gray-300">Total</h6>
+               <h4 class="text-lg font-bold">{{ asset.mem.total ?? "0" }}</h4>
+               <h6 class="text-xs">GB</h6>
+            </div>
+         </div>
+      </ng-container>
+   </ng-container>
+
+   <!-- Processor -->
+   <ng-container *ngIf="asset.cpu">
+      <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+         style="height: 68px !important; padding: 2px 4px">
+         <!-- Icons / Image -->
+         <img class="mx-3" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
+
+         <!-- Detail  -->
+         <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+            <div class="flex items-center my-1">
+               <h6 class="overf text-xs font-medium text-gray-300">Manufacturer-&nbsp;</h6>
+               <h6 class="overf text-xs text-black truncate">{{ asset.cpu.manufacturer }}</h6>
+            </div>
+            <div class="flex items-center my-1">
+               <h6 class="overf text-xs font-medium text-gray-300">Brand-&nbsp;</h6>
+               <h6 class="overf text-xs text-black truncate">{{ asset.cpu.brand }}</h6>
+            </div>
+         </div>
+
+         <!-- Type Area  -->
+         <h6 class="overf font-semibold border-x-2 text-lg text-center text-blue-500" style="writing-mode: vertical-rl">
+            CPU
+         </h6>
+         <!-- Total -->
+         <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+            <h6 class="text-xs text-gray-300">CPU</h6>
+            <h4 class="text-lg font-bold truncate">{{ getProcessorShortName(asset.cpu.brand) }}</h4>
+            <h6 class="text-xs"></h6>
+         </div>
       </div>
-    </div>
-  </ng-container>
+   </ng-container>
+
+   <!-- Disk Layout -->
+   <ng-container *ngFor="let disk of asset.diskLayout">
+      <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
+         style="height: 68px !important; padding: 2px 4px">
+         <!-- If No RAM LAYOUT -->
+
+         <!-- Icons / Image -->
+         <ng-container *ngIf="disk.type == 'HDD'">
+            <img class="mx-3" src="/assets/icons/harddisk.png" height="45px" width="45px" alt="hdd" />
+         </ng-container>
+         <ng-container *ngIf="disk.type == 'SSD' || disk.type == 'NVMe'">
+            <img class="mx-3" src="/assets/icons/ssd.png" height="45px" width="45px" alt="ssd" />
+         </ng-container>
+
+         <!-- Slot  -->
+         <div class="columns-auto justify-center my-1 pl-3" style="width: 100%">
+            <div class="flex items-center my-1">
+               <h6 class="overf text-xs font-medium text-gray-300">Slot -&nbsp;</h6>
+               <h6 class="overf text-xs text-black truncate">{{ disk.device }}</h6>
+            </div>
+            <div class="flex items-center my-1">
+               <h6 class="overf text-xs font-medium text-gray-300">Name -&nbsp;</h6>
+               <h6 class="overf text-xs text-black truncate">{{ disk.name }}</h6>
+            </div>
+         </div>
+
+         <!-- Type Area  -->
+         <h6 class="overf font-semibold border-x-2 text-lg text-center text-green-500"
+            style="writing-mode: vertical-rl">
+            {{ disk.type }}
+         </h6>
+         <!-- Total -->
+         <div style="width: 56px !important; min-width: 56px !important" class="col text-center">
+            <h6 class="text-xs text-gray-300">Total</h6>
+            <h4 class="text-lg font-bold truncate">{{ disk.size ?? "0" }}</h4>
+            <h6 class="text-xs">GB</h6>
+         </div>
+      </div>
+   </ng-container>
 </div>

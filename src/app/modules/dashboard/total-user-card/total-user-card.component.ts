@@ -82,8 +82,13 @@ export class TotalUserCardComponent implements OnInit
                style: {
                   colors: "#334155",
                },
+               formatter: (value) => { return value.toFixed(2).toString() },
             },
+            floating: false,
+            decimalsInFloat: 1,
+
          },
+
       };
    }
 }
