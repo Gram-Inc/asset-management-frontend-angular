@@ -52,7 +52,8 @@
                </mat-form-field>
 
                <!-- Serial Number -->
-               <mat-form-field class="col-span-1">
+               <mat-form-field class="col-span-1"
+                  *ngIf="!(assetForm.get('type').value == 'pc' || assetForm.get('type').value == 'server' || assetForm.get('type').value == 'laptop')">
                   <mat-label>Serial Number</mat-label>
                   <input formControlName="sr_no" matInput />
                </mat-form-field>
