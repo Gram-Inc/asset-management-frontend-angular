@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import * as moment from "moment";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { debounceTime, map, startWith, switchMap, takeUntil } from "rxjs/operators";
+import { AssetForm } from "src/app/core/asset/asset-form";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IWarranty } from "src/app/core/asset/asset.types";
 import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
@@ -129,6 +130,14 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             //Set Asset Type to formbuilder
             this.addAssetTypeToAssetForm();
             this.assetForm.patchValue(val);
+            this.asset.warranty?.map(x => (this.assetForm.get('warranty') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
+            this.asset.amc?.map(x => (this.assetForm.get('amc') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
+            if (this.asset.type == 'laptop' || this.asset.type == 'server' || this.asset.type == 'pc')
+            {
+               (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).clear()
+               this.asset[this.asset.type].diskLayout.map(x => (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).controls.push(AssetForm.DiskFormGroup(x)));
+            }
+
             this.assetForm.get(val.type).patchValue(val[val.type]);
             this.assetForm.get("branch").setValue(typeof val.branch == "object" ? val.branch._id : null);
          }
@@ -173,14 +182,14 @@ export class CreateAssetComponent implements OnInit, OnDestroy
                   hostname: ["", Validators.required],
                }),
                mem: this._formBuilder.group({
-                  total: ["", [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]], //in bytes
+                  total: ["", [Validators.required, Validators.pattern("^([1-9][0-9]*)$")]], //in bytes
                }),
                cpu: this._formBuilder.group({
                   manufacturer: ["Intel®"],
                   brand: [""], //i3,i5..
                   processors: 1,
                }),
-               diskLayout: this._formBuilder.array([this.createDisk()]),
+               diskLayout: this._formBuilder.array([AssetForm.DiskFormGroup()]),
             });
             break;
 
@@ -307,33 +316,11 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       });
    }
 
-   createDisk()
-   {
-      return this._formBuilder.group({
-         device: ["disk0"],
-         type: ["HDD"], // NVMe,..
-         name: [""], //"INTEL SSDPEKNW512G8"
-         vendor: [""], // INTEL
-         size: [500, [Validators.required, Validators.pattern("^(0|[1-9][0-9]*)$")]],
-      });
-   }
-   createWarranty()
-   {
-      return this._formBuilder.group({
-         name: [""],
-         description: [""],
-         type: ["WARRANTY"],
-         warrantySiteType: ["ON_SITE"],
-         startAt: [moment().toISOString(), [Validators.required]],
-         endAt: ["", [Validators.required]],
-         purchaseDate: [moment().toISOString(), [Validators.required]],
-         vendor: [""],
-         poNumber: [""],
-      });
-   }
+
+
    addWarranty()
    {
-      (this.assetForm.get("warranty") as FormArray).push(this.createWarranty());
+      (this.assetForm.get("warranty") as FormArray).push(AssetForm.WarrantyForm());
    }
 
    goForward(formGroupName: string, stepper: MatStepper)
