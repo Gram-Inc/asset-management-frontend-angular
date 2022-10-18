@@ -18,10 +18,10 @@
                                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                  User
                               </th>
-                              <th scope="col"
+                              <!-- <th scope="col"
                                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                  Host Name
-                              </th>
+                              </th> -->
                               <th scope="col"
                                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                  Allocation Status
@@ -40,7 +40,9 @@
                               <tr class="hover:bg-orange-50 cursor-pointer" (click)="openDetail(asset)">
 
                                  <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
+
+                                    <div class="flex items-center"
+                                       *ngIf="asset.type =='laptop' || asset.type =='server' ||asset.type =='pc' ;else OtherAssetDes">
                                        <div class="">
                                           <div class="text-sm font-medium text-gray-900">
                                              {{ asset[asset.type]?.system?.model }}
@@ -50,6 +52,19 @@
                                           <!-- <img style="max-width: 84px; max-height: 18px" [src]="getLogo(asset)" alt="" /> -->
                                        </div>
                                     </div>
+
+                                    <ng-template #OtherAssetDes>
+                                       <div class="flex items-center">
+                                          <div class="">
+                                             <div class="text-sm font-medium text-gray-900">
+                                                {{ asset.name}}
+                                             </div>
+                                             <div class="text-sm text-gray-500">{{ asset.assetCode }}
+                                             </div>
+                                             <!-- <img style="max-width: 84px; max-height: 18px" [src]="getLogo(asset)" alt="" /> -->
+                                          </div>
+                                       </div>
+                                    </ng-template>
                                  </td>
                                  <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-blue-600 cursor-pointer hover:text-orange-500"
@@ -62,9 +77,9 @@
                                        {{ getPrevUser(asset) }}
                                     </div>
                                  </td>
-                                 <td class="px-6 py-4 whitespace-nowrap">
+                                 <!-- <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">{{ asset[asset.type]?.os?.hostname }}</div>
-                                 </td>
+                                 </td> -->
 
                                  <td class="px-6 py-4 whitespace-nowrap">
                                     <span [ngClass]="{

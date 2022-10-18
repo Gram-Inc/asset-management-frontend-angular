@@ -96,6 +96,9 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       //create Asset Form
       this.assetForm = this._formBuilder.group({
          assetCode: [""],
+         name: [""],
+         poNumber: [""],
+         sr_no: [""],
          type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
          vendorId: [null],
          category: [null, [Validators.required]],

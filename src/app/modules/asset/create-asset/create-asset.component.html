@@ -14,8 +14,14 @@
          <!-- Asset Type -->
          <div class="px-4 py-5 bg-white sm:p-6 text-xs">
             <div class="grid grid-cols-4 gap-x-6">
-               <!-- Asset Code -->
+               <!-- Asset Name -->
                <mat-form-field class="col-span-3">
+                  <mat-label>Name</mat-label>
+                  <input formControlName="name" matInput />
+               </mat-form-field>
+
+               <!-- Asset Code -->
+               <mat-form-field class="col-span-1">
                   <mat-label>Asset Code</mat-label>
                   <input formControlName="assetCode" matInput />
                </mat-form-field>
@@ -37,12 +43,24 @@
                </mat-form-field>
 
                <!-- Vendor -->
-               <mat-form-field class="col-span-2">
+               <mat-form-field class="col-span-2 col-start-1">
                   <mat-label>Vendor</mat-label>
                   <mat-select [formControlName]="'vendorId'">
                      <mat-option [value]="null">N/A</mat-option>
                      <mat-option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</mat-option>
                   </mat-select>
+               </mat-form-field>
+
+               <!-- Serial Number -->
+               <mat-form-field class="col-span-1">
+                  <mat-label>Serial Number</mat-label>
+                  <input formControlName="sr_no" matInput />
+               </mat-form-field>
+
+               <!-- PO Number -->
+               <mat-form-field class="col-span-1">
+                  <mat-label>PO Number</mat-label>
+                  <input formControlName="poNumber" matInput />
                </mat-form-field>
 
                <!-- Branch -->
