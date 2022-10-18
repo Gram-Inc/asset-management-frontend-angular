@@ -249,9 +249,29 @@
                      </mat-form-field>
 
                      <!-- Type -->
+                     <mat-form-field class="col-start-1 col-span-1">
+                        <mat-label> Warranty / AMC</mat-label>
+                        <mat-select formControlName="type">
+                           <mat-option value="WARRANTY">Warranty</mat-option>
+                           <mat-option value="AMC">AMC</mat-option>
+                        </mat-select>
+                     </mat-form-field>
+
+                     <!-- Site Type -->
+                     <mat-form-field class="col-span-1">
+                        <mat-label> Type</mat-label>
+                        <mat-select formControlName="warrantySiteType">
+                           <mat-option value="ON_SITE">On Site</mat-option>
+                           <mat-option value="OFF_SITE">Off Site</mat-option>
+                        </mat-select>
+                     </mat-form-field>
+
+                     <!--Purchase -->
                      <mat-form-field class="col-span-2">
-                        <mat-label>Type </mat-label>
-                        <input formControlName="type" matInput required />
+                        <mat-label>Purchase Date</mat-label>
+                        <input matInput [matDatepicker]="pur" formControlName="purchaseDate" />
+                        <mat-datepicker-toggle matSuffix [for]="pur"></mat-datepicker-toggle>
+                        <mat-datepicker #pur></mat-datepicker>
                      </mat-form-field>
 
                      <!--Start -->
@@ -282,7 +302,7 @@
                      </mat-form-field>
                   </ng-container>
                </ng-container>
-               <button mat-stroked-button color="primary" class="mx-2" (click)="addWarranty()">
+               <button mat-stroked-button color="primary" class="col-start-1 mx-2" (click)="addWarranty()">
                   Add Warranty
                </button>
             </div>

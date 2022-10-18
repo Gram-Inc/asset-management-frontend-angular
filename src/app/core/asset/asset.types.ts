@@ -57,14 +57,15 @@ export interface IWarranty
 {
    name?: string;
    description?: string;
-   type?: string;
-   warrantySiteType?: string;
+   type?: "AMC" | "WARRANTY";
+   warrantySiteType?: "ON_SITE" | "OFF_SITE";
    startAt?: string;
    endAt?: string;
    purchaseDate?: string;
    vendor?: string;
    poNumber?: string;
 }
+
 export interface IBattery
 {
    assetCode?: string;

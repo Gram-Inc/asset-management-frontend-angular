@@ -79,6 +79,8 @@ export class CreateAssetComponent implements OnInit, OnDestroy
 
    ngOnInit(): void
    {
+      // Check if path is Create Open As Blanck
+      // this._activatedRoute.url.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) => { c/onsole.log(this._router.) });
       // Get All Category & Types
       this._assetService.assetTypes$.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
       {
@@ -317,11 +319,11 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       return this._formBuilder.group({
          name: [""],
          description: [""],
-         type: [""],
-         warrantySiteType: [""],
+         type: ["WARRANTY"],
+         warrantySiteType: ["ON_SITE"],
          startAt: [moment().toISOString(), [Validators.required]],
          endAt: ["", [Validators.required]],
-         purchaseDate: [""],
+         purchaseDate: [moment().toISOString(), [Validators.required]],
          vendor: [""],
          poNumber: [""],
       });
