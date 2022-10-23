@@ -6,7 +6,7 @@
       <!-- if Layout Found -->
       <ng-container *ngIf="asset.memLayout?.length > 0">
          <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-            style="height: 68px !important; padding: 2px 4px">
+            style="height: 68px !important; padding: 2px 4px;min-width: 280px;">
             <!-- If No RAM LAYOUT -->
 
             <!-- Icons / Image -->
@@ -39,7 +39,7 @@
       <!-- if Layout Found -->
       <ng-container *ngIf="asset.mem">
          <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-            style="height: 68px !important; padding: 2px 4px">
+            style="height: 68px !important; padding: 2px 4px;min-width: 280px;">
             <!-- If No RAM LAYOUT -->
 
             <!-- Icons / Image -->
@@ -72,7 +72,7 @@
       <!-- If no layout found -->
       <ng-container *ngIf="asset.memLayout?.length == 0">
          <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-            style="height: 68px !important; padding: 2px 4px">
+            style="height: 68px !important; padding: 2px 4px;min-width: 280px;">
             <img class="mx-3" src="/assets/icons/ram-memory.png" height="45px" width="45px" alt="ram" />
             <!-- <hr class="border border-gray-300" /> -->
 
@@ -105,7 +105,7 @@
    <!-- Processor -->
    <ng-container *ngIf="asset.cpu">
       <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-         style="height: 68px !important; padding: 2px 4px">
+         style="height: 68px !important; padding: 2px 4px;min-width: 280px;">
          <!-- Icons / Image -->
          <img class="mx-3" src="/assets/icons/cpu.png" height="45px" width="45px" alt="ram" />
 
@@ -137,7 +137,7 @@
    <!-- Disk Layout -->
    <ng-container *ngFor="let disk of asset.diskLayout">
       <div class="flex w-max items-center border border-gray-300 divide-x rounded-2xl"
-         style="height: 68px !important; padding: 2px 4px">
+         style="height: 68px !important; padding: 2px 4px;min-width: 280px;">
          <!-- If No RAM LAYOUT -->
 
          <!-- Icons / Image -->

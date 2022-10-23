@@ -126,8 +126,8 @@
                <mat-form-field class="col-span-1">
                   <mat-label>Nature of Call</mat-label>
                   <mat-select formControlName="natureOfCall" value="request">
-                     <mat-option value="incident">Incident</mat-option>
-                     <mat-option value="request">Request</mat-option>
+                     <mat-option [value]="natureOfCallEnum.Incident">Incident</mat-option>
+                     <mat-option [value]="natureOfCallEnum.Request">Request</mat-option>
                   </mat-select>
                </mat-form-field>
 

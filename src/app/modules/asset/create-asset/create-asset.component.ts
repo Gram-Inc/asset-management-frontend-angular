@@ -117,6 +117,13 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             })
          )
          .subscribe();
+
+      this.assetForm
+         .valueChanges.pipe(
+            takeUntil(this._unsubscribeAll),
+         )
+         .subscribe(x => console.log(x)
+         );
       //Check for AssetTypeChanges
       this.addAssetTypeToAssetForm();
 
@@ -132,13 +139,18 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             this.assetForm.patchValue(val);
             this.asset.warranty?.map(x => (this.assetForm.get('warranty') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
             this.asset.amc?.map(x => (this.assetForm.get('amc') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
+            this.assetForm.get(val.type).patchValue(val[val.type]);
             if (this.asset.type == 'laptop' || this.asset.type == 'server' || this.asset.type == 'pc')
             {
-               (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).clear()
-               this.asset[this.asset.type].diskLayout.map(x => (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).controls.push(AssetForm.DiskFormGroup(x)));
+               // (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).clear()
+               this.asset[this.asset.type].diskLayout.map(x =>
+               {
+
+                  console.log(AssetForm.DiskFormGroup(x));
+                  (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).controls.push(AssetForm.DiskFormGroup(x));
+               });
             }
 
-            this.assetForm.get(val.type).patchValue(val[val.type]);
             this.assetForm.get("branch").setValue(typeof val.branch == "object" ? val.branch._id : null);
          }
       });
@@ -182,12 +194,12 @@ export class CreateAssetComponent implements OnInit, OnDestroy
                   hostname: ["", Validators.required],
                }),
                mem: this._formBuilder.group({
-                  total: ["", [Validators.required, Validators.pattern("^([1-9][0-9]*)$")]], //in bytes
+                  total: [4, [Validators.required, Validators.min(1), Validators.pattern("^([1-9][0-9]*)$")]], //in bytes
                }),
                cpu: this._formBuilder.group({
                   manufacturer: ["Intel®"],
                   brand: [""], //i3,i5..
-                  processors: 1,
+                  processors: [1, [Validators.min(1), Validators.required, Validators.pattern("^([1-9][0-9]*)$")]],
                }),
                diskLayout: this._formBuilder.array([AssetForm.DiskFormGroup()]),
             });
@@ -196,6 +208,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
          //Switch , Firewall
          case "switch":
          case "firewall":
+            this.assetForm.get('category').setValue('Hardware')
             fields = this._formBuilder.group({
                brand: ["", Validators.required],
                noOfPorts: ["", Validators.required],
@@ -210,12 +223,10 @@ export class CreateAssetComponent implements OnInit, OnDestroy
          default:
             break;
       }
-      debugger
       this.assetForm.addControl(type, fields);
       if (type == "laptop" || type == "pc" || type == "server")
       {
          //Enable AutoCompelete Feature
-         debugger
          (this.assetForm.get(`${type}.system`) as FormGroup)
             .get("model")
             .valueChanges.pipe(
@@ -268,6 +279,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       //Check Validation
       if (this.assetForm.invalid) return;
 
+      console.log(this.assetForm.value)
       if (this.asset == null)
          // Create Asset
          this._assetService.createAsset(this.assetForm.value).subscribe(

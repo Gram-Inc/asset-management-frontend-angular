@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AutoCompleteService } from "src/app/core/auto-complete/auto-complete.service";
 import { TicketService } from "src/app/core/ticket/ticket.service";
-import { ITicket, TicketPriority, TicketStatus } from "src/app/core/ticket/ticket.types";
+import { ITicket, TicketNatureOfCall, TicketPriority, TicketStatus } from "src/app/core/ticket/ticket.types";
 import { IUser } from "src/app/core/user/user.types";
 @Component({
    selector: "app-create-ticket",
@@ -26,6 +26,7 @@ export class CreateTicketComponent implements OnInit
    ticket: ITicket = null;
 
    priorityTypes = TicketPriority;
+   natureOfCallEnum = TicketNatureOfCall;
    //Auto Complete
 
    filteredCategoryForAutoComplete: Observable<string[]>;
