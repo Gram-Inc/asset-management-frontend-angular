@@ -13,6 +13,7 @@ export interface ITicket
    callStatus?: TicketStatus;
    priority?: TicketPriority;
    createdAt?: string;
+
 }
 export interface ICallesAttenedByUser
 {

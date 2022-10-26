@@ -52,7 +52,7 @@ export class CreateTicketComponent implements OnInit
          _id: [""],
          requestFromUserId: ["", Validators.required],
          callMedium: ["chat", Validators.required],
-         natureOfCall: ["request", Validators.required],
+         natureOfCall: ["Request", Validators.required],
          category: ["", Validators.required],
          priority: [TicketPriority.Medium, Validators.required],
          description: [""],
