@@ -97,7 +97,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       //create Asset Form
       this.assetForm = this._formBuilder.group({
          assetCode: [""],
-         name: [""],
+         name: ["", [Validators.required]],
          poNumber: [""],
          sr_no: [""],
          type: ["laptop", [Validators.required]], // Set the Value as its KEYVALUE PAIR
@@ -146,7 +146,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy
                this.asset[this.asset.type].diskLayout.map(x =>
                {
 
-                  console.log(AssetForm.DiskFormGroup(x));
                   (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).controls.push(AssetForm.DiskFormGroup(x));
                });
             }
@@ -342,8 +341,9 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       {
          this.assetForm.get("category").markAllAsTouched();
          this.assetForm.get("branch").markAllAsTouched();
+         this.assetForm.get("name").markAllAsTouched();
 
-         if (this.assetForm.get("category").valid && this.assetForm.get("category").valid) stepper.next();
+         if (this.assetForm.get("category").valid && this.assetForm.get("branch").valid && this.assetForm.get("name").valid) stepper.next();
       }
       //System Information
       else if (formGroupName == "os")

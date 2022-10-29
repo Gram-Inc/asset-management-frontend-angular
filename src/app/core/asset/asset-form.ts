@@ -8,15 +8,15 @@ export class AssetForm
    public static WarrantyForm(warranty: IWarranty = null)
    {
       return new FormGroup({
-         name: new FormControl(warranty.name ?? ""),
-         description: new FormControl(warranty.description ?? ""),
-         type: new FormControl(warranty.type ?? "WARRANTY"),
-         warrantySiteType: new FormControl(warranty.warrantySiteType ?? "ON_SITE"),
-         startAt: new FormControl(warranty.startAt ?? moment().toISOString(), [Validators.required],),
-         endAt: new FormControl(warranty.endAt ?? '', [Validators.required]),
-         purchaseDate: new FormControl(warranty.purchaseDate ?? moment().toISOString(), [Validators.required]),
-         vendor: new FormControl(warranty.vendor ?? ""),
-         poNumber: new FormControl(warranty.poNumber ?? ""),
+         name: new FormControl(warranty?.name ?? ""),
+         description: new FormControl(warranty?.description ?? ""),
+         type: new FormControl(warranty?.type ?? "WARRANTY"),
+         warrantySiteType: new FormControl(warranty?.warrantySiteType ?? "ON_SITE"),
+         startAt: new FormControl(warranty?.startAt ?? moment().toISOString(), [Validators.required],),
+         endAt: new FormControl(warranty?.endAt ?? '', [Validators.required]),
+         purchaseDate: new FormControl(warranty?.purchaseDate ?? moment().toISOString(), [Validators.required]),
+         vendor: new FormControl(warranty?.vendor ?? "", [Validators.required]),
+         poNumber: new FormControl(warranty?.poNumber ?? ""),
       });
    }
 
