@@ -22,10 +22,10 @@
             <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
                <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
-                                 'text-green-500': !isDateFuture(asset.warranty[0].endAt),
-                                 'text-red-500': isDateFuture(asset.warranty[0].endAt)
+                                 'text-green-500': isDateFuture(asset.warranty[0].endAt),
+                                 'text-red-500': !isDateFuture(asset.warranty[0].endAt)
                                }" [svgIcon]="
-                                 !isDateFuture(asset.warranty[0].endAt)
+                                 isDateFuture(asset.warranty[0].endAt)
                                    ? 'heroicons_solid:badge-check'
                                    : 'heroicons_solid:x-circle'
                                "></mat-icon>

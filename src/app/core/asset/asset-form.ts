@@ -8,7 +8,7 @@ export class AssetForm
    public static WarrantyForm(warranty: IWarranty = null)
    {
       return new FormGroup({
-         name: new FormControl(warranty?.name ?? ""),
+         name: new FormControl(warranty?.name ?? "", [Validators.required]),
          description: new FormControl(warranty?.description ?? ""),
          type: new FormControl(warranty?.type ?? "WARRANTY"),
          warrantySiteType: new FormControl(warranty?.warrantySiteType ?? "ON_SITE"),

@@ -64,10 +64,9 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy
       this._unsubscribeAll.complete();
    }
 
-   isDateFuture(date)
+   isDateFuture(dt: string)
    {
-      if (isValid(date)) return isFuture(date);
-      return false;
+      return isValid(new Date(dt)) && isFuture(new Date(dt));
    }
    getBranchShortCode(branch: string | Partial<IBranch>): string
    {
