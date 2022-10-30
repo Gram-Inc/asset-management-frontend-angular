@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, NgForm, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { throwError } from "rxjs";
@@ -20,7 +20,7 @@ export class SignInComponent implements OnInit
       type: "success",
       message: "",
    };
-   signInForm: FormGroup;
+   signInForm: UntypedFormGroup;
    showAlert: boolean = false;
 
    /**
@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit
    constructor(
       private _activatedRoute: ActivatedRoute,
       private _authService: AuthService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _router: Router,
       private _snackBar: MatSnackBar,
       private _loadingService: LoadingService

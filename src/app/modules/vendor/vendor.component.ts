@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
@@ -20,9 +20,9 @@ export class VendorComponent implements OnInit, OnDestroy
    private _unsubscribeAll: Subject<any> = new Subject<any>();
    vendors$: Observable<IVendor[]>;
    isLoading: boolean = false;
-   searchCtrl: FormControl = new FormControl("");
+   searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
-   constructor(private _vendorService: VendorService, private _formBuilder: FormBuilder, private _permissionService: PermissionService) { }
+   constructor(private _vendorService: VendorService, private _formBuilder: UntypedFormBuilder, private _permissionService: PermissionService) { }
 
    ngOnInit(): void
    {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -21,7 +21,7 @@ export class CreateTicketComponent implements OnInit
 
    ticket$: Observable<ITicket>;
 
-   ticketForm: FormGroup;
+   ticketForm: UntypedFormGroup;
 
    ticket: ITicket = null;
 
@@ -37,7 +37,7 @@ export class CreateTicketComponent implements OnInit
       private _dialog: MatDialog,
       private _snackBar: MatSnackBar,
       private _ticketService: TicketService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _router: Router,
       private _activatedRoute: ActivatedRoute,

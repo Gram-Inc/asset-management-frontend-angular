@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
@@ -40,7 +40,7 @@ export class DetailsComponent implements OnInit, OnDestroy
 
    users: IUser[] = [];
 
-   userForm: FormGroup;
+   userForm: UntypedFormGroup;
 
    user: IUser;
 
@@ -49,7 +49,7 @@ export class DetailsComponent implements OnInit, OnDestroy
 
    //Department
    departments$: Observable<IDepartment[]> = new Observable<IDepartment[]>();
-   searchCtrl: FormControl = new FormControl("", [Validators.required]);
+   searchCtrl: UntypedFormControl = new UntypedFormControl("", [Validators.required]);
 
    //permission
    //Features
@@ -59,7 +59,7 @@ export class DetailsComponent implements OnInit, OnDestroy
    assetCtrl
    //Constructor
    constructor(
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _userService: UserService,
       private _branchService: BranchService,
       private _departmentService: DepartmentService,

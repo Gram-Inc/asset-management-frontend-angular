@@ -9,7 +9,7 @@ import
    ViewChild,
    ViewEncapsulation,
 } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatCheckboxChange } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
@@ -74,7 +74,7 @@ export class AssetListComponent implements OnInit, AfterViewInit, OnDestroy
 
    constructor(
       private _assetService: AssetService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _rikielConfirmationService: RikielConfirmationService,
       private _matDialog: MatDialog,

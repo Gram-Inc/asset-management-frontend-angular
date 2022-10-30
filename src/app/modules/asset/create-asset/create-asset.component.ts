@@ -1,6 +1,6 @@
 import { STEPPER_GLOBAL_OPTIONS } from "@angular/cdk/stepper";
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { MatStepper } from "@angular/material/stepper";
@@ -41,7 +41,7 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
 export class CreateAssetComponent implements OnInit, OnDestroy
 {
    private _unsubscribeAll: Subject<any> = new Subject<any>();
-   assetForm: FormGroup;
+   assetForm: UntypedFormGroup;
    categories: string[] = ["Hardware", "Software"]; // Hardware / Software
    types; // All type of asset Types
 
@@ -61,7 +61,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
 
    //Constructor
    constructor(
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _assetService: AssetService,
       private _vendorService: VendorService,
       private _branchService: BranchService,
@@ -137,8 +137,8 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             //Set Asset Type to formbuilder
             this.addAssetTypeToAssetForm();
             this.assetForm.patchValue(val);
-            this.asset.warranty?.map(x => (this.assetForm.get('warranty') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
-            this.asset.amc?.map(x => (this.assetForm.get('amc') as FormArray).controls.push(AssetForm.WarrantyForm(x)));
+            this.asset.warranty?.map(x => (this.assetForm.get('warranty') as UntypedFormArray).controls.push(AssetForm.WarrantyForm(x)));
+            this.asset.amc?.map(x => (this.assetForm.get('amc') as UntypedFormArray).controls.push(AssetForm.WarrantyForm(x)));
             this.assetForm.get(val.type).patchValue(val[val.type]);
             if (this.asset.type == 'laptop' || this.asset.type == 'server' || this.asset.type == 'pc')
             {
@@ -146,7 +146,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
                this.asset[this.asset.type].diskLayout.map(x =>
                {
 
-                  (this.assetForm.get(this.asset.type + '.diskLayout') as FormArray).controls.push(AssetForm.DiskFormGroup(x));
+                  (this.assetForm.get(this.asset.type + '.diskLayout') as UntypedFormArray).controls.push(AssetForm.DiskFormGroup(x));
                });
             }
 
@@ -172,7 +172,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       //Remove if any other exisiting Field type exsist
       this.removeTypeFromForm();
 
-      let fields: FormGroup = new FormGroup({});
+      let fields: UntypedFormGroup = new UntypedFormGroup({});
       switch (type)
       {
          //Laptop, Server ,PC Fields
@@ -226,7 +226,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       if (type == "laptop" || type == "pc" || type == "server")
       {
          //Enable AutoCompelete Feature
-         (this.assetForm.get(`${type}.system`) as FormGroup)
+         (this.assetForm.get(`${type}.system`) as UntypedFormGroup)
             .get("model")
             .valueChanges.pipe(
                takeUntil(this._unsubscribeAll),
@@ -241,7 +241,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
 
          this.filteredModelNameForAutoComplete = this._autoCompleteService.modelNames;
 
-         (this.assetForm.get(type) as FormGroup)
+         (this.assetForm.get(type) as UntypedFormGroup)
             .get("os.distro")
             .valueChanges.pipe(
                takeUntil(this._unsubscribeAll),
@@ -255,7 +255,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             .subscribe();
          this.filteredOSForAutoComplete = this._autoCompleteService.os;
 
-         (this.assetForm.get(type) as FormGroup)
+         (this.assetForm.get(type) as UntypedFormGroup)
             .get("cpu.brand")
             .valueChanges.pipe(
                takeUntil(this._unsubscribeAll),
@@ -331,7 +331,7 @@ export class CreateAssetComponent implements OnInit, OnDestroy
 
    addWarranty()
    {
-      (this.assetForm.get("warranty") as FormArray).push(AssetForm.WarrantyForm());
+      (this.assetForm.get("warranty") as UntypedFormArray).push(AssetForm.WarrantyForm());
    }
 
    goForward(formGroupName: string, stepper: MatStepper)

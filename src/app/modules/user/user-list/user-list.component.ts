@@ -8,7 +8,7 @@ import
    ViewChild,
    ViewEncapsulation,
 } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -61,13 +61,13 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
    selectedAsset: IUser | null = null;
    flashMessage: "success" | "error" | null = null;
 
-   selectedAssetForm: FormGroup;
+   selectedAssetForm: UntypedFormGroup;
    isLoading: boolean = false;
-   searchCtrl: FormControl = new FormControl("");
+   searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
    constructor(
       private _userService: UserService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _rikielConfirmationService: RikielConfirmationService,
       private _matDialog: MatDialog,

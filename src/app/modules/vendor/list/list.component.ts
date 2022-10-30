@@ -8,7 +8,7 @@ import
    OnInit,
    ViewChild,
 } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy
    isLoading: boolean = false;
 
    constructor(
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _matDialog: MatDialog,
       private router: Router,

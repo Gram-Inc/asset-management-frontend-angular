@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable, of, Subject } from "rxjs";
@@ -26,7 +26,7 @@ export class AssetComponent implements OnInit, OnDestroy
    flashMessage: "success" | "error" | null = null;
 
    isLoading: boolean = false;
-   searchCtrl: FormControl = new FormControl("");
+   searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
    constructor(private _assetService: AssetService,
       private _permissionService: PermissionService,) { }

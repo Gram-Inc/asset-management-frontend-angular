@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
@@ -13,13 +13,13 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
   styleUrls: ["./create.component.scss"],
 })
 export class CreateComponent implements OnInit, OnDestroy {
-  vendorForm: FormGroup;
+  vendorForm: UntypedFormGroup;
   vendor: IVendor = null;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   //Constructor
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _vendorService: VendorService,
     private _snackBar: MatSnackBar,
     private _router: Router,

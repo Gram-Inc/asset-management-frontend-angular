@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { Observable } from "rxjs/internal/Observable";
-import { FormControl } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
 @Component({
   selector: "app-asset-filter",
   templateUrl: "./asset-filter.component.html",
@@ -18,7 +18,7 @@ export class AssetFilterComponent implements OnInit {
   @ViewChild("filterInput", { static: false })
   departmentInput: ElementRef<HTMLInputElement>;
 
-  filterCtrl: FormControl = new FormControl("");
+  filterCtrl: UntypedFormControl = new UntypedFormControl("");
   constructor() {}
 
   ngOnInit(): void {}

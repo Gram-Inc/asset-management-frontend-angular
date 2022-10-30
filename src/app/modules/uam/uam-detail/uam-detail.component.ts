@@ -8,7 +8,7 @@ import
    OnInit,
    ViewEncapsulation,
 } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDrawer } from "@angular/material/sidenav";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -60,14 +60,14 @@ export class UamDetailComponent implements OnInit, OnDestroy
 
    // UAM Detal page open
    selectedUAM: IUAM;
-   uamForm: FormGroup;
+   uamForm: UntypedFormGroup;
 
    constructor(
       private _userService: UserService,
       private _branchService: BranchService,
       private _departmentService: DepartmentService,
       private _uamService: UamService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private _snackBar: MatSnackBar,
       private _router: Router,
       private _activatedRoute: ActivatedRoute,
@@ -164,7 +164,7 @@ export class UamDetailComponent implements OnInit, OnDestroy
       this._unsubscribeAll.next();
       this._unsubscribeAll.complete();
    }
-   createUserInformationForm(): FormGroup
+   createUserInformationForm(): UntypedFormGroup
    {
       return this._formBuilder.group({
          users: this._formBuilder.array([this.createUser()], [Validators.required]),
@@ -217,7 +217,7 @@ export class UamDetailComponent implements OnInit, OnDestroy
          endUserConfirmatinoOnEmailForwarding: ["", [Validators.required]],
       });
    }
-   createUAMApprovals(): FormGroup
+   createUAMApprovals(): UntypedFormGroup
    {
       let obj = {
          name: [""],
@@ -231,7 +231,7 @@ export class UamDetailComponent implements OnInit, OnDestroy
          dpoDesignee: this._formBuilder.group(obj),
       });
    }
-   createUser(): FormGroup
+   createUser(): UntypedFormGroup
    {
       return this._formBuilder.group({
          firstName: ["", [Validators.required]],
@@ -246,15 +246,15 @@ export class UamDetailComponent implements OnInit, OnDestroy
    }
    addUserToForm(): void
    {
-      let frm = this.uamForm.get("userInformation.users") as FormArray;
+      let frm = this.uamForm.get("userInformation.users") as UntypedFormArray;
       frm.push(this.createUser());
    }
    removeUserFromForm(index: number): void
    {
-      let frm = this.uamForm.get("userInformation.users") as FormArray;
+      let frm = this.uamForm.get("userInformation.users") as UntypedFormArray;
       if (frm.length >= 0) frm.removeAt(index);
    }
-   createAccessShareDrive(): FormGroup
+   createAccessShareDrive(): UntypedFormGroup
    {
       return this._formBuilder.group({
          driveName: ["", [Validators.required]],
@@ -265,12 +265,12 @@ export class UamDetailComponent implements OnInit, OnDestroy
    }
    addAccessToShareDriveForm(): void
    {
-      let frm = this.uamForm.get("accessToShareDrives") as FormArray;
+      let frm = this.uamForm.get("accessToShareDrives") as UntypedFormArray;
       frm.push(this.createAccessShareDrive());
    }
    removeAccessToShareDriveForm(): void
    {
-      let frm = this.uamForm.get("accessToShareDrives") as FormArray;
+      let frm = this.uamForm.get("accessToShareDrives") as UntypedFormArray;
       if (frm.length > 0) frm.removeAt(frm.length - 1);
    }
 

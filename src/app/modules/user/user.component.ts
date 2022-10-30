@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
@@ -23,7 +23,7 @@ export class UserComponent implements OnInit, OnDestroy
    flashMessage: "success" | "error" | null = null;
 
    isLoading: boolean = false;
-   searchCtrl: FormControl = new FormControl("");
+   searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
    constructor(private _userService: UserService, private _permissionService: PermissionService) { }
 

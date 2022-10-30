@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -18,7 +18,7 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
 
   branch$: Observable<IBranch>;
 
-  branchForm: FormGroup;
+  branchForm: UntypedFormGroup;
 
   branch: IBranch = null;
 
@@ -26,7 +26,7 @@ export class BranchCreateComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _branchService: BranchService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _changeDetectorRef: ChangeDetectorRef,
     private _router: Router,
     private _activatedRoute: ActivatedRoute

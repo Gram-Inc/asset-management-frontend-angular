@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -30,7 +30,7 @@ import { IVendor } from "src/app/core/vendor/vendor.types";
 })
 export class AssetDetailComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  assetForm: FormGroup;
+  assetForm: UntypedFormGroup;
   categories: string[] = ["Hardware", "Software"]; // Hardware / Software
   types; // All type of asset Types
 
@@ -49,7 +49,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
 
   //Constructor
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _assetService: AssetService,
     private _vendorService: VendorService,
     private _branchService: BranchService,
@@ -169,7 +169,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     //Remove if any other exisiting Field type exsist
     this.removeTypeFromForm();
 
-    let fields: FormGroup = new FormGroup({});
+    let fields: UntypedFormGroup = new UntypedFormGroup({});
     switch (type) {
       //Laptop, Server ,PC Fields
       case "laptop" || "pc" || "server":
@@ -214,7 +214,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     if (type == "laptop") {
       //Enable AutoCompelete Feature
 
-      (this.assetForm.get("laptop") as FormGroup)
+      (this.assetForm.get("laptop") as UntypedFormGroup)
         .get("os.distro")
         .valueChanges.pipe(
           takeUntil(this._unsubscribeAll),
@@ -227,7 +227,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
         .subscribe();
       this.filteredOSForAutoComplete = this._autoCompleteService.os;
 
-      (this.assetForm.get("laptop") as FormGroup)
+      (this.assetForm.get("laptop") as UntypedFormGroup)
         .get("cpu.brand")
         .valueChanges.pipe(
           takeUntil(this._unsubscribeAll),

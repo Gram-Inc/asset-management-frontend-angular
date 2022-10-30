@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
+import { UntypedFormControl, Validators } from "@angular/forms";
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from "@angular/material/bottom-sheet";
 import { isFuture, isValid } from "date-fns";
 import { Observable, Subject } from "rxjs";
@@ -23,7 +23,7 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy
    AllocationStatus = AllocationStatus;
    users$: Observable<IUser[]> = new Observable<IUser[]>();
    asset: IAsset;
-   searchCtrl: FormControl = new FormControl("", [Validators.required]);
+   searchCtrl: UntypedFormControl = new UntypedFormControl("", [Validators.required]);
    filteredUsers: Observable<IUser[]>;
    selectedUser: IUser = null;
    constructor(
