@@ -11,10 +11,12 @@ import
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { merge, Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
+import { AuthService } from "src/app/core/auth/auth.service";
 import { PermissionService } from "src/app/core/auth/permission.service";
 import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
 import { UserService } from "src/app/core/user/user.service";
@@ -69,7 +71,9 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
       private _changeDetectorRef: ChangeDetectorRef,
       private _rikielConfirmationService: RikielConfirmationService,
       private _matDialog: MatDialog,
-      private _permissionService: PermissionService
+      private _permissionService: PermissionService,
+      private _authService: AuthService,
+      private _snackBar: MatSnackBar,
    ) { }
 
    ngOnInit(): void
@@ -212,7 +216,24 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
    }
    resetPassword(user: IUser)
    {
-      alert(""); // @Gramosx
+      let pas = prompt('Enter new password', '')// @Gramosx
+      if (pas && pas.trim())
+      {
+         this._authService.resetPassword({ id: user._id, password: pas }).subscribe(_ =>
+         {
+            this.openSnackBar('Success', _.message)
+         })
+      }
+   }
+
+   openSnackBar(type: "Error" | "Info" | "Success", msg: string)
+   {
+      this._snackBar.open(msg, "Close", {
+         duration: 3000,
+         verticalPosition: "top",
+         horizontalPosition: "center",
+         panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
+      });
    }
 
    /**
