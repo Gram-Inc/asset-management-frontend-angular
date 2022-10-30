@@ -6,7 +6,7 @@ import { SharedModule } from "../shared/shared.module";
 import { CustomMaterialModule } from "../custom-material/custom-material.module";
 import { TicketListComponent } from "./ticket-list/ticket-list.component";
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
-import { TicketResolver } from "src/app/core/ticket/ticket.resolver";
+import { EditTicketResolver, TicketResolver } from "src/app/core/ticket/ticket.resolver";
 
 const ticketRoutes: Route[] = [
    {
@@ -17,6 +17,11 @@ const ticketRoutes: Route[] = [
    {
       path: "create",
       loadChildren: () => import("./create-ticket/create-ticket.module").then((x) => x.CreateTicketModule),
+   },
+   {
+      path: ":id",
+      // resolve: [EditTicketResolver],
+      loadChildren: () => import("./ticket-detail/ticket-detail.module").then((x) => x.TicketDetailModule),
    },
 ];
 

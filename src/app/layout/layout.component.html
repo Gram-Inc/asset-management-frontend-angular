@@ -33,7 +33,10 @@
             <app-aside [routerString]="'/Home'" *ngIf="!(checkLevel1() | async)" [svgIcon]="'feather:home'"
                [name]="'Home'"></app-aside>
 
-            <mat-accordion *ngIf="checkAsset() | async">
+            <app-aside [routerString]="'/asset'" *ngIf="!(checkLevel1() | async)" [svgIcon]="'feather:layers'"
+               [name]="'Asset'"></app-aside>
+
+            <mat-accordion *ngIf="(checkAsset() | async) && (checkLevel1() | async)">
                <mat-expansion-panel class="mat-elevation-z0">
                   <mat-expansion-panel-header class="p-0 pr-6">
                      <div style="

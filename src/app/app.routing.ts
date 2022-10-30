@@ -68,7 +68,7 @@ export const routes: Route[] = [
          {
             path: "home",
             canActivate: [ElseAdminGuard],
-            loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
+            loadChildren: () => import("./modules/home/home.module").then((x) => x.HomeModule),
          },
          {
             path: "asset",
