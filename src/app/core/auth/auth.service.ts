@@ -204,6 +204,17 @@ export class AuthService
          })
       );
    }
+   // Check for accessing Ticket Section
+   checkRole1(): Observable<boolean>
+   {
+      return this._userService.user$.pipe(
+         switchMap((value) =>
+         {
+            if (value.role != 'level1') return of(false);
+            return of(true);
+         })
+      );
+   }
 
    // Check for accessing Asset Section
    checkAsset(): Observable<boolean>

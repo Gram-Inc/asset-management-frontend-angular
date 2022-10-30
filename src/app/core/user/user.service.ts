@@ -35,6 +35,8 @@ export class UserService
     **/
    set user(value: IUser)
    {
+      console.log(value);
+
       this._user.next(value);
    }
 

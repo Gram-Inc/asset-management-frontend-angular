@@ -1,14 +1,14 @@
 import
-   {
-      AfterViewInit,
-      ChangeDetectorRef,
-      Component,
-      OnChanges,
-      OnDestroy,
-      OnInit,
-      SimpleChanges,
-      ViewChild,
-   } from "@angular/core";
+{
+   AfterViewInit,
+   ChangeDetectorRef,
+   Component,
+   OnChanges,
+   OnDestroy,
+   OnInit,
+   SimpleChanges,
+   ViewChild,
+} from "@angular/core";
 import { MatDrawer, MatDrawerMode } from "@angular/material/sidenav";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Observable, of, Subject } from "rxjs";
@@ -94,6 +94,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
    checkAsset()
    {
       return this._authService.checkAsset();
+   }
+   checkLevel1()
+   {
+      return this._authService.checkRole1();
    }
    checkUser()
    {

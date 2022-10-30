@@ -1,9 +1,11 @@
 import { Route } from "@angular/router";
 import { of } from "rxjs";
 import { InitialDataResolver } from "./app.resolvers";
+import { AdminGuard } from "./core/auth/guards/admin.guard";
 import { AssetGuard } from "./core/auth/guards/asset.guard";
 import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { BranchGuard } from "./core/auth/guards/branch.guard";
+import { ElseAdminGuard } from "./core/auth/guards/else-admin.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
 import { TicketGuard } from "./core/auth/guards/ticket.guard";
 import { UamGuard } from "./core/auth/guards/uam.guard";
@@ -59,8 +61,14 @@ export const routes: Route[] = [
       children: [
          {
             path: "dashboard",
+            canActivate: [AdminGuard],
             resolve: [DashboardResolver],
             loadChildren: () => import("./modules/dashboard/dashboard.module").then((x) => x.DashboardModule),
+         },
+         {
+            path: "home",
+            canActivate: [ElseAdminGuard],
+            loadChildren: () => import("./modules/asset/asset.module").then((x) => x.AssetModule),
          },
          {
             path: "asset",
