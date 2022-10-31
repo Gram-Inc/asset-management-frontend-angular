@@ -10,9 +10,12 @@ export interface ITicket
    natureOfCall?: string;
    email?: string;
    category?: string;
+   subCategory?: string;
    callStatus?: TicketStatus;
    priority?: TicketPriority;
    createdAt?: string;
+   updatedAt?: string;
+   closingDescription?: string;
 
 }
 export interface ICallesAttenedByUser

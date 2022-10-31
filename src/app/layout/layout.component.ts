@@ -95,9 +95,9 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
    {
       return this._authService.checkAsset();
    }
-   checkLevel1()
+   checkLevel(level: 'level1' | 'level2' | 'level3')
    {
-      return this._authService.checkRole1();
+      return this._authService.checkRole(level);
    }
    checkUser()
    {

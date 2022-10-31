@@ -28,15 +28,15 @@
       </div>
     </div> -->
          <div class="side-con">
-            <app-aside [routerString]="'/dashboard'" *ngIf="checkLevel1() | async" [svgIcon]="'feather:home'"
+            <app-aside [routerString]="'/dashboard'" *ngIf="checkLevel('level1') | async" [svgIcon]="'feather:home'"
                [name]="'Dashboard'"></app-aside>
-            <app-aside [routerString]="'/Home'" *ngIf="!(checkLevel1() | async)" [svgIcon]="'feather:home'"
+            <app-aside [routerString]="'/Home'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:home'"
                [name]="'Home'"></app-aside>
 
-            <app-aside [routerString]="'/asset'" *ngIf="!(checkLevel1() | async)" [svgIcon]="'feather:layers'"
+            <app-aside [routerString]="'/asset'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:layers'"
                [name]="'Asset'"></app-aside>
 
-            <mat-accordion *ngIf="(checkAsset() | async) && (checkLevel1() | async)">
+            <mat-accordion *ngIf="(checkAsset() | async) && (checkLevel('level1') | async)">
                <mat-expansion-panel class="mat-elevation-z0">
                   <mat-expansion-panel-header class="p-0 pr-6">
                      <div style="

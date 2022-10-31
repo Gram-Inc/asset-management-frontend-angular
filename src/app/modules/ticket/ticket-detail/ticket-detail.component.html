@@ -1,12 +1,13 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="container m-6  ">
+<div class="container m-6 ">
    <div class="flex flex-col gap-2">
       <div class="flex-1 min-w-0 p-2 bg-purple-200 rounded-md ">
-         <span class="text-sm">State </span> <span class="text-sm text-purple-500 font-bold"> Closed</span>
+         <span class="text-sm">State </span> <span class="text-sm text-purple-500 font-bold"> {{ticket?.callStatus |
+            titlecase}}</span>
       </div>
-      <div class="flex-1 min-w-0 p-2 bg-green-200 rounded-md ">
-         <span class="text-sm text-green-500 font-bold">Solved (Permanently)</span>
-         <p class="text-xs text-stone-600">This is a test description for which testing this one loong text</p>
+      <div class="flex-1 min-w-0 p-2 bg-green-200 rounded-md " *ngIf="ticket?.callStatus == 'Closed'">
+         <span class="text-sm text-green-500 font-bold">Closed (Permanently)</span>
+         <p class="text-xs text-stone-600">{{ticket?.closingDescription}}</p>
       </div>
    </div>
 
@@ -15,16 +16,43 @@
    <div class="mt-4 text-xs">
       <div class="flex justify-between">
 
-         <p>Service request by : <a class="cursor-pointer text-blue-600 hover:underline">Govindram Solanki</a></p>
-         <p>3 months ago</p>
+         <table>
+            <tr>
+               <td>Priority</td>
+               <td class=" whitespace-nowrap">
+                  <span [ngClass]="{
+                                    'bg-green-100 text-green-600 dark:text-green-500':ticket.priority == 'Low',
+                                    'bg-gray-100 text-gray-600 dark:text-gray-500':ticket.priority == 'Medium',
+                                    'bg-red-100 text-red-400 dark:text-red-400 ':ticket.priority == 'High',
+                                    'bg-red-200 text-red-600 dark:text-red-500 ':ticket.priority == 'Critical'
+                                      }" class="px-2 inline-flex text-xs leading-5 rounded-full">
+                     {{ticket.priority| titlecase }}
+                  </span>
+               </td>
+            </tr>
+            <tr *ngIf="requestedUser">
+               <td class="w-44">Service request by</td>
+               <td><a class="cursor-pointer text-blue-600 hover:underline">{{requestedUser.firstName +'
+                     '+requestedUser.lastName}}</a></td>
+            </tr>
+
+            <tr>
+               <td>Category</td>
+               <td>
+                  <p class="text-xs">{{ticket?.category}}</p>
+               </td>
+            </tr>
+         </table>
+
+         <p class="text-stone-500">{{ticket?.createdAt | amTimeAgo}} &nbsp;({{ticket?.createdAt | date:'medium'}})</p>
       </div>
    </div>
 
    <br>
 
    <div class="mt-4">
-      <h1 class="mb-2 font-bold">1992341 Localhost</h1>
-      <p class="text-xs">Hi, Team lskjfdlknwelkjnsdlfkj</p>
+      <h1 class="mb-2 font-bold">{{ticket?.subCategory ?? ticket?.category}}</h1>
+      <p class="text-xs">{{ticket?.description}}</p>
    </div>
 
    <br>
@@ -32,7 +60,7 @@
       <table class="text-xs">
          <tr>
             <td class="w-44">Assigned to</td>
-            <td class="font-bold">Vishal Server Admin</td>
+            <td class="font-bold">{{ticket?.assignedToUserId ?? 'N/A'}}</td>
          </tr>
          <tr>
             <td>Site</td>
@@ -42,8 +70,41 @@
             <td>Department</td>
             <td>IT</td>
          </tr>
+         <ng-container *ngIf="(checkRole('level1') | async) && (checkRole('level2') | async)">
+            <tr>
+               <td>
+                  Call Medium
+               </td>
+               <td>{{ticket?.callMedium | titlecase}}</td>
+            </tr>
+            <tr>
+               <td>
+                  Nature of Call
+               </td>
+               <td>{{ticket?.natureOfCall | titlecase}}</td>
+            </tr>
+            <tr>
+               <td>
+                  Last Updated at
+               </td>
+               <td>{{ticket?.updatedAt | date:'medium'}}</td>
+            </tr>
+         </ng-container>
       </table>
    </div>
 
+
+   <div class="mt-8 flex flex-col">
+      <mat-form-field class="w-96 text-xs">
+         <mat-label>Comment</mat-label>
+         <textarea matInput [formControl]="commentCtrl"></textarea>
+      </mat-form-field>
+      <div>
+         <button mat-raised-button color="primary" (click)="postComment()" class="text-white mr-4">
+            Post
+         </button>
+         <button mat-stroked-button [routerLink]="['../']">Back</button>
+      </div>
+   </div>
 
 </div>

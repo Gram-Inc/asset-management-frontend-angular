@@ -208,4 +208,8 @@ body.rikiel-splash-screen-hidden rikiel-splash-screen {
   opacity: 0;
 }
 
+textarea:focus{
+   border-color: transparent !important;
+   --tw-ring-color: transparent
+}
 @tailwind utilities;

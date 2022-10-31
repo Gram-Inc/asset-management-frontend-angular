@@ -205,12 +205,12 @@ export class AuthService
       );
    }
    // Check for accessing Ticket Section
-   checkRole1(): Observable<boolean>
+   checkRole(role: 'level1' | 'level2' | 'level3'): Observable<boolean>
    {
       return this._userService.user$.pipe(
          switchMap((value) =>
          {
-            if (value.role != 'level1') return of(false);
+            if (value.role != role) return of(false);
             return of(true);
          })
       );

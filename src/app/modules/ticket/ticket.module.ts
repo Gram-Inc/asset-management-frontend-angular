@@ -20,7 +20,7 @@ const ticketRoutes: Route[] = [
    },
    {
       path: ":id",
-      // resolve: [EditTicketResolver],
+      resolve: [EditTicketResolver],
       loadChildren: () => import("./ticket-detail/ticket-detail.module").then((x) => x.TicketDetailModule),
    },
 ];
