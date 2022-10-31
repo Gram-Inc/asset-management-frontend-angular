@@ -1,6 +1,13 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="container m-6 ">
-   <div class="flex flex-col gap-2">
+   <div class="flex justify-end">
+      <div *ngIf="checkRole('level1')">
+         <button color="primary" class="text-white" mat-raised-button (click)="assignTicket()">
+            <mat-icon svgIcon="feather:user-plus" class="h-4 w-4 mr-1"></mat-icon> Assign
+         </button>
+      </div>
+   </div>
+   <div class="flex flex-col gap-2 mt-4">
       <div class="flex-1 min-w-0 p-2 bg-purple-200 rounded-md ">
          <span class="text-sm">State </span> <span class="text-sm text-purple-500 font-bold"> {{ticket?.callStatus |
             titlecase}}</span>

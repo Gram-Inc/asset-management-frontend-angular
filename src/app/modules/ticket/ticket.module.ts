@@ -7,6 +7,7 @@ import { CustomMaterialModule } from "../custom-material/custom-material.module"
 import { TicketListComponent } from "./ticket-list/ticket-list.component";
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
 import { EditTicketResolver, TicketResolver } from "src/app/core/ticket/ticket.resolver";
+import { TicketAssignComponent } from './ticket-assign/ticket-assign.component';
 
 const ticketRoutes: Route[] = [
    {
@@ -26,7 +27,7 @@ const ticketRoutes: Route[] = [
 ];
 
 @NgModule({
-   declarations: [TicketComponent, TicketListComponent, CreateTicketComponent],
+   declarations: [TicketComponent, TicketListComponent, CreateTicketComponent, TicketAssignComponent],
    imports: [CommonModule, RouterModule.forChild(ticketRoutes), CustomMaterialModule, SharedModule],
 })
 export class TicketModule { }

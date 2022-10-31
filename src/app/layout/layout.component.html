@@ -33,8 +33,8 @@
             <app-aside [routerString]="'/Home'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:home'"
                [name]="'Home'"></app-aside>
 
-            <app-aside [routerString]="'/asset'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:layers'"
-               [name]="'Asset'"></app-aside>
+            <app-aside [routerString]="'/asset'" *ngIf="(checkAsset() | async) &&!(checkLevel('level1') | async)"
+               [svgIcon]="'feather:layers'" [name]="'Asset'"></app-aside>
 
             <mat-accordion *ngIf="(checkAsset() | async) && (checkLevel('level1') | async)">
                <mat-expansion-panel class="mat-elevation-z0">
@@ -65,7 +65,7 @@
           [svgIcon]="'feather:layers'"
           [name]="'Asset'"
         ></app-aside> -->
-            <app-aside *ngIf="checkTicket() | async" [routerString]="'/ticket'" [svgIcon]="'feather:home'"
+            <app-aside *ngIf="checkTicket() | async" [routerString]="'/ticket'" [svgIcon]="'heroicons_outline:ticket'"
                [name]="'Ticket'"></app-aside>
             <app-aside *ngIf="checkUser() | async" [routerString]="'/user'" [svgIcon]="'feather:users'" [name]="'User'">
             </app-aside>

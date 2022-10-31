@@ -186,12 +186,12 @@ export class UserService
       );
    }
 
-   getUserById(id: string): Observable<IUser>
+   getUserById(id: string, selectUser = true): Observable<IUser>
    {
       return this._httpClient.get<IDTO>(`${this._baseUrl}/users/${id}`).pipe(
          map((response) =>
          {
-            this._selectedUser.next(response.data);
+            if (selectUser) this._selectedUser.next(response.data);
             return response.data;
          }), switchMap((usr) =>
          {

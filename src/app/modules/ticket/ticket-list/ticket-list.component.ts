@@ -12,11 +12,12 @@ import { UntypedFormBuilder, UntypedFormControl, FormGroup, Validators } from "@
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { merge, Observable, Subject } from "rxjs";
+import { merge, Observable, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
 import { TicketService } from "src/app/core/ticket/ticket.service";
 import { ITicket } from "src/app/core/ticket/ticket.types";
+import { UserService } from "src/app/core/user/user.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 
 @Component({
@@ -44,7 +45,8 @@ export class TicketListComponent implements OnInit
       private _formBuilder: UntypedFormBuilder,
       private _changeDetectorRef: ChangeDetectorRef,
       private _rikielConfirmationService: RikielConfirmationService,
-      private _matDialog: MatDialog
+      private _matDialog: MatDialog,
+      private _userService: UserService
    ) { }
 
    ngOnInit(): void
@@ -181,5 +183,11 @@ export class TicketListComponent implements OnInit
    {
       if (word.length > 55) return word.substring(0, 55) + '...'
       return word;
+   }
+   getAssignedToUser(ticket: ITicket)
+   {
+      if (ticket.assignedToUserId)
+         return this._userService.getUserById(ticket.assignedToUserId).pipe(map(x => x.firstName + ' ' + x.lastName))
+      return of('N/A')
    }
 }

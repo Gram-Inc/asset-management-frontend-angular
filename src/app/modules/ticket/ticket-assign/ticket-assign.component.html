@@ -1,0 +1,54 @@
+<div class="relative flex flex-col w-full h-full">
+
+
+   <!-- Content -->
+   <div class="flex flex-col sm:flex-row flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8">
+      <!-- Icon -->
+      <div
+         class="flex flex-0 items-center justify-center w-10 h-10 sm:mr-4 rounded-full text-green-500 bg-green-100 dark:text-green-50 dark:bg-green-500">
+         <mat-icon class="text-current" svgIcon="feather:sliders"></mat-icon>
+      </div>
+
+
+      <div class="flex flex-col items-center sm:items-start mt-4 sm:mt-0 sm:pr-8 space-y-1 text-center sm:text-left">
+         <!-- Title -->
+         <div class="text-xl leading-6 font-medium">Confirmation</div>
+
+      </div>
+   </div>
+   <div class="mx-8 ">
+      <table *ngIf="selectedUser" class="w-72">
+         <tr>
+            <td>Users Name</td>
+            <td>{{(selectedUser.firstName + " " + selectedUser.lastName )| titlecase}}</td>
+         </tr>
+         <tr>
+            <td>Email</td>
+            <td>{{selectedUser.email}}</td>
+         </tr>
+      </table>
+      <mat-form-field class="w-72 mt-2">
+         <mat-label>Users</mat-label>
+         <input [formControl]="ITUserCtrl" matInput [matAutocomplete]="mRequester" />
+         <mat-autocomplete #mRequester="matAutocomplete" [displayWith]="displayFn.bind(this)">
+            <mat-option *ngFor="let requester of filteredRequesterForAutoComplete" [value]="requester._id">
+               {{ requester.firstName + " " + requester.lastName }}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+   </div>
+
+   <!-- Actions -->
+   <div
+      class="flex items-center justify-center sm:justify-end px-6 py-4 space-x-3 bg-gray-50 dark:bg-black dark:bg-opacity-10">
+      <!-- Cancel -->
+      <button mat-stroked-button [matDialogClose]="'cancelled'">
+         Cancel
+      </button>
+
+      <!-- Confirm -->
+      <button mat-flat-button [disabled]="!selectedUser" color="primary" (click)="assign()" class="text-white">
+         Assign
+      </button>
+   </div>
+</div>

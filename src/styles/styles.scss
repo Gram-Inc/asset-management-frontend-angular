@@ -212,4 +212,8 @@ textarea:focus{
    border-color: transparent !important;
    --tw-ring-color: transparent
 }
+
+mat-dialog-container{
+   border-radius: 1rem !important;
+}
 @tailwind utilities;
