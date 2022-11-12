@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { TicketService } from 'src/app/core/ticket/ticket.service';
-import { ITicket } from 'src/app/core/ticket/ticket.types';
+import { ITicket, ITicketChat } from 'src/app/core/ticket/ticket.types';
 import { UserService } from 'src/app/core/user/user.service';
 import { IUser } from 'src/app/core/user/user.types';
 import { TicketAssignComponent } from '../ticket-assign/ticket-assign.component';
@@ -20,7 +20,9 @@ export class TicketDetailComponent implements OnInit, OnDestroy
 
    ticket: ITicket;
    requestedUser: IUser;
+   assignedUser: IUser;
    commentCtrl: FormControl = new FormControl('', [Validators.required])
+   chat: ITicketChat[];
    private _unsubscribeAll: Subject<any> = new Subject();
    constructor(private _ticketService: TicketService, private _authService: AuthService, private _userService: UserService, private dialog: MatDialog) { }
 
@@ -30,10 +32,13 @@ export class TicketDetailComponent implements OnInit, OnDestroy
       {
          if (x)
          {
+            console.log(x)
             this.ticket = x
             // Get User
             this._userService.getUserById(x.requestFromUserId).subscribe(usr => this.requestedUser = usr);
-            // this._ticketService.getTicketChat(x._id).subscribe(y => { console.log(y) })
+            if (x.assignedToUserId)
+               this._userService.getUserById(x.assignedToUserId).subscribe(usr => this.assignedUser = usr);
+            this._ticketService.getTicketChat(x._id).subscribe(y => { this.chat = y })
          }
       })
    }
@@ -52,8 +57,8 @@ export class TicketDetailComponent implements OnInit, OnDestroy
       if (this.commentCtrl.invalid) return;
       this._ticketService.postTicketChatComment({ ticket: this.ticket._id, message: this.commentCtrl.value }).subscribe(x =>
       {
-         this._ticketService.getTicketChat(this.ticket._id).subscribe(y => { console.log(y) })
-
+         this._ticketService.getTicketChat(this.ticket._id).subscribe(y => { this.chat = y })
+         this.commentCtrl.reset();
       })
    }
 

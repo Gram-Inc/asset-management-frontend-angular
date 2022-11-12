@@ -5,7 +5,7 @@ import { filter, map, switchMap, take, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { IPagination } from "../asset/asset.types";
 import { IDTO } from "../dto/dto.types";
-import { ITicket } from "./ticket.types";
+import { ITicket, ITicketChat } from "./ticket.types";
 
 @Injectable({
    providedIn: "root",
@@ -198,9 +198,12 @@ export class TicketService
          )
       );
    }
-   getTicketChat(id: string): Observable<any>
+   getTicketChat(id: string): Observable<ITicketChat[]>
    {
-      return this._httpClient.get<any>(`${this._baseUrl}/ticketing-chat/`, { params: { 'ticketId': id } });
+      return this._httpClient.get<IDTO>(`${this._baseUrl}/ticketing-chat`, { params: { 'ticketId': id } }).pipe(map((response) =>
+      {
+         return response.data;
+      }));
    }
    postTicketChatComment(data: { ticket: string, message: string }): Observable<any>
    {

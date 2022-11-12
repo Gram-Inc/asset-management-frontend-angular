@@ -69,7 +69,11 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       private _router: Router,
       private _activatedRoute: ActivatedRoute,
       private _autoCompleteService: AutoCompleteService
-   ) { }
+   )
+   {
+
+
+   }
 
 
    get type()

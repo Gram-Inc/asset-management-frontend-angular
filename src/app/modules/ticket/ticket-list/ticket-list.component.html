@@ -86,7 +86,7 @@
                                     {{ticket.category | titlecase}}
                                  </td>
                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ getAssignedToUser(ticket) | async }}
+                                    {{(ticket.assignedToUserId ? 'Assigned' : 'N/A') | uppercase }}
                                  </td>
                                  <!-- Edit Button -->
                                  <!-- <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

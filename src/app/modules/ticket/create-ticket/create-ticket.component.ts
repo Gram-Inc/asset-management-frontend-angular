@@ -57,6 +57,14 @@ export class CreateTicketComponent implements OnInit
          priority: [TicketPriority.Medium, Validators.required],
          description: [""],
          callStatus: [TicketStatus.Open],
+         callesAttenedByUser: [""],
+         assignedToUserId: [""],
+         department: [""],
+         email: [""],
+         subCategory: [""],
+         createdAt: [""],
+         updatedAt: [""],
+         closingDescription: [""],
 
       });
 

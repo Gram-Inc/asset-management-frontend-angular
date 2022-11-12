@@ -46,3 +46,19 @@ export enum TicketNatureOfCall
    Incident = "Incident",
    Request = "Request"
 }
+
+export interface ITicketChat
+{
+   _id: string;
+   mentionedUsers: [],
+   chatBy: string;
+   message: string;
+   ticket: string;
+   messageByUser: {
+      _id: string;
+      lastName: string;
+      firstName: string;
+   },
+   createdAt: string;
+   updatedAt: string;
+}

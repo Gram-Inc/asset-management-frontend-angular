@@ -10,6 +10,7 @@
       <div class="mt-5 lg:ml-4">
          <div class="px-4 py-5 bg-white sm:p-6 text-xs font-sans">
             <div class="grid grid-cols-6 gap-x-3">
+
                <!-- Requester -->
                <mat-form-field class="col-span-4">
                   <mat-label>Requester</mat-label>
@@ -131,7 +132,7 @@
                </mat-form-field>
 
                <!-- Category -->
-               <mat-form-field class="col-span-6">
+               <mat-form-field class="col-start-1 col-span-3">
                   <mat-label>Category</mat-label>
                   <input formControlName="category" matInput [matAutocomplete]="mName" />
                   <mat-autocomplete #mName="matAutocomplete">
@@ -142,11 +143,18 @@
                   </mat-autocomplete>
                </mat-form-field>
 
+               <!-- Sub Category -->
+               <mat-form-field class=" col-span-3">
+                  <mat-label>Sub Category</mat-label>
+                  <input formControlName="subCategory" matInput />
+               </mat-form-field>
+
                <!-- Description (Public) -->
                <mat-form-field class="col-span-6">
                   <mat-label>Description (Public)</mat-label>
                   <textarea formControlName="description" class="h-24" matInput></textarea>
                </mat-form-field>
+
             </div>
          </div>
       </div>
