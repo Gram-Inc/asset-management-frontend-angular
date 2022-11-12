@@ -79,11 +79,11 @@
          </tr>
          <tr>
             <td>Site</td>
-            <td>{{requestedUser.branch['name'] ?? ''}}</td>
+            <td>{{requestedUser?.branch['name'] ?? ''}}</td>
          </tr>
          <tr>
             <td>Department</td>
-            <td>{{requestedUser.departmentId['name'] ?? ''}}</td>
+            <td>{{requestedUser?.departmentId['name'] ?? ''}}</td>
          </tr>
          <ng-container *ngIf="(checkRole('level1') | async) && (checkRole('level2') | async)">
             <tr>
