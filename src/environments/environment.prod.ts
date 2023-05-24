@@ -1,4 +1,1 @@
-export const environment = {
-  production: true,
-  baseUrl: "http://localhost:8000",
-};
+export const environment = {"baseUrl":"http://127.0.0.1:8000","production":true};
