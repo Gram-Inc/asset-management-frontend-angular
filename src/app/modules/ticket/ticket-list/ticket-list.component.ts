@@ -186,8 +186,18 @@ export class TicketListComponent implements OnInit
    }
    getAssignedToUser(ticket: ITicket)
    {
-      if (ticket.assignedToUserId)
-         return this._userService.getUserById(ticket.assignedToUserId).pipe(map(x => x.firstName + ' ' + x.lastName))
+      if (ticket.assignedToUserId) {
+         if (typeof ticket.assignedToUserId === 'object' && ticket.assignedToUserId !== null) {
+            const user = ticket.assignedToUserId;
+            return of((user.firstName || '') + ' ' + (user.lastName || '')).pipe(map(name => name.trim() || 'N/A'));
+         }
+         const assignedToUserId = typeof ticket.assignedToUserId === 'string'
+            ? ticket.assignedToUserId
+            : (ticket.assignedToUserId?._id || '');
+         if (assignedToUserId) {
+            return this._userService.getUserById(assignedToUserId).pipe(map(x => x.firstName + ' ' + x.lastName))
+         }
+      }
       return of('N/A')
    }
 }

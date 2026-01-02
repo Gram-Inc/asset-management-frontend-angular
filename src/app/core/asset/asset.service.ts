@@ -106,20 +106,17 @@ export class AssetService {
   }
 
   getAssetById(id: string): Observable<IAsset> {
-    return this._assets.pipe(
-      take(1),
-      map((assets) => {
-        const ast = assets.find((ast) => ast._id == id || null);
-        this._asset.next(ast);
-        return ast;
-      }),
-      switchMap((ast) => {
-        if (!ast) {
-          return throwError("Could not found task with id of " + id + "!");
-        }
-        return of(ast);
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/asset/${id}`).pipe(
+      map((response: IDTO) => {
+        const asset = response.data;
+        this._asset.next(asset);
+        return asset;
       })
     );
+  }
+
+  getAssetDetailsById(id: string): Observable<IAsset> {
+    return this.getAssetById(id);
   }
 
   assignAssetToUser(assetId: string, userId: string): Observable<IAsset> {
@@ -250,5 +247,15 @@ export class AssetService {
 
   convertGBtoBytes(value: any) {
     return Number.parseInt(value) * 1073741824;
+  }
+
+  getAssetTickets(assetId: string, assetCode?: string, serialNumber?: string): Observable<any[]> {
+    const params: any = {};
+    if (assetCode) params.assetCode = assetCode;
+    if (serialNumber) params.serialNumber = serialNumber;
+
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/ticketing/asset/${assetId}`, { params }).pipe(
+      map((response: IDTO) => response.data || [])
+    );
   }
 }

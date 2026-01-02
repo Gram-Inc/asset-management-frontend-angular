@@ -3,8 +3,8 @@ export interface ITicket
    _id?: string;
    callesAttenedByUser?: Partial<ICallesAttenedByUser[]>;
    description?: string;
-   requestFromUserId?: string;
-   assignedToUserId?: string;
+   requestFromUserId?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
+   assignedToUserId?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
    callMedium?: string;
    department?: string;
    natureOfCall?: string;
@@ -16,7 +16,8 @@ export interface ITicket
    createdAt?: string;
    updatedAt?: string;
    closingDescription?: string;
-
+   assetId?: string;
+   subject?: string;
 }
 export interface ICallesAttenedByUser
 {

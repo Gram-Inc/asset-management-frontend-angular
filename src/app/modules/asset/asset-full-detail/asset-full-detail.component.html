@@ -1,1 +1,295 @@
-<app-asset-timeline></app-asset-timeline>
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+      <p class="mt-4 text-gray-600">Loading asset details...</p>
+    </div>
+
+    <!-- Asset Details -->
+    <div *ngIf="!isLoading && asset" class="space-y-6">
+      <!-- Header -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="px-6 py-5 flex items-center justify-between border-b border-gray-200">
+          <div class="flex items-center space-x-4">
+            <button
+              (click)="goBack()"
+              class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              <mat-icon class="h-5 w-5 mr-2" svgIcon="heroicons_outline:arrow-left"></mat-icon>
+              Back
+            </button>
+            <div class="flex items-center">
+              <mat-icon style="height: 40px; width: 40px" class="text-gray-400 mr-4"
+                [matTooltip]="'Asset Type : ' + asset.type" svgIcon="heroicons_outline:desktop-computer"></mat-icon>
+              <div>
+                <h1 class="text-2xl font-bold text-gray-900">
+                  {{ asset.name || asset.assetCode || 'Asset Details' }}
+                  <span [ngClass]="{
+                    'bg-green-100': asset.allocationStatus == 'IN_POOL',
+                    'text-green-600': asset.allocationStatus == 'IN_POOL',
+                    'bg-indigo-100': asset.allocationStatus == 'ASSIGNED',
+                    'text-indigo-600': asset.allocationStatus == 'ASSIGNED',
+                    'bg-red-100': asset.allocationStatus == 'SCRAP',
+                    'text-red-600': asset.allocationStatus == 'SCRAP',
+                    'bg-yellow-100': asset.allocationStatus == 'DOWN',
+                    'text-yellow-600': asset.allocationStatus == 'DOWN'
+                  }" class="ml-3 px-3 py-1 inline-flex text-xs font-semibold rounded-full">
+                    {{ asset.allocationStatus?.replace('_', ' ') | titlecase }}
+                  </span>
+                </h1>
+                <p class="mt-1 text-sm text-gray-500">{{ asset.sr_no || asset.assetCode }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-x-2">
+            <img *ngIf="getLogo()" style="max-width: 84px; max-height: 48px" [src]="getLogo()" alt="" />
+            <img *ngIf="getProcessorLogo()" style="max-width: 84px; max-height: 48px" [src]="getProcessorLogo()" alt="" />
+          </div>
+        </div>
+
+        <!-- Asset Information Section -->
+        <div class="px-6 py-5">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Asset Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ng-container *ngIf="asset.type == 'laptop' || asset.type == 'pc' || asset.type == 'server'; else otherAssetInfo">
+              <div class="bg-gray-50 px-4 py-3 rounded">
+                <dt class="text-sm font-medium text-gray-500">Model Name</dt>
+                <dd class="mt-1 text-sm text-gray-900">{{ asset[asset.type]?.system?.model || 'N/A' }}</dd>
+              </div>
+              <div class="bg-gray-50 px-4 py-3 rounded">
+                <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
+                <dd class="mt-1 text-sm text-gray-900">{{ asset[asset.type]?.system?.serial || 'N/A' }}</dd>
+              </div>
+            </ng-container>
+            <ng-template #otherAssetInfo>
+              <div class="bg-gray-50 px-4 py-3 rounded">
+                <dt class="text-sm font-medium text-gray-500">Asset Code</dt>
+                <dd class="mt-1 text-sm text-gray-900">{{ asset.assetCode || 'N/A' }}</dd>
+              </div>
+              <div class="bg-gray-50 px-4 py-3 rounded">
+                <dt class="text-sm font-medium text-gray-500">Asset Type</dt>
+                <dd class="mt-1 text-sm text-gray-900">{{ asset.type || 'N/A' }}</dd>
+              </div>
+            </ng-template>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Asset Code</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ asset.assetCode || 'N/A' }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Category</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ asset.category || 'N/A' }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Location</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ asset.location || 'N/A' }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Purchase Date</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ asset.purchaseDate ? (asset.purchaseDate | date) : 'N/A' }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">PO Number</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ asset.poNumber || 'N/A' }}</dd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Allocation Information -->
+        <div class="px-6 py-5 border-t border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Allocation Information</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Branch</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {{ getBranchName(asset.branch) | titlecase }}
+                <span class="text-gray-400 ml-2">({{ getBranchShortCode(asset.branch) | uppercase }})</span>
+              </dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Current User</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ getCurrentUser(asset) }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded">
+              <dt class="text-sm font-medium text-gray-500">Previous User</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ getPreviousUser(asset) }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 rounded" *ngIf="asset.totalRepairTime">
+              <dt class="text-sm font-medium text-gray-500">Total Repair Time</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {{ formatDuration(asset.totalRepairTime.totalDays || 0, asset.totalRepairTime.totalHours || 0, asset.totalRepairTime.totalMinutes || 0) }}
+              </dd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warranty Information -->
+        <div class="px-6 py-5 border-t border-gray-200" *ngIf="asset.warranty && asset.warranty.length > 0">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Warranty Information</h2>
+          <div class="space-y-2">
+            <div *ngFor="let warranty of asset.warranty" class="bg-gray-50 px-4 py-3 rounded">
+              <div class="flex justify-between items-center">
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">{{ warranty.type || 'Warranty' }}</dt>
+                  <dd class="mt-1 text-sm text-gray-900">
+                    {{ warranty.startAt ? (warranty.startAt | date) : 'N/A' }} -
+                    {{ warranty.endAt ? (warranty.endAt | date) : 'N/A' }}
+                  </dd>
+                </div>
+                <mat-icon *ngIf="warranty.endAt" class="h-5 w-5"
+                  [ngClass]="{
+                    'text-green-500': isWarrantyValid(warranty.endAt),
+                    'text-red-500': !isWarrantyValid(warranty.endAt)
+                  }"
+                  [svgIcon]="getWarrantyIcon(warranty.endAt)">
+                </mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specifications -->
+        <div class="px-6 py-5 border-t border-gray-200" *ngIf="asset.type == 'laptop' || asset.type == 'pc' || asset.type == 'server'">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Specifications</h2>
+          <app-spec-card-list [asset]="asset[asset.type]"></app-spec-card-list>
+        </div>
+
+        <!-- QR Code -->
+        <div class="px-6 py-5 border-t border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">QR Code</h2>
+          <app-qrcode [id]="asset._id"></app-qrcode>
+        </div>
+      </div>
+
+      <!-- Timeline Section -->
+      <div class="bg-white shadow rounded-lg overflow-hidden" *ngIf="asset.timeline && asset.timeline.length > 0">
+        <div class="px-6 py-5 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Asset Timeline</h2>
+          <p class="mt-1 text-sm text-gray-500">Allocation history and status changes</p>
+        </div>
+        <div class="px-6 py-5">
+          <app-asset-timeline [data]="asset.timeline"></app-asset-timeline>
+        </div>
+      </div>
+
+      <!-- Repair Periods -->
+      <div class="bg-white shadow rounded-lg overflow-hidden" *ngIf="asset.repairPeriods && asset.repairPeriods.length > 0">
+        <div class="px-6 py-5 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Repair History</h2>
+          <p class="mt-1 text-sm text-gray-500">Periods when asset was in repair (DOWN status)</p>
+        </div>
+        <div class="px-6 py-5">
+          <div class="space-y-4">
+            <div *ngFor="let period of asset.repairPeriods; let i = index" class="border-l-4 border-yellow-400 pl-4 py-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-900">Repair Period #{{ i + 1 }}</p>
+                  <p class="text-sm text-gray-600">
+                    {{ period.startDate ? (period.startDate | date: 'short') : 'N/A' }} -
+                    {{ period.endDate ? (period.endDate | date: 'short') : 'N/A' }}
+                  </p>
+                  <p class="text-sm text-gray-500 mt-1">
+                    Duration: {{ formatDuration(period.durationInDays || 0, period.durationInHours || 0, period.durationInMinutes || 0) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets Section -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="px-6 py-5 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Related Tickets</h2>
+          <p class="mt-1 text-sm text-gray-500">All tickets raised for this asset</p>
+        </div>
+        <div class="px-6 py-5">
+          <div *ngIf="isLoadingTickets" class="text-center py-8">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+            <p class="mt-2 text-sm text-gray-600">Loading tickets...</p>
+          </div>
+          <div *ngIf="!isLoadingTickets && tickets.length === 0" class="text-center py-8">
+            <mat-icon class="h-12 w-12 text-gray-400 mx-auto mb-2" svgIcon="heroicons_outline:inbox"></mat-icon>
+            <p class="text-sm text-gray-600">No tickets found for this asset</p>
+          </div>
+          <div *ngIf="!isLoadingTickets && tickets.length > 0" class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requester</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let ticket of tickets" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{ ticket._id?.substring(0, 8) || 'N/A' }}
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {{ ticket.subject || ticket.description?.substring(0, 50) || 'N/A' }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span [ngClass]="{
+                      'bg-green-100 text-green-800': ticket.callStatus == 'Closed',
+                      'bg-blue-100 text-blue-800': ticket.callStatus == 'Open' || ticket.callStatus == 'Assigned',
+                      'bg-yellow-100 text-yellow-800': ticket.callStatus == 'In Progress' || ticket.callStatus == 'Hold',
+                      'bg-red-100 text-red-800': ticket.callStatus == 'Vendor Dependency'
+                    }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                      {{ ticket.callStatus || 'N/A' }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span [ngClass]="{
+                      'bg-red-100 text-red-800': ticket.priority == 'Critical',
+                      'bg-orange-100 text-orange-800': ticket.priority == 'High',
+                      'bg-yellow-100 text-yellow-800': ticket.priority == 'Medium',
+                      'bg-gray-100 text-gray-800': ticket.priority == 'Low'
+                    }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                      {{ ticket.priority || 'N/A' }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ getTicketRequesterName(ticket) }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ getTicketAssignedToName(ticket) }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ ticket.createdAt ? (ticket.createdAt | date: 'short') : 'N/A' }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button
+                      (click)="openTicket(ticket._id)"
+                      class="text-orange-600 hover:text-orange-900"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!isLoading && !asset" class="text-center py-12">
+      <mat-icon class="h-12 w-12 text-gray-400 mx-auto mb-2" svgIcon="heroicons_outline:exclamation-circle"></mat-icon>
+      <p class="text-gray-600">Asset not found</p>
+      <button
+        (click)="goBack()"
+        class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700"
+      >
+        Go Back
+      </button>
+    </div>
+  </div>
+</div>

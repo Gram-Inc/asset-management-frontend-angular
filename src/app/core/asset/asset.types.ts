@@ -7,10 +7,13 @@ export interface IAsset
    assetCode?: string;
    name?: string;
    type?: string;
+   category?: string;
+   subCategory?: string;
    poNumber?: string;
    location?: string;
    venderId?: string;
    comment?: string;
+   purchaseDate?: string | Date;
    laptop?: Partial<ILaptop>;
    battery?: Partial<IBattery>[];
    sr_no?: string;
@@ -22,13 +25,40 @@ export interface IAsset
    branch?: string | Partial<IBranch>;
    allocationToUserId?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
    perviousUser?: string | Partial<{ _id?: string; firstName?: string; lastName?: string }>;
-   timeline?: Partial<ITimeline>;
+   timeline?: Partial<ITimeline>[];
+   repairPeriods?: IRepairPeriod[];
+   totalRepairTime?: IRepairTimeSummary;
 }
 export interface ITimeline
 {
    x?: AllocationStatus;
-   y?: any[];
+   y?: number[];
    _id?: string;
+   firstName?: string;
+   lastName?: string;
+   duration?: number;
+   durationInDays?: number;
+   durationInHours?: number;
+   durationInMinutes?: number;
+   startDate?: string | Date;
+   endDate?: string | Date;
+   isRepairPeriod?: boolean;
+}
+export interface IRepairPeriod
+{
+   startDate?: Date | string;
+   endDate?: Date | string;
+   duration?: number;
+   durationInDays?: number;
+   durationInHours?: number;
+   durationInMinutes?: number;
+}
+export interface IRepairTimeSummary
+{
+   totalDuration?: number;
+   totalDays?: number;
+   totalHours?: number;
+   totalMinutes?: number;
 }
 export interface IUPS
 {

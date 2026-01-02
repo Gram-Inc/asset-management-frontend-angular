@@ -46,7 +46,7 @@
             <div class="col-span-1">
                 <div class="px-4 sm:px-0">
                     <p class="mt-1 text-sm text-gray-600">Mobile Number</p>
-                    <h3 class="font-medium leading-6 text-gray-900">{{ user.mobileNumber }}</h3>
+                    <h3 class="font-medium leading-6 text-gray-900">{{ user?.mobileNumber || '-' }}</h3>
                 </div>
             </div>
 
@@ -59,39 +59,34 @@
             </div>
         </div>
         <!--Generated Ticket Information -->
-        <div class="flex flex-col p-3 flex-auto bg-white rounded-lg overflow-hidden border border-gray-300">
-            <div class="flex flex-col sm:flex-row items-start justify-between">
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-300" *ngIf="user">
+            <div class="px-4 py-3 border-b border-gray-200">
                 <h3 class="font-medium leading-6 text-gray-900">Generated Ticket Information</h3>
             </div>
-            <div class="grid grid-cols-2 border-t divide-x -m-4 mt-2 dark:bg-transparent">
-                <div class="flex flex-col items-center justify-center p-4">
-                    <div class="font-semibold text-blue-600 leading-none tracking-tighter">594</div>
+            <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="flex flex-col items-center justify-center py-4">
+                    <div class="font-semibold text-blue-600 leading-none tracking-tighter text-2xl">{{ openTicketsCount }}</div>
                     <div class="mt-1 text-center text-sm text-gray-600">Open</div>
                 </div>
-                <div class="flex flex-col items-center justify-center p-4">
-                    <div class="font-semibold text-green-500 leading-none tracking-tighter">287</div>
+                <div class="flex flex-col items-center justify-center py-4">
+                    <div class="font-semibold text-green-500 leading-none tracking-tighter text-2xl">{{ completedTicketsCount }}</div>
                     <div class="mt-1 text-center text-sm text-gray-600">Completed</div>
                 </div>
-
-                <!-- <div class="flex flex-col items-center justify-center p-4">
-              <div class="font-semibold leading-none tracking-tighter">287</div>
-              <div class="mt-1 text-center text-secondary">Completed Tickets</div>
-            </div> -->
             </div>
         </div>
 
         <!--UAM Information -->
-        <div class="flex flex-col p-3 flex-auto bg-white rounded-lg overflow-hidden border border-gray-300">
-            <div class="flex flex-col sm:flex-row items-start justify-between">
+        <div class="bg-white rounded-lg overflow-hidden border border-gray-300" *ngIf="user">
+            <div class="px-4 py-3 border-b border-gray-200">
                 <h3 class="font-medium leading-6 text-gray-900">U.A.M Information</h3>
             </div>
-            <div class="grid grid-cols-2 border-t divide-x -m-4 mt-2 dark:bg-transparent">
-                <div class="flex flex-col items-center justify-center p-4">
-                    <div class="font-semibold text-blue-600 leading-none tracking-tighter">2</div>
+            <div class="grid grid-cols-2 divide-x divide-gray-200">
+                <div class="flex flex-col items-center justify-center py-4">
+                    <div class="font-semibold text-blue-600 leading-none tracking-tighter text-2xl">{{ openUAMCount }}</div>
                     <div class="mt-1 text-center text-sm text-gray-600">Open</div>
                 </div>
-                <div class="flex flex-col items-center justify-center p-4">
-                    <div class="font-semibold text-green-500 leading-none tracking-tighter">87</div>
+                <div class="flex flex-col items-center justify-center py-4">
+                    <div class="font-semibold text-green-500 leading-none tracking-tighter text-2xl">{{ completedUAMCount }}</div>
                     <div class="mt-1 text-center text-sm text-gray-600">Completed</div>
                 </div>
             </div>
@@ -131,7 +126,7 @@
         </div>
 
         <!-- Asset Allocation status -->
-        <div class="flex gap-x-4" *ngIf="user.allocatedAssets.length > 0">
+        <div class="flex gap-x-4" *ngIf="hasAllocatedAssets()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="rgb(74, 222, 128)">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -141,64 +136,24 @@
         </div>
 
         <!-- Additional Permission -->
-        <div class="mt-8">
+        <div class="mt-8" *ngIf="user">
             <div class="flex flex-col flex-auto bg-white rounded-lg overflow-hidden border border-gray-300">
                 <div class="flex flex-col sm:flex-row items-start justify-between m-2">
                     <h3 class="font-medium leading-6 text-gray-900">Additional Permission</h3>
                 </div>
 
-                <!-- User -->
-                <div class="border-t grid grid-cols-2 p-2">
-                    <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
-                        <!-- Type of Permission -->
-                        <h3 class="font-medium leading-6 text-sm text-gray-900">User</h3>
+                <ng-container *ngFor="let module of getModulesToDisplay()">
+                    <div class="border-t grid grid-cols-2 p-2">
+                        <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
+                            <!-- Type of Permission -->
+                            <h3 class="font-medium leading-6 text-sm text-gray-900">{{ getModuleDisplayName(module) }}</h3>
+                        </div>
+                        <div class="col-span-1 flex flex-col items-center justify-center">
+                            <!-- Permission -->
+                            <app-access-pill [data]="getAccessPolicy(module)"></app-access-pill>
+                        </div>
                     </div>
-                    <div class="col-span-1 flex flex-col items-center justify-center">
-                        <!-- Permission -->
-                        <span class="bg-blue-100 text-blue-600 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
-                            Read
-                        </span>
-                    </div>
-                </div>
-
-                <!-- UAM -->
-                <div class="border-t grid grid-cols-2 p-2">
-                    <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
-                        <!-- Type of Permission -->
-                        <h3 class="font-medium leading-6 text-sm text-gray-900">U.A.M</h3>
-                    </div>
-                    <div class="col-span-1 flex flex-col items-center justify-center">
-                        <!-- Permission -->
-                        <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
-                            Read / Write</span>
-                    </div>
-                </div>
-
-                <!-- Asset -->
-                <div class="border-t grid grid-cols-2 p-2">
-                    <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
-                        <!-- Type of Permission -->
-                        <h3 class="font-medium leading-6 text-sm text-gray-900">Asset</h3>
-                    </div>
-                    <div class="col-span-1 flex flex-col items-center justify-center">
-                        <!-- Permission -->
-                        <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
-                            Read / Write</span>
-                    </div>
-                </div>
-
-                <!-- Ticket -->
-                <div class="border-t grid grid-cols-2 p-2">
-                    <div class="col-span-1 flex flex-col items-start ml-2 justify-start border-r">
-                        <!-- Type of Permission -->
-                        <h3 class="font-medium leading-6 text-sm text-gray-900">Ticket</h3>
-                    </div>
-                    <div class="col-span-1 flex flex-col items-center justify-center">
-                        <!-- Permission -->
-                        <span class="bg-green-100 text-green-500 px-4 p-1 inline-flex text-xs leading-5 rounded-full">
-                            Read / Write</span>
-                    </div>
-                </div>
+                </ng-container>
             </div>
         </div>
     </div>

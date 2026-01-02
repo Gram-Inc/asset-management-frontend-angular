@@ -192,4 +192,13 @@ export class AssetShortDetailComponent implements OnInit, OnDestroy
          })
       );
    }
+
+   openFullDetails()
+   {
+      if (this.asset && this.asset._id)
+      {
+         this.matDialogRef.close();
+         this.router.navigate([`/asset/${this.asset._id}`]);
+      }
+   }
 }

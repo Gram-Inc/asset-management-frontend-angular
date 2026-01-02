@@ -35,9 +35,25 @@ export class TicketDetailComponent implements OnInit, OnDestroy
             console.log(x)
             this.ticket = x
             // Get User
-            this._userService.getUserById(x.requestFromUserId).subscribe(usr => this.requestedUser = usr);
-            if (x.assignedToUserId)
-               this._userService.getUserById(x.assignedToUserId).subscribe(usr => this.assignedUser = usr);
+            const requestFromUserId = typeof x.requestFromUserId === 'string'
+               ? x.requestFromUserId
+               : (x.requestFromUserId?._id || '');
+            if (requestFromUserId) {
+               this._userService.getUserById(requestFromUserId).subscribe(usr => this.requestedUser = usr);
+            } else if (typeof x.requestFromUserId === 'object' && x.requestFromUserId !== null) {
+               this.requestedUser = x.requestFromUserId as IUser;
+            }
+
+            if (x.assignedToUserId) {
+               const assignedToUserId = typeof x.assignedToUserId === 'string'
+                  ? x.assignedToUserId
+                  : (x.assignedToUserId?._id || '');
+               if (assignedToUserId) {
+                  this._userService.getUserById(assignedToUserId).subscribe(usr => this.assignedUser = usr);
+               } else if (typeof x.assignedToUserId === 'object' && x.assignedToUserId !== null) {
+                  this.assignedUser = x.assignedToUserId as IUser;
+               }
+            }
             this._ticketService.getTicketChat(x._id).subscribe(y => { this.chat = y })
          }
       })

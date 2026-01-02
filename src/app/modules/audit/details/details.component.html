@@ -114,7 +114,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr *ngFor="let asset of assets" [class.bg-green-50]="asset.isScanned">
+          <tr *ngFor="let asset of assets" [class.bg-green-50]="asset.isScanned" class="hover:bg-gray-50 cursor-pointer" (click)="openAssetDetail(asset)">
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
               {{ getAssetName(asset) }}
             </td>

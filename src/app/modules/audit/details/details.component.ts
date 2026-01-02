@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
 import { AuditService } from "src/app/core/audit/audit.service";
+import { AssetService } from "src/app/core/asset/asset.service";
 import { IAudit, IAuditAsset, AuditStatus } from "src/app/core/audit/audit.types";
+import { IAsset } from "src/app/core/asset/asset.types";
+import { AssetShortDetailComponent } from "../../shared/asset-short-detail/asset-short-detail.component";
 
 @Component({
   selector: "app-audit-details",
@@ -17,7 +21,9 @@ export class AuditDetailsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     public router: Router,
-    private _auditService: AuditService
+    private _auditService: AuditService,
+    private _assetService: AssetService,
+    private _matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -169,5 +175,30 @@ export class AuditDetailsComponent implements OnInit {
       return `${asset.scannedBy.firstName || ""} ${asset.scannedBy.lastName || ""}`.trim() || "-";
     }
     return "-";
+  }
+
+  openAssetDetail(asset: IAuditAsset, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // If assetId is already an object (IAsset), use it directly
+    if (asset.assetId && typeof asset.assetId === "object") {
+      this._matDialog.open(AssetShortDetailComponent, { data: asset.assetId as IAsset });
+      return;
+    }
+
+    // If assetId is a string, fetch the asset first
+    if (asset.assetId && typeof asset.assetId === "string") {
+      this._assetService.getAssetById(asset.assetId).subscribe({
+        next: (fullAsset) => {
+          this._matDialog.open(AssetShortDetailComponent, { data: fullAsset });
+        },
+        error: (err) => {
+          console.error("Error loading asset details:", err);
+        },
+      });
+      return;
+    }
   }
 }
