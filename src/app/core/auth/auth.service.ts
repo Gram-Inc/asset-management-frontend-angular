@@ -287,6 +287,18 @@ export class AuthService
       );
    }
 
+   // Check for accessing Audit Section
+   checkAudit(): Observable<boolean>
+   {
+      return this._userService.user$.pipe(
+         switchMap((value) =>
+         {
+            if (this._permissionService.checkPermission(value.permissions, ModuleTypes.Audit) == AccessType.NoAcess) return of(false);
+            return of(true);
+         })
+      );
+   }
+
    // Check for accessing Report Section
    checkReport(): Observable<boolean>
    {

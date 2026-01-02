@@ -444,6 +444,104 @@
                                     </div>
                                  </td>
                               </tr>
+                              <!-- Department -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Department) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Department) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Department) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Department) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Department
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.Department)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="departmentMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #departmentMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Department)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Department)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Department)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Department)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
+                              <!-- Audit -->
+                              <tr class="hover:bg-orange-50 cursor-pointer">
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center  pl-4 gap-4">
+                                       <div class="w-6 block text-orange-500 h-6 rounded-md ">
+                                          <mat-icon svgIcon="heroicons_outline:shield-check"
+                                             *ngIf=" getAccessPolicy(features.Audit) == accessTypes.FullAccess">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:pencil-alt"
+                                             *ngIf=" getAccessPolicy(features.Audit) == accessTypes.ReadWrite">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:book-open"
+                                             *ngIf=" getAccessPolicy(features.Audit) == accessTypes.Read">
+                                          </mat-icon>
+                                          <mat-icon svgIcon="heroicons_outline:ban"
+                                             *ngIf=" getAccessPolicy(features.Audit) == accessTypes.NoAcess">
+                                          </mat-icon>
+                                       </div>
+                                       <div class="text-sm font-medium text-gray-900">
+                                          Audit
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <app-access-pill [data]="getAccessPolicy(features.Audit)">
+                                    </app-access-pill>
+                                 </td>
+                                 <!-- Access Type Dropdown -->
+                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class=" text-gray-900">
+                                       <button type="button" mat-stroked-button matTooltip="Edit"
+                                          [disabled]="userForm.get('role').value == 'level1'"
+                                          [matMenuTriggerFor]="auditMenu">
+                                          Edit
+                                       </button>
+                                       <mat-menu #auditMenu="matMenu">
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.NoAcess,features.Audit)">N/A</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.Read,features.Audit)">Read</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.ReadWrite,features.Audit)">Read
+                                             / Write</button>
+                                          <button mat-menu-item
+                                             (click)="setAccessType(accessTypes.FullAccess,features.Audit)">Full</button>
+                                       </mat-menu>
+                                    </div>
+                                 </td>
+                              </tr>
                            </tbody>
                         </table>
 

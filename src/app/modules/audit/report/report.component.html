@@ -1,0 +1,117 @@
+<div class="p-8" *ngIf="audit">
+  <div class="flex-1 min-w-0 mb-6">
+    <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+      <span class="block xl:inline">Audit Report:</span>
+      <span class="block text-orange-600 xl:inline"> {{ audit.name }}</span>
+    </h1>
+  </div>
+
+  <!-- Summary -->
+  <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow mb-6">
+    <h3 class="text-lg font-semibold mb-4 text-gray-900">Summary</h3>
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <label class="text-sm font-medium text-gray-500">Total Assets</label>
+        <p class="text-2xl font-bold text-gray-900">{{ audit.totalAssets || 0 }}</p>
+      </div>
+      <div>
+        <label class="text-sm font-medium text-gray-500">Scanned</label>
+        <p class="text-2xl font-bold text-green-600">
+          {{ audit.scannedAssets || 0 }}
+        </p>
+      </div>
+      <div>
+        <label class="text-sm font-medium text-gray-500">Missing</label>
+        <p class="text-2xl font-bold text-red-600">
+          {{ audit.missingAssets || 0 }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scanned Assets -->
+  <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow mb-6">
+    <h3 class="text-lg font-semibold mb-4 text-gray-900">Scanned Assets</h3>
+    <p class="text-gray-500 mb-4">
+      {{ audit.scannedAssets || 0 }} assets were successfully scanned during
+      this audit.
+    </p>
+    <div *ngIf="scannedAssets.length > 0" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scanned At</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Scanned By</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let asset of scannedAssets" class="bg-green-50">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ getAssetName(asset) }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ asset.scannedAt | date: 'short' }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ getScannedByName(asset) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="scannedAssets.length === 0" class="text-center py-4 text-gray-500">
+      No scanned assets found.
+    </div>
+  </div>
+
+  <!-- Missing Assets -->
+  <div
+    class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow mb-6"
+    *ngIf="audit.missingAssets && audit.missingAssets > 0"
+  >
+    <h3 class="text-lg font-semibold mb-4 text-red-600">Missing Assets</h3>
+    <p class="text-gray-500 mb-4">
+      {{ audit.missingAssets }} assets were not scanned and marked as missing.
+    </p>
+    <div *ngIf="missingAssets.length > 0" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let asset of missingAssets" class="bg-red-50">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{ getAssetName(asset) }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                Missing
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="missingAssets.length === 0" class="text-center py-4 text-gray-500">
+      No missing assets found.
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-4">
+    <button
+      mat-stroked-button
+      (click)="router.navigate(['/audit'])"
+    >
+      Back to List
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!audit" class="p-8 text-center">
+  <p class="text-gray-500">Loading report...</p>
+</div>

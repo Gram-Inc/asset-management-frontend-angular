@@ -1,1 +1,1 @@
-export const environment = {"baseUrl":"http://127.0.0.1:8000","production":true};
+export const environment = {"baseUrl":"https://lunar-assets-management-backend.vercel.app","production":true};

@@ -39,7 +39,11 @@ export class PermissionService
       "UserCreate",
       "UserView",
       "UserUpdate",
-      "UserDelete"
+      "UserDelete",
+      "AuditCreate",
+      "AuditView",
+      "AuditUpdate",
+      "AuditDelete"
    ];
    constructor(private _userService: UserService) { }
 

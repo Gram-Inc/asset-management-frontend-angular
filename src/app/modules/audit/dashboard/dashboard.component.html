@@ -1,0 +1,108 @@
+<div class="p-8">
+  <div class="flex-1 min-w-0 mb-6">
+    <h1 class="text-2xl tracking-tight font-medium text-gray-800 sm:text-2xl md:text-2xl">
+      <span class="block xl:inline">Audit</span>
+      <span class="block text-orange-600 xl:inline"> Dashboard</span>
+    </h1>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div *ngIf="statistics" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow">
+      <h3 class="text-sm font-medium text-gray-500">Total Audits</h3>
+      <p class="text-3xl font-bold mt-2 text-gray-900">{{ statistics.totalAudits }}</p>
+    </div>
+    <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow">
+      <h3 class="text-sm font-medium text-gray-500">Completed</h3>
+      <p class="text-3xl font-bold mt-2 text-green-600">
+        {{ statistics.completedAudits }}
+      </p>
+    </div>
+    <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow">
+      <h3 class="text-sm font-medium text-gray-500">In Progress</h3>
+      <p class="text-3xl font-bold mt-2 text-orange-600">
+        {{ statistics.inProgressAudits }}
+      </p>
+    </div>
+    <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow">
+      <h3 class="text-sm font-medium text-gray-500">Missing Assets</h3>
+      <p class="text-3xl font-bold mt-2 text-red-600">
+        {{ statistics.missingAssetsCount }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Department History Table -->
+  <div class="px-4 py-5 bg-white sm:p-6 rounded-lg shadow overflow-hidden">
+    <div class="mb-4 border-b border-gray-200 pb-4">
+      <h3 class="text-lg font-semibold text-gray-900">Department Audit History</h3>
+    </div>
+    <div *ngIf="isLoading" class="text-center py-8 text-gray-500">Loading...</div>
+    <div *ngIf="!isLoading && departmentHistory.length === 0" class="text-center py-8 text-gray-500">
+      No department audit history available.
+    </div>
+    <div *ngIf="!isLoading && departmentHistory.length > 0">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Department
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Last Audit Date
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Total Audits
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let dept of departmentHistory" class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm font-medium text-gray-900">
+                {{ dept.departmentName }}
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-500">
+                {{ formatDate(dept.lastAuditDate) }}
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-500">{{ dept.totalAudits }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span
+                *ngIf="dept.neverAudited"
+                class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800"
+              >
+                Never Audited
+              </span>
+              <span
+                *ngIf="!dept.neverAudited && dept.lastAuditStatus"
+                class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
+              >
+                {{ dept.lastAuditStatus }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

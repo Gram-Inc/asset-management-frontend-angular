@@ -7,7 +7,8 @@ export enum ModuleTypes
     Report = "REPORT",
     UAM = "UAM",
     Ticket = "TICKET",
-    Vendor = "VENDOR"
+    Vendor = "VENDOR",
+    Audit = "AUDIT"
 }
 export enum AccessType
 {
@@ -70,4 +71,12 @@ export enum IBranchPermissions
     BranchView = "BranchView",
     BranchUpdate = "BranchUpdate",
     BranchDelete = "BranchDelete",
+}
+
+export enum IAuditPermissions
+{
+    AuditCreate = "AuditCreate",
+    AuditView = "AuditView",
+    AuditUpdate = "AuditUpdate",
+    AuditDelete = "AuditDelete",
 }

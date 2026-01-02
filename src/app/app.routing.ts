@@ -107,6 +107,11 @@ export const routes: Route[] = [
             canActivate: [VendorGuard],
             loadChildren: () => import("./modules/vendor/vendor.module").then((x) => x.VendorModule),
          },
+         {
+            path: "audit",
+            canActivate: [AuthGuard],
+            loadChildren: () => import("./modules/audit/audit.module").then((x) => x.AuditModule),
+         },
       ],
    },
    {
