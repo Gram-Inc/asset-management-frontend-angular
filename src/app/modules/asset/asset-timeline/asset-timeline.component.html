@@ -1,69 +1,113 @@
 <!-- Activity feed -->
-<div class="w-full text-sm">
-  <ng-container *ngIf="data.length; else noActivity">
-    <div class="mt-8">
-      <ol>
+<div class="w-full">
+  <ng-container *ngIf="data && data.length > 0; else noActivity">
+    <div class="mt-2">
+      <ol class="space-y-3">
         <!-- Activities -->
         <ng-container
-          *ngFor="let activity of data; let i = index; let first = first; let last = last; trackBy: trackByFn"
+          *ngFor="let activity of data; let i = index; let last = last; trackBy: trackByFn"
         >
           <!-- Activity -->
-          <li class="relative flex py-3">
-            <!-- Line -->
-            <ng-container *ngIf="!last && isSameDay(activity.y[1], data[i + 1].y[0])">
-              <div class="absolute top-7 left-3.5 w-0.5 h-full -ml-px bg-gray-100 dark:bg-gray-600"></div>
+          <li class="relative flex py-1.5">
+            <!-- Connecting Line -->
+            <ng-container *ngIf="!last">
+              <div class="absolute top-5 left-2 w-0.5 h-full -ml-px bg-gray-200"></div>
             </ng-container>
 
-            <div class="relative flex flex-auto">
+            <div class="relative flex flex-auto items-start">
               <!-- Icon -->
-              <ng-container>
-                <div
-                  class="flex flex-shrink-0 items-center justify-center w-7 h-7 mr-3 rounded-full"
+              <div
+                class="flex flex-shrink-0 items-center justify-center w-4 h-4 mr-3 mt-0.5 rounded-full z-10"
+                [ngClass]="{
+                  'bg-green-100': activity.eventType === TimelineEventType.ASSET_CREATED,
+                  'bg-blue-100': activity.x == 'ASSIGNED' || activity.eventType === TimelineEventType.ASSIGNED_TO_USER,
+                  'bg-orange-100': activity.x == 'IN_POOL' || activity.eventType === TimelineEventType.RETURNED_TO_POOL,
+                  'bg-yellow-100': activity.x == 'DOWN' || activity.eventType === TimelineEventType.MOVED_TO_REPAIR,
+                  'bg-red-100': activity.x == 'SCRAP',
+                  'bg-purple-100': activity.eventType === TimelineEventType.TICKET_CREATED,
+                  'bg-gray-100': !activity.eventType && !activity.x
+                }"
+              >
+                <mat-icon
+                  class="h-2.5 w-2.5"
                   [ngClass]="{
-                    'bg-blue-100': activity.x == 'ASSIGNED',
-                    'bg-orange-100': activity.x == 'IN_POOL',
-                    'bg-yellow-100': activity.x == 'DOWN',
-                    'bg-red-100': activity.x == 'SCRAP'
+                    'text-green-600': activity.eventType === TimelineEventType.ASSET_CREATED,
+                    'text-blue-600': activity.x == 'ASSIGNED' || activity.eventType === TimelineEventType.ASSIGNED_TO_USER,
+                    'text-orange-600': activity.x == 'IN_POOL' || activity.eventType === TimelineEventType.RETURNED_TO_POOL,
+                    'text-yellow-600': activity.x == 'DOWN' || activity.eventType === TimelineEventType.MOVED_TO_REPAIR,
+                    'text-red-600': activity.x == 'SCRAP',
+                    'text-purple-600': activity.eventType === TimelineEventType.TICKET_CREATED,
+                    'text-gray-600': !activity.eventType && !activity.x
                   }"
+                  [svgIcon]="getActivityIconData(activity)"
                 >
-                  <mat-icon
-                    class="icon-size-4 text-white"
-                    [ngClass]="{
-                      'text-blue-500': activity.x == 'ASSIGNED',
-                      'text-orange-500': activity.x == 'IN_POOL',
-                      'text-yellow-500': activity.x == 'DOWN',
-                      'text-red-500': activity.x == 'SCRAP'
-                    }"
-                    [svgIcon]="getActivityIconData(activity)"
-                  >
-                  </mat-icon>
-                </div>
-              </ng-container>
+                </mat-icon>
+              </div>
 
               <!-- Content -->
-              <div class="flex flex-col flex-auto items-start">
-                <!-- Description -->
-                <!-- <ng-container *ngIf="activity.description"> -->
-                <div>{{ activity.x | titlecase }}</div>
-                <!-- </ng-container> -->
-                <div
-                  class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5"
-                >
-                  <!-- Date -->
-                  <div class="text-gray-400">
-                    {{ activity.y[0] | date: "MMM dd, h:mm a" }}
-                  </div>
-                  <!-- Linked content -->
-                  <ng-container *ngIf="activity._id">
-                    <div class="hidden sm:block">&bull;</div>
-                    <!-- Internal link -->
-                    <a class="cursor-pointer text-blue-500" [routerLink]="activity._id"> Asset </a>
-                  </ng-container>
+              <div class="flex flex-col flex-auto items-start min-w-0 pb-1">
+                <!-- Event Type Badge and Description -->
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span
+                    *ngIf="activity.eventType"
+                    class="px-1.5 py-0.5 text-xs font-medium rounded-md"
+                    [ngClass]="getEventTypeColor(activity.eventType)"
+                  >
+                    {{ formatEventType(activity.eventType) | titlecase }}
+                  </span>
+                  <span
+                    *ngIf="!activity.eventType && activity.x"
+                    class="px-1.5 py-0.5 text-xs font-medium rounded-md"
+                    [ngClass]="getStatusColor(activity.x)"
+                  >
+                    {{ formatStatus(activity.x) | titlecase }}
+                  </span>
+                  <span class="text-sm font-medium text-gray-900 leading-tight">
+                    {{ getEventDescription(activity) }}
+                  </span>
                 </div>
-                <!-- Extra content -->
-                <!-- <ng-container *ngIf="activity.extraContent"> -->
-                <!-- <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800">Extra Content</div> -->
-                <!-- </ng-container> -->
+
+                <!-- User Information -->
+                <div *ngIf="getUserName(activity)" class="mt-0.5 text-xs text-gray-600">
+                  <span class="font-medium">User:</span> {{ getUserName(activity) }}
+                </div>
+
+                <!-- Ticket Information -->
+                <div *ngIf="activity.eventType === TimelineEventType.TICKET_CREATED && activity.ticketId" class="mt-0.5">
+                  <button
+                    (click)="openTicket(activity.ticketId)"
+                    class="text-xs text-purple-600 hover:text-purple-800 underline font-medium"
+                  >
+                    View Ticket: {{ activity.ticketSubject || activity.ticketId.substring(0, 8) }}
+                  </button>
+                </div>
+
+                <!-- Date and Duration -->
+                <div class="flex items-center gap-2 mt-1 text-xs text-gray-500">
+                  <!-- Timestamp -->
+                  <div class="flex items-center">
+                    <mat-icon class="h-3 w-3 mr-1" svgIcon="heroicons_outline:clock"></mat-icon>
+                    <span>{{ (activity.timestamp || activity.startDate || activity.y[0]) | date: "MMM dd, yyyy h:mm a" }}</span>
+                  </div>
+
+                  <!-- Duration (for status changes) -->
+                  <div
+                    *ngIf="activity.duration && activity.duration > 0 && (activity.eventType === TimelineEventType.STATUS_CHANGE || activity.eventType === TimelineEventType.ASSIGNED_TO_USER || activity.eventType === TimelineEventType.RETURNED_TO_POOL || activity.eventType === TimelineEventType.MOVED_TO_REPAIR || !activity.eventType)"
+                    class="flex items-center"
+                  >
+                    <span class="mx-1">&bull;</span>
+                    <mat-icon class="h-3 w-3 mr-1" svgIcon="heroicons_outline:calendar"></mat-icon>
+                    <span>Duration: {{ formatDuration(activity.durationInDays || 0, activity.durationInHours || 0, activity.durationInMinutes || 0) }}</span>
+                  </div>
+                </div>
+
+                <!-- Pool Time Highlight -->
+                <div
+                  *ngIf="activity.x === 'IN_POOL' && activity.durationInDays !== undefined && activity.durationInDays > 0"
+                  class="mt-0.5 text-xs text-orange-600 font-medium"
+                >
+                  In Pool for {{ formatDuration(activity.durationInDays, activity.durationInHours || 0, activity.durationInMinutes || 0) }}
+                </div>
               </div>
             </div>
           </li>
@@ -73,5 +117,10 @@
   </ng-container>
 
   <!-- No Activity template -->
-  <ng-template #noActivity> There are is activity at the moment... </ng-template>
+  <ng-template #noActivity>
+    <div class="text-center py-8 text-gray-500">
+      <mat-icon class="h-10 w-10 text-gray-400 mx-auto mb-2" svgIcon="heroicons_outline:clock"></mat-icon>
+      <p class="text-sm">No timeline activity available</p>
+    </div>
+  </ng-template>
 </div>

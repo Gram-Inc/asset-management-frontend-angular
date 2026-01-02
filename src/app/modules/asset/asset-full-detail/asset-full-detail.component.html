@@ -162,13 +162,23 @@
       </div>
 
       <!-- Timeline Section -->
-      <div class="bg-white shadow rounded-lg overflow-hidden" *ngIf="asset.timeline && asset.timeline.length > 0">
+      <div class="bg-white shadow rounded-lg overflow-hidden">
         <div class="px-6 py-5 border-b border-gray-200">
-          <h2 class="text-lg font-semibold text-gray-900">Asset Timeline</h2>
-          <p class="mt-1 text-sm text-gray-500">Allocation history and status changes</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900">Asset Timeline</h2>
+              <p class="mt-1 text-sm text-gray-500">Complete chronological history including creation, assignments, tickets, and status changes</p>
+            </div>
+            <div *ngIf="asset.totalTimeInPool" class="text-right">
+              <div class="text-xs text-gray-500">Total Time in Pool</div>
+              <div class="text-sm font-semibold text-orange-600">
+                {{ formatDuration(asset.totalTimeInPool.totalDays || 0, asset.totalTimeInPool.totalHours || 0, asset.totalTimeInPool.totalMinutes || 0) }}
+              </div>
+            </div>
+          </div>
         </div>
         <div class="px-6 py-5">
-          <app-asset-timeline [data]="asset.timeline"></app-asset-timeline>
+          <app-asset-timeline [data]="asset.timeline || []"></app-asset-timeline>
         </div>
       </div>
 

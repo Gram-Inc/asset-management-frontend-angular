@@ -28,10 +28,22 @@ export interface IAsset
    timeline?: Partial<ITimeline>[];
    repairPeriods?: IRepairPeriod[];
    totalRepairTime?: IRepairTimeSummary;
+   totalTimeInPool?: IRepairTimeSummary;
+   createdAt?: string | Date;
 }
+export enum TimelineEventType {
+   ASSET_CREATED = 'ASSET_CREATED',
+   STATUS_CHANGE = 'STATUS_CHANGE',
+   TICKET_CREATED = 'TICKET_CREATED',
+   ASSIGNED_TO_USER = 'ASSIGNED_TO_USER',
+   RETURNED_TO_POOL = 'RETURNED_TO_POOL',
+   MOVED_TO_REPAIR = 'MOVED_TO_REPAIR',
+}
+
 export interface ITimeline
 {
-   x?: AllocationStatus;
+   eventType?: TimelineEventType | string;
+   x?: AllocationStatus | string;
    y?: number[];
    _id?: string;
    firstName?: string;
@@ -43,6 +55,10 @@ export interface ITimeline
    startDate?: string | Date;
    endDate?: string | Date;
    isRepairPeriod?: boolean;
+   timestamp?: string | Date;
+   description?: string;
+   ticketId?: string;
+   ticketSubject?: string;
 }
 export interface IRepairPeriod
 {

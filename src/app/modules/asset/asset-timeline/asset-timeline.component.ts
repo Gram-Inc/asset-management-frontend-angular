@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import * as moment from "moment";
-import { AllocationStatus, ITimeline } from "src/app/core/asset/asset.types";
+import { AllocationStatus, ITimeline, TimelineEventType } from "src/app/core/asset/asset.types";
 
 @Component({
   selector: "app-asset-timeline",
@@ -8,169 +9,11 @@ import { AllocationStatus, ITimeline } from "src/app/core/asset/asset.types";
   styleUrls: ["./asset-timeline.component.scss"],
 })
 export class AssetTimelineComponent implements OnInit {
-  @Input() data: ITimeline[] = [
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641187948202, 1641352646953],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641352646953, 1641355643012],
-      _id: "619b85cde7049da912a951ba",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641355643012, 1641355761931],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641355761931, 1641355786950],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641355786950, 1641356212311],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641356212311, 1641356260554],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641356260554, 1641356267659],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641356267659, 1641356349460],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641356349460, 1641356376018],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641356376018, 1641356461126],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641356461126, 1641356735726],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641356735726, 1641359695658],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641359695658, 1641359709563],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641359709563, 1641359770071],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641359770071, 1641359971614],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641359971614, 1641360043619],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641360043619, 1641360176355],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641360176355, 1641360179439],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641360179439, 1641360193697],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641360193697, 1641360375333],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641360375333, 1641360380555],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.SCRAP,
-      y: [1641360380555, 1641360384624],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641360384624, 1641360398175],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641360398175, 1641361090300],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.IN_POOL,
-      y: [1641361090300, 1641361098500],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641361098500, 1641361173342],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641361173342, 1641361580924],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641361580924, 1641365587627],
-      _id: "619b85cde7049da912a951ba",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641365587627, 1641365597816],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.DOWN,
-      y: [1641365597816, 1641384286382],
-      _id: "",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641384286382, 1641485352351],
-      _id: "61d2b13ac142d96ac3c9398f",
-    },
-    {
-      x: AllocationStatus.ASSIGNED,
-      y: [1641485352351, 1641544271930],
-      _id: "619b85cde7049da912a951ba",
-    },
-  ];
-  constructor() {}
+  @Input() data: ITimeline[] = [];
+
+  TimelineEventType = TimelineEventType;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -197,6 +40,24 @@ export class AssetTimelineComponent implements OnInit {
     return item.id || index;
   }
   getActivityIconData(activity: ITimeline) {
+    // Check event type first
+    if (activity.eventType === TimelineEventType.ASSET_CREATED) {
+      return "heroicons_outline:plus-circle";
+    }
+    if (activity.eventType === TimelineEventType.TICKET_CREATED) {
+      return "heroicons_outline:document-text";
+    }
+    if (activity.eventType === TimelineEventType.ASSIGNED_TO_USER) {
+      return "heroicons_outline:user-add";
+    }
+    if (activity.eventType === TimelineEventType.MOVED_TO_REPAIR) {
+      return "heroicons_outline:wrench-screwdriver";
+    }
+    if (activity.eventType === TimelineEventType.RETURNED_TO_POOL) {
+      return "heroicons_outline:arrow-left";
+    }
+
+    // Fallback to status-based icons
     let v = "heroicons_outline:code";
     switch (activity.x) {
       case AllocationStatus.ASSIGNED:
@@ -205,17 +66,99 @@ export class AssetTimelineComponent implements OnInit {
       case AllocationStatus.IN_POOL:
         v = "heroicons_outline:office-building";
         break;
-
       case AllocationStatus.DOWN:
         v = "heroicons_outline:exclamation-circle";
         break;
       case AllocationStatus.SCRAP:
         v = "heroicons_outline:x-circle";
         break;
-
       default:
         break;
     }
     return v;
+  }
+
+  getEventTypeColor(eventType: string): string {
+    switch (eventType) {
+      case TimelineEventType.ASSET_CREATED:
+        return 'bg-green-100 text-green-600';
+      case TimelineEventType.TICKET_CREATED:
+        return 'bg-purple-100 text-purple-600';
+      case TimelineEventType.ASSIGNED_TO_USER:
+        return 'bg-blue-100 text-blue-600';
+      case TimelineEventType.MOVED_TO_REPAIR:
+        return 'bg-yellow-100 text-yellow-600';
+      case TimelineEventType.RETURNED_TO_POOL:
+        return 'bg-orange-100 text-orange-600';
+      case TimelineEventType.STATUS_CHANGE:
+        return 'bg-gray-100 text-gray-600';
+      default:
+        return 'bg-gray-100 text-gray-600';
+    }
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case AllocationStatus.ASSIGNED:
+        return 'bg-blue-100 text-blue-600';
+      case AllocationStatus.IN_POOL:
+        return 'bg-orange-100 text-orange-600';
+      case AllocationStatus.DOWN:
+        return 'bg-yellow-100 text-yellow-600';
+      case AllocationStatus.SCRAP:
+        return 'bg-red-100 text-red-600';
+      default:
+        return 'bg-gray-100 text-gray-600';
+    }
+  }
+
+  formatDuration(days: number, hours: number, minutes: number): string {
+    const parts: string[] = [];
+    if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`);
+    if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+    if (minutes > 0 && days === 0) parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+    return parts.length > 0 ? parts.join(', ') : 'Less than a minute';
+  }
+
+  getUserName(activity: ITimeline): string {
+    if (activity.firstName && activity.lastName) {
+      if (activity.firstName.toUpperCase() === activity.lastName.toUpperCase()) {
+        return activity.firstName;
+      }
+      return `${activity.firstName} ${activity.lastName}`;
+    }
+    return '';
+  }
+
+  openTicket(ticketId: string): void {
+    if (ticketId) {
+      this.router.navigate([`/ticket/${ticketId}`]);
+    }
+  }
+
+  getEventDescription(activity: ITimeline): string {
+    if (activity.description) {
+      return activity.description;
+    }
+    if (activity.eventType === TimelineEventType.ASSET_CREATED) {
+      return 'Asset Created';
+    }
+    if (activity.eventType === TimelineEventType.TICKET_CREATED) {
+      return activity.ticketSubject || 'Ticket Created';
+    }
+    if (activity.x) {
+      return activity.x.toString().replace('_', ' ');
+    }
+    return 'Event';
+  }
+
+  formatEventType(eventType: string): string {
+    if (!eventType) return '';
+    return eventType.replace(/_/g, ' ');
+  }
+
+  formatStatus(status: string): string {
+    if (!status) return '';
+    return status.replace(/_/g, ' ');
   }
 }
