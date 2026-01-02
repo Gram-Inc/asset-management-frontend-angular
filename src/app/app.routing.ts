@@ -5,6 +5,7 @@ import { AdminGuard } from "./core/auth/guards/admin.guard";
 import { AssetGuard } from "./core/auth/guards/asset.guard";
 import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { BranchGuard } from "./core/auth/guards/branch.guard";
+import { DepartmentGuard } from "./core/auth/guards/department.guard";
 import { ElseAdminGuard } from "./core/auth/guards/else-admin.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
 import { TicketGuard } from "./core/auth/guards/ticket.guard";
@@ -90,6 +91,11 @@ export const routes: Route[] = [
             path: "branch",
             canActivate: [BranchGuard],
             loadChildren: () => import("./modules/branch/branch.module").then((x) => x.BranchModule),
+         },
+         {
+            path: "department",
+            canActivate: [DepartmentGuard],
+            loadChildren: () => import("./modules/department/department.module").then((x) => x.DepartmentModule),
          },
          {
             path: "uam",

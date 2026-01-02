@@ -275,6 +275,18 @@ export class AuthService
       );
    }
 
+   // Check for accessing Department Section
+   checkDepartment(): Observable<boolean>
+   {
+      return this._userService.user$.pipe(
+         switchMap((value) =>
+         {
+            if (this._permissionService.checkPermission(value.permissions, ModuleTypes.Department) == AccessType.NoAcess) return of(false);
+            return of(true);
+         })
+      );
+   }
+
    // Check for accessing Report Section
    checkReport(): Observable<boolean>
    {

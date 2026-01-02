@@ -111,6 +111,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit, OnChan
    {
       return this._authService.checkBranch();
    }
+   checkDepartment()
+   {
+      return this._authService.checkDepartment();
+   }
    checkReport()
    {
       return this._authService.checkReport();

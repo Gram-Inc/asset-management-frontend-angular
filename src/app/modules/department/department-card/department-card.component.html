@@ -1,0 +1,60 @@
+<div class="bg-white border border-gray-200 overflow-hidden sm:rounded-lg">
+   <div class="px-4 py-5 lg:flex lg:items-center lg:justify-between">
+      <div class="">
+         <h3 class="text-lg leading-6 font-medium text-gray-900">{{ department.name | titlecase }}</h3>
+      </div>
+      <div class="flex gap-2">
+         <button href="#" class="
+        whitespace-nowrap
+        inline-flex
+        items-center
+        justify-center
+        px-4
+        py-2
+        border
+        rounded-md
+        shadow-sm
+        text-base text-orange-600
+        border-orange-600
+        hover:bg-orange-600 hover:text-white
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500
+      " [routerLink]="[department._id]" *ngIf="canEdit() | async">
+            Edit
+         </button>
+         <button href="#" class="
+        whitespace-nowrap
+        inline-flex
+        items-center
+        justify-center
+        px-4
+        py-2
+        border
+        rounded-md
+        shadow-sm
+        text-base text-red-600
+        border-red-600
+        hover:bg-red-600 hover:text-white
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+      " (click)="deleteDepartment()" *ngIf="canDelete() | async">
+            Delete
+         </button>
+      </div>
+   </div>
+   <div class="border-t border-gray-200">
+      <dl>
+         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Department Name</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ department.name | titlecase }}</dd>
+         </div>
+         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Status</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                     [ngClass]="department.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                  {{ department.isActive ? 'Active' : 'Inactive' }}
+               </span>
+            </dd>
+         </div>
+      </dl>
+   </div>
+</div>

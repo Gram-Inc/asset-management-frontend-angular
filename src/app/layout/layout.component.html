@@ -106,6 +106,8 @@
                [svgIcon]="'heroicons_outline:identification'" [name]="'Vendor'"></app-aside>
             <app-aside *ngIf="checkBranch() | async" [routerString]="'/branch'"
                [svgIcon]="'heroicons_outline:office-building'" [name]="'Branch'" [isDisabled]="false"></app-aside>
+            <app-aside *ngIf="checkDepartment() | async" [routerString]="'/department'"
+               [svgIcon]="'heroicons_outline:user-group'" [name]="'Department'" [isDisabled]="false"></app-aside>
             <app-aside *ngIf="checkReport() | async" [routerString]="'/report'" [svgIcon]="'feather:activity'"
                [name]="'Report'" [isDisabled]="true"></app-aside>
             <app-aside *ngIf="checkSetting() | async" [routerString]="'/setting'" [svgIcon]="'feather:sliders'"
