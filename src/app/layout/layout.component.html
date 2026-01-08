@@ -30,7 +30,7 @@
          <div class="side-con">
             <app-aside [routerString]="'/dashboard'" *ngIf="checkLevel('level1') | async" [svgIcon]="'feather:home'"
                [name]="'Dashboard'"></app-aside>
-            <app-aside [routerString]="'/Home'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:home'"
+            <app-aside [routerString]="'/home'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:home'"
                [name]="'Home'"></app-aside>
 
             <app-aside [routerString]="'/asset'" *ngIf="(checkAsset() | async) &&!(checkLevel('level1') | async)"

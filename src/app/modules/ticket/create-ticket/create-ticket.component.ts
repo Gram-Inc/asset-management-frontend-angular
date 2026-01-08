@@ -124,10 +124,12 @@ export class CreateTicketComponent implements OnInit
       if (this.ticketForm.invalid) return;
 
       //CHECK IF UPDATE or Create
+      const ticketId = this.ticketForm.value._id || this.ticket?._id;
 
       //Update
-      if (this.ticket)
-         this._ticketService.updateTicket(this.ticket._id, this.ticketForm.value).subscribe(
+      if (ticketId && ticketId.trim() !== '')
+      {
+         this._ticketService.updateTicket(ticketId, this.ticketForm.value).subscribe(
             (_) =>
             {
                this.openSnackBar("Success", "Ticket Updated");
@@ -140,8 +142,10 @@ export class CreateTicketComponent implements OnInit
                this.openSnackBar("Error", err.message);
             }
          );
+      }
       //Create
       else
+      {
          this._ticketService.createTicket(this.ticketForm.value).subscribe(
             (_) =>
             {
@@ -155,6 +159,7 @@ export class CreateTicketComponent implements OnInit
                this.openSnackBar("Error", err.message);
             }
          );
+      }
    }
 
    openSnackBar(type: "Error" | "Info" | "Success", msg: string)

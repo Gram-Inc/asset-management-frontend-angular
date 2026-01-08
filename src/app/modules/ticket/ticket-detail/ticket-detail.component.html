@@ -1,20 +1,93 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="container m-6 ">
-   <div class="flex justify-end">
-      <div *ngIf="checkRole('level1') | async">
-         <button color="primary" class="text-white" mat-raised-button (click)="assignTicket()">
-            <mat-icon svgIcon="feather:user-plus" class="h-4 w-4 mr-1"></mat-icon> Assign
-         </button>
+   <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center gap-4">
+         <div class="flex-1 min-w-0">
+            <span class="text-sm text-gray-500">Status: </span>
+            <span *ngIf="canChangeStatus() | async"
+                  class="flex items-center gap-2">
+               <div class="flex items-center px-3 py-1.5 rounded-full cursor-pointer font-medium text-sm transition-colors hover:opacity-80"
+                    [ngClass]="{
+                       'text-blue-800 bg-blue-200': statusCtrl.value === 'Open',
+                       'text-purple-800 bg-purple-200': statusCtrl.value === 'Assigned',
+                       'text-yellow-800 bg-yellow-200': statusCtrl.value === 'In Progress',
+                       'text-orange-800 bg-orange-200': statusCtrl.value === 'Hold',
+                       'text-gray-800 bg-gray-200': statusCtrl.value === 'Vendor Dependency',
+                       'text-green-800 bg-green-200': statusCtrl.value === 'Closed'
+                    }"
+                    [matMenuTriggerFor]="statusMenu">
+                  {{ statusCtrl.value || ticket?.callStatus || 'Open' | titlecase }}
+                  <mat-icon class="ml-1 icon-size-4" svgIcon="heroicons_outline:chevron-down"></mat-icon>
+               </div>
+               <mat-menu #statusMenu="matMenu">
+                  <button *ngFor="let status of availableStatuses"
+                          [ngClass]="{ 'bg-orange-50': statusCtrl.value === status }"
+                          mat-menu-item
+                          (click)="selectStatus(status)">
+                     <span class="inline-flex items-center justify-between w-full">
+                        <span class="font-medium">{{ status | titlecase }}</span>
+                     </span>
+                  </button>
+               </mat-menu>
+            </span>
+            <span *ngIf="showReadOnlyStatus() | async"
+                  class="inline-flex items-center px-3 py-1.5 rounded-full font-medium text-sm"
+                  [ngClass]="{
+                     'text-blue-800 bg-blue-200': ticket?.callStatus === 'Open',
+                     'text-purple-800 bg-purple-200': ticket?.callStatus === 'Assigned',
+                     'text-yellow-800 bg-yellow-200': ticket?.callStatus === 'In Progress',
+                     'text-orange-800 bg-orange-200': ticket?.callStatus === 'Hold',
+                     'text-gray-800 bg-gray-200': ticket?.callStatus === 'Vendor Dependency',
+                     'text-green-800 bg-green-200': ticket?.callStatus === 'Closed'
+                  }">
+               {{ ticket?.callStatus || 'Open' | titlecase }}
+            </span>
+         </div>
+      </div>
+      <div class="flex gap-2">
+         <div *ngIf="checkRole('level1') | async">
+            <button
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               (click)="assignTicket()">
+               <mat-icon svgIcon="feather:user-plus" class="h-4 w-4 mr-1"></mat-icon> Assign
+            </button>
+         </div>
       </div>
    </div>
-   <div class="flex flex-col gap-2 mt-4">
-      <div class="flex-1 min-w-0 p-2 bg-purple-200 rounded-md ">
-         <span class="text-sm">State </span> <span class="text-sm text-purple-500 font-bold"> {{ticket?.callStatus |
-            titlecase}}</span>
+
+   <div class="flex flex-col gap-2 mt-4" *ngIf="ticket?.callStatus == 'Closed'">
+      <div class="flex-1 min-w-0 p-3 bg-green-50 border border-green-200 rounded-md">
+         <span class="text-sm text-green-800 font-semibold">Closed (Permanently)</span>
+         <p class="text-xs text-gray-600 mt-1">{{ticket?.closingDescription}}</p>
       </div>
-      <div class="flex-1 min-w-0 p-2 bg-green-200 rounded-md " *ngIf="ticket?.callStatus == 'Closed'">
-         <span class="text-sm text-green-500 font-bold">Closed (Permanently)</span>
-         <p class="text-xs text-stone-600">{{ticket?.closingDescription}}</p>
+   </div>
+
+   <!-- Close Ticket Dialog -->
+   <div *ngIf="showCloseDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="cancelClose()">
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" (click)="$event.stopPropagation()">
+         <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-900">Close Ticket</h2>
+            <p class="text-sm text-gray-500 mt-1">Please provide a closing description to close this ticket.</p>
+         </div>
+         <div class="px-6 py-4">
+            <mat-form-field appearance="outline" class="w-full">
+               <mat-label>Closing Description</mat-label>
+               <textarea matInput [formControl]="closingDescriptionCtrl" rows="4" placeholder="Enter reason for closing..."></textarea>
+               <mat-error *ngIf="closingDescriptionCtrl.hasError('required')">Closing description is required</mat-error>
+            </mat-form-field>
+         </div>
+         <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+            <button
+               class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               (click)="cancelClose()">
+               Cancel
+            </button>
+            <button
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+               (click)="closeTicket()">
+               Close Ticket
+            </button>
+         </div>
       </div>
    </div>
 

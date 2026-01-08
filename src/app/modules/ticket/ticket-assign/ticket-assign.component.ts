@@ -97,13 +97,23 @@ export class TicketAssignComponent implements OnInit
          this.openSnackBar('Error', 'Invalid data.');
          return;
       }
-      this.data.assignedToUserId = this.ITUserCtrl.value
-      this.ticketService.updateTicket(this.data._id, this.data).subscribe(x =>
+      if (!this.data || !this.data._id)
       {
-
-         this.openSnackBar('Success', 'Ticket Assigned')
-         this.matDialogRef.close();
-      })
+         this.openSnackBar('Error', 'Ticket ID is missing.');
+         return;
+      }
+      this.data.assignedToUserId = this.ITUserCtrl.value
+      this.ticketService.updateTicket(this.data._id, this.data).subscribe(
+         (x) =>
+         {
+            this.openSnackBar('Success', 'Ticket Assigned')
+            this.matDialogRef.close();
+         },
+         (err) =>
+         {
+            this.openSnackBar('Error', err.message || 'Failed to assign ticket.');
+         }
+      )
 
    }
 }

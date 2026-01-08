@@ -81,7 +81,10 @@ export class AsideComponent implements OnInit {
     // If the aside has a children that is active,
     // always mark it as active
 
-    this.active = this._router.isActive(this.routerString, true);
+    // Use exact match for routes, but also check if the current URL starts with the routerString
+    // This handles cases where the route might have additional path segments
+    this.active = this._router.isActive(this.routerString, true) ||
+                  (currentUrl && currentUrl.toLowerCase().startsWith(this.routerString.toLowerCase()));
     // Mark for check
     this._changeDetectorRef.markForCheck();
   }
