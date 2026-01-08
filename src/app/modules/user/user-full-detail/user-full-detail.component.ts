@@ -8,6 +8,9 @@ import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
 import { TicketService } from "src/app/core/ticket/ticket.service";
 import { UamService } from "src/app/core/uam/uam.service";
 import { TicketStatus } from "src/app/core/ticket/ticket.types";
+import { AssetService } from "src/app/core/asset/asset.service";
+import { IAsset } from "src/app/core/asset/asset.types";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-user-full-detail",
@@ -28,11 +31,17 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
   openUAMCount: number = 0;
   completedUAMCount: number = 0;
 
+  // Assigned assets
+  assignedAssets: IAsset[] = [];
+  isLoadingAssets: boolean = false;
+
   constructor(
     private _userService: UserService,
     public permissionService: PermissionService,
     private _ticketService: TicketService,
-    private _uamService: UamService
+    private _uamService: UamService,
+    private _assetService: AssetService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +49,7 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
       if (val) {
         this.user = val;
         this.loadUserStatistics();
+        this.loadAssignedAssets();
       }
     });
   }
@@ -150,5 +160,48 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
     }
     // If it's a string, consider it as having assets
     return !!this.user.allocatedAssets;
+  }
+
+  loadAssignedAssets(): void {
+    if (!this.user || !this.user._id) return;
+
+    this.isLoadingAssets = true;
+    this._assetService
+      .getAssetsByUserId(this.user._id)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (assets) => {
+          this.assignedAssets = assets || [];
+          this.isLoadingAssets = false;
+        },
+        error: (err) => {
+          console.error("Error loading assigned assets:", err);
+          this.isLoadingAssets = false;
+        },
+      });
+  }
+
+  openAssetDetail(asset: IAsset): void {
+    if (asset._id) {
+      this.router.navigate([`/asset/${asset._id}`]);
+    }
+  }
+
+  getAssetDisplayName(asset: IAsset): string {
+    if (asset.type === "laptop" || asset.type === "server" || asset.type === "pc") {
+      return asset[asset.type]?.system?.model || asset.name || "Unknown";
+    }
+    return asset.name || asset.assetCode || "Unknown";
+  }
+
+  getAssetSerialNumber(asset: IAsset): string {
+    if (asset.type === "laptop" || asset.type === "server" || asset.type === "pc") {
+      return asset[asset.type]?.system?.serial || asset.sr_no || "-";
+    }
+    return asset.sr_no || "-";
+  }
+
+  getAssetType(asset: IAsset): string {
+    return asset.type ? asset.type.charAt(0).toUpperCase() + asset.type.slice(1) : "-";
   }
 }

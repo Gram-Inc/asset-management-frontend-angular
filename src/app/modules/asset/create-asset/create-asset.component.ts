@@ -223,6 +223,16 @@ export class CreateAssetComponent implements OnInit, OnDestroy
          case 'software':
             this.assetForm.get('category').setValue('Software')
             break;
+
+         case 'other':
+            this.assetForm.get('category').setValue('Hardware')
+            fields = this._formBuilder.group({
+               brand: [""],
+               model: [""],
+               description: [""],
+            });
+            break;
+
          default:
             break;
       }
@@ -375,6 +385,15 @@ export class CreateAssetComponent implements OnInit, OnDestroy
             this.assetForm.get(`${this.type}.diskLayout`).valid
          )
             stepper.next();
+      }
+      // Other Asset Type
+      else if (formGroupName == "other")
+      {
+         // Validate other form group
+         this.assetForm.get("other").markAllAsTouched();
+
+         // If valid move next (all fields are optional, so just move forward)
+         if (this.assetForm.get("other").valid) stepper.next();
       }
 
       //Warranty will be validated by createFN

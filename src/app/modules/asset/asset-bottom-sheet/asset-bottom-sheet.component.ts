@@ -164,4 +164,13 @@ export class AssetBottomSheetComponent implements OnInit, OnDestroy
       if (asset.allocationToUserId && typeof asset.allocationToUserId == "object")
          this.router.navigate([`/user/${asset.allocationToUserId._id}`]);
    }
+
+   getSerialNumber(asset: IAsset): string {
+      // For laptop, pc, server - check if system.serial exists
+      if (asset.type === 'laptop' || asset.type === 'pc' || asset.type === 'server') {
+         return asset[asset.type]?.system?.serial || asset.sr_no || '-';
+      }
+      // For other types, use sr_no
+      return asset.sr_no || '-';
+   }
 }

@@ -258,4 +258,10 @@ export class AssetService {
       map((response: IDTO) => response.data || [])
     );
   }
+
+  getAssetsByUserId(userId: string): Observable<IAsset[]> {
+    return this._httpClient.get<IDTO>(`${this._baseUrl}/asset/user/${userId}`).pipe(
+      map((response: IDTO) => response.data || [])
+    );
+  }
 }

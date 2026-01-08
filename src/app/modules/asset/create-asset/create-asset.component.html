@@ -251,6 +251,41 @@
 
    </ng-container>
 
+   <!-- Other Asset Type -->
+   <ng-container *ngIf="assetForm.contains('other')" [formGroupName]="'other'">
+      <mat-step [stepControl]="assetForm.get('other')">
+         <ng-template matStepLabel>Asset Details</ng-template>
+         <ng-template matStepContent>
+            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+               <div class="grid grid-cols-4 gap-x-6">
+                  <!-- Brand -->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Brand</mat-label>
+                     <input formControlName="brand" matInput />
+                  </mat-form-field>
+
+                  <!-- Model -->
+                  <mat-form-field class="col-span-2">
+                     <mat-label>Model</mat-label>
+                     <input formControlName="model" matInput />
+                  </mat-form-field>
+
+                  <!-- Description -->
+                  <mat-form-field class="col-span-4">
+                     <mat-label>Description</mat-label>
+                     <textarea formControlName="description" matInput rows="4"></textarea>
+                  </mat-form-field>
+               </div>
+            </div>
+            <!-- Actions -->
+            <button mat-stroked-button matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" class="mx-2" (click)="goForward('other', stepper)">
+               Next
+            </button>
+         </ng-template>
+      </mat-step>
+   </ng-container>
+
    <!-- Warranty -->
    <mat-step [stepControl]="assetForm.get('warranty')['controls']">
       <ng-template matStepLabel>Warranty Information</ng-template>
