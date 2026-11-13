@@ -111,14 +111,11 @@ export class UamService
 
    getUAMById(id: string): Observable<IUAM>
    {
-      return this._uams.pipe(
-         take(1),
-         map((uams) =>
+      return this._httpClient.get<IDTO>(`${this._baseUrl}/user-access-management/${id}`).pipe(
+         map((response) =>
          {
-            const uam = uams.find((uam) => uam._id == id || null);
-
+            const uam = response.data;
             this._uam.next(uam);
-
             return uam;
          }),
          switchMap((uam) =>
@@ -188,7 +185,7 @@ export class UamService
       return this.uams$.pipe(
          take(1),
          switchMap((uams) =>
-            this._httpClient.delete(`${this._baseUrl}/uam/${_id}`).pipe(
+            this._httpClient.delete(`${this._baseUrl}/user-access-management/${_id}`).pipe(
                map((isDeleted: boolean) =>
                {
                   // Find the index of the deleted uam

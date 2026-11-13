@@ -112,6 +112,11 @@ export const routes: Route[] = [
             canActivate: [AuthGuard],
             loadChildren: () => import("./modules/audit/audit.module").then((x) => x.AuditModule),
          },
+         {
+            path: "report",
+            canActivate: [AdminGuard],
+            loadChildren: () => import("./modules/report/report.module").then((x) => x.ReportModule),
+         },
       ],
    },
    {
@@ -121,7 +126,7 @@ export const routes: Route[] = [
    },
    {
       path: '**',
-      redirectTo: 'dashboard',
+      redirectTo: 'not-found',
 
    }
 ];

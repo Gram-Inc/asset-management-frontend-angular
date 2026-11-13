@@ -239,7 +239,7 @@ export class UserService
       return this.users$.pipe(
          take(1),
          switchMap((users) =>
-            this._httpClient.delete(`${this._baseUrl}/user/${_id}`).pipe(
+            this._httpClient.delete(`${this._baseUrl}/users/${_id}`).pipe(
                map((isDeleted: boolean) =>
                {
                   // Find the index of the deleted user

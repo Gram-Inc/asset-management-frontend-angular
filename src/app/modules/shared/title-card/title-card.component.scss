@@ -1,24 +1,4 @@
-.card {
-  border-radius: 30px;
-  // border: 1px solid #eee;
-  height: 195px;
-  width: 190px;
-  margin: 24px;
-  padding: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease-in-out;
-  line-height: 24px;
-  text-align: center;
-}
-
-mat-icon {
-  height: auto;
-  width: auto;
-}
-.card:not(.highlight-card):hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.1);
+:host {
+  display: block;
+  height: 100%;
 }

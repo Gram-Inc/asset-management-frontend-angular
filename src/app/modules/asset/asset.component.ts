@@ -2,12 +2,14 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } fr
 import { FormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { Observable, of, Subject } from "rxjs";
+import { Observable, combineLatest, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { AssetService } from "src/app/core/asset/asset.service";
 import { IAsset, IPagination } from "src/app/core/asset/asset.types";
 import { PermissionService } from "src/app/core/auth/permission.service";
 import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
+import { ReportService } from "src/app/core/report/report.service";
+import { UserService } from "src/app/core/user/user.service";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
 import { AssetFilterComponent } from "../shared/asset-filter/asset-filter.component";
 
@@ -29,7 +31,10 @@ export class AssetComponent implements OnInit, OnDestroy
    searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
    constructor(private _assetService: AssetService,
-      private _permissionService: PermissionService,) { }
+      private _permissionService: PermissionService,
+      private _userService: UserService,
+      private _reportService: ReportService,
+      private _snackBar: MatSnackBar,) { }
 
    ngOnInit(): void
    {
@@ -69,14 +74,27 @@ export class AssetComponent implements OnInit, OnDestroy
     */
    canExport(): Observable<boolean>
    {
-      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Asset).pipe(
-         switchMap(value =>
-         {
-            //User should be able to Export only if He has full access
-            if (value == AccessType.FullAccess) return of(true);
-            return of(false);
-         })
+      return combineLatest([
+         this._permissionService.checkCurrentUserPermission(ModuleTypes.Asset),
+         this._userService.user$,
+      ]).pipe(
+         map(([value, user]) => this.canDownload(value, user?.role))
       );
+   }
+
+   exportCsv(): void
+   {
+      this._reportService.download("assets", {
+         searchText: this.searchCtrl.value || "",
+      }).subscribe({
+         error: () => this._snackBar.open("Could not export assets", "Close", { duration: 3000 }),
+      });
+   }
+
+   private canDownload(value: AccessType, role?: string): boolean
+   {
+      const canView = value == AccessType.Read || value == AccessType.ReadWrite || value == AccessType.FullAccess;
+      return canView && (role == "level1" || role == "level2");
    }
 
    canCreateAsset(): Observable<boolean>

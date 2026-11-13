@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AssetHub — Platform Overview</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #1c1917;
+      background: #fff;
+    }
+    h1, h2, h3, .serif { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-weight: 500; }
+    .page {
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+      position: relative;
+      page-break-after: always;
+      background: #fbf8f5;
+      padding: 16mm 16mm 18mm;
+    }
+    .page:last-child { page-break-after: auto; }
+    .kicker {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 9.5pt;
+      color: #c2410c;
+      font-weight: 600;
+    }
+    h1 { font-size: 34pt; line-height: 1.05; margin: 8mm 0 5mm; letter-spacing: -0.02em; }
+    h2 { font-size: 26pt; line-height: 1.08; margin: 2mm 0 4mm; letter-spacing: -0.02em; }
+    p { margin: 0 0 3.5mm; font-size: 11pt; line-height: 1.45; color: #44403c; }
+    .lede { font-size: 13pt; line-height: 1.4; color: #292524; max-width: 150mm; }
+    .footer {
+      position: absolute;
+      left: 16mm;
+      right: 16mm;
+      bottom: 8mm;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5pt;
+      letter-spacing: 0.04em;
+      color: #a8a29e;
+      text-transform: uppercase;
+    }
+    .rule { height: 0.4mm; background: #ff7043; border: 0; margin: 0; }
+    .frame {
+      background: #fff;
+      border: 0.3mm solid #e7e0d8;
+      border-radius: 3.5mm;
+      overflow: hidden;
+      box-shadow: 0 8mm 18mm rgba(28, 25, 23, 0.08);
+    }
+    .chrome {
+      height: 8mm;
+      background: #f5f0ea;
+      border-bottom: 0.2mm solid #e7e0d8;
+      display: flex;
+      align-items: center;
+      gap: 1.4mm;
+      padding: 0 3mm;
+    }
+    .dot { width: 2.1mm; height: 2.1mm; border-radius: 50%; background: #e7e0d8; }
+    .dot:nth-child(1) { background: #ff7043; }
+    .dot:nth-child(2) { background: #fdba74; }
+    .dot:nth-child(3) { background: #d6d3d1; }
+    .url {
+      margin-left: 2mm;
+      background: #fff;
+      border-radius: 2mm;
+      padding: 0.8mm 3mm;
+      font-size: 8pt;
+      color: #78716c;
+      flex: 1;
+    }
+    .frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 168mm;
+      object-fit: contain;
+      object-position: top center;
+      background: #fff;
+    }
+    .cover {
+      background:
+        radial-gradient(circle at 88% 82%, rgba(255, 112, 67, 0.16), transparent 28%),
+        #fbf8f5;
+      padding: 0;
+    }
+    .cover-bar { height: 4mm; background: #ff7043; }
+    .cover-inner { padding: 22mm 18mm 0; height: calc(297mm - 4mm); position: relative; }
+    .mark { width: 18mm; height: 18mm; }
+    .pill {
+      display: inline-block;
+      margin-top: 8mm;
+      border: 0.3mm solid #ff7043;
+      color: #c2410c;
+      border-radius: 99mm;
+      padding: 2.2mm 4.5mm;
+      font-size: 10.5pt;
+      letter-spacing: 0.01em;
+    }
+    .cover-foot {
+      position: absolute;
+      left: 18mm;
+      right: 18mm;
+      bottom: 16mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: #78716c;
+      font-size: 10pt;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 6mm; }
+    .card {
+      background: #fff;
+      border-radius: 3mm;
+      padding: 6mm 6mm 5mm;
+      border: 0.25mm solid #efe8e0;
+    }
+    .card h3 { margin: 3mm 0 2mm; font-size: 15pt; color: #1c1917; }
+    .card p { font-size: 10.5pt; margin: 0; }
+    .icon { width: 9mm; height: 9mm; }
+    .split { display: grid; grid-template-columns: 58mm 1fr; gap: 6mm; align-items: start; }
+    .split h2 { font-size: 22pt; }
+    .meta { font-size: 10pt; color: #78716c; margin-top: 4mm; }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5mm;
+      margin: 4mm 0 0;
+      font-size: 9pt;
+      color: #9a3412;
+      font-weight: 600;
+    }
+    .flow span {
+      background: #fff1ea;
+      border-radius: 99mm;
+      padding: 1.2mm 2.4mm;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 6mm; background: #fff; }
+    th, td { text-align: left; padding: 3.2mm 3.5mm; font-size: 10pt; vertical-align: top; }
+    th { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: #a8a29e; font-weight: 600; border-bottom: 0.3mm solid #e7e0d8; }
+    td { border-bottom: 0.2mm solid #f1ebe4; color: #44403c; }
+    td strong { color: #1c1917; font-weight: 600; }
+    .roles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-top: 5mm; }
+    .role { background: #fff; border-radius: 3mm; padding: 5mm; border-top: 1.2mm solid #ff7043; }
+    .role h3 { margin: 2mm 0; font-size: 14pt; }
+    .role p { font-size: 10pt; margin: 0; }
+    .close-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 8mm; }
+    .shot-sm { height: 92mm; }
+    .shot-md { height: 118mm; }
+    .shot-lg { height: 168mm; }
+    .shot-xl { height: 188mm; }
+    .banner { height: 62mm; object-fit: contain; object-position: center; background: #fff; }
+    .caption { font-size: 9pt; color: #78716c; margin-top: 2.5mm; }
+  </style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="cover-bar"></div>
+  <div class="cover-inner">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+      <rect width="64" height="64" rx="16" fill="#ff7043"/>
+      <circle cx="32" cy="32" r="6" fill="#fff"/>
+      <circle cx="16" cy="20" r="3.2" fill="#fff"/>
+      <circle cx="48" cy="18" r="3.2" fill="#fff"/>
+      <circle cx="18" cy="46" r="3.2" fill="#fff"/>
+      <circle cx="46" cy="46" r="3.2" fill="#fff"/>
+      <path d="M29 28 L18 22 M35 28 L46 20 M29 36 L20 44 M35 36 L44 44" stroke="#fff" stroke-width="1.6" fill="none"/>
+    </svg>
+    <div class="kicker" style="margin-top:14mm">IT asset and operations platform</div>
+    <h1>One record for every laptop, ticket, access request, and audit.</h1>
+    <p class="lede">From the day equipment arrives to the day it is retired. AssetHub keeps the hardware, the support history, and the approval trail on the same record.</p>
+    <div class="pill">Shown in use at Satyamev Infotech Private Limited</div>
+    <svg viewBox="0 0 640 180" width="150mm" height="42mm" style="position:absolute; right:8mm; bottom:28mm; opacity:0.9" aria-hidden="true">
+      <g fill="none" stroke="#ff7043" stroke-width="1.2">
+        <path d="M40 140 C120 40, 200 40, 280 110 S440 180, 600 50" opacity="0.35"/>
+        <circle cx="40" cy="140" r="5" fill="#ff7043" stroke="none"/>
+        <circle cx="210" cy="78" r="4" fill="#fdba74" stroke="none"/>
+        <circle cx="360" cy="128" r="4" fill="#ff7043" stroke="none"/>
+        <circle cx="600" cy="50" r="6" fill="#ff7043" stroke="none"/>
+      </g>
+    </svg>
+    <div class="cover-foot">
+      <div>Platform overview<br>Prepared September 2026</div>
+      <div style="text-align:right">Ahmedabad · Mumbai · Pune<br>Bangalore · Hyderabad</div>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="kicker">Overview</div>
+  <h2>What it replaces</h2>
+  <p class="lede">Most IT teams track hardware in a spreadsheet, support in email, and access approvals in whatever thread they started. AssetHub keeps all three tied to the same records.</p>
+  <div class="grid-2">
+    <article class="card">
+      <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="16" rx="2" fill="none" stroke="#ff7043" stroke-width="1.6"/><path d="M12 26h8M16 22v4" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>Asset registry</h3>
+      <p>Every laptop, server, printer, mobile, and license — who has it, which office it sits in, what warranty covers it, and the history from purchase to retirement.</p>
+    </article>
+    <article class="card">
+      <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 8h20v12H10l-4 4V8z" fill="none" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>Support desk</h3>
+      <p>Helpdesk tickets that link to the asset in question, so a repair history and a support history live on the same record.</p>
+    </article>
+    <article class="card">
+      <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="14" r="5" fill="none" stroke="#ff7043" stroke-width="1.6"/><path d="M8 26c1.6-4 4.4-6 8-6s6.4 2 8 6" fill="none" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>Access governance</h3>
+      <p>A structured path for granting, changing, or revoking system access, routed through the approval chain the organization already uses.</p>
+    </article>
+    <article class="card">
+      <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 16l6 6 12-12" fill="none" stroke="#ff7043" stroke-width="1.8"/></svg>
+      <h3>Physical audits</h3>
+      <p>Scan-based stock checks by branch and department, closing with a clear list of what was found and what is missing.</p>
+    </article>
+  </div>
+  <p style="margin-top:6mm">Built for IT administrators and helpdesk staff, for line managers approving requests, and for employees who need to see what is assigned to them.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Dashboards</div>
+  <h2>The view depends on who is looking</h2>
+  <p>Administrators see the whole estate. Everyone else gets a home scoped to their own access. Satyamev Infotech, five offices. This week’s joiners are marked allocated or still pending.</p>
+  <div class="flow">
+    <span>In pool 20</span>
+    <span>Assigned 44</span>
+    <span>Down 5</span>
+    <span>Scrap 3</span>
+  </div>
+  <div class="frame" style="margin-top:4mm">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / dashboard</div></div>
+    <img src="shots/dashboard.png" alt="Administrator dashboard for Satyamev Infotech" />
+  </div>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>03</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Asset registry</div>
+  <h2>One record, purchase to retirement</h2>
+  <div class="flow">
+    <span>In pool</span><span>Assigned</span><span>Down, in repair</span><span>Scrap</span>
+  </div>
+  <div class="frame" style="margin-top:5mm">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / asset / SIPL-AMD-LT-0108</div></div>
+    <img src="shots/asset-timeline.png" alt="Timeline for a Dell Latitude assigned to Meera Shah" />
+  </div>
+  <p class="caption">Dell Latitude 5440, Ahmedabad. Assigned to Karan Shah, returned to the pool, then issued to Meera Shah. The keyboard ticket sits on the same timeline.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Asset registry</div>
+  <h2>The working inventory</h2>
+  <p>Laptops, desktops, monitors, printers, mobiles, and a file server, each with a holder and an office code.</p>
+  <div class="frame">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / asset</div></div>
+    <img src="shots/assets.png" alt="Asset list across Satyamev offices" />
+  </div>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Support desk</div>
+  <h2>Tickets, tied to the equipment</h2>
+  <div class="flow">
+    <span>Open</span><span>Assigned</span><span>In progress</span><span>On hold</span><span>Waiting on vendor</span><span>Closed</span>
+  </div>
+  <div class="frame" style="margin-top:5mm">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / ticket</div></div>
+    <img src="shots/ticket-detail.png" alt="Ticket conversation about a Latitude keyboard" />
+  </div>
+  <p class="caption">Meera Shah and Priya Desai, on the Ahmedabad Latitude. Closing a ticket requires a note of what was done.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>06</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Access governance</div>
+  <h2>A paper trail for who can access what</h2>
+  <div class="flow">
+    <span>Submitted</span><span>Number issued</span><span>Manager</span><span>IT</span><span>Closed</span>
+  </div>
+  <div class="frame" style="margin-top:5mm">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / uam</div></div>
+    <img src="shots/uam.png" alt="Access requests for Satyamev joiners and a leaver" />
+  </div>
+  <p class="caption">Joiners in Ahmedabad, Mumbai, Pune, and Bangalore, plus a closed deactivation for a Mumbai leaver. A closed request cannot be quietly edited afterward.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>07</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Physical audits</div>
+  <h2>Stock checks that are not a spreadsheet</h2>
+  <p>The registry already knows which assets should be in a branch and department. Scanning starts the audit. Anything still unscanned at the close is marked missing.</p>
+  <div class="frame">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / audit / dashboard</div></div>
+    <img src="shots/audit.png" alt="Audit dashboard with department history" />
+  </div>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>08</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">The organization</div>
+  <h2>Five offices, one registry</h2>
+  <p>Satyamev Infotech Private Limited. Ahmedabad is the head office. Mumbai, Pune, Bangalore, and Hyderabad run the same asset and ticket record.</p>
+  <div class="frame">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / branch</div></div>
+    <img class="banner" src="shots/branches.png" alt="Branch cards for Hyderabad, Bangalore, Pune, Mumbai, and Ahmedabad" />
+  </div>
+  <div class="frame" style="margin-top:4mm">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / department</div></div>
+    <img style="height:78mm" src="shots/departments.png" alt="Departments from Information Technology through Administration" />
+  </div>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>09</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Roles and permissions</div>
+  <h2>Three roles, permission by module</h2>
+  <div class="roles">
+    <article class="role">
+      <svg class="icon" viewBox="0 0 32 32"><path d="M8 14l8-6 8 6v10H8V14z" fill="none" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>Administrator</h3>
+      <p>Full access, including the executive dashboard, user creation, deletes, and password resets. Access cannot be narrowed.</p>
+    </article>
+    <article class="role">
+      <svg class="icon" viewBox="0 0 32 32"><rect x="7" y="8" width="18" height="16" rx="2" fill="none" stroke="#ff7043" stroke-width="1.6"/><path d="M12 16h8" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>IT Admin</h3>
+      <p>The working role. Access is granted module by module: full, read-write, read-only, or none. This role runs physical audit scanning.</p>
+    </article>
+    <article class="role">
+      <svg class="icon" viewBox="0 0 32 32"><circle cx="16" cy="12" r="4" fill="none" stroke="#ff7043" stroke-width="1.6"/><path d="M8 24c1.5-4 4-6 8-6s6.5 2 8 6" fill="none" stroke="#ff7043" stroke-width="1.6"/></svg>
+      <h3>Employee</h3>
+      <p>Own tickets, own access requests, and the equipment currently assigned to them. No view of other people’s records.</p>
+    </article>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Module</th><th>Administrator</th><th>IT Admin</th><th>Employee</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Asset registry</strong></td><td>Full, including delete</td><td>Configurable</td><td>Own allocated items</td></tr>
+      <tr><td><strong>Support tickets</strong></td><td>Full, including delete</td><td>Configurable</td><td>Raise and track own</td></tr>
+      <tr><td><strong>Access requests</strong></td><td>Full</td><td>Configurable, including who may issue a number</td><td>Submit and track own</td></tr>
+      <tr><td><strong>Vendors, branches, departments</strong></td><td>Full</td><td>Configurable</td><td>No access</td></tr>
+      <tr><td><strong>Physical audits</strong></td><td>Full</td><td>Configurable — this role scans</td><td>No access</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">New accounts are created by an administrator. There is no open self-signup into the live system.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>10</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">For everyone else</div>
+  <h2>A home, not the whole estate</h2>
+  <div class="frame">
+    <div class="chrome"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="url">assethub / home</div></div>
+    <img src="shots/home.png" alt="Employee home for Meera Shah with allocated assets" />
+  </div>
+  <p class="caption">Meera Shah, Software Engineering, Ahmedabad. She sees her monitor, headset, and laptops — not the rest of the company.</p>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>11</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Foundation</div>
+  <h2>One source of truth</h2>
+  <p class="lede">The laptop assigned to someone is the same record that shows the ticket raised against it, the audit that last confirmed it, and the access request that came with it.</p>
+  <svg viewBox="0 0 640 280" width="100%" height="78mm" aria-hidden="true">
+    <rect x="250" y="110" width="140" height="56" rx="28" fill="#ff7043"/>
+    <text x="320" y="144" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="18">One record</text>
+    <g fill="#fff" stroke="#e7e0d8" stroke-width="1">
+      <rect x="36" y="28" width="150" height="48" rx="10"/>
+      <rect x="454" y="28" width="150" height="48" rx="10"/>
+      <rect x="36" y="204" width="150" height="48" rx="10"/>
+      <rect x="454" y="204" width="150" height="48" rx="10"/>
+    </g>
+    <g fill="#1c1917" font-family="Helvetica Neue, Arial, sans-serif" font-size="14">
+      <text x="111" y="57" text-anchor="middle">Laptop</text>
+      <text x="529" y="57" text-anchor="middle">Ticket</text>
+      <text x="111" y="233" text-anchor="middle">Audit</text>
+      <text x="529" y="233" text-anchor="middle">Access</text>
+    </g>
+    <g stroke="#ff7043" stroke-width="1.4" fill="none">
+      <path d="M186 52 C230 52, 240 110, 250 128"/>
+      <path d="M454 52 C410 52, 400 110, 390 128"/>
+      <path d="M186 228 C230 228, 240 170, 250 152"/>
+      <path d="M454 228 C410 228, 400 170, 390 152"/>
+    </g>
+  </svg>
+  <div class="close-grid">
+    <article class="card">
+      <h3>Access and accountability</h3>
+      <p>Role and module permissions are enforced in the interface and in the services. Every assignment, scan, and access step is stamped with who acted and when.</p>
+    </article>
+    <article class="card">
+      <h3>Nothing to install</h3>
+      <p>A browser, an API, and a database. Access-request forms are produced as print-ready documents when a paper record is required.</p>
+    </article>
+  </div>
+  <div class="footer"><span>AssetHub — Platform overview</span><span>12</span></div>
+</section>
+
+</body>
+</html>

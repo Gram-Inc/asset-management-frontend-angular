@@ -1,29 +1,77 @@
+.uam-toolbar {
+  .uam-search {
+    font-size: 0.875rem;
+  }
+}
+
+.uam-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.uam-btn-primary {
+  background: #111827;
+  color: #fff;
+  border: 1px solid #111827;
+
+  &:hover {
+    background: #1f2937;
+    border-color: #1f2937;
+  }
+}
+
+.uam-btn-secondary {
+  background: #fff;
+  color: #111827;
+  border: 1px solid #e8eaee;
+
+  &:hover {
+    background: #f9fafb;
+  }
+}
+
+:host ::ng-deep .uam-search .mat-form-field-wrapper {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+:host ::ng-deep .uam-search .mat-form-field-outline {
+  border-radius: 12px;
+}
+
 .mat-radio-button {
   &.mat-radio-disabled {
     &.mat-radio-checked .mat-radio-outer-circle {
-      border-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      border-color: #111827 !important;
     }
     &.mat-radio-checked .mat-radio-label-content {
-      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      color: #111827 !important;
     }
     &.mat-radio-checked .mat-radio-inner-circle {
-      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      background-color: #111827 !important;
     }
   }
 }
 .mat-checkbox-checked {
   &.mat-checkbox-disabled {
     .mat-checkbox-background {
-      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      background-color: #111827 !important;
     }
     .mat-checkbox-label {
-      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      color: #111827 !important;
     }
   }
 }
 .mat-select-disabled .mat-select-value {
-  color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+  color: #111827 !important;
 }
 .mat-input-element:disabled {
-  color: orange;
+  color: #374151;
 }

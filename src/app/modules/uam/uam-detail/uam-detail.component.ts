@@ -62,6 +62,15 @@ export class UamDetailComponent implements OnInit, OnDestroy
    selectedUAM: IUAM;
    uamForm: UntypedFormGroup;
 
+   /** Quiet status sequence — mirrors existing UAMAction values, not a workflow engine */
+   readonly statusSteps: { label: string; match: string[] }[] = [
+      { label: 'Created', match: ['Created'] },
+      { label: 'UAM number', match: ['UAMNumberCreated'] },
+      { label: 'Line manager', match: ['AssignedToLineManager', 'ApprovedByLineManager'] },
+      { label: 'IT', match: ['AssignedToITAfterApprovalOfLineManager'] },
+      { label: 'Closed', match: ['Closed', 'Rejected'] },
+   ];
+
    constructor(
       private _userService: UserService,
       private _branchService: BranchService,
@@ -246,12 +255,12 @@ export class UamDetailComponent implements OnInit, OnDestroy
    }
    addUserToForm(): void
    {
-      let frm = this.uamForm.get("userInformation.users") as UntypedFormArray;
+      let frm = this.uamForm.get("windows.userInformation.users") as UntypedFormArray;
       frm.push(this.createUser());
    }
    removeUserFromForm(index: number): void
    {
-      let frm = this.uamForm.get("userInformation.users") as UntypedFormArray;
+      let frm = this.uamForm.get("windows.userInformation.users") as UntypedFormArray;
       if (frm.length >= 0) frm.removeAt(index);
    }
    createAccessShareDrive(): UntypedFormGroup
@@ -279,12 +288,14 @@ export class UamDetailComponent implements OnInit, OnDestroy
    {
       this.uamForm.markAllAsTouched();
 
-      console.log(this.uamForm)
-      //VAlidate Form
       if (this.uamForm.invalid) return;
 
       let obj = { ...this.uamForm.value };
-      obj.windows.userInformation.reportingManager = obj.windows.userInformation.reportingManager._id;
+      const manager = obj.windows?.userInformation?.reportingManager;
+      if (manager && typeof manager === 'object')
+      {
+         obj.windows.userInformation.reportingManager = manager._id;
+      }
       this._uamService.createUAM(obj).subscribe(
          (_) =>
          {
@@ -295,7 +306,6 @@ export class UamDetailComponent implements OnInit, OnDestroy
          },
          (err) =>
          {
-            console.log(err)
             this.openSnackBar("Error", err.message);
          }
       );
@@ -319,5 +329,37 @@ export class UamDetailComponent implements OnInit, OnDestroy
    displayFnUser(user: IUser): string
    {
       return user && user.firstName ? user.firstName + " " + user.lastName : "";
+   }
+
+   currentStatus(): string
+   {
+      return this.selectedUAM?.status || '';
+   }
+
+   statusStepIndex(): number
+   {
+      const status = this.currentStatus();
+      if (!status) return -1;
+      return this.statusSteps.findIndex((step) => step.match.includes(status));
+   }
+
+   statusStepClass(index: number): string
+   {
+      const current = this.statusStepIndex();
+      const status = this.currentStatus();
+      if (current < 0) return 'is-pending';
+      if (status === 'Rejected' && index === this.statusSteps.length - 1) return 'is-rejected';
+      if (index < current) return 'is-done';
+      if (index === current) return status === 'Rejected' ? 'is-rejected' : 'is-current';
+      return 'is-pending';
+   }
+
+   statusStepLabel(index: number): string
+   {
+      if (index === this.statusSteps.length - 1 && this.currentStatus() === 'Rejected')
+      {
+         return 'Rejected';
+      }
+      return this.statusSteps[index].label;
    }
 }

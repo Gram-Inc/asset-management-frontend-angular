@@ -1,0 +1,189 @@
+.ticket-detail {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 960px;
+}
+
+.ticket-panel {
+  padding: 20px 24px;
+}
+
+.ticket-panel-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.ticket-description {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.ticket-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px 20px;
+}
+
+.ticket-meta-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.ticket-meta-value {
+  margin-top: 2px;
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.ticket-closed-banner {
+  padding: 12px 14px;
+  background: #ecfdf5;
+  border: 1px solid #d1fae5;
+  border-radius: 12px;
+}
+
+.ticket-status-trigger {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ticket-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ticket-btn-primary {
+  background: #111827;
+  color: #fff;
+  border: 1px solid #111827;
+
+  &:hover {
+    background: #1f2937;
+  }
+}
+
+.ticket-btn-secondary {
+  background: #fff;
+  color: #111827;
+  border: 1px solid #e8eaee;
+
+  &:hover {
+    background: #f9fafb;
+  }
+}
+
+.ticket-chat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket-chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 80px;
+}
+
+.ticket-bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.ticket-bubble-row--mine {
+  justify-content: flex-end;
+}
+
+.ticket-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.ticket-avatar--mine {
+  background: #111827;
+  color: #fff;
+}
+
+.ticket-bubble {
+  max-width: min(520px, 85%);
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+.ticket-bubble--theirs {
+  background: #f3f4f6;
+  border-bottom-left-radius: 6px;
+}
+
+.ticket-bubble--mine {
+  background: #eef0f4;
+  border-bottom-right-radius: 6px;
+}
+
+.ticket-bubble-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.ticket-bubble-body {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #111827;
+  white-space: pre-wrap;
+}
+
+.ticket-composer {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f1f4;
+}
+
+:host ::ng-deep .ticket-composer-field .mat-form-field-wrapper {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+:host ::ng-deep .ticket-composer-field .mat-form-field-flex,
+:host ::ng-deep .ticket-composer-field textarea {
+  border-radius: 16px;
+}
+
+:host ::ng-deep .ticket-composer-field .mat-form-field-outline {
+  border-radius: 16px;
+}
+
+.ticket-close-dialog {
+  overflow: hidden;
+}

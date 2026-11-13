@@ -1,149 +1,105 @@
-<div *ngIf="user$ | async as user; else noUser">
-   <mat-drawer-container class="main-container bg-white" hasBackdrop="false">
-      <mat-drawer #drawer class="sidenav" [mode]="mode" opened="true">
-         <div style="display: flex; justify-content: space-between; padding: 24px 20px; align-items: center">
-            <img src="../assets/logo/rikielR.svg" alt="" z-index="50" width="40px" height="40px" />
-            <button z-index="50" mat-icon-button [routerLink]="['/']">
-               <!-- <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon> -->
-            </button>
-         </div>
-         <div class="sideNav-TopCard" style="display: flex; padding: 18px; align-items: center">
-            <user></user>
-            <!-- <mat-icon svgIcon="heroicons_outline:user-circle"style="margin-right: 16px" ></mat-icon> -->
-            <div class="flex flex-col w-full" style="margin-left: 16px">
-               <h6 class="w-full overf text-sm font-regular">
-                  {{ user.firstName }}
-               </h6>
-               <p class="text-xs font-extralight">
-                  {{ user.email }}
-               </p>
-            </div>
-         </div>
-
-         <!-- DASHBOARD Component -->
-         <!-- <div style="margin-top: 24px">
-      <div style="margin-left: 25px; margin-right: 25px">
-        <span class="title">DASHBOARD</span>
-        <p>Auto-resizing sidenav</p>
-      </div>
-    </div> -->
-         <div class="side-con">
+<div *ngIf="user$ | async as user; else noUser" class="studio-shell">
+   <mat-drawer-container class="main-container" autosize [hasBackdrop]="mode === 'over'">
+      <mat-drawer #drawer class="sidenav" [class.wide]="showLabels" [mode]="mode" opened="true">
+         <nav class="rail-nav" [class.labeled]="showLabels" aria-label="Primary">
             <app-aside [routerString]="'/dashboard'" *ngIf="checkLevel('level1') | async" [svgIcon]="'feather:home'"
-               [name]="'Dashboard'"></app-aside>
+               [name]="'Dashboard'" [showTip]="!showLabels"></app-aside>
             <app-aside [routerString]="'/home'" *ngIf="!(checkLevel('level1') | async)" [svgIcon]="'feather:home'"
-               [name]="'Home'"></app-aside>
+               [name]="'Home'" [showTip]="!showLabels"></app-aside>
 
-            <app-aside [routerString]="'/asset'" *ngIf="(checkAsset() | async) &&!(checkLevel('level1') | async)"
-               [svgIcon]="'feather:layers'" [name]="'Asset'"></app-aside>
+            <app-aside [routerString]="'/asset'" *ngIf="(checkAsset() | async) && !(checkLevel('level1') | async)"
+               [svgIcon]="'feather:layers'" [name]="'Asset'" [showTip]="!showLabels"></app-aside>
 
-            <mat-accordion *ngIf="(checkAsset() | async) && (checkLevel('level1') | async)">
-               <mat-expansion-panel class="mat-elevation-z0">
-                  <mat-expansion-panel-header class="p-0 pr-6">
-                     <div style="
-                                    display: flex;
-                                    align-items: center;
-                                    text-align: left;
-                                    height: 44px;
-                                    width: 100%;
-                                    padding-left: 35px;
-                                    color: rgb(99, 115, 129);
-                                ">
-                        <mat-icon style="margin-right: 12px" [svgIcon]="'feather:layers'"></mat-icon>
-                        <span>Asset</span>
-                     </div>
-                  </mat-expansion-panel-header>
-                  <app-aside [routerString]="'/asset'" [svgIcon]="''" [name]="'Manage Asset'"></app-aside>
+            <ng-container *ngIf="(checkAsset() | async) && (checkLevel('level1') | async)">
+               <button type="button" class="side-link" [class.active]="sectionActive('/asset')"
+                  [matMenuTriggerFor]="assetMenu" matTooltip="Asset" [matTooltipDisabled]="showLabels"
+                  matTooltipPosition="right" aria-label="Asset">
+                  <mat-icon [svgIcon]="'feather:layers'"></mat-icon>
+                  <span>Asset</span>
+                  <mat-icon class="chevron" [svgIcon]="'heroicons_outline:chevron-right'"></mat-icon>
+               </button>
+               <mat-menu #assetMenu="matMenu" xPosition="after" panelClass="rail-menu">
+                  <a mat-menu-item routerLink="/asset" [class.rail-on]="isAssetManage()">Manage</a>
+                  <a mat-menu-item routerLink="/asset/scanned" [class.rail-on]="isAssetScanned()">Scanned</a>
+               </mat-menu>
+            </ng-container>
 
-                  <app-aside [routerString]="'/asset/scanned'" [name]="'Scanned Asset'">
-                  </app-aside>
-               </mat-expansion-panel>
-            </mat-accordion>
-
-            <!-- <app-aside
-          *ngIf="checkAsset() | async"
-          [routerString]="'/asset'"
-          [svgIcon]="'feather:layers'"
-          [name]="'Asset'"
-        ></app-aside> -->
             <app-aside *ngIf="checkTicket() | async" [routerString]="'/ticket'" [svgIcon]="'heroicons_outline:ticket'"
-               [name]="'Ticket'"></app-aside>
-            <app-aside *ngIf="checkUser() | async" [routerString]="'/user'" [svgIcon]="'feather:users'" [name]="'User'">
-            </app-aside>
+               [name]="'Ticket'" [showTip]="!showLabels"></app-aside>
 
+            <ng-container *ngIf="checkUAM() | async">
+               <button type="button" class="side-link" [class.active]="sectionActive('/uam')"
+                  [matMenuTriggerFor]="uamMenu" matTooltip="U.A.M" [matTooltipDisabled]="showLabels"
+                  matTooltipPosition="right" aria-label="User access management">
+                  <mat-icon [svgIcon]="'feather:file-text'"></mat-icon>
+                  <span>U.A.M</span>
+                  <mat-icon class="chevron" [svgIcon]="'heroicons_outline:chevron-right'"></mat-icon>
+               </button>
+               <mat-menu #uamMenu="matMenu" xPosition="after" panelClass="rail-menu">
+                  <a mat-menu-item routerLink="/uam" [class.rail-on]="isUamManage()">Manage</a>
+                  <a mat-menu-item *ngIf="canCreateUAM() | async" routerLink="/uam/create" [class.rail-on]="isUamCreate()">Create</a>
+               </mat-menu>
+            </ng-container>
 
-            <!-- UAM Dropdown navigation -->
-            <mat-accordion *ngIf="checkUAM() | async">
-               <mat-expansion-panel class="mat-elevation-z0">
-                  <mat-expansion-panel-header class="p-0 pr-6">
-                     <div style="
-                                    display: flex;
-                                    align-items: center;
-                                    text-align: left;
-                                    height: 44px;
-                                    width: 100%;
-                                    padding-left: 35px;
-                                    color: rgb(99, 115, 129);
-                                ">
-                        <mat-icon style="margin-right: 12px" [svgIcon]="'feather:file-text'"></mat-icon>
-                        <span>U.A.M</span>
-                     </div>
-                  </mat-expansion-panel-header>
-                  <app-aside [routerString]="'/uam'" [svgIcon]="''" [name]="'Manage U.A.M'"></app-aside>
-                  <app-aside *ngIf="canCreateUAM() | async" [routerString]="'/uam/create'" [svgIcon]="''"
-                     [name]="'Create'">
-                  </app-aside>
-                  <app-aside *ngIf="checkUAM() | async" [routerString]="'/uam/approve'" [name]="'Approve'">
-                  </app-aside>
-               </mat-expansion-panel>
-            </mat-accordion>
-            <!-- <app-aside
-          *ngIf="checkUAM() | async"
-          [routerString]="'/uam'"
-          [svgIcon]="'feather:file-text'"
-          [name]="'U.A.M'"
-        ></app-aside> -->
-            <app-aside *ngIf="checkVendor() | async" [routerString]="'/vendor'"
-               [svgIcon]="'heroicons_outline:identification'" [name]="'Vendor'"></app-aside>
-            <app-aside *ngIf="checkBranch() | async" [routerString]="'/branch'"
-               [svgIcon]="'heroicons_outline:office-building'" [name]="'Branch'" [isDisabled]="false"></app-aside>
-            <app-aside *ngIf="checkDepartment() | async" [routerString]="'/department'"
-               [svgIcon]="'heroicons_outline:user-group'" [name]="'Department'" [isDisabled]="false"></app-aside>
             <app-aside *ngIf="checkAudit() | async" [routerString]="'/audit'"
-               [svgIcon]="'heroicons_outline:clipboard-check'" [name]="'Audit'" [isDisabled]="false"></app-aside>
-            <app-aside *ngIf="checkReport() | async" [routerString]="'/report'" [svgIcon]="'feather:activity'"
-               [name]="'Report'" [isDisabled]="true"></app-aside>
+               [svgIcon]="'heroicons_outline:clipboard-check'" [name]="'Audit'" [showTip]="!showLabels"></app-aside>
+
+            <div class="rail-gap"
+               *ngIf="(checkUser() | async) || (checkVendor() | async) || (checkBranch() | async) || (checkDepartment() | async)">
+            </div>
+
+            <app-aside *ngIf="checkUser() | async" [routerString]="'/user'" [svgIcon]="'feather:users'" [name]="'User'"
+               [showTip]="!showLabels"></app-aside>
+            <app-aside *ngIf="checkVendor() | async" [routerString]="'/vendor'"
+               [svgIcon]="'heroicons_outline:identification'" [name]="'Vendor'" [showTip]="!showLabels"></app-aside>
+            <app-aside *ngIf="checkBranch() | async" [routerString]="'/branch'"
+               [svgIcon]="'heroicons_outline:office-building'" [name]="'Branch'" [showTip]="!showLabels"></app-aside>
+            <app-aside *ngIf="checkDepartment() | async" [routerString]="'/department'"
+               [svgIcon]="'heroicons_outline:user-group'" [name]="'Department'" [showTip]="!showLabels"></app-aside>
+
+            <div class="rail-gap" *ngIf="(checkLevel('level1') | async) || (checkSetting() | async)"></div>
+
+            <app-aside *ngIf="checkLevel('level1') | async" [routerString]="'/report'" [svgIcon]="'feather:activity'"
+               [name]="'Report'" [showTip]="!showLabels"></app-aside>
             <app-aside *ngIf="checkSetting() | async" [routerString]="'/setting'" [svgIcon]="'feather:sliders'"
-               [name]="'Setting'"></app-aside>
+               [name]="'Setting'" [showTip]="!showLabels"></app-aside>
 
-
-         </div>
+            <button *ngIf="mode === 'side'" type="button" class="side-link rail-toggle" (click)="toggleNav()"
+               [attr.aria-label]="navExpanded ? 'Collapse navigation' : 'Expand navigation'">
+               <mat-icon [svgIcon]="'heroicons_outline:view-boards'"></mat-icon>
+               <span>{{ navExpanded ? 'Collapse' : 'Expand' }}</span>
+            </button>
+         </nav>
       </mat-drawer>
 
-      <div class="flex flex-col flex-auto w-full min-w-0" style="color: var(--TextColor); overflow-x: hidden">
-         <mat-toolbar
-            class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
-            style="z-index: 100; height: 64px; background-color: white">
-            <button mat-icon-button (click)="toggleDrawer()">
+      <div class="content-canvas">
+         <header class="studio-head">
+            <button *ngIf="mode === 'over'" mat-icon-button type="button" (click)="toggleDrawer()" aria-label="Open navigation">
                <mat-icon class="topIcon" svgIcon="heroicons_outline:menu-alt-1"></mat-icon>
             </button>
-            <!-- <span class="toolbar-spacer"></span> -->
-            <!-- <a [routerLink]="['/']">
-          <img class="mx-4" src="../assets/logo/favicon.ico" alt="" z-index="50" width="58" />
-        </a> -->
-
+            <span class="mark-well">
+               <img class="mark" src="../assets/logo/rikielR.svg" alt="" width="22" height="22" />
+            </span>
+            <span class="head-rule" aria-hidden="true"></span>
+            <h1 class="studio-title">{{ pageTitle }}</h1>
             <span class="toolbar-spacer"></span>
-            <FullScreen [iconTpl]="icon" style="margin-right: 8px">
+            <FullScreen [iconTpl]="icon" class="head-icon">
                <ng-template #icon>
-                  <mat-icon class="topIcon">fullscreen</mat-icon>
+                  <mat-icon class="topIcon" svgIcon="heroicons_outline:arrows-expand"></mat-icon>
                </ng-template>
             </FullScreen>
-            <user style="margin-right: 8px"></user>
-         </mat-toolbar>
-         <!-- <br />
-    <br />
-    <br /> -->
+            <div class="who">
+               <div class="who-copy">
+                  <div class="who-name">{{ user.firstName }} {{ user.lastName }}</div>
+                  <div class="who-mail">{{ user.email }}</div>
+               </div>
+               <user class="toolbar-action"></user>
+            </div>
+         </header>
          <app-loading-bar></app-loading-bar>
-         <router-outlet *ngIf="user != null && user != undefined"></router-outlet>
+         <div class="content-scroll">
+            <router-outlet *ngIf="user != null && user != undefined"></router-outlet>
+         </div>
       </div>
    </mat-drawer-container>
 </div>

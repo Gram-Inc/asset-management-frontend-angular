@@ -1,45 +1,218 @@
 mat-form-field {
   @apply w-full;
 }
+
+.uam-detail {
+  max-width: 1120px;
+}
+
+.uam-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.uam-btn-primary {
+  background: #111827;
+  color: #fff;
+  border: 1px solid #111827;
+
+  &:hover {
+    background: #1f2937;
+    border-color: #1f2937;
+  }
+}
+
+.uam-btn-secondary {
+  background: #fff;
+  color: #111827;
+  border: 1px solid #e8eaee;
+
+  &:hover {
+    background: #f9fafb;
+  }
+}
+
+.uam-panel {
+  overflow: hidden;
+}
+
+.uam-panel-head {
+  padding: 18px 20px 0;
+}
+
+.uam-panel-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.uam-panel-body {
+  padding: 16px 20px 20px;
+}
+
+.uam-field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.uam-inset {
+  border: 1px solid #f0f1f4;
+  border-radius: 14px;
+  background: #fafbfc;
+}
+
+.uam-segment {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  gap: 2px;
+}
+
+.uam-segment-btn {
+  padding: 6px 16px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &.is-on {
+    background: #fff;
+    color: #111827;
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.06);
+    pointer-events: none;
+  }
+
+  &:disabled:not(.is-on) {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.uam-steps-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.uam-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.uam-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #d1d5db;
+  flex-shrink: 0;
+}
+
+.uam-step-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.uam-step-line {
+  height: 1px;
+  flex: 1 1 24px;
+  min-width: 16px;
+  margin: 0 10px;
+  background: #e5e7eb;
+}
+
+.uam-step.is-done .uam-step-dot,
+.uam-step-line.is-done {
+  background: #111827;
+}
+
+.uam-step.is-done .uam-step-label {
+  color: #374151;
+}
+
+.uam-step.is-current .uam-step-dot {
+  background: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+}
+
+.uam-step.is-current .uam-step-label {
+  color: #111827;
+  font-weight: 600;
+}
+
+.uam-step.is-rejected .uam-step-dot {
+  background: #dc2626;
+}
+
+.uam-step.is-rejected .uam-step-label {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.uam-number-field {
+  min-width: 200px;
+}
+
 .mat-radio-button {
   &.mat-radio-disabled {
     &.mat-radio-checked .mat-radio-outer-circle {
-      border-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      border-color: #111827 !important;
     }
     &.mat-radio-checked .mat-radio-label-content {
-      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      color: #111827 !important;
     }
     &.mat-radio-checked .mat-radio-inner-circle {
-      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      background-color: #111827 !important;
     }
   }
 }
 .mat-checkbox-checked {
   &.mat-checkbox-disabled {
     .mat-checkbox-background {
-      background-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      background-color: #111827 !important;
     }
     .mat-checkbox-label {
-      color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+      color: #111827 !important;
     }
   }
 }
 .mat-select-disabled .mat-select-value {
-  color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+  color: #111827 !important;
 }
 .mat-input-element:disabled {
-  color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
+  color: #374151 !important;
 }
 
 .mat-button-disabled {
   &.bg-card {
-    color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
-    border: 1px;
+    color: #111827 !important;
+    border: 1px solid #e8eaee !important;
     background-color: white !important;
-    border-color: rgb(234 88 12 / var(--tw-bg-opacity)) !important;
 
     span {
-      color: rgb(234 88 12) !important;
+      color: #111827 !important;
     }
   }
 }

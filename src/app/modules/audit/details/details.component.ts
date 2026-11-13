@@ -15,6 +15,8 @@ import { AssetShortDetailComponent } from "../../shared/asset-short-detail/asset
 export class AuditDetailsComponent implements OnInit {
   audit: IAudit | null = null;
   assets: IAuditAsset[] = [];
+  missingAssets: any[] = [];
+  missingAssetsLoaded = false;
   progress: any = null;
   isLoading = true;
 
@@ -58,6 +60,7 @@ export class AuditDetailsComponent implements OnInit {
         this.audit = audit;
         this.loadAssets();
         this.loadProgress();
+        this.loadMissingAssets();
       },
       error: (err) => {
         console.error("Error loading audit:", err);
@@ -68,6 +71,7 @@ export class AuditDetailsComponent implements OnInit {
             this.progress = resolverData[1];
           }
           this.loadAssets();
+          this.loadMissingAssets();
         } else {
           this.router.navigate(["/audit"]);
         }
@@ -84,6 +88,21 @@ export class AuditDetailsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
+      },
+    });
+  }
+
+  loadMissingAssets(): void {
+    if (!this.audit?._id) return;
+    const auditId = this.audit._id;
+    this._auditService.getMissingAssets().subscribe({
+      next: (rows) => {
+        this.missingAssets = (rows || []).filter((row) => row?.auditId === auditId);
+        this.missingAssetsLoaded = true;
+      },
+      error: () => {
+        this.missingAssets = [];
+        this.missingAssetsLoaded = true;
       },
     });
   }
@@ -107,13 +126,15 @@ export class AuditDetailsComponent implements OnInit {
   getStatusColor(status: string): string {
     switch (status) {
       case AuditStatus.OPEN:
-        return "bg-blue-100 text-blue-800";
+        return "ops-pill-info";
       case AuditStatus.IN_PROGRESS:
-        return "bg-yellow-100 text-yellow-800";
+        return "ops-pill-warn";
       case AuditStatus.COMPLETED:
-        return "bg-green-100 text-green-800";
+        return "ops-pill-ok";
+      case AuditStatus.CLOSED:
+        return "ops-pill-neutral";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "ops-pill-neutral";
     }
   }
 
@@ -167,6 +188,14 @@ export class AuditDetailsComponent implements OnInit {
       return asset.assetId.name || asset.assetId._id || "N/A";
     }
     return asset.assetId || "N/A";
+  }
+
+  getMissingAssetName(row: { assetId?: string | Partial<IAsset> }): string {
+    if (!row?.assetId) return "N/A";
+    if (typeof row.assetId === "object") {
+      return row.assetId.name || row.assetId._id || "N/A";
+    }
+    return row.assetId;
   }
 
   getScannedByName(asset: IAuditAsset): string {

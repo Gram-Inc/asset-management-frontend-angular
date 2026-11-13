@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -23,6 +23,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy
    ticket: ITicket;
    requestedUser: IUser;
    assignedUser: IUser;
+   currentUserId: string = '';
    commentCtrl: FormControl = new FormControl('', [Validators.required])
    chat: ITicketChat[];
    statusCtrl: FormControl = new FormControl('');
@@ -44,16 +45,34 @@ export class TicketDetailComponent implements OnInit, OnDestroy
       private _userService: UserService,
       private dialog: MatDialog,
       private _snackBar: MatSnackBar,
-      private _router: Router
+      private _router: Router,
+      private _route: ActivatedRoute
    ) { }
+
+   private ticketId(): string
+   {
+      if (this.ticket?._id) return this.ticket._id;
+      let route = this._route.snapshot;
+      while (route)
+      {
+         const id = route.paramMap.get('id');
+         if (id) return id;
+         route = route.parent;
+      }
+      return '';
+   }
 
    ngOnInit(): void
    {
+      this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe(user =>
+      {
+         this.currentUserId = user?._id || '';
+      });
+
       this._ticketService.ticket$.pipe(takeUntil(this._unsubscribeAll)).subscribe(x =>
       {
          if (x)
          {
-            console.log(x)
             this.ticket = x
             this.statusCtrl.setValue(x.callStatus || TicketStatus.Open);
 
@@ -77,7 +96,10 @@ export class TicketDetailComponent implements OnInit, OnDestroy
                   this.assignedUser = x.assignedToUserId as IUser;
                }
             }
-            this._ticketService.getTicketChat(x._id).subscribe(y => { this.chat = y })
+            const chatTicketId = x._id || this.ticketId();
+            if (chatTicketId) {
+               this._ticketService.getTicketChat(chatTicketId).subscribe(y => { this.chat = y })
+            }
          }
       })
    }
@@ -127,18 +149,27 @@ export class TicketDetailComponent implements OnInit, OnDestroy
 
    assignTicket()
    {
-      this.dialog.open(TicketAssignComponent, {
-         data: this.ticket,
-         panelClass: "fuse-confirmation-dialog-panel",
-      }).afterClosed().subscribe(x =>
+      const ticketId = this.ticketId();
+      if (!ticketId)
       {
-         this._ticketService.getTicketById(this.ticket._id).subscribe()
+         this.openSnackBar('Error', 'Ticket ID is missing.');
+         return;
+      }
+      this.dialog.open(TicketAssignComponent, {
+         data: { ...this.ticket, _id: ticketId },
+         panelClass: "fuse-confirmation-dialog-panel",
+      }).afterClosed().subscribe((assigned) =>
+      {
+         if (assigned === true)
+         {
+            this._ticketService.getTicketById(ticketId).subscribe();
+         }
       })
    }
 
    selectStatus(status: TicketStatus)
    {
-      if (!this.ticket || !this.ticket._id) return;
+      if (!this.ticketId()) return;
 
       this.statusCtrl.setValue(status);
 
@@ -152,7 +183,8 @@ export class TicketDetailComponent implements OnInit, OnDestroy
 
    updateStatus()
    {
-      if (!this.ticket || !this.ticket._id) return;
+      const ticketId = this.ticketId();
+      if (!ticketId) return;
 
       const newStatus = this.statusCtrl.value;
 
@@ -166,10 +198,10 @@ export class TicketDetailComponent implements OnInit, OnDestroy
          callStatus: newStatus
       };
 
-      this._ticketService.updateTicket(this.ticket._id, updateData).subscribe(
-         (updatedTicket) => {
+      this._ticketService.updateTicket(ticketId, updateData).subscribe(
+         () => {
             this.openSnackBar('Success', 'Ticket status updated successfully');
-            this._ticketService.getTicketById(this.ticket._id).subscribe();
+            this._ticketService.getTicketById(ticketId).subscribe();
          },
          (err) => {
             this.openSnackBar('Error', err.message || 'Failed to update ticket status');
@@ -186,7 +218,8 @@ export class TicketDetailComponent implements OnInit, OnDestroy
          return;
       }
 
-      if (!this.ticket || !this.ticket._id) return;
+      const ticketId = this.ticketId();
+      if (!ticketId) return;
 
       const updateData = {
          ...this.ticket,
@@ -194,12 +227,12 @@ export class TicketDetailComponent implements OnInit, OnDestroy
          closingDescription: this.closingDescriptionCtrl.value
       };
 
-      this._ticketService.updateTicket(this.ticket._id, updateData).subscribe(
-         (updatedTicket) => {
+      this._ticketService.updateTicket(ticketId, updateData).subscribe(
+         () => {
             this.openSnackBar('Success', 'Ticket closed successfully');
             this.showCloseDialog = false;
             this.closingDescriptionCtrl.reset();
-            this._ticketService.getTicketById(this.ticket._id).subscribe();
+            this._ticketService.getTicketById(ticketId).subscribe();
          },
          (err) => {
             this.openSnackBar('Error', err.message || 'Failed to close ticket');
@@ -212,6 +245,42 @@ export class TicketDetailComponent implements OnInit, OnDestroy
       this.showCloseDialog = false;
       this.closingDescriptionCtrl.reset();
       this.statusCtrl.setValue(this.ticket?.callStatus || TicketStatus.Open);
+   }
+
+   callMediumLabel(value?: string): string
+   {
+      if (!value) return '';
+      const key = value.replace(/[\s_-]/g, '').toLowerCase();
+      const labels: Record<string, string> = {
+         phone: 'Phone',
+         chat: 'Chat',
+         email: 'Email',
+         walkin: 'Walk-in',
+      };
+      return labels[key] || value;
+   }
+
+   isMine(cht: ITicketChat): boolean
+   {
+      return !!(this.currentUserId && cht?.messageByUser?._id === this.currentUserId);
+   }
+
+   statusPillClass(status?: string): string
+   {
+      switch (status)
+      {
+         case 'Closed':
+            return 'ops-pill-ok';
+         case 'In Progress':
+         case 'Hold':
+            return 'ops-pill-warn';
+         case 'Open':
+         case 'Assigned':
+            return 'ops-pill-info';
+         case 'Vendor Dependency':
+         default:
+            return 'ops-pill-neutral';
+      }
    }
 
    openSnackBar(type: "Error" | "Info" | "Success", msg: string)

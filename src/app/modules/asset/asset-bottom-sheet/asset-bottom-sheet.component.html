@@ -1,58 +1,61 @@
-<div class="">
-   <div class="flex flex-row items-center">
-      <div class="flex-auto">
-         <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Model Name</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ asset.name }}</dd>
+<div class="p-4">
+   <div class="ops-surface p-4 mb-4">
+      <div class="flex flex-row items-center">
+         <div class="flex-auto">
+            <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+               <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Model Name</dt>
+               <dd class="mt-1 text-sm text-[#111827] sm:mt-0 sm:col-span-2">{{ asset.name }}</dd>
+            </div>
+            <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+               <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Serial Number</dt>
+               <dd class="mt-1 text-sm text-[#111827] sm:mt-0 sm:col-span-2">{{ getSerialNumber(asset) }}</dd>
+            </div>
+            <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+               <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Branch</dt>
+               <dd class="mt-1 text-sm text-[#111827] sm:mt-0 sm:col-span-2">
+                  {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
+                  <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
+               </dd>
+            </div>
+            <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+               <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Warranty Period</dt>
+               <dd class="flex items-center content-center mt-1 text-sm text-[#111827] sm:mt-0 sm:col-span-2">
+                  {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
+                  <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
+                                    'text-green-500': isDateFuture(asset.warranty[0].endAt),
+                                    'text-red-500': !isDateFuture(asset.warranty[0].endAt)
+                                  }" [svgIcon]="
+                                    isDateFuture(asset.warranty[0].endAt)
+                                      ? 'heroicons_solid:badge-check'
+                                      : 'heroicons_solid:x-circle'
+                                  "></mat-icon>
+               </dd>
+            </div>
          </div>
-         <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Serial Number</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ getSerialNumber(asset) }}</dd>
-         </div>
-         <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Branch</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-               {{ getBranchName(asset.branch) | titlecase }} &nbsp; &nbsp; &nbsp;
-               <span class="text-gray-400">{{ getBranchShortCode(asset.branch) | uppercase }}</span>
-            </dd>
-         </div>
-         <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Warranty Period</dt>
-            <dd class="flex items-center content-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-               {{ asset.warranty[0] ? (asset.warranty[0].endAt | date) : "N/A" }} &nbsp; &nbsp;
-               <mat-icon *ngIf="asset.warranty[0]" class="h-4 w-4" [ngClass]="{
-                                 'text-green-500': isDateFuture(asset.warranty[0].endAt),
-                                 'text-red-500': !isDateFuture(asset.warranty[0].endAt)
-                               }" [svgIcon]="
-                                 isDateFuture(asset.warranty[0].endAt)
-                                   ? 'heroicons_solid:badge-check'
-                                   : 'heroicons_solid:x-circle'
-                               "></mat-icon>
-            </dd>
-         </div>
-      </div>
 
-      <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+         <app-qrcode [id]="asset._id" class="flex-none"></app-qrcode>
+      </div>
+      <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+         <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">Current User</dt>
+         <dd class="mt-1 text-sm text-[#111827] sm:mt-0 sm:col-span-2 cursor-pointer hover:underline"
+            (click)="openCurrentUser(asset)">
+            {{ getCurrentUser(asset) }}
+         </dd>
+      </div>
    </div>
-   <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-      <dt class="text-sm font-medium text-gray-500">Current User</dt>
-      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 cursor-pointer hover:text-orange-500"
-         (click)="openCurrentUser(asset)">
-         {{ getCurrentUser(asset) }}
-      </dd>
-   </div>
-   <div class="mx-1 text-sm text-gray-900 sm:mx-3 sm:col-span-3">
+
+   <div class="mx-1 text-sm text-[#111827] sm:mx-3 sm:col-span-3">
       <div class="flex flex-col items-center">
-         <div class="flex items-center p-0.5 my-5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+         <div class="flex items-center p-0.5 my-5 rounded-full overflow-hidden bg-[#f0f1f4]">
             <button class="px-6 rounded-full" [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.ASSIGNED,
+            'bg-white pointer-events-none shadow-sm': asset.allocationStatus == AllocationStatus.ASSIGNED,
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.ASSIGNED)
           }" mat-flat-button (click)="asset.allocationStatus = AllocationStatus.ASSIGNED; searchCtrl.enable()"
                disableRipple>
                Assign
             </button>
             <button class="px-6 rounded-full" [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.IN_POOL,
+            'bg-white pointer-events-none shadow-sm': asset.allocationStatus == AllocationStatus.IN_POOL,
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.IN_POOL)
           }" mat-flat-button (click)="asset.allocationStatus = AllocationStatus.IN_POOL; searchCtrl.disable()"
                disableRipple>
@@ -60,14 +63,14 @@
             </button>
 
             <button class="px-6 rounded-full" [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.SCRAP,
+            'bg-white pointer-events-none shadow-sm': asset.allocationStatus == AllocationStatus.SCRAP,
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.SCRAP)
           }" mat-flat-button (click)="asset.allocationStatus = AllocationStatus.SCRAP; searchCtrl.disable()"
                disableRipple>
                Move to Scrap
             </button>
             <button class="px-6 rounded-full" [ngClass]="{
-            'bg-card pointer-events-none shadow': asset.allocationStatus == AllocationStatus.DOWN,
+            'bg-white pointer-events-none shadow-sm': asset.allocationStatus == AllocationStatus.DOWN,
             'bg-transparent': !(asset.allocationStatus == AllocationStatus.DOWN)
           }" mat-flat-button (click)="asset.allocationStatus = AllocationStatus.DOWN; searchCtrl.disable()"
                disableRipple>
@@ -77,7 +80,6 @@
       </div>
    </div>
 
-   <!-- User List / Selection -->
    <ng-container>
       <span class="mx-3 hidden sm:block" style="font-size: small">
          <mat-form-field class="w-full">
@@ -94,14 +96,11 @@
 </div>
 <span class="sm:ml-3 m-3 flex justify-center">
    <button type="button" [disabled]="!isAssetEdited()" [ngClass]="{
-      'text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500':
-        isAssetEdited(),
-      'text-gray-400 bg-gray-100  ': !isAssetEdited()
-    }" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium"
+      'text-white bg-[#111827] hover:bg-black': isAssetEdited(),
+      'text-gray-400 bg-gray-100': !isAssetEdited()
+    }" class="inline-flex items-center px-4 py-2.5 border border-transparent rounded-xl text-sm font-medium focus:outline-none"
       (click)="updateAllocation()">
-      <!-- Heroicon name: solid/check -->
       <mat-icon class="-ml-1 mr-2 h-5 w-5" svgIcon="heroicons_outline:check-circle"></mat-icon>
-
       Update
    </button>
 </span>

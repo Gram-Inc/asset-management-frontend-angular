@@ -7,11 +7,11 @@ tr.example-detail-row {
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
+  background: #f8f9fb;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
+  background: #f3f4f6;
 }
 
 .example-element-row td {
@@ -25,7 +25,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-diagram {
   min-width: 80px;
-  border: 2px solid black;
+  border: 1px solid #f0f1f4;
+  border-radius: 12px;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;

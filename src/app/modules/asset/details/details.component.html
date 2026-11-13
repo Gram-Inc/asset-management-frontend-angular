@@ -1,9 +1,9 @@
 <div class="p-8" [formGroup]="assetForm">
-  <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Create Asset</h2>
+  <div class="ops-surface px-4 py-5 sm:p-6 flex-1 min-w-0 mb-4">
+    <h2 class="text-xl font-semibold leading-7 text-[#111827] sm:truncate">Create Asset</h2>
   </div>
 
-  <div class="px-4 py-5 bg-white sm:p-6">
+  <div class="ops-surface px-4 py-5 sm:p-6 mb-4">
     <div class="grid grid-cols-6 gap-6">
       <!-- Name -->
       <div class="col-span-4 sm:col-span-4">
@@ -16,7 +16,7 @@
               ? 'border-red-500'
               : 'border-gray-300'
           "
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+          class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
           [matAutocomplete]="name"
         />
         <mat-autocomplete #name="matAutocomplete">
@@ -39,7 +39,7 @@
         <input
           type="text"
           [formControlName]="'assetCode'"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
         />
         <span
           *ngIf="
@@ -55,7 +55,7 @@
         <label for="country" class="block text-sm font-medium text-gray-700">Category</label>
         <select
           [formControlName]="'category'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#111827] focus:border-[#e5e7eb] sm:text-sm"
         >
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
@@ -74,7 +74,7 @@
         <input
           type="text"
           [formControlName]="'sr_no'"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
         />
         <span
           *ngIf="
@@ -90,7 +90,7 @@
         <label for="country" class="block text-sm font-medium text-gray-700">Location / Branch</label>
         <select
           [formControlName]="'branch'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#111827] focus:border-[#e5e7eb] sm:text-sm"
         >
           <option *ngFor="let branch of branchs$ | async" [value]="branch?._id">{{ branch.name }}</option>
         </select>
@@ -108,7 +108,7 @@
         <label for="country" class="block text-sm font-medium text-gray-700">Vendor</label>
         <select
           [formControlName]="'vendorId'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#111827] focus:border-[#e5e7eb] sm:text-sm"
         >
           <option [value]="null"></option>
           <option *ngFor="let vnd of vendors$ | async" [value]="vnd._id">{{ vnd?.name }}</option>
@@ -128,7 +128,7 @@
         <select
           (change)="addAssetTypeToAssetForm()"
           [formControlName]="'type'"
-          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+          class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#111827] focus:border-[#e5e7eb] sm:text-sm"
         >
           <option *ngFor="let ast of types | keyvalue" [value]="ast.value">{{ ast.key }}</option>
         </select>
@@ -147,7 +147,7 @@
         <input
           [formControlName]="'warranty'"
           type="date"
-          class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
         />
         <span
           *ngIf="
@@ -163,7 +163,7 @@
 
   <ng-container *ngIf="assetForm.contains('laptop')">
     <ng-container *ngIf="assetForm.controls['type'].value == 'laptop'" [formGroupName]="'laptop'">
-      <div class="px-4 py-5 bg-white sm:p-6">
+      <div class="ops-surface px-4 py-5 sm:p-6 mb-4">
         <div class="grid grid-cols-6 gap-6">
           <ng-container [formGroupName]="'system'">
             <!-- Model Name -->
@@ -172,7 +172,7 @@
               <input
                 type="text"
                 [formControlName]="'model'"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+                class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
                 [matAutocomplete]="mName"
               />
               <mat-autocomplete #mName="matAutocomplete">
@@ -204,7 +204,7 @@
               <input
                 type="text"
                 [formControlName]="'serial'"
-                class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
               />
               <!-- <span
                 *ngIf="
@@ -230,7 +230,7 @@
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+              class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
             />
             <span
               *ngIf="
@@ -254,7 +254,7 @@
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+              class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
               [matAutocomplete]="os"
             />
             <mat-autocomplete #os="matAutocomplete">
@@ -284,7 +284,7 @@
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+              class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
             />
             <div class="text-xs text-gray-300 mt-1">In GB</div>
             <span
@@ -309,7 +309,7 @@
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+              class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
               [matAutocomplete]="processor"
             />
             <mat-autocomplete #processor="matAutocomplete">
@@ -335,7 +335,7 @@
             <label for="first-name" class="block text-sm font-medium text-gray-700">Storage Type</label>
             <select
               [formControlName]="'type'"
-              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+              class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-[#111827] focus:border-[#e5e7eb] sm:text-sm"
             >
               <option value="HDD">HDD</option>
               <option value="SSD">SSD</option>
@@ -363,7 +363,7 @@
                   ? 'border-red-500'
                   : 'border-gray-300'
               "
-              class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm rounded-md"
+              class="mt-1 focus:ring-1 focus:ring-[#111827] focus:border-[#e5e7eb] block w-full shadow-sm sm:text-sm border border-[#e5e7eb] rounded-xl"
             />
             <div class="text-xs text-gray-300 mt-1">In GB</div>
 
@@ -389,7 +389,7 @@
     <!-- Confirm -->
     <button
       type="button"
-      class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+      class="inline-flex items-center px-4 py-2.5 border border-transparent rounded-xl text-sm font-medium text-white bg-[#111827] hover:bg-black focus:outline-none"
       (click)="create()"
     >
       <!-- Heroicon name: solid/check -->

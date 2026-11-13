@@ -1,11 +1,13 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { Observable, of, Subject } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, combineLatest, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
 import { PermissionService } from "src/app/core/auth/permission.service";
 import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
+import { ReportService } from "src/app/core/report/report.service";
 import { UserService } from "src/app/core/user/user.service";
 import { IUser } from "src/app/core/user/user.types";
 import { RikielConfirmationService } from "src/app/custom/confirmation/confirmation.service";
@@ -25,7 +27,10 @@ export class UserComponent implements OnInit, OnDestroy
    isLoading: boolean = false;
    searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
-   constructor(private _userService: UserService, private _permissionService: PermissionService) { }
+   constructor(private _userService: UserService,
+      private _permissionService: PermissionService,
+      private _reportService: ReportService,
+      private _snackBar: MatSnackBar) { }
 
    ngOnInit(): void
    {
@@ -65,14 +70,25 @@ export class UserComponent implements OnInit, OnDestroy
   */
    canExport(): Observable<boolean>
    {
-      return this._permissionService.checkCurrentUserPermission(ModuleTypes.User).pipe(
-         switchMap(value =>
+      return combineLatest([
+         this._permissionService.checkCurrentUserPermission(ModuleTypes.User),
+         this._userService.user$,
+      ]).pipe(
+         map(([value, user]) =>
          {
-            //User should be able to Export only if He has full access
-            if (value == AccessType.FullAccess) return of(true);
-            return of(false);
+            const canView = value == AccessType.Read || value == AccessType.ReadWrite || value == AccessType.FullAccess;
+            return canView && (user?.role == "level1" || user?.role == "level2");
          })
       );
+   }
+
+   exportCsv(): void
+   {
+      this._reportService.download("users", {
+         searchText: this.searchCtrl.value || "",
+      }).subscribe({
+         error: () => this._snackBar.open("Could not export users", "Close", { duration: 3000 }),
+      });
    }
 
    canCreate(): Observable<boolean>

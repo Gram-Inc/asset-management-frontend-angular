@@ -22,6 +22,15 @@ interface ModuleAccess {
   hasAccess: boolean;
 }
 
+interface CoverageBanner {
+  status: "expired" | "soon";
+  coverageType: "WARRANTY" | "AMC";
+  assetName: string;
+  assetCode: string;
+  assetId: string;
+  endAt: string | Date;
+}
+
 interface ModuleStats {
   asset?: {
     total?: number;
@@ -61,6 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   user: IUser;
   allocatedAssets: IAsset[] = [];
+  coverageBanner: CoverageBanner | null = null;
   isLoadingAssets = false;
   isLoading = true;
 
@@ -278,11 +288,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (assets) => {
           this.allocatedAssets = assets || [];
+          this.coverageBanner = this.pickCoverageBanner(this.allocatedAssets);
           this.isLoadingAssets = false;
           this._changeDetectorRef.markForCheck();
         },
         error: (err) => {
           console.error('Error loading allocated assets:', err);
+          this.allocatedAssets = [];
+          this.coverageBanner = null;
           this.isLoadingAssets = false;
           this._changeDetectorRef.markForCheck();
         }
@@ -342,6 +355,52 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (asset._id) {
       this._router.navigate([`/asset/${asset._id}`]);
     }
+  }
+
+  openCoverageAsset(): void {
+    if (this.coverageBanner?.assetId) {
+      this._router.navigate([`/asset/${this.coverageBanner.assetId}`]);
+    }
+  }
+
+  private pickCoverageBanner(assets: IAsset[]): CoverageBanner | null {
+    const now = Date.now();
+    const until = now + 30 * 24 * 60 * 60 * 1000;
+    let chosen: { rank: number; endAt: number; banner: CoverageBanner } | null = null;
+
+    for (const asset of assets || []) {
+      for (const warranty of asset.warranty || []) {
+        if (warranty?.type !== "WARRANTY" && warranty?.type !== "AMC") {
+          continue;
+        }
+        if (!warranty.endAt) {
+          continue;
+        }
+        const endAt = new Date(warranty.endAt).getTime();
+        if (Number.isNaN(endAt) || endAt >= until) {
+          continue;
+        }
+        const status: "expired" | "soon" = endAt < now ? "expired" : "soon";
+        const rank = status === "expired" ? 0 : 1;
+        if (chosen && (rank > chosen.rank || (rank === chosen.rank && endAt >= chosen.endAt))) {
+          continue;
+        }
+        chosen = {
+          rank,
+          endAt,
+          banner: {
+            status,
+            coverageType: warranty.type,
+            assetName: this.getAssetDisplayName(asset),
+            assetCode: asset.assetCode || "",
+            assetId: asset._id || "",
+            endAt: warranty.endAt,
+          },
+        };
+      }
+    }
+
+    return chosen?.banner || null;
   }
 
   getAssetDisplayName(asset: IAsset): string {

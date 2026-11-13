@@ -4,6 +4,7 @@ import { IAssetDashboard } from "src/app/core/dashboard/dashboard.types";
 @Component({
   selector: "overall-branch-asset-detail-table",
   templateUrl: "./overall-branch-asset-detail-table.component.html",
+  styleUrls: ["./overall-branch-asset-detail-table.component.scss"],
 })
 export class OverallBranchAssetDetailTableComponent implements OnInit {
   @Input() data: IAssetDashboard;

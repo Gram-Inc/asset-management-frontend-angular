@@ -122,12 +122,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy
          )
          .subscribe();
 
-      this.assetForm
-         .valueChanges.pipe(
-            takeUntil(this._unsubscribeAll),
-         )
-         .subscribe(x => console.log(x)
-         );
       //Check for AssetTypeChanges
       this.addAssetTypeToAssetForm();
 
@@ -292,7 +286,6 @@ export class CreateAssetComponent implements OnInit, OnDestroy
       //Check Validation
       if (this.assetForm.invalid) return;
 
-      console.log(this.assetForm.value)
       if (this.asset == null)
          // Create Asset
          this._assetService.createAsset(this.assetForm.value).subscribe(

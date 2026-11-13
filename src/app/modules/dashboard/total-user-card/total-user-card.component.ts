@@ -5,6 +5,7 @@ import { IUserDashboard } from "src/app/core/dashboard/dashboard.types";
 @Component({
    selector: "total-user-card",
    templateUrl: "./total-user-card.component.html",
+   styleUrls: ["./total-user-card.component.scss"],
 })
 export class TotalUserCardComponent implements OnInit
 {

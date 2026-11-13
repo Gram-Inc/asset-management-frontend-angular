@@ -1,15 +1,13 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject } from 'rxjs';
-import { debounceTime, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { catchError, debounceTime, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AutoCompleteService } from 'src/app/core/auto-complete/auto-complete.service';
 import { TicketService } from 'src/app/core/ticket/ticket.service';
-import { ITicket } from 'src/app/core/ticket/ticket.types';
-import { UserService } from 'src/app/core/user/user.service';
+import { ITicket, TicketStatus } from 'src/app/core/ticket/ticket.types';
 import { IUser } from 'src/app/core/user/user.types';
-import { RikielConfirmationService } from 'src/app/custom/confirmation/confirmation.service';
 
 @Component({
    selector: 'app-ticket-assign',
@@ -25,21 +23,31 @@ import { RikielConfirmationService } from 'src/app/custom/confirmation/confirmat
         .mat-dialog-container {
           padding: 0 !important;
         }
+        .assign-search {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 8px;
+          color: #6b7280;
+          font-size: 0.8125rem;
+        }
       }
     `,
    ],
    encapsulation: ViewEncapsulation.None,
 })
-export class TicketAssignComponent implements OnInit
+export class TicketAssignComponent implements OnInit, OnDestroy
 {
 
    filteredRequesterForAutoComplete: IUser[] = [];
+   searching = false;
+   assigning = false;
+   private searchSeq = 0;
    private _unsubscribeAll: Subject<any> = new Subject<any>();
    ITUserCtrl = new FormControl('')
    selectedUser: IUser;
    constructor(private _snackBar: MatSnackBar,
       private _autoCompleteService: AutoCompleteService,
-      private userService: UserService,
       private ticketService: TicketService,
       @Inject(MAT_DIALOG_DATA) public data: ITicket,
       public matDialogRef: MatDialogRef<TicketAssignComponent>
@@ -47,39 +55,69 @@ export class TicketAssignComponent implements OnInit
 
    ngOnInit(): void
    {
-      this._autoCompleteService.getITUsers();
       this._autoCompleteService.ITUsers.pipe(takeUntil(this._unsubscribeAll)).subscribe((val) =>
       {
-         this.filteredRequesterForAutoComplete = val;
+         this.filteredRequesterForAutoComplete = val || [];
       });
+
+      this.fetchUsers('').pipe(takeUntil(this._unsubscribeAll)).subscribe();
 
       this.ITUserCtrl
          .valueChanges.pipe(
             takeUntil(this._unsubscribeAll),
             debounceTime(300),
-            tap(v =>
+            tap((value: string) =>
             {
-
-               if (v && v.length >= 12) this.userService.getUserById(this.ITUserCtrl.value).subscribe((val) =>
+               if (!this.selectedUser || value !== this.selectedUser._id)
                {
-                  this.selectedUser = val;
-               });
-               else this.selectedUser = null
+                  this.selectedUser = this.filteredRequesterForAutoComplete.find((user) => user._id === value) || null;
+               }
             }),
-            switchMap((query) =>
-            {
-               return this._autoCompleteService.getITUsers(1, 10, query);
-            }),
-
+            switchMap((query) => this.fetchUsers(typeof query === 'string' ? query : '')),
          )
          .subscribe();
    }
 
-   displayFn(userId): string
+   ngOnDestroy(): void
    {
-      let x = this.filteredRequesterForAutoComplete.find(usr => usr._id == userId);
-      return x?.firstName ?? '';
+      this._unsubscribeAll.next(null);
+      this._unsubscribeAll.complete();
+   }
 
+   selectUser(userId: string): void
+   {
+      this.selectedUser = this.filteredRequesterForAutoComplete.find((user) => user._id === userId) || null;
+   }
+
+   displayFn(value: string): string
+   {
+      if (!value) return '';
+      const user = this.filteredRequesterForAutoComplete.find((usr) => usr._id === value)
+         || (this.selectedUser?._id === value ? this.selectedUser : null);
+      if (!user) return value;
+      return `${user.firstName || ''} ${user.lastName || ''}`.trim();
+   }
+
+   private fetchUsers(query: string)
+   {
+      if (this.selectedUser && query === this.selectedUser._id)
+      {
+         this.searching = false;
+         return of(null);
+      }
+      const seq = ++this.searchSeq;
+      this.searching = true;
+      return this._autoCompleteService.getITUsers(1, 10, query).pipe(
+         catchError(() =>
+         {
+            this.openSnackBar('Error', 'Could not search users.');
+            return of(null);
+         }),
+         tap(() =>
+         {
+            if (seq === this.searchSeq) this.searching = false;
+         }),
+      );
    }
    openSnackBar(type: "Error" | "Info" | "Success", msg: string)
    {
@@ -92,9 +130,10 @@ export class TicketAssignComponent implements OnInit
    }
    assign()
    {
-      if (this.ITUserCtrl.invalid || !this.selectedUser)
+      if (this.assigning) return;
+      if (!this.selectedUser?._id)
       {
-         this.openSnackBar('Error', 'Invalid data.');
+         this.openSnackBar('Error', 'Select a user to assign.');
          return;
       }
       if (!this.data || !this.data._id)
@@ -102,18 +141,26 @@ export class TicketAssignComponent implements OnInit
          this.openSnackBar('Error', 'Ticket ID is missing.');
          return;
       }
-      this.data.assignedToUserId = this.ITUserCtrl.value
-      this.ticketService.updateTicket(this.data._id, this.data).subscribe(
-         (x) =>
+      const ticketId = this.data._id;
+      this.assigning = true;
+      this.ticketService.updateTicket(ticketId, {
+         ...this.data,
+         _id: ticketId,
+         assignedToUserId: this.selectedUser._id,
+         callStatus: this.data.callStatus === TicketStatus.Open ? TicketStatus.Assigned : this.data.callStatus,
+      }).subscribe(
+         () =>
          {
-            this.openSnackBar('Success', 'Ticket Assigned')
-            this.matDialogRef.close();
+            this.assigning = false;
+            this.openSnackBar('Success', 'Ticket assigned');
+            this.matDialogRef.close(true);
          },
          (err) =>
          {
-            this.openSnackBar('Error', err.message || 'Failed to assign ticket.');
+            this.assigning = false;
+            const message = err?.error?.message;
+            this.openSnackBar('Error', Array.isArray(message) ? message.join(' ') : (message || 'Failed to assign ticket.'));
          }
-      )
-
+      );
    }
 }

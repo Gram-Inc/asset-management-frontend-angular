@@ -16,7 +16,17 @@ export class AssetResolver implements Resolve<any> {
    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IDTO>
    {
       this._assetService.clrAst();
-      return this._assetService.getAssets();
+      const expiring = route.queryParamMap.get("expiring") === "true";
+      const expired = route.queryParamMap.get("expired") === "true";
+      if (!expiring && !expired) {
+         return this._assetService.getAssets();
+      }
+      return this._assetService.getAssets(1, 10, "", "", "", "desc", "name", {
+         expiring,
+         expired,
+         expiringIn: Number(route.queryParamMap.get("expiringIn")) || 30,
+         warrantyType: route.queryParamMap.get("warrantyType") || "",
+      });
    }
 }
 

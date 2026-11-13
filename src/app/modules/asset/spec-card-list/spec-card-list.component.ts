@@ -19,6 +19,7 @@ export class SpecCardListComponent implements OnInit
 
    getProcessorShortName(value: string)
    {
+      if (!value) return "N/A";
       if (value.includes("i3")) return "i3";
       else if (value.includes("i5")) return "i5";
       else if (value.includes("i7")) return "i7";

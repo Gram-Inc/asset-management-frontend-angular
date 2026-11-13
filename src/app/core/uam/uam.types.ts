@@ -8,9 +8,13 @@ export interface IUAM
    createdAt?: string;
    requestTypeAction?: RequestTypeActionUAM;
    uamNo?: string;
+   uamNumber?: string;
    priority?: "low" | "medium" | "high";
    uamType?: "windows" | "application";
    userInformation?: IUserInformationUAM;
+   windows?: {
+      userInformation?: IUserInformationUAM;
+   };
    accessToShareDrives?: {
       driveName?: string;
       folderName?: string;

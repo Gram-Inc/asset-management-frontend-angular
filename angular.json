@@ -34,7 +34,8 @@
                      "src/rikielR.svg",
                      "src/assets",
                      "src/assets/icons",
-                     "src/assets/logo"
+                     "src/assets/logo",
+                     "src/_redirects"
                   ],
                   "styles": [
                      "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -57,7 +58,7 @@
                         {
                            "type": "anyComponentStyle",
                            "maximumWarning": "2kb",
-                           "maximumError": "4kb"
+                           "maximumError": "6kb"
                         }
                      ],
                      "fileReplacements": [

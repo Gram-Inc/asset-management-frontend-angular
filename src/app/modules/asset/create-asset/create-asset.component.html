@@ -1,18 +1,18 @@
 <div class="p-8 text-xs">
-   <div class="px-4 py-5 bg-white sm:p-6 flex-1 min-w-0">
-      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+   <div class="ops-surface px-4 py-5 sm:p-6 flex-1 min-w-0 mb-4">
+      <h2 class="text-xl font-semibold leading-7 text-[#111827] sm:truncate">
          {{ asset == null ? "Create" : "Update" }} Asset
       </h2>
    </div>
 </div>
 
-<mat-stepper orientation="vertical" [linear]="true" class="font-sans" color="accent" [formGroup]="assetForm" #stepper>
+<mat-stepper orientation="vertical" [linear]="true" class="font-sans" [formGroup]="assetForm" #stepper>
    <!-- Asset Basic Details -->
    <mat-step>
       <ng-template matStepLabel>Asset Type</ng-template>
       <ng-template matStepContent>
          <!-- Asset Type -->
-         <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+         <div class="ops-surface px-4 py-5 sm:p-6 text-xs mb-3">
             <div class="grid grid-cols-4 gap-x-6">
                <!-- Asset Name -->
                <mat-form-field class="col-span-3">
@@ -89,7 +89,7 @@
       <mat-step [stepControl]="assetForm.get(assetForm.get('type').value)['os']">
          <ng-template matStepLabel>System Information</ng-template>
          <ng-template matStepContent>
-            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+            <div class="ops-surface px-4 py-5 sm:p-6 text-xs mb-3">
                <div class="grid grid-cols-4 gap-x-6">
                   <!-- system -->
                   <ng-container formGroupName="system">
@@ -169,7 +169,7 @@
       <mat-step [stepControl]="assetForm.get(assetForm.get('type').value)['diskLayout']">
          <ng-template matStepLabel>Memory / Disk Information</ng-template>
          <ng-template matStepContent>
-            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+            <div class="ops-surface px-4 py-5 sm:p-6 text-xs mb-3">
                <div class="grid grid-cols-4 gap-x-6">
                   <!-- processor -->
                   <ng-container formGroupName="cpu">
@@ -256,7 +256,7 @@
       <mat-step [stepControl]="assetForm.get('other')">
          <ng-template matStepLabel>Asset Details</ng-template>
          <ng-template matStepContent>
-            <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+            <div class="ops-surface px-4 py-5 sm:p-6 text-xs mb-3">
                <div class="grid grid-cols-4 gap-x-6">
                   <!-- Brand -->
                   <mat-form-field class="col-span-2">
@@ -290,7 +290,7 @@
    <mat-step [stepControl]="assetForm.get('warranty')['controls']">
       <ng-template matStepLabel>Warranty Information</ng-template>
       <ng-template matStepContent>
-         <div class="px-4 py-5 bg-white sm:p-6 text-xs">
+         <div class="ops-surface px-4 py-5 sm:p-6 text-xs mb-3">
             <div class="grid grid-cols-4 gap-x-6">
                <!-- Warranty -->
                <ng-container formArrayName="warranty"

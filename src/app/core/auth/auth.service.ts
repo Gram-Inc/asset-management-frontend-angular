@@ -41,16 +41,6 @@ export class AuthService
    // -----------------------------------------------------------------------------------------------------
 
    /**
-    * Forgot password
-    *
-    * @param email
-    */
-   forgotPassword(email: string): Observable<any>
-   {
-      return this._httpClient.post('api/auth/forgot-password', email);
-   }
-
-   /**
     * Reset password
     *
     * @param password

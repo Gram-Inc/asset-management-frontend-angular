@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "asset-management-frontend-angular",
+			"path": "."
+		},
+		{
+			"name": "assets-management-backend",
+			"path": "../assets-management-backend"
+		}
+	],
+	"settings": {}
+}

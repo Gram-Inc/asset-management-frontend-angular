@@ -77,19 +77,36 @@ export class AssetService {
     type: string = "",
     allocationStatus: string = "",
     order: "asc" | "desc" | "" = "desc",
-    sort: string = "name"
+    sort: string = "name",
+    coverage?: {
+      expiring?: boolean;
+      expired?: boolean;
+      expiringIn?: number;
+      warrantyType?: string;
+    }
   ): Observable<IDTO> {
+    const params: { [key: string]: string } = {
+      page: "" + page,
+      limit: "" + limit,
+      type: type,
+      searchText: searchText,
+      allocationStatus: allocationStatus,
+    };
+    if (coverage?.expiring) {
+      params.expiring = "true";
+      params.expiringIn = "" + (coverage.expiringIn || 30);
+    }
+    if (coverage?.expired) {
+      params.expired = "true";
+      params.expiringIn = "" + (coverage.expiringIn || 30);
+    }
+    if (coverage?.warrantyType) {
+      params.warrantyType = coverage.warrantyType;
+    }
+
     return this._httpClient
       .get<IDTO>(`${this._baseUrl}/asset/paginate`, {
-        params: {
-          page: "" + page,
-          limit: "" + limit,
-          type: type,
-          searchText: searchText,
-          allocationStatus: allocationStatus,
-          // order: order,
-          // sort: sort,
-        },
+        params,
       })
       .pipe(
         tap((response: IDTO) => {

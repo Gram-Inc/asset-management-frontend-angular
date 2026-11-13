@@ -174,7 +174,6 @@ export class DetailsComponent implements OnInit, OnDestroy
          this._userService.updateUser(this.user._id, obj).subscribe(
             (_) =>
             {
-               console.log("Updated")
                this.openSnackBar("Success", "User Updated");
                this._router.navigate(["../../"]
                   , {
@@ -184,7 +183,6 @@ export class DetailsComponent implements OnInit, OnDestroy
             },
             (err) =>
             {
-               console.log("Err")
                this.openSnackBar("Error", err.message);
             }
          );

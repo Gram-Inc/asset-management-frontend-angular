@@ -81,34 +81,34 @@ export class AssetTimelineComponent implements OnInit {
   getEventTypeColor(eventType: string): string {
     switch (eventType) {
       case TimelineEventType.ASSET_CREATED:
-        return 'bg-green-100 text-green-600';
+        return 'ops-pill-ok';
       case TimelineEventType.TICKET_CREATED:
-        return 'bg-purple-100 text-purple-600';
+        return 'ops-pill-info';
       case TimelineEventType.ASSIGNED_TO_USER:
-        return 'bg-blue-100 text-blue-600';
+        return 'ops-pill-info';
       case TimelineEventType.MOVED_TO_REPAIR:
-        return 'bg-yellow-100 text-yellow-600';
+        return 'ops-pill-warn';
       case TimelineEventType.RETURNED_TO_POOL:
-        return 'bg-orange-100 text-orange-600';
+        return 'ops-pill-ok';
       case TimelineEventType.STATUS_CHANGE:
-        return 'bg-gray-100 text-gray-600';
+        return 'ops-pill-neutral';
       default:
-        return 'bg-gray-100 text-gray-600';
+        return 'ops-pill-neutral';
     }
   }
 
   getStatusColor(status: string): string {
     switch (status) {
       case AllocationStatus.ASSIGNED:
-        return 'bg-blue-100 text-blue-600';
+        return 'ops-pill-info';
       case AllocationStatus.IN_POOL:
-        return 'bg-orange-100 text-orange-600';
+        return 'ops-pill-ok';
       case AllocationStatus.DOWN:
-        return 'bg-yellow-100 text-yellow-600';
+        return 'ops-pill-warn';
       case AllocationStatus.SCRAP:
-        return 'bg-red-100 text-red-600';
+        return 'ops-pill-danger';
       default:
-        return 'bg-gray-100 text-gray-600';
+        return 'ops-pill-neutral';
     }
   }
 

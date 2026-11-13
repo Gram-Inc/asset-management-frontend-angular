@@ -97,9 +97,7 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
             (u: any) => u.status === "Approved" || u.status === "Completed"
           ).length;
         },
-        error: (err) => {
-          console.error("Error loading user statistics:", err);
-        },
+        error: () => {},
       });
   }
   ngOnDestroy(): void {
@@ -110,6 +108,20 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
   getDepartmentName(user: IUser) {
     if (user.departmentId && typeof user.departmentId == "object") return user.departmentId.name;
     return "-";
+  }
+  getBranchName(user: IUser) {
+    if (user.branch && typeof user.branch == "object") {
+      return (user.branch as any).name || (user.branch as any).branchCode || "-";
+    }
+    return "-";
+  }
+  getUserName() {
+    if (!this.user) return "";
+    if (this.user.firstName && this.user.lastName) {
+      if (this.user.firstName?.toUpperCase() == this.user.lastName?.toUpperCase()) return this.user.firstName;
+      return this.user.firstName + " " + this.user.lastName;
+    }
+    return this.user.email || "";
   }
   getUserLevel(user: IUser) {
     if (user.role == "level1") return "Level 1";
@@ -174,8 +186,7 @@ export class UserFullDetailComponent implements OnInit, OnDestroy {
           this.assignedAssets = assets || [];
           this.isLoadingAssets = false;
         },
-        error: (err) => {
-          console.error("Error loading assigned assets:", err);
+        error: () => {
           this.isLoadingAssets = false;
         },
       });

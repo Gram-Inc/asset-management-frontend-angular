@@ -1,1 +1,1 @@
-export const environment = {"baseUrl":"https://lunar-assets-management-backend.vercel.app","production":true};
+export const environment = {"baseUrl":"https://lunar-api.onrender.com","production":true};

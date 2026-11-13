@@ -1,4 +1,68 @@
-.mat-header-cell {
-  background-color: white;
-  border-bottom: 1px #b4b4b4;
+:host {
+  display: block;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #f0f1f4;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.04);
+  padding: 18px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.studio-table {
+  width: 100%;
+  background: transparent;
+}
+
+:host ::ng-deep .studio-table {
+  .mat-header-cell {
+    background: #fff;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    font-weight: 600;
+    padding: 8px 10px;
+  }
+
+  .mat-cell {
+    border-bottom: 1px solid #f3f4f6;
+    padding: 14px 10px;
+    color: #111827;
+    font-size: 14px;
+  }
+
+  .mat-row:hover .mat-cell {
+    background: #f8f9fb;
+  }
+
+  .mat-header-row,
+  .mat-row {
+    height: auto;
+  }
+}
+
+.cell-plain {
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.cell-name {
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
 }

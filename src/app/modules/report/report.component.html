@@ -1,0 +1,60 @@
+<div class="report-studio">
+  <p class="report-lead">
+    Download CSV files for assets, tickets, and users. Warranty figures count coverage ending in the next 30 days.
+  </p>
+
+  <div class="download-grid">
+    <section class="download-panel">
+      <div class="download-copy">
+        <h2>Assets</h2>
+        <p>Full asset inventory with status, assignment, and coverage fields.</p>
+      </div>
+      <button type="button" class="download-btn" (click)="download('assets')">
+        <mat-icon svgIcon="feather:download-cloud"></mat-icon>
+        Download CSV
+      </button>
+    </section>
+
+    <section class="download-panel">
+      <div class="download-copy">
+        <h2>Tickets</h2>
+        <p>Support tickets with status, assignee, and timeline details.</p>
+      </div>
+      <button type="button" class="download-btn" (click)="download('tickets')">
+        <mat-icon svgIcon="feather:download-cloud"></mat-icon>
+        Download CSV
+      </button>
+    </section>
+
+    <section class="download-panel">
+      <div class="download-copy">
+        <h2>Users</h2>
+        <p>Directory of users with roles, branch, and department.</p>
+      </div>
+      <button type="button" class="download-btn" (click)="download('users')">
+        <mat-icon svgIcon="feather:download-cloud"></mat-icon>
+        Download CSV
+      </button>
+    </section>
+  </div>
+
+  <section class="warranty-section">
+    <h2 class="section-label">Warranty summary</h2>
+    <div class="metric-grid">
+      <title-card
+        [value]="warrantyCount"
+        [icon]="'heroicons_outline:shield-check'"
+        title="Warranty ending"
+        [color]="'text-orange-500'"
+        [bgColor]="'bg-orange-50'">
+      </title-card>
+      <title-card
+        [value]="amcCount"
+        [icon]="'heroicons_outline:clipboard-check'"
+        title="AMC ending"
+        [color]="'text-blue-500'"
+        [bgColor]="'bg-blue-50'">
+      </title-card>
+    </div>
+  </section>
+</div>

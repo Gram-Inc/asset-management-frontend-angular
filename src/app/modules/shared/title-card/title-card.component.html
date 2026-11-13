@@ -1,13 +1,9 @@
-<div [ngClass]="[this.color, this.bgColor]" class="card" target="_blank" rel="noopener">
-  <div class="font-sans">
-    <mat-icon class="h-14" [svgIcon]="this.icon"></mat-icon>
-    <br />
-    <p class="text-lg">
-      {{ this.title }}
-    </p>
-
-    <p class="font-bold text-3xl" style="padding-top: 10px">
-      {{ this.value }}
-    </p>
+<div class="metric">
+  <div class="metric-top">
+    <span class="metric-label">{{ title }}</span>
+    <span class="metric-badge" *ngIf="icon" [ngClass]="color">
+      <mat-icon [svgIcon]="icon"></mat-icon>
+    </span>
   </div>
+  <div class="metric-value" [ngClass]="color">{{ value ?? 0 }}</div>
 </div>

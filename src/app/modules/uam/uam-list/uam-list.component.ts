@@ -29,20 +29,24 @@ import { RikielConfirmationService } from "src/app/custom/confirmation/confirmat
    styles: [
       /* language=SCSS */
       `
-      .inventory-grid {
-        grid-template-columns: auto 40px;
-
-        @screen sm {
-          grid-template-columns: auto 112px 72px;
-        }
-
-        @screen md {
-          grid-template-columns: auto 112px 72px;
-        }
-
-        @screen lg {
-          grid-template-columns: auto 112px 96px 96px 72px;
-        }
+      .uam-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25rem;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: background 0.15s ease, border-color 0.15s ease;
+      }
+      .uam-btn-secondary {
+        background: #fff;
+        color: #111827;
+        border: 1px solid #e8eaee;
+      }
+      .uam-btn-secondary:hover {
+        background: #f9fafb;
       }
     `,
    ],
@@ -128,7 +132,7 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy
                {
                   this.isLoading = true;
                   return this._uamService.getUAMS(
-                     this._paginator.pageIndex,
+                     this._paginator.pageIndex + 1,
                      this._paginator.pageSize
                      /* "",
                      "",
@@ -192,6 +196,50 @@ export class UamListComponent implements OnInit, AfterViewInit, OnDestroy
    {
       if (obj) return typeof obj === "object" ? obj.branchCode : "-";
       return "NULL";
+   }
+
+   uamStatusLabel(status?: string): string
+   {
+      switch (status)
+      {
+         case 'Created':
+            return 'Created';
+         case 'UAMNumberCreated':
+            return 'Number assigned';
+         case 'AssignedToLineManager':
+         case 'ApprovedByLineManager':
+            return 'Line manager';
+         case 'AssignedToITAfterApprovalOfLineManager':
+            return 'IT';
+         case 'Closed':
+            return 'Closed';
+         case 'Rejected':
+            return 'Rejected';
+         default:
+            return status || '';
+      }
+   }
+
+   uamStatusClass(status?: string): string
+   {
+      switch (status)
+      {
+         case 'Created':
+            return 'ops-pill-info';
+         case 'UAMNumberCreated':
+            return 'ops-pill-info';
+         case 'AssignedToLineManager':
+         case 'ApprovedByLineManager':
+            return 'ops-pill-warn';
+         case 'AssignedToITAfterApprovalOfLineManager':
+            return 'ops-pill-info';
+         case 'Closed':
+            return 'ops-pill-ok';
+         case 'Rejected':
+            return 'ops-pill-danger';
+         default:
+            return 'ops-pill-neutral';
+      }
    }
 
    displayFnCreatedBy(createdBy?: string | IUser)

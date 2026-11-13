@@ -15,6 +15,11 @@ export interface IAssetDashboard {
     WARRANTY?: number;
     AMC?: number;
   };
+  assetsCountExpired?: {
+    WARRANTY?: number;
+    AMC?: number;
+  };
+  warrantyCoverageItems?: IWarrantyCoverageItem[];
   registeredAssets?: number;
   lastTenCreatedAssetsDetails?: {
     _id?: string;
@@ -44,6 +49,16 @@ export interface IAssetDashboard {
       DOWN?: number;
     }
   ];
+}
+export interface IWarrantyCoverageItem {
+  assetId?: string;
+  assetCode?: string;
+  name?: string;
+  type?: string;
+  branchName?: string;
+  endAt?: string;
+  coverageType?: "WARRANTY" | "AMC";
+  status?: "expired" | "soon";
 }
 export interface ITicketDashboard {
   ticketStatusCount?: {

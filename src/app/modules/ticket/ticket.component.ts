@@ -1,13 +1,16 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, UntypedFormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { Observable, of, Subject } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, combineLatest, of, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { IPagination } from "src/app/core/asset/asset.types";
 import { PermissionService } from "src/app/core/auth/permission.service";
 import { AccessType, ModuleTypes } from "src/app/core/auth/permission.types";
+import { ReportService } from "src/app/core/report/report.service";
 import { TicketService } from "src/app/core/ticket/ticket.service";
 import { ITicket } from "src/app/core/ticket/ticket.types";
+import { UserService } from "src/app/core/user/user.service";
 @Component({
    selector: "app-ticket",
    templateUrl: "./ticket.component.html",
@@ -24,7 +27,11 @@ export class TicketComponent implements OnInit, OnDestroy
    isLoading: boolean = false;
    searchCtrl: UntypedFormControl = new UntypedFormControl("");
 
-   constructor(private _ticketService: TicketService, private _permissionService: PermissionService) { }
+   constructor(private _ticketService: TicketService,
+      private _permissionService: PermissionService,
+      private _userService: UserService,
+      private _reportService: ReportService,
+      private _snackBar: MatSnackBar) { }
 
    ngOnInit(): void
    {
@@ -64,14 +71,25 @@ export class TicketComponent implements OnInit, OnDestroy
    */
    canExport(): Observable<boolean>
    {
-      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Ticket).pipe(
-         switchMap(value =>
+      return combineLatest([
+         this._permissionService.checkCurrentUserPermission(ModuleTypes.Ticket),
+         this._userService.user$,
+      ]).pipe(
+         map(([value, user]) =>
          {
-            //User should be able to Export only if He has full access
-            if (value == AccessType.FullAccess) return of(true);
-            return of(false);
+            const canView = value == AccessType.Read || value == AccessType.ReadWrite || value == AccessType.FullAccess;
+            return canView && (user?.role == "level1" || user?.role == "level2");
          })
       );
+   }
+
+   exportCsv(): void
+   {
+      this._reportService.download("tickets", {
+         searchText: this.searchCtrl.value || "",
+      }).subscribe({
+         error: () => this._snackBar.open("Could not export tickets", "Close", { duration: 3000 }),
+      });
    }
 
    canCreate(): Observable<boolean>

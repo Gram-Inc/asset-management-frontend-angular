@@ -1,0 +1,116 @@
+:host {
+  display: block;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #f0f1f4;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.04);
+  padding: 18px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.studio-table {
+  width: 100%;
+  min-width: 480px;
+  background: transparent;
+}
+
+:host ::ng-deep .studio-table {
+  .mat-header-cell {
+    background: transparent;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    font-weight: 600;
+    padding: 8px 10px;
+  }
+
+  .mat-cell {
+    border-bottom: 1px solid #f3f4f6;
+    padding: 12px 10px;
+    color: #111827;
+    font-size: 14px;
+  }
+
+  .mat-row:hover .mat-cell {
+    background: #f8f9fb;
+  }
+
+  .mat-header-row,
+  .mat-row {
+    height: auto;
+  }
+}
+
+.branch-code {
+  font-weight: 600;
+  color: #111827;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.working {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar {
+  position: relative;
+  width: 4px;
+  height: 18px;
+  border-radius: 99px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.bar-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 99px;
+}
+
+.bar-low {
+  background: #fee2e2;
+}
+
+.bar-low .bar-fill {
+  background: #ef4444;
+}
+
+.bar-mid {
+  background: #ffedd5;
+}
+
+.bar-mid .bar-fill {
+  background: #fb923c;
+}
+
+.bar-high {
+  background: #dcfce7;
+}
+
+.bar-high .bar-fill {
+  background: #34d399;
+}

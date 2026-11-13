@@ -1,219 +1,165 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="container m-6 ">
-   <div class="flex justify-between items-center mb-4">
-      <div class="flex items-center gap-4">
-         <div class="flex-1 min-w-0">
-            <span class="text-sm text-gray-500">Status: </span>
-            <span *ngIf="canChangeStatus() | async"
-                  class="flex items-center gap-2">
-               <div class="flex items-center px-3 py-1.5 rounded-full cursor-pointer font-medium text-sm transition-colors hover:opacity-80"
-                    [ngClass]="{
-                       'text-blue-800 bg-blue-200': statusCtrl.value === 'Open',
-                       'text-purple-800 bg-purple-200': statusCtrl.value === 'Assigned',
-                       'text-yellow-800 bg-yellow-200': statusCtrl.value === 'In Progress',
-                       'text-orange-800 bg-orange-200': statusCtrl.value === 'Hold',
-                       'text-gray-800 bg-gray-200': statusCtrl.value === 'Vendor Dependency',
-                       'text-green-800 bg-green-200': statusCtrl.value === 'Closed'
-                    }"
-                    [matMenuTriggerFor]="statusMenu">
-                  {{ statusCtrl.value || ticket?.callStatus || 'Open' | titlecase }}
-                  <mat-icon class="ml-1 icon-size-4" svgIcon="heroicons_outline:chevron-down"></mat-icon>
-               </div>
-               <mat-menu #statusMenu="matMenu">
-                  <button *ngFor="let status of availableStatuses"
-                          [ngClass]="{ 'bg-orange-50': statusCtrl.value === status }"
-                          mat-menu-item
-                          (click)="selectStatus(status)">
-                     <span class="inline-flex items-center justify-between w-full">
-                        <span class="font-medium">{{ status | titlecase }}</span>
-                     </span>
+<div class="ticket-detail" *ngIf="ticket">
+   <!-- Status / summary panel -->
+   <div class="ops-surface ticket-panel">
+      <div class="flex flex-wrap justify-between items-start gap-4">
+         <div class="flex flex-col gap-3 min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+               <span class="text-xs font-semibold uppercase tracking-wider ops-muted">Status</span>
+               <ng-container *ngIf="canChangeStatus() | async">
+                  <button type="button" class="ops-pill ticket-status-trigger cursor-pointer border-0"
+                     [ngClass]="statusPillClass(statusCtrl.value)" [matMenuTriggerFor]="statusMenu">
+                     {{ statusCtrl.value || ticket?.callStatus || 'Open' | titlecase }}
+                     <mat-icon class="ml-1 icon-size-4" svgIcon="heroicons_outline:chevron-down"></mat-icon>
                   </button>
-               </mat-menu>
-            </span>
-            <span *ngIf="showReadOnlyStatus() | async"
-                  class="inline-flex items-center px-3 py-1.5 rounded-full font-medium text-sm"
-                  [ngClass]="{
-                     'text-blue-800 bg-blue-200': ticket?.callStatus === 'Open',
-                     'text-purple-800 bg-purple-200': ticket?.callStatus === 'Assigned',
-                     'text-yellow-800 bg-yellow-200': ticket?.callStatus === 'In Progress',
-                     'text-orange-800 bg-orange-200': ticket?.callStatus === 'Hold',
-                     'text-gray-800 bg-gray-200': ticket?.callStatus === 'Vendor Dependency',
-                     'text-green-800 bg-green-200': ticket?.callStatus === 'Closed'
-                  }">
-               {{ ticket?.callStatus || 'Open' | titlecase }}
-            </span>
-         </div>
-      </div>
-      <div class="flex gap-2">
-         <div *ngIf="checkRole('level1') | async">
-            <button
-               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-               (click)="assignTicket()">
-               <mat-icon svgIcon="feather:user-plus" class="h-4 w-4 mr-1"></mat-icon> Assign
-            </button>
-         </div>
-      </div>
-   </div>
-
-   <div class="flex flex-col gap-2 mt-4" *ngIf="ticket?.callStatus == 'Closed'">
-      <div class="flex-1 min-w-0 p-3 bg-green-50 border border-green-200 rounded-md">
-         <span class="text-sm text-green-800 font-semibold">Closed (Permanently)</span>
-         <p class="text-xs text-gray-600 mt-1">{{ticket?.closingDescription}}</p>
-      </div>
-   </div>
-
-   <!-- Close Ticket Dialog -->
-   <div *ngIf="showCloseDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="cancelClose()">
-      <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" (click)="$event.stopPropagation()">
-         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-xl font-semibold text-gray-900">Close Ticket</h2>
-            <p class="text-sm text-gray-500 mt-1">Please provide a closing description to close this ticket.</p>
-         </div>
-         <div class="px-6 py-4">
-            <mat-form-field appearance="outline" class="w-full">
-               <mat-label>Closing Description</mat-label>
-               <textarea matInput [formControl]="closingDescriptionCtrl" rows="4" placeholder="Enter reason for closing..."></textarea>
-               <mat-error *ngIf="closingDescriptionCtrl.hasError('required')">Closing description is required</mat-error>
-            </mat-form-field>
-         </div>
-         <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
-            <button
-               class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-               (click)="cancelClose()">
-               Cancel
-            </button>
-            <button
-               class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-               (click)="closeTicket()">
-               Close Ticket
-            </button>
-         </div>
-      </div>
-   </div>
-
-   <br>
-
-   <div class="mt-4 text-xs">
-      <div class="flex justify-between">
-
-         <table>
-            <tr>
-               <td>Priority</td>
-               <td class=" whitespace-nowrap">
-                  <span [ngClass]="{
-                                    'bg-green-100 text-green-600 dark:text-green-500':ticket.priority == 'Low',
-                                    'bg-gray-100 text-gray-600 dark:text-gray-500':ticket.priority == 'Medium',
-                                    'bg-red-100 text-red-400 dark:text-red-400 ':ticket.priority == 'High',
-                                    'bg-red-200 text-red-600 dark:text-red-500 ':ticket.priority == 'Critical'
-                                      }" class="px-2 inline-flex text-xs leading-5 rounded-full">
-                     {{ticket.priority| titlecase }}
-                  </span>
-               </td>
-            </tr>
-            <tr *ngIf="requestedUser">
-               <td class="w-44">Service request by</td>
-               <td><a class="cursor-pointer text-blue-600 hover:underline">{{requestedUser.firstName +'
-                     '+requestedUser.lastName}}</a></td>
-            </tr>
-
-            <tr>
-               <td>Category</td>
-               <td>
-                  <p class="text-xs">{{ticket?.category}}</p>
-               </td>
-            </tr>
-         </table>
-
-         <p class="text-stone-500">{{ticket?.createdAt | amTimeAgo}} &nbsp;({{ticket?.createdAt | date:'medium'}})</p>
-      </div>
-   </div>
-
-   <br>
-
-   <div class="mt-4">
-      <h1 class="mb-2 font-bold">{{ticket?.subCategory ?? ticket?.category}}</h1>
-      <p class="text-xs">{{ticket?.description}}</p>
-   </div>
-
-   <br>
-   <div class="mt-4">
-      <table class="text-xs">
-         <tr>
-            <td class="w-44">Assigned to</td>
-            <td class="font-bold">{{assignedUser ? assignedUser.firstName+' ' + assignedUser.lastName: 'N/A'}}</td>
-         </tr>
-         <tr>
-            <td>Category</td>
-            <td>{{ticket.category}}</td>
-         </tr>
-         <tr>
-            <td>Subcategory</td>
-            <td>{{ticket.subCategory}}</td>
-         </tr>
-         <tr>
-            <td>Site</td>
-            <td>{{requestedUser?.branch['name'] ?? ''}}</td>
-         </tr>
-         <tr>
-            <td>Department</td>
-            <td>{{requestedUser?.departmentId['name'] ?? ''}}</td>
-         </tr>
-         <ng-container *ngIf="(checkRole('level1') | async) && (checkRole('level2') | async)">
-            <tr>
-               <td>
-                  Call Medium
-               </td>
-               <td>{{ticket?.callMedium | titlecase}}</td>
-            </tr>
-            <tr>
-               <td>
-                  Nature of Call
-               </td>
-               <td>{{ticket?.natureOfCall | titlecase}}</td>
-            </tr>
-            <tr>
-               <td>
-                  Last Updated at
-               </td>
-               <td>{{ticket?.updatedAt | date:'medium'}}</td>
-            </tr>
-         </ng-container>
-      </table>
-   </div>
-
-
-
-   <div class="my-8 flex flex-col">
-      <mat-form-field class="w-96 text-xs">
-         <mat-label>Comment</mat-label>
-         <textarea matInput [formControl]="commentCtrl"></textarea>
-      </mat-form-field>
-      <div>
-         <button mat-raised-button color="primary" (click)="postComment()" class="text-white mr-4">
-            Post
-         </button>
-         <button mat-stroked-button [routerLink]="['../']">Back</button>
-      </div>
-   </div>
-
-   <div class="mt-4 flex gap-6" *ngFor="let cht of chat">
-      <div>
-         <span class="rounded-full w-10 h-10 flex items-center justify-center bg-yellow-500 text-white ">
-            <span>{{cht.messageByUser.firstName.charAt(0)+ cht.messageByUser.lastName.charAt(0)| uppercase}}</span>
-         </span>
-      </div>
-      <div class="flex flex-col">
-         <!-- Header -->
-         <div class="flex items-baseline">
-            <div class="font-bold text-stone-900 ">{{cht.messageByUser.firstName + ' ' + cht.messageByUser.lastName}}
+                  <mat-menu #statusMenu="matMenu">
+                     <button *ngFor="let status of availableStatuses" mat-menu-item
+                        (click)="selectStatus(status)">
+                        <span class="font-medium">{{ status | titlecase }}</span>
+                     </button>
+                  </mat-menu>
+               </ng-container>
+               <span *ngIf="showReadOnlyStatus() | async" class="ops-pill"
+                  [ngClass]="statusPillClass(ticket?.callStatus)">
+                  {{ ticket?.callStatus || 'Open' | titlecase }}
+               </span>
             </div>
 
-            <span class="text-sm text-gray-700">&nbsp;&#x2022;&nbsp;{{cht.createdAt | date:'medium'}}</span>
+            <div class="flex flex-wrap items-center gap-2 text-sm">
+               <span class="ops-pill" [ngClass]="{
+                     'ops-pill-ok': ticket.priority == 'Low',
+                     'ops-pill-neutral': ticket.priority == 'Medium',
+                     'ops-pill-warn': ticket.priority == 'High',
+                     'ops-pill-danger': ticket.priority == 'Critical'
+                  }">
+                  {{ ticket.priority | titlecase }}
+               </span>
+               <span class="ops-muted">{{ ticket?.createdAt | amTimeAgo }} · {{ ticket?.createdAt | date:'medium' }}</span>
+            </div>
+
+            <div class="ticket-meta text-sm" *ngIf="requestedUser">
+               <span class="ops-muted">Requested by</span>
+               <span class="ml-2 text-gray-900">{{ requestedUser.firstName + ' ' + requestedUser.lastName }}</span>
+            </div>
          </div>
-         <div class=" mt-2">
-            {{cht.message}}
+
+         <div *ngIf="checkRole('level1') | async">
+            <button type="button" class="ticket-btn ticket-btn-primary" (click)="assignTicket()">
+               <mat-icon svgIcon="feather:user-plus" class="icon-size-4 mr-1"></mat-icon>
+               Assign
+            </button>
          </div>
+      </div>
+
+      <div *ngIf="ticket?.callStatus == 'Closed'" class="ticket-closed-banner mt-4">
+         <span class="text-sm font-semibold text-green-800">Closed (Permanently)</span>
+         <p class="text-xs ops-muted mt-1">{{ ticket?.closingDescription }}</p>
+      </div>
+
+      <div class="ticket-meta-grid mt-5">
+         <div>
+            <div class="ticket-meta-label">Assigned to</div>
+            <div class="ticket-meta-value">{{ assignedUser ? assignedUser.firstName + ' ' + assignedUser.lastName : 'N/A' }}</div>
+         </div>
+         <div>
+            <div class="ticket-meta-label">Category</div>
+            <div class="ticket-meta-value">{{ ticket.category }}</div>
+         </div>
+         <div>
+            <div class="ticket-meta-label">Subcategory</div>
+            <div class="ticket-meta-value">{{ ticket.subCategory || '—' }}</div>
+         </div>
+         <div>
+            <div class="ticket-meta-label">Site</div>
+            <div class="ticket-meta-value">{{ requestedUser?.branch['name'] ?? '—' }}</div>
+         </div>
+         <div>
+            <div class="ticket-meta-label">Department</div>
+            <div class="ticket-meta-value">{{ requestedUser?.departmentId['name'] ?? '—' }}</div>
+         </div>
+         <ng-container *ngIf="checkLevel1OrLevel2() | async">
+            <div>
+               <div class="ticket-meta-label">Call Medium</div>
+               <div class="ticket-meta-value">{{ callMediumLabel(ticket?.callMedium) }}</div>
+            </div>
+            <div>
+               <div class="ticket-meta-label">Nature of Call</div>
+               <div class="ticket-meta-value">{{ ticket?.natureOfCall | titlecase }}</div>
+            </div>
+            <div>
+               <div class="ticket-meta-label">Last Updated</div>
+               <div class="ticket-meta-value">{{ ticket?.updatedAt | date:'medium' }}</div>
+            </div>
+         </ng-container>
       </div>
    </div>
 
+   <!-- Description panel -->
+   <div class="ops-surface ticket-panel">
+      <h2 class="ticket-panel-title">{{ ticket?.subCategory ?? ticket?.category }}</h2>
+      <p class="ticket-description">{{ ticket?.description }}</p>
+   </div>
+
+   <!-- Chat panel -->
+   <div class="ops-surface ticket-panel ticket-chat-panel">
+      <h2 class="ticket-panel-title">Comments</h2>
+
+      <div class="ticket-chat-thread">
+         <div *ngIf="chat && chat.length === 0" class="text-center py-8">
+            <mat-icon class="h-12 w-12 text-gray-400 mx-auto mb-2" svgIcon="heroicons_outline:inbox"></mat-icon>
+            <p class="text-sm ops-muted">No comments found</p>
+         </div>
+
+         <div *ngFor="let cht of chat" class="ticket-bubble-row"
+            [class.ticket-bubble-row--mine]="isMine(cht)">
+            <div class="ticket-avatar" *ngIf="!isMine(cht)">
+               {{ (cht.messageByUser.firstName.charAt(0) + cht.messageByUser.lastName.charAt(0)) | uppercase }}
+            </div>
+            <div class="ticket-bubble" [class.ticket-bubble--mine]="isMine(cht)"
+               [class.ticket-bubble--theirs]="!isMine(cht)">
+               <div class="ticket-bubble-meta">
+                  <span class="font-semibold">{{ cht.messageByUser.firstName + ' ' + cht.messageByUser.lastName }}</span>
+                  <span class="ops-muted">{{ cht.createdAt | date:'medium' }}</span>
+               </div>
+               <div class="ticket-bubble-body">{{ cht.message }}</div>
+            </div>
+            <div class="ticket-avatar ticket-avatar--mine" *ngIf="isMine(cht)">
+               {{ (cht.messageByUser.firstName.charAt(0) + cht.messageByUser.lastName.charAt(0)) | uppercase }}
+            </div>
+         </div>
+      </div>
+
+      <div class="ticket-composer">
+         <mat-form-field class="w-full ticket-composer-field" appearance="outline">
+            <mat-label>Comment</mat-label>
+            <textarea matInput [formControl]="commentCtrl" rows="2"></textarea>
+         </mat-form-field>
+         <div class="flex items-center gap-2 mt-2">
+            <button type="button" class="ticket-btn ticket-btn-primary" (click)="postComment()">Post</button>
+            <button type="button" class="ticket-btn ticket-btn-secondary" [routerLink]="['../']">Back</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Close Ticket Dialog -->
+<div *ngIf="showCloseDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+   (click)="cancelClose()">
+   <div class="ops-surface ticket-close-dialog max-w-md w-full mx-4" (click)="$event.stopPropagation()">
+      <div class="px-6 py-4 border-b" style="border-color: #f0f1f4">
+         <h2 class="text-lg font-semibold text-gray-900">Close Ticket</h2>
+         <p class="text-sm ops-muted mt-1">Please provide a closing description to close this ticket.</p>
+      </div>
+      <div class="px-6 py-4">
+         <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Closing Description</mat-label>
+            <textarea matInput [formControl]="closingDescriptionCtrl" rows="4"
+               placeholder="Enter reason for closing..."></textarea>
+            <mat-error *ngIf="closingDescriptionCtrl.hasError('required')">Closing description is required</mat-error>
+         </mat-form-field>
+      </div>
+      <div class="px-6 py-4 flex justify-end gap-3" style="border-top: 1px solid #f0f1f4">
+         <button type="button" class="ticket-btn ticket-btn-secondary" (click)="cancelClose()">Cancel</button>
+         <button type="button" class="ticket-btn ticket-btn-primary" (click)="closeTicket()">Close Ticket</button>
+      </div>
+   </div>
 </div>

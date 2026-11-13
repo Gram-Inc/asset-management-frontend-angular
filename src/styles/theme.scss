@@ -3,7 +3,7 @@
 
 // Typography
 $custom-typography: mat-typography-config(
-  $font-family: Raleway,
+  $font-family: 'Inter, "Segoe UI", system-ui, sans-serif',
   $headline: mat-typography-level(24px, 48px, 400),
   $body-1: mat-typography-level(16px, 24px, 400),
 );

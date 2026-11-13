@@ -21,8 +21,6 @@ export class CreateAuditComponent implements OnInit {
   branches: IBranch[] = [];
   departments: IDepartment[] = [];
   level2Users: IUser[] = [];
-  includeAllAssets: boolean = true;
-  selectedAssets: string[] = [];
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
@@ -71,7 +69,6 @@ export class CreateAuditComponent implements OnInit {
         ? formValue.departmentIds
         : [formValue.departmentIds],
       assignedToUserId: formValue.assignedToUserId || undefined,
-      assetIds: this.includeAllAssets ? undefined : this.selectedAssets,
     };
 
     this._auditService.createAudit(auditDto).subscribe({
@@ -93,12 +90,5 @@ export class CreateAuditComponent implements OnInit {
       horizontalPosition: "center",
       panelClass: type == "Error" ? "text-red-500" : type == "Info" ? "text-blue-500" : "text-green-500",
     });
-  }
-
-  toggleAssetSelection(): void {
-    this.includeAllAssets = !this.includeAllAssets;
-    if (this.includeAllAssets) {
-      this.selectedAssets = [];
-    }
   }
 }

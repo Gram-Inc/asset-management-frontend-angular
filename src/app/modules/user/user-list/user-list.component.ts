@@ -131,7 +131,7 @@ export class UserListComponent implements OnInit, AfterViewInit, OnDestroy
                {
                   this.isLoading = true;
                   return this._userService.getUsers(
-                     this._paginator.pageIndex,
+                     this._paginator.pageIndex + 1,
                      this._paginator.pageSize
                      /* "",
                      "",

@@ -13,6 +13,7 @@ export class AsideComponent implements OnInit {
   @Input() name: string;
   @Input() routerString: string;
   @Input() isDisabled: boolean = false;
+  @Input() showTip = false;
   active: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -83,8 +84,14 @@ export class AsideComponent implements OnInit {
 
     // Use exact match for routes, but also check if the current URL starts with the routerString
     // This handles cases where the route might have additional path segments
-    this.active = this._router.isActive(this.routerString, true) ||
-                  (currentUrl && currentUrl.toLowerCase().startsWith(this.routerString.toLowerCase()));
+    const path = (currentUrl || "").split("?")[0].split("#")[0];
+    if (this.routerString === "/asset") {
+      this.active = path === "/asset" || (path.startsWith("/asset/") && !path.startsWith("/asset/scanned"));
+    } else if (this.routerString === "/uam") {
+      this.active = path === "/uam" || (path.startsWith("/uam/") && !path.startsWith("/uam/create"));
+    } else {
+      this.active = path === this.routerString || path.startsWith(this.routerString + "/");
+    }
     // Mark for check
     this._changeDetectorRef.markForCheck();
   }

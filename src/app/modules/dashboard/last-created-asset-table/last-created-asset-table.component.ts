@@ -4,6 +4,7 @@ import { IAssetDashboard } from "src/app/core/dashboard/dashboard.types";
 @Component({
   selector: "last-created-asset-table",
   templateUrl: "./last-created-asset-table.component.html",
+  styleUrls: ["./last-created-asset-table.component.scss"],
 })
 export class LastCreatedAssetTableComponent implements OnInit {
   @Input() data: IAssetDashboard;

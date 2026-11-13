@@ -1,48 +1,141 @@
-<div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
-    <!-- Avatar and name -->
-    <div class="flex flex-auto items-center min-w-0">
-        <div class="flex-0 w-16 h-16 rounded-full overflow-hidden"></div>
-        <div class="flex flex-col min-w-0 ml-4">
-            <div class="text-2xl md:text-5xl tracking-tight leading-7 md:leading-snug truncate">
-                Welcome back !, <span class="text-orange-500"> {{ user.firstName | titlecase }}</span> !
+<div class="studio" *ngIf="dashboard?.assets as assets">
+    <section class="hero">
+        <div class="hero-copy">
+            <div class="eyebrow">Fleet</div>
+            <div class="hero-num">{{ fleetTotal() }}</div>
+            <p class="hero-note">{{ warrantyBellText() }}</p>
+            <div class="stack" aria-hidden="true">
+                <span class="seg pool" [style.flex]="statusCount('IN_POOL') || 0"></span>
+                <span class="seg assigned" [style.flex]="statusCount('ASSIGNED') || 0"></span>
+                <span class="seg down" [style.flex]="statusCount('DOWN') || 0"></span>
+                <span class="seg scrap" [style.flex]="statusCount('SCRAP') || 0"></span>
             </div>
-
-            <div class="flex items-center">
-                <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:bell'"></mat-icon>
-                <div class="ml-1.5 leading-6 truncate text-secondary">You have 2 new approval and 15 new tasks</div>
+            <div class="legend">
+                <span><i class="dot pool"></i>In pool {{ share('IN_POOL') }}%</span>
+                <span><i class="dot assigned"></i>Assigned {{ share('ASSIGNED') }}%</span>
+                <span><i class="dot down"></i>Down {{ share('DOWN') }}%</span>
+                <span><i class="dot scrap"></i>Scrap {{ share('SCRAP') }}%</span>
             </div>
         </div>
+        <div class="donut-wrap">
+            <div class="donut" [style.background]="donutBackground()">
+                <div class="donut-hole">
+                    <div class="donut-pct">{{ share('ASSIGNED') }}%</div>
+                    <div class="donut-pill">Assigned</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="split">
+        <section class="panel">
+            <h2>Asset mix</h2>
+            <div class="mix">
+                <span class="tick pool"></span>
+                <div>
+                    <div class="mix-name">In pool</div>
+                    <div class="mix-meta">Ready to assign</div>
+                </div>
+                <div class="mix-val">{{ statusCount('IN_POOL') }}</div>
+            </div>
+            <div class="mix">
+                <span class="tick assigned"></span>
+                <div>
+                    <div class="mix-name">Assigned</div>
+                    <div class="mix-meta">With a person or desk</div>
+                </div>
+                <div class="mix-val">{{ statusCount('ASSIGNED') }}</div>
+            </div>
+            <div class="mix">
+                <span class="tick down"></span>
+                <div>
+                    <div class="mix-name">Down</div>
+                    <div class="mix-meta">In repair</div>
+                </div>
+                <div class="mix-val">{{ statusCount('DOWN') }}</div>
+            </div>
+            <div class="mix">
+                <span class="tick scrap"></span>
+                <div>
+                    <div class="mix-name">Scrap</div>
+                    <div class="mix-meta">Retired</div>
+                </div>
+                <div class="mix-val">{{ statusCount('SCRAP') }}</div>
+            </div>
+            <button type="button" class="mix mix-btn" (click)="openCoverageList('WARRANTY')">
+                <span class="tick warn"></span>
+                <div>
+                    <div class="mix-name">Warranty</div>
+                    <div class="mix-meta">Expired or due in 30 days</div>
+                </div>
+                <div class="mix-val">{{ coverageCount('WARRANTY') }}</div>
+            </button>
+            <button type="button" class="mix mix-btn" (click)="openCoverageList('AMC')">
+                <span class="tick info"></span>
+                <div>
+                    <div class="mix-name">AMC</div>
+                    <div class="mix-meta">Expired or due in 30 days</div>
+                </div>
+                <div class="mix-val">{{ coverageCount('AMC') }}</div>
+            </button>
+        </section>
+
+        <section class="panel">
+            <h2>Tickets</h2>
+            <div class="ticket-grid">
+                <a class="ticket" routerLink="/ticket" *ngFor="let status of ticketStatuses">
+                    <div class="ticket-label">{{ status.label }}</div>
+                    <div class="ticket-val">{{ ticketCount(status.key) }}</div>
+                </a>
+            </div>
+        </section>
     </div>
-    <!-- Actions -->
-</div>
 
-<div class="card-container">
-    <title-card [value]="dashboard.assets.assetStatusCount.IN_POOL" [icon]="'heroicons_outline:archive'" title="In Pool"
-        [color]="'text-green-500'" [bgColor]="'bg-green-50'"></title-card>
-    <title-card [value]="dashboard.assets.assetStatusCount.ASSIGNED" [icon]="'heroicons_outline:user-circle'"
-        title="Assigned" [color]="'text-blue-500'" [bgColor]="'bg-blue-50'"></title-card>
-    <title-card [value]="dashboard.assets.assetStatusCount.SCRAP" [icon]="'heroicons_outline:trash'" title="Scrap"
-        [color]="'text-red-500'" [bgColor]="'bg-red-50'"></title-card>
-    <title-card [value]="dashboard.assets.assetStatusCount.DOWN" [icon]="'heroicons_outline:exclamation'" title="Down"
-        [color]="'text-yellow-500'" [bgColor]="'bg-yellow-50'"></title-card>
-</div>
+    <section class="panel">
+        <h2>Coverage</h2>
+        <div *ngIf="!assets.warrantyCoverageItems?.length" class="empty">
+            No warranties or AMC contracts expired or expiring in the next 30 days
+        </div>
+        <div class="overflow-x-auto" *ngIf="assets.warrantyCoverageItems?.length">
+            <table class="coverage-table">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Type</th>
+                        <th>Branch</th>
+                        <th>Coverage</th>
+                        <th>State</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of assets.warrantyCoverageItems" [routerLink]="['/asset', item.assetId]">
+                        <td>
+                            <div class="font-medium">{{ item.assetCode || item.name }}</div>
+                            <div class="row-meta">{{ item.name }}</div>
+                        </td>
+                        <td class="capitalize">{{ item.type }}</td>
+                        <td>{{ item.branchName || '—' }}</td>
+                        <td>{{ item.coverageType === 'AMC' ? 'AMC' : 'Warranty' }}</td>
+                        <td>
+                            <span class="ops-pill"
+                                [ngClass]="item.status === 'expired' ? 'ops-pill-danger' : 'ops-pill-warn'">
+                                {{ item.status === 'expired' ? 'Expired' : 'Expires soon' }}
+                            </span>
+                        </td>
+                        <td>{{ item.endAt | date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-<div class="grid grid-cols-6 gap-6 w-full min-w-0 p-6">
-    <!-- Steps -->
-    <simple-timeline></simple-timeline>
-
-    <!-- Overall Asset Details  -->
-    <overall-branch-asset-detail-table [data]="dashboard.assets" class="sm:col-span-6 md:col-span-6 lg:col-span-6">
-    </overall-branch-asset-detail-table>
-
-    <!-- Last Created Asset Details  -->
-    <last-created-asset-table [data]="dashboard.assets" class="sm:col-span-6 md:col-span-3 lg:col-span-3">
-    </last-created-asset-table>
-
-    <!-- Overall User Chart  -->
-    <total-user-card [data]="dashboard.users" class="sm:col-span-6 md:col-span-3 lg:col-span-3"></total-user-card>
-
-    <!-- New JOinee Status Table -->
-    <new-joinee-status-table [data]="dashboard.users" class="sm:col-span-6 md:col-span-3 lg:col-span-3">
-    </new-joinee-status-table>
+    <div class="widgets">
+        <overall-branch-asset-detail-table [data]="dashboard.assets"></overall-branch-asset-detail-table>
+        <div class="widgets-pair">
+            <last-created-asset-table [data]="dashboard.assets"></last-created-asset-table>
+            <total-user-card [data]="dashboard.users"></total-user-card>
+        </div>
+        <new-joinee-status-table [data]="dashboard.users"></new-joinee-status-table>
+    </div>
 </div>

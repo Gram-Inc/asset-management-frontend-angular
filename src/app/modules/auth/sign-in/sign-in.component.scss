@@ -1,0 +1,125 @@
+.sign-in-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px 16px;
+  background: #f6f7f9;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.sign-in-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid #f0f1f4;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.04);
+}
+
+.sign-in-title {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: #111827;
+}
+
+.sign-in-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.sign-in-sub a {
+  color: #111827;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sign-in-sub a:hover {
+  text-decoration: underline;
+}
+
+.sign-in-form {
+  margin-top: 28px;
+}
+
+.sign-in-remember {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.sign-in-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #111827;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.sign-in-submit:hover:not(:disabled) {
+  background: #1f2937;
+}
+
+.sign-in-submit:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.18);
+}
+
+.sign-in-submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.sign-in-spinner {
+  display: inline-block;
+}
+
+.sign-in-spinner circle {
+  stroke: #fff !important;
+}
+
+.sign-in-card .mat-form-field {
+  margin-bottom: 4px;
+}
+
+.sign-in-card .mat-checkbox-checked.mat-primary .mat-checkbox-background,
+.sign-in-card .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background {
+  background-color: #111827 !important;
+}
+
+.sign-in-card .mat-checkbox-checked.mat-primary .mat-checkbox-frame,
+.sign-in-card .mat-checkbox:not(.mat-checkbox-disabled).mat-primary .mat-checkbox-ripple .mat-ripple-element {
+  border-color: #111827;
+}
+
+@media (max-width: 480px) {
+  .sign-in-page {
+    padding: 20px 12px;
+    align-items: flex-start;
+  }
+
+  .sign-in-card {
+    padding: 24px 20px;
+  }
+}

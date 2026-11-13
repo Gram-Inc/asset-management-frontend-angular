@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "node set-env.ts && ng build --configuration=production",
+    "deploy": "node scripts/deploy.cjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -52,6 +53,7 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "postcss": "^8.4.4",
     "source-map-explorer": "^2.5.2",
-    "typescript": "~4.8.4"
+    "typescript": "~4.8.4",
+    "wrangler": "^4.161.0"
   }
 }

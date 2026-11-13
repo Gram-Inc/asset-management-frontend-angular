@@ -77,7 +77,7 @@ export class ListComponent implements OnInit, AfterViewInit, OnDestroy
                {
                   this.isLoading = true;
                   return this._vendorService.getVendors(
-                     this._paginator.pageIndex,
+                     this._paginator.pageIndex + 1,
                      this._paginator.pageSize
                      /* "",
                      "",

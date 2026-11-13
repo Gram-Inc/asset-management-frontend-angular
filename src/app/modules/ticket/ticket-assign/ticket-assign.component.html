@@ -30,12 +30,16 @@
       <mat-form-field class="w-72 mt-2">
          <mat-label>Users</mat-label>
          <input [formControl]="ITUserCtrl" matInput [matAutocomplete]="mRequester" />
-         <mat-autocomplete #mRequester="matAutocomplete" [displayWith]="displayFn.bind(this)">
+         <mat-spinner *ngIf="searching" matSuffix diameter="18"></mat-spinner>
+         <mat-autocomplete #mRequester="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)="selectUser($event.option.value)">
             <mat-option *ngFor="let requester of filteredRequesterForAutoComplete" [value]="requester._id">
                {{ requester.firstName + " " + requester.lastName }}
             </mat-option>
          </mat-autocomplete>
       </mat-form-field>
+      <div class="assign-search" *ngIf="searching">
+         <span>Searching users…</span>
+      </div>
    </div>
 
    <!-- Actions -->
@@ -47,8 +51,8 @@
       </button>
 
       <!-- Confirm -->
-      <button mat-flat-button [disabled]="!selectedUser" color="primary" (click)="assign()" class="text-white">
-         Assign
+      <button mat-flat-button [disabled]="!selectedUser || assigning" color="primary" (click)="assign()" class="text-white">
+         {{ assigning ? 'Assigning…' : 'Assign' }}
       </button>
    </div>
 </div>

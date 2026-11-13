@@ -40,4 +40,13 @@ export class BranchComponent implements OnInit {
          })
       );
    }
+
+   canEdit(): Observable<boolean> {
+      return this._permissionService.checkCurrentUserPermission(ModuleTypes.Branch).pipe(
+         switchMap(value => {
+            if (value == AccessType.ReadWrite || value == AccessType.FullAccess) return of(true);
+            return of(false);
+         })
+      );
+   }
 }
