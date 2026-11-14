@@ -1,1 +1,1 @@
-export const environment = {"baseUrl":"https://lunar-api.onrender.com","production":true};
+export const environment = {"baseUrl":"https://lunar-api-typf.onrender.com","production":true};
